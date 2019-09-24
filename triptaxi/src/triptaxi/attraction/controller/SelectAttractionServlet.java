@@ -1,6 +1,7 @@
 package triptaxi.attraction.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,13 +32,20 @@ public class SelectAttractionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+				AttractionService service=new AttractionService();
 				request.setCharacterEncoding("UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				String attId=request.getParameter("attId");
-				Attraction a=new AttractionService().selectAttraction(attId);
+				Attraction a=service.selectAttraction(attId);
+				List<Attraction> list=service.recommendAttraction(attId);
+				for(Attraction arr : list) {
+					System.out.println(arr);
+				}
+				
+				
 				
 				request.setAttribute("selectatt", a);
+				request.setAttribute("list", list);
 				request.getRequestDispatcher("/views/attraction/attraction.jsp").forward(request, response);
 
 
