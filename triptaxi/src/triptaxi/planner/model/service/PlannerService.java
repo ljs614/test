@@ -29,14 +29,6 @@ public class PlannerService {
 		return planner;
 	}
 	
-	public Attraction selectAttraction(String attraction_id) {
-		Connection conn=getConnection();
-		
-		Attraction att=dao.selectAttraction(conn, attraction_id);
-		close(conn);
-		return att;
-	}
-	
 	public List<CityList> selectCityList(String continentName){
 	      Connection conn = getConnection();
 	      List<CityList> list = dao.selectCityList(conn, continentName);

@@ -64,34 +64,6 @@ public class PlannerDao {
 		
 	}
 	
-	public Attraction selectAttraction(Connection conn, String attraction_id) {
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql=prop.getProperty("selectAttraction");
-		Attraction att=null;
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, attraction_id);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				att=new Attraction();
-				att.setAttractionId(rs.getString("attraction_id"));
-				att.setAttractionName(rs.getString("attraction_name"));
-				att.setCity(rs.getString("city_name"));
-				att.setCategory(rs.getString("attraction_category"));
-				att.setAttractionLat(rs.getDouble("attraction_lat"));
-				att.setAttractionLng(rs.getDouble("attraction_lng"));
-				att.setImageUrl(rs.getString("thumnail_url"));
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		return att;
-	}
-	
 	public List<CityList> selectCityList(Connection conn, String continentName) {
 	      PreparedStatement pstmt = null;
 	      ResultSet rs = null;
