@@ -4,22 +4,44 @@
 <%
 	List<Attraction[]> list=(List)request.getAttribute("atts");
 	Planner planner=(Planner)request.getAttribute("planner");
-	int count=0;
-	int mapIndex=0;
-	String attsLat="";
-	String attsLng="";
+
 %>
 
 
 <%@ include file="/views/common/header.jsp" %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
-
-	
 	<section id="header-container">
 		<div id="cover-container">
 			<div id="cover-content">
-				<button id="like_Btn" onclick="like_click();"></button>
+				<div id="cover-change" onclick="cover_change();"></div>
+				<div id="like_btn" class="like" onclick="like_click();"></div>
+				<div id="planner-info">
+					<div id="planner-writer">
+						<div id="planner-writer-profile">
+							<img src="<%=request.getContextPath()%>/images/bx_loader.gif" widht='40px' height='40px'/>
+						</div>
+						<div id="planner-writer-name">
+							<%=planner.getPlannerWriter()%>
+						</div>
+					</div>
+					<div id="planner-member">
+						<div id="planner-member-invite">
+							<img src="<%=request.getContextPath()%>/views/planner/img/pButton.png" width='40px' height='40px'/>
+						</div>
+					</div>
+					<div id="planner-name">
+						<%=planner.getPlannerName()%>
+					</div>
+					<div id="planner-etc">
+						<div id="planner-etc-date">
+							
+						</div>
+						<div id="planner-etc-theme">
+							비즈니스
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="planView-nav">
@@ -48,9 +70,6 @@
 				</div>
 				<div id="right-side">
 					<div id="side-map">
-						<div id="content">
-							Hellow world!
-						</div>
 					</div>
 					<div id="side-attrs">
 
@@ -74,35 +93,48 @@
 			
 	</div>
 	<script>
-		//개요 테이블 생성
 		var planList=${jlist};
 		var html="";
+		//일정 날짜 생성
+		var date_=new Date('<%=planner.getPlannerDate()%>');
+		var dayLong=planList.length;
+		html+=date_.getFullYear()+"."+(date_.getMonth()+1)+"."+date_.getDate()+"~";
+		date_.setDate(date_.getDate()+dayLong-1);
+		html+=date_.getFullYear()+"."+(date_.getMonth()+1)+"."+date_.getDate()+"("+dayLong+"일)";
+		$("#planner-etc-date").html(html);
+		
+		
+		//개요 테이블 생성
+		html="";
 		for(var i=0; i<planList.length; i++){
 			html+="<div id='planner-day"+(i+1)+"' class='day-planner'>";
 			html+="<table class='day-table'>";
 			html+="<tr>";
 			html+="<td class='day-day' rowspan='2' colspan='2'>DAY"+(i+1)+"</td>";
-			html+="<td class='day-date' colspan='3'>";
+			html+="<td class='day-date' colspan='5'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
 			html+="&nbsp;&nbsp;"+date_.getFullYear()+"년 "+(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")</td>";
 			html+="</tr>";
 			html+="<tr>";
-			html+="<td class='day-city' colspan='3'>&nbsp;"+planList[i][0]["city"]+"</td>";
+			html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i][0]["city"]+"</td>";
 			html+="</tr>";
 			for(var j=0; j<planList[i].length; j++){
 				html+="<tr>";
 				html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
 				html+="<td class='day-tourImg' rowspan='3'>";
 				html+="<img src='<%=request.getContextPath()%>/"+planList[i][j]["imageUrl"]+"' width='100px' height='100px' /></td>";
-				html+="<td class='day-tourName' colspan='2'>"+planList[i][j]['attractionName']+"</td>";
+				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['attractionName']+"</td>";
+				html+="<td class='day-city-zoom'>";
+				html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
 				html+="</tr>";
 				html+="<tr>";
-				html+="<td class='day-tourType'>"+planList[i][j]['category']+"</td>";
+				html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;"+planList[i][j]['category']+"</td>";
 				html+="<td class='day-score'>8/10 b</td>";//수정하기
+				html+="<td></td>"
 				html+="</tr>";
 				html+="<tr>";
-				html+="<td colspan='2'></td>";
+				html+="<td colspan='3'></td>";
 				html+="</tr>";
 				if(j!=planList[i].length-1){
 					html+="<tr>";
@@ -124,7 +156,7 @@
 			html+="<td class='schedule-day'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
-			html+=date_.getMonth()+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")";
+			html+=(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")";
 			html+="<p class='p-day'>DAY"+(i+1)+"</p></td>";
 			html+="<td class='schedule-city'>ㆍ"+planList[i][0]['city']+"</td>";
 			html+="<td class='schedule-att'>";
@@ -163,7 +195,7 @@
 			}
 		}
 		//메인 내비 생성
-		html='<div id="exit-main"><button id="exit-mainMap" onclick="exit_mainMap();">X</button></div>';
+		html='<div id="exit-main"><button id="exit-mainMap" onclick="exit_mainMap();">전체 지도 닫기 X</button></div>';
 		for(var i=0; i<planList.length; i++){
 			html+="<div class='mmn-div'>";
 			html+="<input type='hidden' value='"+(i+1)+"' />";
@@ -173,7 +205,7 @@
 			html+="<td class='mmn-date' colspan='3'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
-			html+="<p>"+date_.getFullYear()+"."+date_.getMonth()+"."+date_.getDate()+"("+returnDay(date_.getDay())+")</p>";
+			html+="<p>"+date_.getFullYear()+"."+(date_.getMonth()+"."+date_.getDate()+1)+"("+returnDay(date_.getDay())+")</p>";
 			html+="<p class='mmn-date-city'>"+planList[i][0]["city"]+"</p></td>";
 			html+="</td>";
 			html+="</table>";
@@ -350,7 +382,7 @@
 				switch($(this).html()){
 					case "개요":$(".navs").css("font-weight","");$(".planView-main-container").hide();$("#planView-outline").show();$("#planView-main").css("height", $("#planner-container").height()+100+"px");$(this).css("font-weight","bold");break;
 					case "일정표":$("#planView-main").css("height", $("#planView-schedule").height()+100+"px");$(".navs").css("font-weight","");$(".planView-main-container").hide();$("#planView-schedule").show();$(this).css("font-weight","bold");break;
-					case "지도":cDay=1;$(".mmn-div").css({"background-color":"navy","color":"white"});$($(".mmn-div")[0]).css({"background-color":"lavender","color":"navy"});$("html, section").scrollTop(0);$("html, section").css("overflow-y","hidden");$("#main-map").show();mainMap();break;
+					case "지도":cDay=1;$(".mmn-div").css({"background-color":"white","color":"navy"});$($(".mmn-div")[0]).css({"background-color":"navy","color":"white"});$("html, section").scrollTop(0);$("html, section").css("overflow-y","hidden");$("#main-map").show();mainMap();break;
 					default:;
 				}
 			});
@@ -422,12 +454,58 @@
 		$(".mmn-div").click(function(){
 			cDay=$($(this).children('input')).val();
 			fn_markerM(mainM);
-			$($(".mmn-div")).css({"background-color":"navy","color":"white"});
-			$(this).css({"background-color":"lavender","color":"navy"});
+			$($(".mmn-div")).css({"background-color":"white","color":"navy"});
+			$(this).css({"background-color":"navy","color":"white"});
 		});
 	});	
-	
+	var like=false;
 
+	//좋아요버튼 클릭이벤트
+	function like_click(){
+		if(like){
+			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+			like=false;
+		}else{
+			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
+			like=true;
+		}
+	}
+	$(function(){
+			//좋아요버튼 호버
+			$("#like_btn").hover(function(){
+				if(!like){
+					$(this).css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"0.5"});
+				}
+			},function(){
+				if(!like){
+					$(this).css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+				}
+			});
+
+			//초대 클릭이벤트
+			$("#planner-member-invite").click(function(){
+				location.href="<%=request.getContextPath()%>/invite";
+			});
+
+
+
+			//도시 줌 클릭이벤트
+			$(".day-city-zoom").click(function(){
+				var day_num=$(this).parents(".day-planner").index();
+				var city_num=$(this).siblings(".day-num").html()-1;
+				if(cDay!=day_num+1){
+					cDay=day_num+1;
+					fn_marker(map);
+				}
+				var cityLat=(attrsLat[day_num].split(","))[city_num];
+				var cityLng=(attrsLng[day_num].split(","))[city_num];
+				var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
+				map.setCenter(cityLatLng);
+				map.setZoom(14);
+
+			});
+		
+	});
 	</script>
 
 

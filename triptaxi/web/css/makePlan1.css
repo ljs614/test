@@ -85,7 +85,7 @@
 
     }
 
-    nav ul#mainMenu>li>a {
+    nav ul#mainMenu>li {
       text-decoration: none;
       color: black;
       font-weight: bolder;
@@ -101,12 +101,12 @@
       background-color:#fde396;
     }
 
-    nav ul#mainMenu>li:nth-of-type(2)>a {
+    nav ul#mainMenu>li:nth-of-type(2) {
       padding-top: 12px;
       height: 43px;
     }
 
-    nav ul#mainMenu>li:nth-of-type(5)>a {
+    nav ul#mainMenu>li:nth-of-type(5) {
       padding-top: 12px;
       height: 43px;
     }
@@ -145,18 +145,24 @@
       padding-top: 17px;
       padding-bottom: 0px;
       text-align:center;
-      /* border:solid 1px red; */
     }
 
     .country {
       background-color: rgb(233, 232, 232);
+      padding-top:3px;
+      height:22px !important;
     }
 
-    .country, .city{
-      /* border-bottom: 1px solid rgb(180, 177, 177); */
-      padding-top:6px;
+    .city{
+      padding-top:10px;
       height:30px;
       text-align:center;
+      cursor:pointer;
+    }
+    .comingsoon{
+      padding-top:100px;
+      border:none !important;
+      
     }
 
     div#selectPopup {
@@ -367,7 +373,7 @@
     background-color: rgb(189, 189, 189);
   }
 
-  #plan1Modal{
+  #plan1Modal,#closeBTModal{
     background-color: rgba(0,0,0,0.4);
     width:100%;
     height:100%;
@@ -377,14 +383,17 @@
     top:0;
     vertical-align: middle;
   }
-  #plan1Modal>#plan1Modal-content{
+
+  #plan1Modal>#plan1Modal-content,
+  #closeBTModal>#closeBTModal-content{
     background-color:white;
     width:400px;
     height:250px;
     margin:0 auto;
     margin-top:18%;
   }
-  #plan1Modal-content>#MoTitle{
+  #plan1Modal-content>#MoTitle,
+  #closeBTModal-content>#cbm-Title{
     height:44px;
     border-bottom:1px solid rgb(194, 192, 192);
     font-size:20px;
@@ -392,15 +401,20 @@
     padding-left:15px;
     font-weight:bolder;
   }
-  #MoTitle>img{
+  #MoTitle>img,#cbm-Title>img{
     position:relative;
+    top:3px;
     left:235px;
   }
-  #MoTitle>img:hover{
+  #MoTitle>img:hover, #cbm-Title>img:hover{
     opacity:0.5;
   }
+  #cbm-Title>img{
+    position:relative;
+    left:295px;
+  }
   #plan1Modal-content form input{font-family: 'Nanum Gothic', sans-serif;}
-  #MoContent{
+  #MoContent, #cbm-Content{
     height:130px;
     border-bottom:1px solid rgb(194, 192, 192);
   }
@@ -421,7 +435,7 @@
     position:relative;
     width:100px;
     height:35px;
-    top:43px;
+    top:11px;
     left:280px;
     background-color:rgb(253, 214, 94);
     border:none;
@@ -456,3 +470,28 @@
     font-size:13px;
   }
 
+  #cbm-Content{
+    height:93px;
+    border-bottom:1px solid rgb(194, 192, 192);
+    text-align:center;
+    padding-top:27px;
+    font-weight:bolder;
+    font-size:17px;
+  }
+  #cbm-BTArea{
+    text-align:center;
+  }
+  #cbmBT-Y, #cbmBT-N{
+    margin-top:14px;
+    display:inline-block;
+    border:1px solid rgba(253, 213, 94, 0.61);
+    width:100px;
+    height:27px;
+    padding-top:7px;
+    margin-left:10px;
+    margin-right:10px;
+    cursor:pointer;
+  }
+  #cbmBT-Y:hover, #cbmBT-N:hover{
+    background-color:rgba(253, 213, 94, 0.61);
+  }

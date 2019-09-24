@@ -1,11 +1,14 @@
 package triptaxi.planner.model.dao;
 
+import static triptaxi.common.template.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,8 +17,6 @@ import com.triptaxi.attraction.model.vo.Attraction;
 
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
-
-import static triptaxi.common.template.JDBCTemplate.close;
 
 public class PlannerDao {
 	
@@ -117,5 +118,69 @@ public class PlannerDao {
 	      
 	      return list;
 	   }
+	
+	public int insertPlanner(Connection conn, String plannerName, String plannerDate) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertPlanner");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, plannerName);
+			pstmt.setString(2, plannerDate);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectPlannerId(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String result = null;
+		String sql = "select seq_tt_planner.currval from dual";
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+
+		return result;
+	}
+	
+	public int insertPlannerDay(Connection conn, int dayNo, String cityName, String plannerId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertPlannerDay");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dayNo);
+			pstmt.setString(2, cityName);
+			pstmt.setString(3, plannerId);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 
 }
