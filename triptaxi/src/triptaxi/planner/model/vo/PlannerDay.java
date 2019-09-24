@@ -3,7 +3,7 @@ package triptaxi.planner.model.vo;
 public class PlannerDay {
 
 	String plannerDayId;
-	String plannerDayNo;
+	int plannerDayNo;
 	String cityName;
 	String tourList;
 	String plannerId;
@@ -12,7 +12,7 @@ public class PlannerDay {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlannerDay(String plannerDayId, String plannerDayNo, String cityName, String tourList, String plannerId) {
+	public PlannerDay(String plannerDayId, int plannerDayNo, String cityName, String tourList, String plannerId) {
 		super();
 		this.plannerDayId = plannerDayId;
 		this.plannerDayNo = plannerDayNo;
@@ -29,11 +29,11 @@ public class PlannerDay {
 		this.plannerDayId = plannerDayId;
 	}
 
-	public String getPlannerDayNo() {
+	public int getPlannerDayNo() {
 		return plannerDayNo;
 	}
 
-	public void setPlannerDayNo(String plannerDayNo) {
+	public void setPlannerDayNo(int plannerDayNo) {
 		this.plannerDayNo = plannerDayNo;
 	}
 
@@ -67,6 +67,7 @@ public class PlannerDay {
 				+ ", tourList=" + tourList + ", plannerId=" + plannerId + "]";
 	}
 
+	
 	
 	
 }
