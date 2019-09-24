@@ -84,14 +84,14 @@
 	        $(".con1_hover1").on("mouseenter",function(){
 	        	$(".top_con_span").first().css("color","black").css("fontSize","25px");
 	 			$(".top_con_p").first().css("color","black"); 
-	 			$(".top_con_i").first().css("color","#a2c5f7");
+	 			$(".top_con_i1").first().css("color","#a2c5f7");
         		$(".top_img0").css("display","none");
         		$(".top_img1").css("display","block");
 	        });
 	        $(".con1_hover1").on("mouseleave",function(){
 	 			$(".top_con_span").first().css("color","white").css("fontSize","25px");
 	 			$(".top_con_p").first().css("color","white"); 
-	 			$(".top_con_i").first().css("color","white");
+	 			$(".top_con_i1").first().css("color","white");
         		$(".top_img1").css("display","none");
         		$(".top_img0").css("display","block");
 	        });
@@ -101,14 +101,14 @@
 	        $(".con1_hover2").on("mouseenter",function(){
 	        	$(".top_con_span").eq(1).css("color","black").css("fontSize","25px");
 	 			$(".top_con_p").eq(1).css("color","black"); 
-	 			$(".top_con_i").eq(1).css("color","#a2c5f7");
+	 			$(".top_con_i1").eq(1).css("color","#a2c5f7");
        		$(".top_img0").css("display","none");
        		$(".top_img2").css("display","block");
 	        });
 	        $(".con1_hover2").on("mouseleave",function(){
 	 			$(".top_con_span").eq(1).css("color","white").css("fontSize","25px");
 	 			$(".top_con_p").eq(1).css("color","white"); 
-	 			$(".top_con_i").eq(1).css("color","white");
+	 			$(".top_con_i1").eq(1).css("color","white");
        		$(".top_img2").css("display","none");
        		$(".top_img0").css("display","block");
 	        });
@@ -118,14 +118,14 @@
 	        $(".con1_hover3").on("mouseenter",function(){
 	        	$(".top_con_span").last().css("color","black").css("fontSize","25px");
 	 			$(".top_con_p").last().css("color","black"); 
-	 			$(".top_con_i").last().css("color","#a2c5f7");
+	 			$(".top_con_i1").last().css("color","#a2c5f7");
        		$(".top_img0").css("display","none");
        		$(".top_img3").css("display","block");
 	        });
 	        $(".con1_hover3").on("mouseleave",function(){
 	 			$(".top_con_span").last().css("color","white").css("fontSize","25px");
 	 			$(".top_con_p").last().css("color","white"); 
-	 			$(".top_con_i").last().css("color","white");
+	 			$(".top_con_i1").last().css("color","white");
        		$(".top_img3").css("display","none");
        		$(".top_img0").css("display","block");
 	        });
@@ -133,34 +133,29 @@
         
         $(function(){
         	$(".con1_1").hover(function(){
-        		$(".material-icons").first().css("color","#66a1f4");
+        		$(".material-icons_con1").first().css("color","#66a1f4");
         	},function(){
-        		$(".material-icons").first().css("color","lightslategray");
+        		$(".material-icons_con1").first().css("color","lightslategray");
         	});
         });
         
         $(function(){
         	$(".con1_2").hover(function(){
-        		$(".material-icons").eq(1).css("color","#66a1f4");
+        		$(".material-icons_con1").eq(1).css("color","#66a1f4");
         	},function(){
-        		$(".material-icons").eq(1).css("color","lightslategray");
+        		$(".material-icons_con1").eq(1).css("color","lightslategray");
         	});
         });
         
         $(function(){
         	$(".con1_3").hover(function(){
-        		$(".material-icons").last().css("color","#66a1f4");
+        		$(".material-icons_con1").last().css("color","#66a1f4");
         	},function(){
-        		$(".material-icons").last().css("color","lightslategray");
+        		$(".material-icons_con1").last().css("color","lightslategray");
         	});
         });
         
-        $(document).ready(function(){
-            $('.bxslider').bxSlider({
-	            slideWidth: 682,
-	            captions: true
-            	});
-	        });
+        
     </script>
 
  
