@@ -14,6 +14,8 @@
 	int clipCount=a.getClipCount();
 	int reviewScore=a.getReviewScore();
 	String category=a.getCategory();
+	List<Attraction> list=(List)request.getAttribute("list");
+	
 %>
 <%@ include file="/views/common/header.jsp" %>
 <style>
@@ -271,35 +273,13 @@ img {
 	color:gray;
 }
 
-#recommend1{
+#recommendDiv{
   position: relative;
   text-align: center;
   color: black;
  overflow:hidden;
 }
 
-
-#recommend2{
-
-  position: relative;
-  text-align: center;
-  color: black;
-   overflow:hidden;
-}
-#recommend3{
-
-  position: relative;
-  text-align: center;
-  color: black;
-  overflow:hidden;
-}
-#recommend4{
-
-   position: relative;
-  text-align: center;
-  color: black;
-   overflow:hidden;
-}
 #recommendPic1{
  width:230px;
  height:200px;
@@ -425,23 +405,23 @@ text-align: center;
 		<div class="container">
   <div class="mySlides">
     <div class="numbertext">1 / 4</div>
-    <img src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[0]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:600px;height:400px">
     <%-- <img src="images/"<%=attName%>/<%=thumbnailUrl%>" style="width:600px;height:400px"> --%>
   </div>
 
   <div class="mySlides">
     <div class="numbertext">2 / 4</div>
-    <img src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[1]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:600px;height:400px">
   </div>
 
   <div class="mySlides">
     <div class="numbertext">3 / 4</div>
-    <img src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[2]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:600px;height:400px">
   </div>
     
   <div class="mySlides">
     <div class="numbertext">4 / 4</div>
-    <img src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[3]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:600px;height:400px">
   </div>
 
 
@@ -452,16 +432,16 @@ text-align: center;
 
   <div class="row">
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[0]%>" style="width:100%" onclick="currentSlide(1)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:100%" onclick="currentSlide(1)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[1]%>" style="width:100%" onclick="currentSlide(2)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:100%" onclick="currentSlide(2)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[2]%>" style="width:100%" onclick="currentSlide(3)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:100%" onclick="currentSlide(3)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/views/attraction/images/<%=attName%>/<%=imageUrl[3]%>" style="width:100%" onclick="currentSlide(4)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:100%" onclick="currentSlide(4)">
     </div>
 	</div>
 	</div>
@@ -498,28 +478,28 @@ text-align: center;
   
   <tr>
    <td id="recommendTD">
-   <div id="recommend1">
+   <div id="recommendDiv">
    <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/나트랑센터/나트랑센터1.jpg"><div id="howlong"><h6>→ 0.75km</h6></div> </a></div>
    <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">52</i>
    &nbsp<i class="fas fa-heart" style="color:hotpink">56</i>&nbsp 나트랑센터 </h4>
    
    </td>
    <td>
-   <div id="recommend2">
+   <div id="recommendDiv">
    <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/빈펄랜드/빈펄랜드1.jpg"><div id="howlong"><h6>→ 0.85km</h6></div></a></div>
    <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">75</i>
    &nbsp<i class="fas fa-heart" style="color:hotpink">74</i> &nbsp 빈펄랜드 </h4>
    
    </td>
    <td>
-   <div id="recommend3">
+   <div id="recommendDiv">
    <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/빈펄케이블카/빈펄케이블카1.jpg"><div id="howlong"><h6>→ 0.9km</h6></div></a></div>
    <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">25</i>
    &nbsp<i class="fas fa-heart" style="color:hotpink">56</i> &nbsp 빈펄케이블카 </h4>
    
    </td>
    <td>
-   <div id="recommend4">
+   <div id="recommendDiv">
    <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/에그머드배쓰/에그머드배쓰1.jpg"><div id="howlong"><h6>→ 2.3km</h6></div></a></div>
    <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">120</i>
    &nbsp<i class="fas fa-heart" style="color:hotpink">75</i> &nbsp 에그머드배쓰 </h4>
@@ -542,12 +522,13 @@ text-align: center;
  		<table>
  		<tr>
  		<td id=reviewComment>
- 
  		</td>
  		</tr>
+ 		
 	 </table>
 	</section>
 	<script>
+
 var slideIndex = 1;
 showSlides(slideIndex);
 
