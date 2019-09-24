@@ -487,6 +487,11 @@
         $('#closeBTModal').css("display", "none");
       });
       
+      $('#cbmBT-Y').click(function(){
+    	  /* 나중에 Servlet경로로 변경 */
+    	  location.href="<%=request.getContextPath()%>/views/planner/planMain.jsp";
+      });
+      
       
       function fn_makePlan(){
     	  var dayArr=[];

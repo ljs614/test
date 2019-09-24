@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.triptaxi.attraction.model.vo.Attraction;
-
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
+import triptaxi.planner.model.vo.Tour;
 
 public class PlannerDao {
 	
@@ -137,16 +136,16 @@ public class PlannerDao {
 		return result;
 	}
 	
-	public int insertPlannerDay(Connection conn, int dayNo, String cityName, String plannerId) {
+	public int insertPlannerDay(Connection conn, PlannerDay plannerday) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertPlannerDay");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dayNo);
-			pstmt.setString(2, cityName);
-			pstmt.setString(3, plannerId);
+			pstmt.setInt(1, plannerday.getPlannerDayNo());
+			pstmt.setString(2, plannerday.getCityName());
+			pstmt.setString(3, plannerday.getPlannerId());
 			
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
@@ -154,8 +153,8 @@ public class PlannerDao {
 		}finally {
 			close(pstmt);
 		}
-		
 		return result;
+		
 	}
 	
 	public List<PlannerDay> selectPlannerDayList(Connection conn, String plannerId) {
@@ -183,6 +182,17 @@ public class PlannerDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public List<Tour> selectTourList(Connection conn, String city){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTourList");
+		List<Tour> tourList = new ArrayList<Tour>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+		}
 	}
 	
 
