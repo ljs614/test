@@ -20,7 +20,7 @@ public class PlannerService {
 	
 	private PlannerDao dao=new PlannerDao();
 	
-	public Planner selectPlanner(String userId, String plannerId) {
+	public Planner selectPlanner(String plannerId) {
 		Connection conn=getConnection();
 		
 		Planner planner=dao.selectPlanner(conn, plannerId);
