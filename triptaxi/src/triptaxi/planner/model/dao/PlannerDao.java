@@ -184,6 +184,36 @@ public class PlannerDao {
 		return list;
 	}
 	
+	public Tour selectTour(Connection conn, String tourId, String table, String idName) {
+		Statement stmt=null;
+		Tour tour=null;
+		ResultSet rs=null;
+		String sql="SELECT * FROM "+table+" WHERE "+idName+"="+tourId;
+		try {
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery(sql);
+			if(rs.next()) {
+				tour=new Tour();
+				tour.setTourId(rs.getString(1));
+				tour.setTourName(rs.getString(2));
+				tour.setTourEng(rs.getString(3));
+				tour.setCity(rs.getString(4));
+				tour.setTourLat(rs.getDouble(5));
+				tour.setTourLng(rs.getDouble(6));
+				tour.setImageUrl(rs.getString(7));
+				tour.setClipCount(rs.getInt(9));
+				tour.setReviewScore(rs.getInt(10));
+				tour.setCategory(rs.getString(11));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		return tour;
+	}
+	
 	public List<Tour> selectTourList(Connection conn, String city){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

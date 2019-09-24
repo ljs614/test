@@ -17,6 +17,8 @@ import triptaxi.planner.model.service.PlannerService;
 import com.google.gson.Gson;
 import com.triptaxi.attraction.model.vo.Attraction;
 import triptaxi.planner.model.vo.Planner;
+import triptaxi.planner.model.vo.PlannerDay;
+import triptaxi.planner.model.vo.Tour;
 
 /**
  * Servlet implementation class PlannerViewServlet
@@ -40,25 +42,33 @@ public class PlannerViewServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
-		String userId=request.getParameter("userId");
 		String plannerId=request.getParameter("plannerId");
 		PlannerService service=new PlannerService();
-		Planner planner=service.selectPlanner(userId, plannerId);
-		List<Attraction[]> list=new ArrayList<Attraction[]>();
-		String view;
 		
+		Planner planner=service.selectPlanner(plannerId);
+		String view;
 		if(planner!=null) {
-			String[] days=planner.getPlannerPlan().split("/");
-			for(int i=0; i<days.length; i++) {
-				String[] tours=days[i].split(",");
-				Attraction[] atts=new Attraction[tours.length];
-				for(int j=0; j<tours.length; j++) {
-					atts[j]=service.selectAttraction(tours[j]);
+			List<PlannerDay> pdList=service.selectPlannerDayList(plannerId);
+			List<Tour[]> list=new ArrayList<Tour[]>();
+			for(int i=0; i<pdList.size(); i++) {
+				String[] tours=pdList.get(i).getTourList().split(",");
+				Tour[] tourList=new Tour[tours[i].length()];
+				for(int j=0; j<tourList.length; j++) {
+						tourList[j]=service.selectTour(tours[j]);
 				}
-				list.add(atts);
+				list.add(tourList);
 			}
+//			String[] days=planner.getPlannerPlan().split("/");
+//			for(int i=0; i<days.length; i++) {
+//				String[] tours=days[i].split(",");
+//				Attraction[] atts=new Attraction[tours.length];
+//				for(int j=0; j<tours.length; j++) {
+//					atts[j]=service.selectAttraction(tours[j]);
+//				}
+//				list.add(atts);
+//			}
+//			request.setAttribute("atts", list);
 			request.setAttribute("planner", planner);
-			request.setAttribute("atts", list);
 			request.setAttribute("jlist", gson.toJson(list));
 			view="/views/planner/planView.jsp";
 			

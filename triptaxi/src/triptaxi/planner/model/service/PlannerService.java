@@ -74,6 +74,26 @@ public class PlannerService {
 		return list;
 	}
 	
+	public Tour selectTour(String tourId) {
+		Connection conn=getConnection();
+		String table="";
+		String idName="";
+		if(tourId.substring(0, 2).equals("at")) {
+			table="TT_ATTRACTION";
+			idName="ATTRACTION_ID";
+		}else if(tourId.substring(0, 2).equals("ac")) {
+			table="TT_ACTIVITY";
+			idName="ACTIVITY_ID";
+		}else{
+			table="TT_FESTIVAL";
+			idName="FESTIVAL_ID";
+		}
+		Tour tour=dao.selectTour(conn, tourId, table, idName);
+		close(conn);
+		return tour;
+	}
+	
+	
 	public List<Tour> selectTourList(String city){
 		Connection conn = getConnection();
 		
