@@ -6,63 +6,144 @@ public class Planner {
 	
 	private String plannerId;
 	private String plannerName;
-	private String plannerWriter;
 	private Date plannerDate;
-	private String plannerPlan;
+	private String plannerWriter;
+	private String plannerTheme;
+	private int plannerLike;
+	private int plannerCount;
+	private int plannerPublic;
+	private Date plannerWritedate;
+	private String plannerCoverimg;
+	
 	
 	public Planner() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Planner(String plannerId, String plannerName, String plannerWriter, Date plannerDate, String plannerPlan) {
+
+	public Planner(String plannerId, String plannerName, Date plannerDate, String plannerWriter, String plannerTheme,
+			int plannerLike, int plannerCount, int plannerPublic, Date plannerWritedate, String plannerCoverimg) {
 		super();
 		this.plannerId = plannerId;
 		this.plannerName = plannerName;
-		this.plannerWriter = plannerWriter;
 		this.plannerDate = plannerDate;
-		this.plannerPlan = plannerPlan;
+		this.plannerWriter = plannerWriter;
+		this.plannerTheme = plannerTheme;
+		this.plannerLike = plannerLike;
+		this.plannerCount = plannerCount;
+		this.plannerPublic = plannerPublic;
+		this.plannerWritedate = plannerWritedate;
+		this.plannerCoverimg = plannerCoverimg;
 	}
+
 
 	public String getPlannerId() {
 		return plannerId;
 	}
 
+
 	public void setPlannerId(String plannerId) {
 		this.plannerId = plannerId;
 	}
+
 
 	public String getPlannerName() {
 		return plannerName;
 	}
 
+
 	public void setPlannerName(String plannerName) {
 		this.plannerName = plannerName;
 	}
 
-	public String getPlannerWriter() {
-		return plannerWriter;
-	}
-
-	public void setPlannerWriter(String plannerWriter) {
-		this.plannerWriter = plannerWriter;
-	}
 
 	public Date getPlannerDate() {
 		return plannerDate;
 	}
 
+
 	public void setPlannerDate(Date plannerDate) {
 		this.plannerDate = plannerDate;
 	}
 
-	public String getPlannerPlan() {
-		return plannerPlan;
+
+	public String getPlannerWriter() {
+		return plannerWriter;
 	}
 
-	public void setPlannerPlan(String plannerPlan) {
-		this.plannerPlan = plannerPlan;
+
+	public void setPlannerWriter(String plannerWriter) {
+		this.plannerWriter = plannerWriter;
 	}
 
+
+	public String getPlannerTheme() {
+		return plannerTheme;
+	}
+
+
+	public void setPlannerTheme(String plannerTheme) {
+		this.plannerTheme = plannerTheme;
+	}
+
+
+	public int getPlannerLike() {
+		return plannerLike;
+	}
+
+
+	public void setPlannerLike(int plannerLike) {
+		this.plannerLike = plannerLike;
+	}
+
+
+	public int getPlannerCount() {
+		return plannerCount;
+	}
+
+
+	public void setPlannerCount(int plannerCount) {
+		this.plannerCount = plannerCount;
+	}
+
+
+	public int getPlannerPublic() {
+		return plannerPublic;
+	}
+
+
+	public void setPlannerPublic(int plannerPublic) {
+		this.plannerPublic = plannerPublic;
+	}
+
+
+	public Date getPlannerWritedate() {
+		return plannerWritedate;
+	}
+
+
+	public void setPlannerWritedate(Date plannerWritedate) {
+		this.plannerWritedate = plannerWritedate;
+	}
+
+
+	public String getPlannerCoverimg() {
+		return plannerCoverimg;
+	}
+
+
+	public void setPlannerCoverimg(String plannerCoverimg) {
+		this.plannerCoverimg = plannerCoverimg;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Planner [plannerId=" + plannerId + ", plannerName=" + plannerName + ", plannerDate=" + plannerDate
+				+ ", plannerWriter=" + plannerWriter + ", plannerTheme=" + plannerTheme + ", plannerLike=" + plannerLike
+				+ ", plannerCount=" + plannerCount + ", plannerPublic=" + plannerPublic + ", plannerWritedate="
+				+ plannerWritedate + ", plannerCoverimg=" + plannerCoverimg + "]";
+	}
 	
-
+	
 }

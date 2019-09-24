@@ -14,6 +14,7 @@ import triptaxi.planner.model.dao.PlannerDao;
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.JsonCityCount;
 import triptaxi.planner.model.vo.Planner;
+import triptaxi.planner.model.vo.PlannerDay;
 
 public class PlannerService {
 	
@@ -22,7 +23,7 @@ public class PlannerService {
 	public Planner selectPlanner(String userId, String plannerId) {
 		Connection conn=getConnection();
 		
-		Planner planner=dao.selectPlanner(conn, userId, plannerId);
+		Planner planner=dao.selectPlanner(conn, plannerId);
 		
 		close(conn);
 		return planner;
@@ -79,6 +80,13 @@ public class PlannerService {
 		close(conn);
 		
 		return result;
+	}
+	
+	public List<PlannerDay> selectPlannerDayList(String plannerId){
+		Connection conn=getConnection();
+		List<PlannerDay> list=dao.selectPlannerDayList(conn, plannerId);
+		close(conn);
+		return list;
 	}
 
 }

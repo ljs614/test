@@ -17,6 +17,7 @@ import com.triptaxi.attraction.model.vo.Attraction;
 
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
+import triptaxi.planner.model.vo.PlannerDay;
 
 public class PlannerDao {
 	
@@ -31,24 +32,27 @@ public class PlannerDao {
 		}
 	}
 	
-	public Planner selectPlanner(Connection conn, String userId, String plannerId) {
+	public Planner selectPlanner(Connection conn, String plannerId) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		Planner p=null;
 		String sql=prop.getProperty("selectPlanner");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, plannerId);
+			pstmt.setString(1, plannerId);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				p=new Planner();
 				p.setPlannerId(rs.getString("planner_id"));
 				p.setPlannerName(rs.getString("planner_name"));
-				p.setPlannerWriter(userId);
 				p.setPlannerDate(rs.getDate("planner_date"));
-				p.setPlannerPlan(rs.getString("planner_plan"));
-				
+				p.setPlannerWriter(rs.getString("planner_writer"));
+				p.setPlannerTheme(rs.getString("planner_theme"));
+				p.setPlannerLike(rs.getInt("planner_like"));
+				p.setPlannerCount(rs.getInt("planner_count"));
+				p.setPlannerPublic(rs.getString("planner_public").charAt(0));
+				p.setPlannerWritedate(rs.getDate("planner_writedate"));
+				p.setPlannerCoverimg(rs.getString("planner_coverimg"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -180,6 +184,33 @@ public class PlannerDao {
 		}
 		
 		return result;
+	}
+	
+	public List<PlannerDay> selectPlannerDayList(Connection conn, String plannerId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<PlannerDay> list=new ArrayList<PlannerDay>();
+		String sql=prop.getProperty("selectPlannerDayList");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,  plannerId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				PlannerDay pd=new PlannerDay();
+				pd.setPlannerDayId(rs.getString("planner_day_id"));
+				pd.setPlannerDayNo(rs.getInt("planner_day_no"));
+				pd.setCityName(rs.getString("city_name"));
+				pd.setTourList(rs.getString("tour_list"));
+				pd.setPlannerId(rs.getString("plannerId"));
+				list.add(pd);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 	
 
