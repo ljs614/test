@@ -118,7 +118,7 @@ public class PlannerDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sql = "select seq_tt_planner.currval from dual";
+		String sql = "select 'PL-'||seq_tt_planner.currval from dual";
 		
 		try {
 			stmt = conn.createStatement();
@@ -172,7 +172,7 @@ public class PlannerDao {
 				pd.setPlannerDayNo(rs.getInt("planner_day_no"));
 				pd.setCityName(rs.getString("city_name"));
 				pd.setTourList(rs.getString("tour_list"));
-				pd.setPlannerId(rs.getString("plannerId"));
+				pd.setPlannerId(rs.getString("planner_id"));
 				list.add(pd);
 			}
 		}catch(SQLException e) {
@@ -214,7 +214,7 @@ public class PlannerDao {
 		return tour;
 	}
 	
-	public List<Tour> selectTourList(Connection conn, String city){
+	public List<Tour> selectTourList(Connection conn, String city, String month){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectTourList");
@@ -222,7 +222,35 @@ public class PlannerDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, city);
+			pstmt.setString(2, city);
+			pstmt.setString(3, city);
+			pstmt.setString(4, month);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Tour t = new Tour();
+				t.setTourId(rs.getString(1));
+				t.setTourName(rs.getString(2));
+				t.setTourEng(rs.getString(3));
+				t.setCity(rs.getString(4));
+				t.setTourLat(rs.getDouble(5));
+				t.setTourLng(rs.getDouble(6));
+				t.setImageUrl(rs.getString(7));
+				t.setClipCount(rs.getInt(9));
+				t.setReviewScore(rs.getInt(10));
+				t.setCategory(rs.getString(11));
+				tourList.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
 		}
+		
+		return tourList;
 	}
 	
 

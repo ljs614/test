@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.JsonCityCount;
 import triptaxi.planner.model.vo.PlannerDay;
+import triptaxi.planner.model.vo.Tour;
 
 /**
  * Servlet implementation class MakePlan1EndServlet
@@ -42,7 +43,8 @@ public class MakePlan1EndServlet extends HttpServlet {
 //		
 		String plannerName = request.getParameter("planTitle");
 		String plannerDate = request.getParameter("startDay");
-		
+		String month = plannerDate.substring(5, 7);
+	
 		PlannerService service = new PlannerService(); 
 		Gson gson = new Gson();
 		List<JsonCityCount> list = gson.fromJson(request.getParameter("jsonData"), 
@@ -58,6 +60,7 @@ public class MakePlan1EndServlet extends HttpServlet {
 		int result = 0;
 		
 		List<PlannerDay> dayList = new ArrayList<PlannerDay>();
+		
 
 		
 		if(plannerId != null) {
@@ -65,15 +68,25 @@ public class MakePlan1EndServlet extends HttpServlet {
 				int count = list.get(i).getCount();
 				for(int j=0;j<count;j++) {
 					PlannerDay pd = new PlannerDay(null, dayNo, list.get(i).getCity(),null,plannerId);
+					dayNo++;
 					dayList.add(pd);
 				}
 			}			
 			result = service.insertPlannerDay(dayList);
 		}
 		
+		List<Tour> tourList = new ArrayList<Tour>();
+		
 		if(result>0) {
 			dayList = service.selectPlannerDayList(plannerId);
-			service.selectTourList(list.get(0).getCity());
+			tourList = service.selectTourList(list.get(0).getCity(), month);
+		}
+		
+		for(PlannerDay p : dayList) {
+			System.out.println(p.getPlannerDayNo());
+		}
+		for(Tour t : tourList) {
+			System.out.println(t.getTourName());
 		}
 		
 		

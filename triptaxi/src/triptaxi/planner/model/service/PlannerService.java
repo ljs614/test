@@ -94,10 +94,13 @@ public class PlannerService {
 	}
 	
 	
-	public List<Tour> selectTourList(String city){
+	public List<Tour> selectTourList(String city, String month){
 		Connection conn = getConnection();
 		
-		List<Tour> tourList = dao.selectTourList(conn, city);
+		List<Tour> tourList = dao.selectTourList(conn, city, month);
+		
+		close(conn);
+		return tourList;
 		
 	}
 
