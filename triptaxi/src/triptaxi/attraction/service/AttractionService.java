@@ -16,12 +16,13 @@ import triptaxi.attraction.dao.AttractionDao;
 public class AttractionService {
 	private AttractionDao dao=new AttractionDao();
 	private String city;
-
+	private String attId;
 	public Attraction selectAttraction(String attId) {
 			Connection conn=getConnection();
 		Attraction a=dao.selectAttraction(conn,attId);
 		close(conn);
 		city=a.getCity();
+		attId=a.getAttractionId();
 		return a;
 		
 	}
@@ -31,6 +32,13 @@ public class AttractionService {
 		List<Attraction> list=dao.recommendAttraction(conn,city,attId);
 		close(conn);
 		return list;
+	}
+	
+	public int clipCount(int clip) {
+		Connection conn=getConnection();
+		int result=dao.clipCount(conn,clip,attId);
+		close(conn);
+		return result;
 	}
 	
 }

@@ -11,7 +11,7 @@ public class Attraction {
 	private String imageUrl;
 	private String attractionComment;
 	private int clipCount;
-	private int reviewScore;
+	private double reviewScore;
 	private String category;
 	
 	public Attraction() {
@@ -20,7 +20,7 @@ public class Attraction {
 
 	public Attraction(String attractionId, String attractionName, String attractionEng, String city,
 			double attractionLat, double attractionLng, String imageUrl, String attractionComment, int clipCount,
-			int reviewScore, String category) {
+			double reviewScore, String category) {
 		super();
 		this.attractionId = attractionId;
 		this.attractionName = attractionName;
@@ -107,11 +107,11 @@ public class Attraction {
 		this.clipCount = clipCount;
 	}
 
-	public int getReviewScore() {
+	public double getReviewScore() {
 		return reviewScore;
 	}
 
-	public void setReviewScore(int reviewScore) {
+	public void setReviewScore(double reviewScore) {
 		this.reviewScore = reviewScore;
 	}
 
@@ -131,5 +131,7 @@ public class Attraction {
 				+ clipCount + ", reviewScore=" + reviewScore + ", category=" + category + "]";
 	}
 
+	
+	
 	
 }

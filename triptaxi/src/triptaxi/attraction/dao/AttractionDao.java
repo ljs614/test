@@ -45,7 +45,7 @@ public class AttractionDao {
 				a.setImageUrl(rs.getString("image_url"));
 				a.setAttractionComment(rs.getString("attraction_comment"));
 				a.setClipCount(rs.getInt("clip_count"));
-				a.setReviewScore(rs.getInt("review_score"));
+				a.setReviewScore(rs.getDouble("review_score"));
 				a.setCategory(rs.getString("category"));
 			}
 		}catch(SQLException e) {
@@ -84,7 +84,7 @@ public class AttractionDao {
 				a.setImageUrl(rs.getString("image_url"));
 				a.setAttractionComment(rs.getString("attraction_comment"));
 				a.setClipCount(rs.getInt("clip_count"));
-				a.setReviewScore(rs.getInt("review_score"));
+				a.setReviewScore(rs.getDouble("review_score"));
 				a.setCategory(rs.getString("category"));
 				list.add(a);
 			}
@@ -96,6 +96,28 @@ public class AttractionDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public int clipCount(Connection conn,int clip,String attId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("clipCount");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			result=pstmt.executeUpdate();
+			
+				
+				
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

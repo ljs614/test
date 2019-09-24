@@ -12,18 +12,20 @@
 	String[] imageUrl=a.getImageUrl().split(",");
 	String attComment=a.getAttractionComment();
 	int clipCount=a.getClipCount();
-	int reviewScore=a.getReviewScore();
+	double reviewScore=a.getReviewScore();
 	String category=a.getCategory();
 	int count=0;
+	int clip=0;
 	List<Attraction> list=(List)request.getAttribute("list");
 	
 %>
 <%@ include file="/views/common/header.jsp" %>
+
 <style>
 
 div{
-    border: 2px solid hotpink;
-  border-radius: 5px;   
+    /* border: 2px solid hotpink;
+  border-radius: 5px;    */
 }
 
 table{
@@ -52,6 +54,29 @@ td{
 		text-align:left;
 		font-family: 'Nanum Gothic', sans-serif;
 	}
+	#clipCount{
+	font-size:20px;
+	margin-left:10px;
+	float:left;
+	color:orange;
+	}
+	
+	#star_grade{
+	font-size:20px;
+	margin-left:10px;
+	float:left;
+    color: gold;
+    }
+    
+    	#reviewScore{
+	font-size:20px;
+	margin-left:10px;
+	float:left;
+    color: gray;
+    }
+
+	
+	
 	.button {
   padding: 15px 25px;
   font-size: 15px;
@@ -88,7 +113,7 @@ td{
 	text-align:center;
 }
 #topButtonAdd{
-	font-size: 50px;
+	font-size: 52px;
 	color: gray;
 	text-align:center;
 }
@@ -96,6 +121,7 @@ td{
 .topButton{
 	width:500px;
 	text-align:right;
+	margin-top:10px;
 }
 #topButtonClip:hover{
 	font-size: 52px;
@@ -338,9 +364,26 @@ text-align: center;
   from {opacity: 0} 
   to {opacity: 1}
 }
-
- 
 </style>
+	<script>
+	var count=0;
+		$("#clipClick").click(function(){
+			count++;
+			console.log(count);
+			if(parseInt(count)%2!=0){
+			$("#topButtonClip").css("color","orange");
+			$("#imageText").html("클립해제");
+        	alert("클립보드에 추가됐습니다.")
+        	<%=clip=1 %>
+			}else{$("#topButtonClip").css("color","gray");
+			<%=clip=-1%>
+			$("#imageText").text("클립보드");
+      		alert("클립보드에서 제거됐습니다.")
+      }
+		});
+	</script>
+ 
+
 	<section id=sectionHead>
 	<br><br>
 	<table>
@@ -356,16 +399,26 @@ text-align: center;
 	<td>
 	<div class=attractionName>
 	<h2><%=attName%> (<%=attEng%>)</h2>
-	<h5><i class="fas fa-map-marker-alt"></i>Trần Phú, 냐짱, Tỉnh Khánh Hòa, 베트남</h5>
-  <h5><i class="fas fa-paperclip"><%=clipCount%></i> | 
-      <i class="fas fa-heart" style="color:hotpink">1</i> | 
-	<a href=""><span id=clipText><i class="fas fa-camera-retro"></i>사진추가</span></a>
-	</h5>
-	</div>
+	</div><br>
+	<div id=clipCount>
+  	<i class="fas fa-paperclip"><%=clipCount%></i> 
+ 	 </div>
+  	<div id="star_grade"></div>
+  	<div id="reviewScore">평점<%=reviewScore%></div>
+  	
+  	<script>
+  	switch(Math.abs(<%=(int)reviewScore/2%>)){
+  	case 1: $("#star_grade").html("<i class='fas fa-star'></i>"); break;
+  	case 2: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  	case 3: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  	case 4: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  	case 5: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  	}
+	</script>
 	</td>
 	<td class=topButton>
 	<div class=topButton>
-	<a id="clipClick"><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
+	<a id="clipClick" href="<%=request.getContextPath()%>/attraction/clipCount?score=<%=clip%>"><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
 	<a href=""><i class="fas fa-map-marked-alt" id="topButtonMap"><h4 id="imageText">지도보기</h4></i></a>&nbsp
 	<a href=""><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰작성</h4></i></a>&nbsp
 	<a href=""><i class="far fa-calendar-plus" id="topButtonAdd"><h4 id="imageText">일정추가</h4></i></a>
@@ -374,23 +427,8 @@ text-align: center;
 	
 	</tr>
 	</table>
-	<script>
-	var count=0;
-		$("#clipClick").click(function(){
-			count++;
-			console.log(count);
-			if(parseInt(count)%2!=0){
-			$("#topButtonClip").css("color","orange");
-			$("#imageText").html("클립해제");
-        	alert("클립보드에 추가됐습니다.")
-			}else{$("#topButtonClip").css("color","gray");
-			$("#imageText").text("클립보드");
-      		alert("클립보드에서 제거됐습니다.")
-      }
-		});
-	</script>
+
 	</section>
-	
 	<section id=sectionBody>
 	<br>
 	<table>
