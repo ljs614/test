@@ -14,6 +14,7 @@
 	int clipCount=a.getClipCount();
 	int reviewScore=a.getReviewScore();
 	String category=a.getCategory();
+	int count=0;
 	List<Attraction> list=(List)request.getAttribute("list");
 	
 %>
@@ -21,22 +22,22 @@
 <style>
 
 div{
- /*   border: 2px solid hotpink;
-  border-radius: 5px;   */
+    border: 2px solid hotpink;
+  border-radius: 5px;   
 }
 
 table{
 margin:0 auto;
 width:1024px;
-
+border: 1px solid #444444;
 }
 
 tr{
-
+border: 1px solid #444444;
 }
 
 td{
-  /* border: 1px solid #444444; */
+   border: 1px solid #444444; 
 }
 
 	#root{
@@ -294,13 +295,6 @@ img {
   -webkit-animation-duration: 1.5s;
 }
 
-#howlong {
-  position: absolute;
-  top: 80%;
-  left: 5%;
-  color:white;
-  font-family: Arial;
-}
 
  #reviewTitle{
  	text-align: center;
@@ -353,7 +347,7 @@ text-align: center;
 	<tr>
 	<td>
 	<div id=root>
-		<h5><a href="" id="root1">여행지</a> > <a href="" id="root1">베트남</a> > <a href="" id="root1">나트랑</a> > <a href="" id="root1">관광명소</a> > <a href="" id="root1"><%=attName%></a></h5>
+		<h5><a href="" id="root1">여행지</a> > <a href="" id="root1">나라</a> > <a href="" id="root1"><%=city%></a> > <a href="" id="root1">관광명소</a> > <a href="" id="root1"><%=attName%></a></h5>
 	</div>
 	</td>
 	</tr>
@@ -474,38 +468,20 @@ text-align: center;
 	</div>
 	</td>
   </tr>
-  	
-  
-  <tr>
-   <td id="recommendTD">
-   <div id="recommendDiv">
-   <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/나트랑센터/나트랑센터1.jpg"><div id="howlong"><h6>→ 0.75km</h6></div> </a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">52</i>
-   &nbsp<i class="fas fa-heart" style="color:hotpink">56</i>&nbsp 나트랑센터 </h4>
+  	<tr>
+  <% for(Attraction arr : list){ count++; String[] recommendImageUrl=arr.getImageUrl().split(",");%>
+  <td id="recommendTD">
+  <div id="recommendDiv">
+  <a href="<%=request.getContextPath()%>/attraction/select?attId=<%=arr.getAttractionId()%>" name="attId"><img id="recommendPic1" src="<%=request.getContextPath() %>/images/<%=arr.getCity()%>/<%=arr.getAttractionName()%>/<%=recommendImageUrl[0]%>"></a></div>
+   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip"><%=arr.getClipCount() %></i>
+   &nbsp <%=arr.getAttractionName()%> </h4>
+ </td>
+  <%if(count==4){%>
+    </tr>
+    <tr>
+ <%count=0;}} %>
    
-   </td>
-   <td>
-   <div id="recommendDiv">
-   <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/빈펄랜드/빈펄랜드1.jpg"><div id="howlong"><h6>→ 0.85km</h6></div></a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">75</i>
-   &nbsp<i class="fas fa-heart" style="color:hotpink">74</i> &nbsp 빈펄랜드 </h4>
-   
-   </td>
-   <td>
-   <div id="recommendDiv">
-   <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/빈펄케이블카/빈펄케이블카1.jpg"><div id="howlong"><h6>→ 0.9km</h6></div></a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">25</i>
-   &nbsp<i class="fas fa-heart" style="color:hotpink">56</i> &nbsp 빈펄케이블카 </h4>
-   
-   </td>
-   <td>
-   <div id="recommendDiv">
-   <a href=""><img id="recommendPic1" src="<%=request.getContextPath() %>/views/attraction/images/에그머드배쓰/에그머드배쓰1.jpg"><div id="howlong"><h6>→ 2.3km</h6></div></a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip">120</i>
-   &nbsp<i class="fas fa-heart" style="color:hotpink">75</i> &nbsp 에그머드배쓰 </h4>
-   
-   </td>
-  </tr>
+ </tr>
  </table>
  <br><br>
  <table>
