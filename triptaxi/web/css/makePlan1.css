@@ -1,0 +1,458 @@
+@charset "UTF-8";
+
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    header {
+      z-index: 999;
+      height: 60px;
+      font-family: 'Nanum Gothic', sans-serif;
+      border-bottom:1px solid rgba(180, 177, 177, 0.664);
+    }
+
+    header>div {
+      width: 500px;
+      display: inline-block;
+    }
+
+    header>div>img {
+      display: inline-block;
+    }
+
+    header>div>h3 {
+      position: absolute;
+      top: 0px;
+      margin-left: 10px;
+      width: 300px;
+      display: inline-block;
+    }
+
+    header button#close {
+      position: absolute;
+      display: inline-block;
+      top: 12px;
+      right: 30px;
+      width: 80px;
+      height: 35px;
+    }
+
+    div#map {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      left: 205px;
+      padding: 0;
+      top: 0px;
+      z-index: 1;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+
+    nav {
+      background-color: white;
+      /* border:1px solid red; */
+      width: 55px;
+      height: 100%;
+      left: 0;
+      margin: 0;
+      position: fixed;
+      display: inline-block;
+      font-family: 'Nanum Gothic', sans-serif;
+      border-right:1px solid rgba(180, 177, 177, 0.664);;
+    }
+
+    nav ul#mainMenu {
+      margin: 0;
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul#mainMenu>li {
+
+      border-bottom: 1px solid rgba(180, 177, 177, 0.664);;
+      text-align: center;
+      vertical-align: middle;
+      height: 55px;
+      font-size: 13px;
+
+    }
+
+    nav ul#mainMenu>li>a {
+      text-decoration: none;
+      color: black;
+      font-weight: bolder;
+      position: relative;
+      display: inline-block;
+      padding-top: 20px;
+      width: 55px;
+      height: 35px;
+
+    }
+
+    .clickColor{
+      background-color:#fde396;
+    }
+
+    nav ul#mainMenu>li:nth-of-type(2)>a {
+      padding-top: 12px;
+      height: 43px;
+    }
+
+    nav ul#mainMenu>li:nth-of-type(5)>a {
+      padding-top: 12px;
+      height: 43px;
+    }
+
+    ul#mainMenu>li:hover {
+      background-color: #fde396;
+    }
+
+    div#subMenu {
+      position: fixed;
+      margin: 0;
+      width: 148px;
+      height: 100%;
+      left: 56px;
+      background-color: white;
+      border-right:1px solid rgba(180, 177, 177, 0.664);
+    }
+
+    div#subMenu>ul {
+      margin-top: 0;
+      list-style: none;
+      padding: 0;      
+    }
+
+    div#subMenu>ul>li{
+      text-align:center;
+      border-bottom:1px solid rgba(180, 177, 177, 0.664);
+    }
+
+ 
+
+    div#subMenu>ul>li:first-child {
+      height: 38px;
+      background-color: #fde396;
+      font-weight: 900;
+      padding-top: 17px;
+      padding-bottom: 0px;
+      text-align:center;
+      /* border:solid 1px red; */
+    }
+
+    .country {
+      background-color: rgb(233, 232, 232);
+    }
+
+    .country, .city{
+      /* border-bottom: 1px solid rgb(180, 177, 177); */
+      padding-top:6px;
+      height:30px;
+      text-align:center;
+    }
+
+    div#selectPopup {
+      background-color: white;
+      width: 300px;
+      height: 190px;
+      z-index: 9;
+      position: absolute;
+      display: inline-block;
+      top: 65px;
+      left: 210px;
+      border-radius: 10px;
+      max-height: 516px;
+      min-height:190px;
+      display:none;
+    }
+
+    div#selectPopup>#selTitle {
+      background-color: rgb(253, 214, 94);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      height: 55px;
+    }
+
+    div#selTitle>#titleName {
+      display: inline-block;
+      margin-top: 17px;
+      margin-left: 15px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    div#selTitle>#selDate {
+      display: inline-block;
+      position: absolute;
+      font-size: 14px;
+      top: 19px;
+      right: 15px;
+      font-weight:500;
+    }
+    div#selTitle>#selDate:hover{
+      border-bottom:1px solid black;
+      cursor:pointer;
+    }
+
+    div#selectPopup>#selectCity {
+      width: 300px;
+      /* height:45px; */
+      border-bottom: 1px solid rgb(194, 192, 192);
+      max-height: 408px;
+      position:absolute;
+      top:55px;
+      /* min-height:65px; */
+    }
+
+    div#selectCity>.selCity {
+      background-color: rgb(233, 232, 232);
+      width: 256px;
+      height: 45px;
+      position: relative;
+      top: 18px;
+      left: 22px;
+      border-radius: 5px;
+    }
+
+    div.selCity>.cityCloseBt {
+      position: absolute;
+      top: 15px;
+      left: 6px;
+
+    }
+    div.selCity>.cityCloseBt:hover{
+      opacity: 0.5;
+    }
+    div.selCity>.mButton{
+      position:absolute;
+      top:15px;
+      left:175px;
+    }
+    div.selCity>.mButton:hover{
+      opacity: 0.5;
+    }
+    div.selCity>.pButton{
+      position:absolute;
+      top:15px;
+      left:230px;
+    }
+    div.selCity>.pButton:hover{
+      opacity: 0.5;
+    }
+    div.selCity>.roadImg{
+      position:absolute;
+      top:-18px;
+      left:15px;
+
+    }
+    div.selCity>.selCityName{
+      /* border:1px solid red; */
+      display:inline-block;
+      width:100px;
+      position:absolute;
+      top:13px;
+      left:25px;
+    }
+    
+    div.selCity>.setDay{
+      /* border:1px solid red; */
+      display:inline-block;
+      position:absolute;
+      width:33px;
+      top:14px;
+      left:192px;
+      font-size:14px;
+      text-align: center;
+    }
+
+
+    div#selectPopup>.selButton {
+      width: 300px;
+      height: 51px;
+      position:relative;
+      /* top:83px; */
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius:10px;
+      
+    }
+    
+    div.selButton>.makePlanBt{
+      width: 256px;
+      height:27px;
+      position:absolute;
+      top:9px;
+      left: 22px;
+      background-color: #fde396;
+      text-align:center;
+      padding-top:8px;
+      font-weight:500;
+      /* font-weight:bolder; */
+    }
+    div.selButton>.makePlanBt:hover{
+      background-color: #fde396a2;
+    }
+
+
+    div#datepicker {
+      position: absolute;
+      top: 15px;
+      left: 300px;
+      display: none;
+    }
+
+    .ui-datepicker {
+      width: 310px;
+      font-family: 'Nanum Gothic', sans-serif; 
+    }
+
+    .ui-datepicker-header {
+      text-align: center;
+      background: white;
+      padding-bottom: 15px;
+      font-weight: 300;
+      border: none;
+    }
+
+    .ui-datepicker-calendar thead {
+      text-align: center;
+      background: white;
+      padding-bottom: 15px;
+      font-size: 14px;
+      font-weight: 100;
+      border: none;
+      color: darkgray;
+    }
+
+    .ui-datepicker-calendar .ui-state-default {
+      background: none;
+      border: none;
+      text-align: center;
+      height: 30px;
+      width: 32px;
+      line-height: 36px;
+      margin-top: 3px;
+      padding-top: 2px;
+      padding-bottom: 5px;
+    }
+
+    .ui-datepicker-calendar .ui-state-active {
+      border-radius: 50%;
+      background-color: rgb(253, 214, 94);
+      color: white;
+      height: 30px;
+      width: 32px;
+    }
+
+    .ui-datepicker-calendar .ui-state-hover {
+      border-radius: 50%;
+      background-color: rgb(255, 233, 168);
+      color: white;
+      height: 30px;
+      width: 32px;
+    }
+
+    #selectCity::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+  } 
+  #selectCity::-webkit-scrollbar-thumb {
+    background-color: rgb(189, 189, 189);
+  }
+
+  #plan1Modal{
+    background-color: rgba(0,0,0,0.4);
+    width:100%;
+    height:100%;
+    z-index:999;
+    display:none;
+    position:absolute;
+    top:0;
+    vertical-align: middle;
+  }
+  #plan1Modal>#plan1Modal-content{
+    background-color:white;
+    width:400px;
+    height:250px;
+    margin:0 auto;
+    margin-top:18%;
+  }
+  #plan1Modal-content>#MoTitle{
+    height:44px;
+    border-bottom:1px solid rgb(194, 192, 192);
+    font-size:20px;
+    padding-top:17px;
+    padding-left:15px;
+    font-weight:bolder;
+  }
+  #MoTitle>img{
+    position:relative;
+    left:235px;
+  }
+  #MoTitle>img:hover{
+    opacity:0.5;
+  }
+  #plan1Modal-content form input{font-family: 'Nanum Gothic', sans-serif;}
+  #MoContent{
+    height:130px;
+    border-bottom:1px solid rgb(194, 192, 192);
+  }
+  #MoContent>table{
+    position:relative;
+    top:15px;
+    left:25px;
+    /* border:1px solid black; */
+    border-collapse: collapse;
+  }
+  #MoContent>table tr{height:50px;}
+  #MoContent>table th{padding-right:20px;}
+  #MoContent>table input{height:20px;}
+  #MoContent>table #planTitle{width:250px; }
+  #MoContent>table #startDay{width:150px; }
+
+  input[type="button"]{
+    position:relative;
+    width:100px;
+    height:35px;
+    top:43px;
+    left:280px;
+    background-color:rgb(253, 214, 94);
+    border:none;
+    font-weight:900;
+    font-size:15px;
+    color:rgb(0, 0, 0);
+  }
+  input[type="button"]:hover{
+    background-color:#fde396;
+  }
+  input[type="button"]:active{
+    background-color:rgb(253, 214, 94);
+  }
+  input[type="button"]:focus{
+  	outline:none;
+  }
+  
+  #MoContent span{
+    color:gray;
+    position:relative;
+    left:-25px;
+    top:1px;
+  }
+
+  #MoContent #titleCnt{
+    display:inline-block;
+    position:relative;
+    width:45px;
+    text-align:right;
+    left:-55px;
+    color:gray;
+    font-size:13px;
+  }
+

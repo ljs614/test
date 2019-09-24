@@ -1,0 +1,278 @@
+@charset "UTF-8";
+
+html, body {
+	overflow-x: hidden;
+}
+
+section {
+	height: 1602px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+div#planMainHeader, div#planMainHeaderColor {
+	width: 100%;
+	height: 400px;
+	position: absolute;
+	top: 53px;
+}
+
+div#planMainHeader {
+	background:
+		url('https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80');
+	background-size: 100% 450px;
+}
+
+div#planMainHeaderColor {
+	background-color: rgb(58, 55, 10);
+	opacity: 0.2;
+	z-index: 1;
+}
+
+div#planMainHeader div#innerHeader {
+	width: 1024px;
+	height: 400px;
+	margin: 0 auto;
+}
+
+div#innerHeader div#pmh_title {
+	border-bottom: 2px solid white;
+	font-weight: bolder;
+	font-size: 30px;
+	width: 550px;
+	height: 50px;
+	color: white;
+	text-align: center;
+	letter-spacing: 1px;
+	margin: 0 auto;
+	position: relative;
+	top: 70px;
+	z-index: 50;
+}
+
+div#makePlanBT, div#planViewBT {
+	display: inline-block;
+	border: 2px solid rgba(255, 255, 255, 0.884);
+	color: white;
+	font-weight: bolder;
+	font-size: 18px;
+	text-align: center;
+	margin-left: 20px;
+	width: 170px;
+	height: 20px;
+	position: relative;
+	top: 200px;
+	left: 260px;
+	padding: 20px;
+	z-index: 50;
+}
+
+#makePlanBT:hover, #planViewBT:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.274);
+}
+
+div#planMainContent {
+	width: 100%;
+	height: 1100px;
+	position: absolute;
+	top: 452px;
+}
+
+div#planMainContent div#innerContent {
+	/* border: 1px solid black; */
+	width: 1024px;
+	height: 1150px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+div#innerContent div#pmc_title {
+	font-size: 22px;
+	font-weight: bold;
+	position: relative;
+	top: 30px;
+}
+
+div#innerContent>table#planContentFilter {
+	position: relative;
+	top: 60px;
+	left: 80px;
+	border: 1px solid rgb(180, 177, 177);
+	border-collapse: collapse;
+	text-align: center;
+}
+
+table#planContentFilter th {
+	width: 120px;
+	height: 35px;
+	border: 1px solid rgb(180, 177, 177);
+}
+
+table#planContentFilter td {
+	width: 120px;
+	height: 35px;
+	border: 1px solid rgb(180, 177, 177);
+}
+
+.tbl_Continent {
+	cursor: pointer;
+}
+
+div#sac_title {
+	/* border:1px solid red; */
+	color: rgb(124, 122, 122);
+	font-weight: bolder;
+	text-align: left;
+	padding-left: 50px;
+	padding-top: 10px;
+}
+
+div#sac_content ul {
+	margin-left: 60px;
+	padding-bottom: 20px;
+}
+
+div#sac_content ul>li {
+	border: 2px solid white;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+div#sac_content ul>li:hover {
+	border: 2px solid rgb(180, 177, 177);
+	border-radius: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+div#innerContent div#planViewWrap {
+	width: 862px;
+	height: 929px;
+	position: relative;
+	top: 80px;
+	left: 80px;
+}
+
+div#innerContent div#planViewState {
+	position: relative;
+}
+
+div#planViewState>#planSort {
+	display: inline-block;
+	width: 100px;
+	position: relative;
+	left: -300px;
+	color: gray;
+	margin: 0;
+}
+
+div#planViewState>#planSort>div {
+	display: inline-block;
+	color: black;
+	cursor: pointer;
+}
+
+div#planViewState>#planTotalCount {
+	width: 120px;
+	display: inline-block;
+	position: relative;
+	left: 280px;
+	text-align: right;
+}
+
+div#planTotalCount>span#totalCnt {
+	color: #66a1f4;
+	font-weight: bolder;
+}
+
+div.clickColor {
+	color: #66a1f4 !important;
+	font-weight: bolder;
+}
+
+div#planViewWrap div.planView_Div {
+	border: 1px solid rgb(180, 177, 177);
+	display: inline-block;
+	width: 268px;
+	height: 250px;
+	margin: 20px 5px 0px 5px;
+	margin-top: 20px;
+	margin-right: 5px;
+	overflow: hidden;
+}
+
+div.planView_Div .planView_Thumbnail {
+	height: 180px;
+}
+
+div.planView_Div:hover .planView_Thumbnail {
+	transform: translateY(-50%);
+	transition: 0.5s;
+}
+
+div.planView_Div .planView_Content {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 148px;
+}
+
+div.planView_Content>div.pvc_title {
+	padding-left: 30px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+div.planView_Content>div.pvc_date, div.pvc_totalDay {
+	font-weight: 900;
+	display: inline-block;
+	padding-top: 10px;
+	color: #66a1f4;
+}
+
+div.planView_Content>div.pvc_totalDay {
+	color: gray;
+}
+
+div.planView_Div:hover .planView_Content {
+	transform: translateY(-56%);
+	transition: 0.6s;
+	transition-delay: 0.05s;
+}
+
+div.pvc_city {
+	padding-top: 13px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+div.pvc_theme {
+	padding-top: 10px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+div.pvc_users {
+	display: inline-block;
+	padding-top: 10px;
+	text-align: left;
+	position: relative;
+	left: -15px;
+}
+
+div.pvc_Popularity {
+	/* border:1px solid #66a1f4bd; */
+	background-color: #66a1f41a;
+	border-radius: 5px;
+	display: inline-block;
+	position: relative;
+	padding: 2px;
+	left: 40px;
+}
+
+div.planView_Div:hover .pvc_Popularity {
+	transform: translateX(-25%);
+	transition: 1.8s;
+}

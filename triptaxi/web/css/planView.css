@@ -1,0 +1,323 @@
+@charset "UTF-8";
+
+
+html, body{
+    overflow-x: hidden;
+}
+section#header-container{
+    overflow: hidden;
+    
+}
+div#cover-container{
+    margin-top:50px;
+    width:100%; 
+    background-image:url("https://content.skyscnr.com/2816df3a348f8ca308b79749a31c232e/las-vegas-hero.jpg?resize=2400px:800px&quality=100");
+    background-size: 100% 400px;
+    height:400px;
+}
+div#cover-content{
+    position: relative;
+    width:960px;
+    height:390px;
+    border:1px solid black;
+    z-index:990;
+    margin:0 auto;
+    top:5px;
+    
+}
+button#like_Btn{
+    width:40px;
+    height:40px;
+    position: relative;
+    float:right;
+    border:none;
+    background-image: url("<%=request.getContextPath()%>/views/planner/img/heart_off.png");
+    background-size: 40px 40px;
+}
+div#planView-nav{
+    width:100%;
+}
+div#navBar{
+    width:960px;
+    margin:0 auto;
+}
+div#planView-nav{
+    border-bottom: 1px solid silver;
+    height:40px;
+    margin-top:-10px;
+}
+div#planView-nav li{
+    float: left;
+    font-size: 25px;
+    font-weight: 100;
+    width:100px;
+    height: 40px;
+    text-align: center;
+}
+div#planView-nav a:hover{
+    cursor: pointer;
+}
+div#planView-nav ul{
+    margin-left:-40px;
+}
+div#planView-nav input[type=button]{
+    float:right;
+    width:150px;
+    height:40px;
+    margin-left:20px;
+    margin-top:-5px;
+}
+div#planView-nav input[type=button]:focus{
+    outline: none;
+}
+div#planView-nav input[type=button]:hover{
+    cursor: pointer;
+}
+div#planView-nav input[type=button]:active{
+    cursor: pointer;
+    
+}
+input#copy_btn{
+    background-color: rgb(255, 123, 0);
+    border: none;
+    color:white;
+    font-weight: 400;
+    font-size: 20px;
+}
+input#modify_btn{
+    background-color: rgb(255, 217, 0);
+    border: none;
+    color:white;
+    font-weight: 400;
+    font-size: 20px;
+}
+section#planView-main{
+    width:100%;
+    height:200px;
+}
+div.planView-main-container{
+    width:960px;
+    margin: 0 auto;
+    margin-top:20px;
+    /* border:1px solid red; */
+}
+div#planner-containerNmap{
+    position: absolute;
+    width:800px;
+    /* border:1px solid black; */
+    margin:0 auto;
+    margin-left:102px;
+    display:inline-block;
+    /* margin-right:0px; */
+}
+div#planner-container{
+    width:500px;
+    /* border:1px solid lavender; */
+    margin:0 auto;
+}
+div#right-side{
+    width: 350px;
+    height:500px;
+    margin:0 auto;
+    position: absolute;
+    margin-left: 12px;
+    border:1px solid red;
+
+}
+div#side-map{
+    width: 350px;
+    height:350px;
+}
+div#planner-container, #right-side, #side-navi{
+    display: inline-block;	
+}
+div#side-navi{
+    position: fixed;
+    width:90px;
+    border:1px dotted red;
+    text-align: center;
+}
+.side-navi-btn{
+    font-size: 15px;
+    border:none;
+    background-color: white;
+    display:block;
+    margin:0 auto;
+
+}
+
+div#side-navi:hover{
+    cursor: pointer;
+}
+div#side-navi input[type=button]:focus{
+    outline:none;
+}
+div#side-navi input[type=button]:hover{
+    cursor: pointer;
+}
+div.day-planner{
+    margin-bottom: 15px;
+}
+td.day-day{
+    font-size: 30px;
+    width: 50px;
+    height:60px;
+    text-align: center;
+    color:white;
+    font-weight: 900;
+    background-color: rgb(247, 217, 49);
+}
+td.day-date{
+    width:400px;
+    height:20px;
+    font-size: 12px;
+    font-weight: 900;
+    color:black;
+}
+td.day-city{
+    font-size: 25px;
+    font-weight: 900;
+    width:400px;
+    color:black;
+    border-bottom: 1px solid lavender;
+}
+td.day-num{
+    text-align: center;
+    width: 50px;
+    font-size: 30px;
+    font-weight: 900;
+    color:olive;
+}
+td.day-tourImg{
+    width:100px;
+}
+td.day-tourDistance1{
+    width:50px;
+    height:15px;
+    border-right: 2px dotted black;
+}
+td.day-tourDistance2{
+    width:50px;
+    height:15px;
+    font-size: 12px;
+}
+td.day-tourName{
+    width:300px;
+    height: 50px;
+    font-size: 20px;
+}
+td.day-tourType{
+    width:100px;
+    text-align: center;
+}
+td.day-good{
+    width:287px;
+}
+table.day-table{
+    border-spacing: 0;
+    width:500px;
+    border:1px solid lavender;
+}
+#planner-schedule{
+    display:none;
+}
+
+table#planner-schedule-tbl{
+    width:80%;
+    border:2px solid brown;
+    border-collapse: collapse;
+    margin:0 auto;
+    
+}
+table#planner-schedule-tbl td, th{
+    border:1px solid chocolate;
+}
+table#planner-schedule-tbl th{
+    height:30px;
+    background-color: brown;
+    color:aliceblue;
+    font-weight: bold;
+    font-size: 20px;
+    
+}
+td.schedule-day>p{
+    font-size: 25px;
+    margin:0;
+    font-weight: 900;	
+}
+td.schedule-day{
+    text-align: center;
+    width:180px;	
+}
+td.schedule-city{
+    font-size: 20px;
+}
+td.schedule-att>p{
+    margin:2px;
+}
+
+div#main-map{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    z-index: 990;
+}
+div#main-map-map{
+    display: inline-block;
+    position: absolute;
+    height:100%;
+    top:0;
+    z-index: 990;
+}
+
+div#main-map-navi{
+    display: inline-block;
+    position: absolute;
+    width:170px;
+    height:100%;
+    top:0;
+    right:0;
+    z-index: 999;
+    background-color: navy;
+}
+
+div#exit-main{
+    text-align: right;
+    
+}
+div.mmn-div{
+    position: relative;
+    color:white;
+    margin:5px;
+    margin-top:10px;
+}
+table.mmn-tbl{
+    border-top:2px solid lavender;
+    border-bottom:2px solid lavender;
+    border-collapse: none;
+    width:160px;
+    padding-top: 5px;
+    padding-bottom:5px;
+}
+table.mmn-tbl:hover{
+    cursor: pointer;
+}
+div#main-map-navi{
+    overflow:auto;
+}
+td.mmn-day{
+    font-weight: 600;
+    font-size: 20px;
+}
+td.mmn-date{
+    text-align: center;
+}
+td.mmn-date>p{
+    border:0;
+    margin:0;
+}
+p.mmn-date-city{
+    font-size: 10px;
+}
+
