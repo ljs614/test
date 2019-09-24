@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@ include file="/views/common/header.jsp"%>
 
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
-<link href="<%=request.getContextPath() %>/css/planMain.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/planMain.css" rel="stylesheet">
 
 <section>
 	<div id='planMainHeaderColor'></div>
@@ -13,10 +13,10 @@
 	<div id="planMainHeader">
 		<div id="innerHeader">
 			<div id="pmh_title">누구나 쉽게 일정을 계획할 수 있습니다.</div>
-			<div id='makePlanBT' onclick="location.href=''">
+			<div id='makePlanBT' onclick="location.href='<%=request.getContextPath()%>/makePlan1';">
 				<i class="far fa-calendar-plus"></i> 새 일정 만들기
 			</div>
-			<div id='planViewBT' onclick="location.href=''">
+			<div id='planViewBT' onclick="location.href''">
 				<i class="far fa-eye"></i> 나의 일정보기
 			</div>
 		</div>
@@ -35,6 +35,62 @@
 					<td class="tbl_Continent">오스트레일리아</td>
 					<td class="tbl_Continent">남아메리카</td>
 					<td class="tbl_Continent">아프리카</td>
+				</tr>
+				<tr class='showCityList' id='showCityList_Asia' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>아시아</div>
+						<div id='sac_content'>
+							<ul>
+								<li>도시</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr class='showCityList' id='showCityList_Europe' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>유럽</div>
+						<div id='sac_content'>
+							<ul>
+								<li>도시</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr  class='showCityList' id='showCityList_NorthAmerica' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>북아메리카</div>
+						<div id='sac_content'>
+							<ul>
+								<li>도시</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr class='showCityList' id='showCityList_Austrailia' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>오스트레일리아</div>
+						<div id='sac_content'>
+							<ul>
+								<li>도시</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr class='showCityList' id='showCityList_SouthAmerica' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>남아메리카</div>
+						<div id='sac_content'>
+							준비중
+						</div>
+					</td>
+				</tr>
+				<tr class='showCityList' id='showCityList_Africa' style="display:none">
+					<td colspan='7'>
+						<div id='sac_title'>아프리카</div>
+						<div id='sac_content'>
+							준비중
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<th>여행일</th>
@@ -69,8 +125,7 @@
 
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -90,8 +145,7 @@
 				</div>
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -111,8 +165,7 @@
 				</div>
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -156,28 +209,49 @@
 </section>
 
 <script>
-        $('.tbl_Continent').click(function () {
+	var aa;
+	var selectId;
+	var flag=true;
+	$('.tbl_Continent').click(function () {
+		if(!flag){
+			$('#innerContent').css("height",$('#innerContent').height()-$(selectId).height());
+            $('section').css('height',$('section').height()-$(selectId).height());
+		}
 
-            if ($(this).text() != $('#showAllCity').children().text() || $('#showAllCity').length == 0) {
-                $('#showAllCity').remove();
-                var tr = $("<tr id='showAllCity'>");
-                var html = "<td colspan='7'><div id='sac_title'>" + $(this).text() + "</div>";
-                html += "<div id='sac_content'><ul><li>도시</li></ul></div></td>";
-                tr.html(html);
-                console.log($(this).parent());
-                tr.insertAfter($(this).parent());
-                console.log($('section').height());
-                $('#innerContent').css("height",$('#innerContent').height()+$('#showAllCity').height());
-                $('section').css('height',$('section').height()+$('#showAllCity').height());
+		switch($(this).text()){
+			case '아시아': selectId='#showCityList_Asia'; break;
+			case '유럽': selectId='#showCityList_Europe'; break;
+			case '북아메리카': selectId='#showCityList_NorthAmerica'; break;
+			case '오스트레일리아': selectId='#showCityList_Austrailia'; break;
+			case '남아메리카': selectId='#showCityList_SouthAmerica'; break;
+			case '아프리카': selectId='#showCityList_Africa'; break;
+		}
 
-            }
-        });
+		$('.showCityList').hide();
 
-        $('#planSort>div').click(function () {
-            $('#planSort>div').removeClass('clickColor');
-            $(this).addClass('clickColor');
-        })
-    </script>
+		if(selectId == aa){
+			$(selectId).slideUp();
+			aa='';
+			flag=true;
+		}else{
+			$(selectId).slideDown();
+			aa = selectId;
+		
+			$('#innerContent').css("height",$('#innerContent').height()+$(selectId).height());
+            $('section').css('height',$('section').height()+$(selectId).height());
+			flag=false;
+			
+		}
+		
+	});
+
+	$('#planSort>div').click(function () {
+		$('#planSort>div').removeClass('clickColor');
+		$(this).addClass('clickColor');
+	})
+	
+
+</script>
 
 
 <%@ include file="/views/common/footer.jsp"%>

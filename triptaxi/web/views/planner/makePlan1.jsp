@@ -83,7 +83,8 @@
 					src="<%=request.getContextPath()%>/views/planner/img/closeModal.png"
 					alt="" width="20px" height="20px">
 			</div>
-			<form>
+			<form name="plan1Frm" method="post" >
+				<input type="hidden" id="jsonData" name="jsonData" >
 				<div id="MoContent">
 					<table>
 						<tr>
@@ -95,16 +96,17 @@
 						</tr>
 						<tr>
 							<th>출발일</th>
-							<td><input type="text" id="startDay" name="startDay">
+							<td><input type="text" id="startDay" name="startDay" readonly>
 								<span> <i class="fas fa-calendar-alt"></i>
 							</span></td>
 						</tr>
 					</table>
-					<input type="button" value="완료">
+				</div>
 			</form>
+			<input type="button" onclick="fn_makePlan();"value="완료">
 		</div>
 	</div>
-</div>
+
 	<div id="closeBTModal">
     <div id="closeBTModal-content">
         <div id="cbm-Title">
@@ -131,6 +133,10 @@
 	const nations = new Set([]);
 	var iconBase = 'http://maps.google.com/mapfiles/kml/paddle/';
 	makeCityList(${asiaList});
+
+	
+	/* selectPopup 도시 저장용 */
+	var choiceCity = [];
 	
 	
 	console.log(${asiaList});
@@ -209,12 +215,9 @@
     	var beforeIndex;
     	var bounds = new google.maps.LatLngBounds();
     	
-    	
-    	
-    		
     	for(var i=0;i<lats.length;i++){
     		var loc = new google.maps.LatLng(lats[i], lngs[i]);
-    		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+"red-circle.png" });
+    		var marker = new google.maps.Marker({position:loc, map:map , icon:"https://img.icons8.com/office/40/000000/marker.png" });
     			bounds.extend(loc);
     			markers.push(marker);
     	}
@@ -232,13 +235,13 @@
     				var longitude = item['longitude'];
     				
     				beforeIndex = index;
-    				markers[beforeIndex].setIcon(iconBase+"red-stars.png");
+    				markers[beforeIndex].setIcon("https://img.icons8.com/office/80/000000/marker.png");
     			}   			
     		});
     		
     	});
     	$(document).on("mouseout", '.city', function(){
-    		markers[beforeIndex].setIcon(iconBase+"red-circle.png");
+    		markers[beforeIndex].setIcon("https://img.icons8.com/office/40/000000/marker.png");
     	})
     	
     }
@@ -336,75 +339,83 @@
 
     var totalDay=0;
 
-    function removeCity(event) {
-      if ($('div.selCity').length == 1) {
-        $('div#selectPopup').css("display", "none");
-        $('div#selectCity').remove();
-        $('div.selButton').remove();
-      } else {
-        $(event.target).parent().remove();
-      if ($('div.selCity').length< 6) {
-        $('div#selectPopup').css("height", $('div#selectPopup').height() - 65 + "px");
-        $('div#selectCity').css("height", $('div#selectCity').height() - 65 + "px");
-        $('div#selectCity').css("overflow-y", "visible");
-      }
-      }
-      $('div.selButton').css("top",$('div#selectCity').height()+ "px");
-      totalDay = totalDay - $(event.target).siblings().children().text();
-      $('#selectCity').attr("totalDay",totalDay);
-      
-    };
-
-
-
-    function addCity(event) {
-        var cityName = $(event.target).text();
-        console.log($(event.target).text());
-        if ($('div#selectPopup').css("display")=="none") {
-          $('div#selectPopup').css("display", "block");
-          var addDiv = "<div id='selectCity'>";
-          addDiv += "<div class='selCity' style=' margin-bottom:18px;'>";
-          addDiv += "<img class='cityCloseBt' src='<%=request.getContextPath()%>/views/planner/img/cityCloseBt.png' width='15px' height='15px' onclick='removeCity(event);'>";
-          addDiv += "<div class='selCityName'>"
-          addDiv += cityName;
-          addDiv += "</div>";
-          addDiv += "<img class='mButton' onclick='fn_mDayCnt(event)'src='<%=request.getContextPath()%>/views/planner/img/mButton.png' width='15px' height='15px'>";
-          addDiv += "<div class='setDay'><span class='setDayCount'>2</span>일</div>"
-          addDiv += "<img class='pButton' onclick='fn_pDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/pButton.png' width='16px' height='15px'>";
-          addDiv += "<div class='tDay'>";
-          addDiv += "</div></div></div>";
-          addDiv += "<div class='selButton'><div class='makePlanBt' onclick='openModal();'>상세일정만들기</div></div>";
-          $('div#selectPopup').append(addDiv);
-          $('div#selectCity').css("height", $('div#selectCity').height() + 20 + "px");
-          $('div.selButton').css("top",$('div#selectCity').height() + "px");
+     function removeCity(event) {
+         if ($('div.selCity').length == 1) {
+           $('div#selectPopup').css("display", "none");
+           $('div#selectCity').remove();
+           $('div.selButton').remove();
+         } else {
+        	 console.log($('.cityCloseBt').index($(event.target)));
+        	 if($('.cityCloseBt').index($(event.target))==0){
+        		 console.log($($(event.target).parent().siblings().children('.roadImg')[0]));
+        		 $($(event.target).parent().siblings().children('.roadImg')[0]).remove();	 
+        	 }
+        	 /* if($('.cityCloseBt').index($(event.target))) */
+           $(event.target).parent().remove();
+         if ($('div.selCity').length< 6) {
+           $('div#selectPopup').css("height", $('div#selectPopup').height() - 65 + "px");
+           $('div#selectCity').css("height", $('div#selectCity').height() - 65 + "px");
+           $('div#selectCity').css("overflow-y", "visible");
+         }
+         }
+         $('div.selButton').css("top",$('div#selectCity').height()+ "px");
+         totalDay = totalDay - $(event.target).siblings().children().text();
+         $('#selectCity').attr("totalDay",totalDay);
          
-        } else {
-          var addDiv2 = "<div class='selCity' style='margin-bottom:18px;'>";
-          addDiv2 += "<img class='roadImg' src='<%=request.getContextPath()%>/views/planner/img/road1.png' height='18px'>";
-          addDiv2 += "<img class='cityCloseBt' src='<%=request.getContextPath()%>/views/planner/img/cityCloseBt.png' width='15px' height='15px' onclick='removeCity(event);'>";
-          addDiv2 += "<div class='selCityName'>"
-          addDiv2 += cityName;
-          addDiv2 += "</div>";
-          addDiv2 += "<img class='mButton' onclick='fn_mDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/mButton.png' width='15px' height='15px'>";
-          addDiv2 += "<div class='setDay'><span class='setDayCount'>2</span>일</div>"
-          addDiv2 += "<img class='pButton' onclick='fn_pDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/pButton.png' width='16px' height='15px'>";
-          addDiv2 += "<div class='tDay'>";
-          addDiv2 += "</div></div>";
+       };
 
-       
-          if ($('div#selectCity').height() >= 408) {
-            $('div#selectCity').css("overflow-y", "scroll");
-          }
 
-          $('div#selectCity').append(addDiv2);
 
-          $('div#selectPopup').css("height", $('div#selectPopup').height() + 65 + "px");
-          $('div#selectCity').css("height", $('div#selectCity').height() + 65 + "px");
-          $('div.selButton').css("top",$('div#selectCity').height()+ "px");
-        }
-          totalDay=totalDay+2;
-          $('#selectCity').attr("totalDay",totalDay);
-      };
+       function addCity(event) {
+           var cityName = $(event.target).text();
+           console.log($(event.target).text());
+           if ($('div#selectPopup').css("display")=="none") {
+             $('div#selectPopup').css("display", "block");
+             var addDiv = "<div id='selectCity'>";
+             addDiv += "<div class='selCity' style=' margin-bottom:18px;'>";
+             addDiv += "<img class='cityCloseBt' src='<%=request.getContextPath()%>/views/planner/img/cityCloseBt.png' width='15px' height='15px' onclick='removeCity(event);'>";
+             addDiv += "<div class='selCityName'>"
+             addDiv += cityName;
+             addDiv += "</div>";
+             addDiv += "<img class='mButton' onclick='fn_mDayCnt(event)'src='<%=request.getContextPath()%>/views/planner/img/mButton.png' width='15px' height='15px'>";
+             addDiv += "<div class='setDay'><span class='setDayCount'>2</span>일</div>"
+             addDiv += "<img class='pButton' onclick='fn_pDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/pButton.png' width='16px' height='15px'>";
+             addDiv += "<div class='tDay'>";
+             addDiv += "</div></div></div>";
+             addDiv += "<div class='selButton'><div class='makePlanBt' onclick='openModal();'>상세일정만들기</div></div>";
+             $('div#selectPopup').append(addDiv);
+             $('div#selectCity').css("height", $('div#selectCity').height() + 20 + "px");
+             $('div.selButton').css("top",$('div#selectCity').height() + "px");
+            
+           } else {
+             var addDiv2 = "<div class='selCity' style='margin-bottom:18px;'>";
+             addDiv2 += "<img class='roadImg' src='<%=request.getContextPath()%>/views/planner/img/road1.png' height='18px'>";
+             addDiv2 += "<img class='cityCloseBt' src='<%=request.getContextPath()%>/views/planner/img/cityCloseBt.png' width='15px' height='15px' onclick='removeCity(event);'>";
+             addDiv2 += "<div class='selCityName'>"
+             addDiv2 += cityName;
+             addDiv2 += "</div>";
+             addDiv2 += "<img class='mButton' onclick='fn_mDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/mButton.png' width='15px' height='15px'>";
+             addDiv2 += "<div class='setDay'><span class='setDayCount'>2</span>일</div>"
+             addDiv2 += "<img class='pButton' onclick='fn_pDayCnt(event)' src='<%=request.getContextPath()%>/views/planner/img/pButton.png' width='16px' height='15px'>";
+             addDiv2 += "<div class='tDay'>";
+             addDiv2 += "</div></div>";
+
+          
+             if ($('div#selectCity').height() >= 408) {
+               $('div#selectCity').css("overflow-y", "scroll");
+             }
+
+             $('div#selectCity').append(addDiv2);
+
+             $('div#selectPopup').css("height", $('div#selectPopup').height() + 65 + "px");
+             $('div#selectCity').css("height", $('div#selectCity').height() + 65 + "px");
+             $('div.selButton').css("top",$('div#selectCity').height()+ "px");
+           }
+             totalDay=totalDay+2;
+             $('#selectCity').attr("totalDay",totalDay);
+         };
+
+      
       function fn_mDayCnt(event){
         var day = $(event.target).siblings().children().text();
         if(day==1){
@@ -475,6 +486,42 @@
       $('#cbmBT-N,#cbm-Title>img').click(function(){
         $('#closeBTModal').css("display", "none");
       });
+      
+      
+      function fn_makePlan(){
+    	  var dayArr=[];
+        for(var i=0;i<$('.selCity').length;i++){
+          var city = $($('.selCity')[i]).children('.selCityName').text();
+          var count = $($('.selCity')[i]).children().children('.setDayCount').text();
+          dayArr.push({city:city,count:count});
+        }
+        var jsonData = JSON.stringify(dayArr);
+        console.log(jsonData);
+
+        console.log(dayArr);
+    	  if(plan1Frm_validate()==true){
+    		$('#jsonData').val(jsonData);
+    		plan1Frm.action="<%=request.getContextPath()%>/makePlan1End";
+    		plan1Frm.submit();
+  			
+  		  }
+      }
+      
+       function plan1Frm_validate(){
+    	  if($('#planTitle').val().trim().length!=0 && $('#startDay').val().length!=0){
+    		  return true;
+    	  }
+    	  else if($('#planTitle').val().trim().length==0){
+    		  $('#planTitle').focus();
+    		  return false;
+    	  }
+    	  else if($('#startDay').val().length==0){
+    		  $('#startDay').focus();
+    		  return false;
+    	  }
+      } 
+      
+      
 
   </script>
   
