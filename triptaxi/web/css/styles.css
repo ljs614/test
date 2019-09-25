@@ -20,6 +20,7 @@
   width: 33.3333%;
   height: 300px;
   padding: 20px;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 
 .aos-item__inner {
@@ -27,7 +28,6 @@
   width: 100%;
   height: 100%;
   float: left;
-  border:1px solid lightgray;
   text-align: center;
 }
 .aos-item__inner>img{

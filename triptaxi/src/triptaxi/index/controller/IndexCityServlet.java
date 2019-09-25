@@ -39,16 +39,14 @@ public class IndexCityServlet extends HttpServlet {
 		
 		List<City> list=new CityService().selectCityList();
 		
-		JSONArray jarr=new JSONArray();
-		
-		for(City t : list) {
-			JSONObject j=new JSONObject();
-			j.put("cityName",t.getCityName());
-			j.put("cityEng",t.getCityEng());
-			j.put("nationName",t.getNationName());
-			jarr.add(t);
-			System.out.println(jarr);
-		}
+		/*
+		 * JSONArray jarr=new JSONArray();
+		 * 
+		 * for(City t : list) { JSONObject j=new JSONObject();
+		 * j.put("cityName",t.getCityName()); j.put("cityEng",t.getCityEng());
+		 * j.put("nationName",t.getNationName()); jarr.add(t); System.out.println(jarr);
+		 * }
+		 */
 		
 		response.setContentType("application/json;charset=UTF-8");
 		new Gson().toJson(list,response.getWriter());

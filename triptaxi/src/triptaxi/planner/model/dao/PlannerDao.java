@@ -286,5 +286,36 @@ public class PlannerDao {
 	
 	}
 	
+	public List<Planner> selectPlannerList(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Planner> list=new ArrayList();
+		String sql=prop.getProperty("selectPlannerList");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Planner p=new Planner();
+				p.setPlannerId(rs.getString("planner_id"));
+				p.setPlannerName(rs.getString("planner_name"));
+				p.setPlannerDate(rs.getDate("planner_date"));
+				p.setPlannerWriter(rs.getString("planner_writer"));
+				p.setPlannerTheme(rs.getString("planner_theme"));
+				p.setPlannerLike(rs.getInt("planner_like"));
+				p.setPlannerCount(rs.getInt("planner_count"));
+				p.setPlannerPublic(rs.getString("planner_public").charAt(0));
+				p.setPlannerWritedate(rs.getDate("planner_writedate"));
+				p.setPlannerCoverimg(rs.getString("planner_coverimg"));
+				list.add(p);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 
 }

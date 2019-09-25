@@ -128,6 +128,13 @@ public class PlannerService {
 		}
 		close(conn);
 	}
+	
+	public List<Planner> selectPlannerList(){
+		Connection conn=getConnection();
+		List<Planner> list=dao.selectPlannerList(conn);
+		close(conn);
+		return list;
+	}
 
 
 }
