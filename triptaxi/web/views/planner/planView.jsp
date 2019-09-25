@@ -11,7 +11,10 @@
 	<section id="header-container">
 		<div id="cover-container">
 			<div id="cover-content">
-				<div id="cover-change" onclick="cover_change();"></div>
+				<label id="cover-change" for="cover-img">커버 바꾸기</label> 
+				<input type='file' name='coverImg' id="cover-img">
+
+				<!-- <div id="cover-change" onclick="fn_coverChange();">커버 바꾸기</div> -->
 				<div id="like_btn" class="like" onclick="like_click();"></div>
 				<div id="planner-info">
 					<div id="planner-writer">
@@ -105,11 +108,12 @@
 		var planList=${jlist};
 		//커버 이미지
 		var coverImg="<%=coverImg%>";
-		console.log(coverImg);
 		if(coverImg=='null'){
 			coverImg="<%=request.getContextPath()%>/images/"+planList[0][0]['city']+"/Bangkok1.jpg";
+			$("#cover-container").css("background-image","url('"+coverImg+"')");
+		}else{
+			$("#cover-container").css("background-image","url('../views/planner/img/coverImg/"+coverImg+"')");
 		}
-		$("#cover-container").css("background-image","url('"+coverImg+"')");
 		var html="";
 
 		//커버 일정 날짜 생성
@@ -139,7 +143,7 @@
 				html+="<tr>";
 				html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
 				html+="<td class='day-tourImg' rowspan='3'>";
-				html+="<img src='<%=request.getContextPath()%>/"+planList[i][j]["imageUrl"]+"' width='100px' height='100px' /></td>";
+				html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
 				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['tourName']+"</td>";
 				html+="<td class='day-tour-zoom'>";
 				html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
@@ -236,6 +240,8 @@
 			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
 			$("#main-map-map").css("width",$("#planView-main").width()-150+"px");
 			$($(".mmn-div")[0]).css({"background-color":"lavender","color":"navy"});
+			$('#planTitle>i').hide();
+			$("#cover-change").css("opacity",0);
 		});
 
 		$(window).resize(function(){
@@ -300,7 +306,6 @@
 			});
 			polyMarker_draw(map);
 		}
-		console.log(planList);
 	
 		function polyMarker_draw(map){	
 			var lats=[];
@@ -481,14 +486,17 @@
 		}
 	}
 
+
 	//일정 이름 바꾸기
-	$('#planTitle').mouseover(function(){
+	$('#header-container').mouseover(function(){
 		// $(this).css("background-color","#F2F2F2");
-		$('#planTitle>i').css("color","skyblue");
+		$('#planTitle>i').show();
+		$("#cover-change").css("opacity",1);
 	});
-	$('#planTitle').mouseleave(function(){
+	$('#header-container').mouseleave(function(){
 		// $(this).css("background-color", "white");
-		$('#planTitle>i').css("color","white");
+		$('#planTitle>i').hide();
+		$("#cover-change").css("opacity",0);
 	});
 
 	$('#planTitle').on('click',function(){
@@ -533,46 +541,66 @@
 
 
 	$(function(){
-			//좋아요버튼 호버
-			$("#like_btn").hover(function(){
-				if(!like){
-					$(this).css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"0.5"});
-				}
-			},function(){
-				if(!like){
-					$(this).css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+		//커버 이미지 바꾸기
+		$("#cover-img").change(function(){
+			var fd=new FormData();
+			// console.log($("#cover-img")[0].files);
+			fd.append("cover",$("#cover-img")[0].files[0]);
+			fd.append("plannerId", "<%=planner.getPlannerId()%>");
+			fd.append("plannerCoverImg", "<%=planner.getPlannerCoverimg()%>");
+			$.ajax({
+				url:"<%=request.getContextPath()%>/planner/coverChange",
+				data:fd,
+				type:"post",
+				processData:false,
+                contentType:false,
+				success:function(data){
+					$("#cover-container").css("background-image","url('../views/planner/img/coverImg/"+data+"')");
+
 				}
 			});
-
-			//초대 클릭이벤트
-			$("#planner-member-invite").click(function(){
-				location.href="<%=request.getContextPath()%>/invite";
-			});
+		});
 
 
 
-			//관광지 줌 클릭이벤트
-			$(".day-tour-zoom").click(function(){
-				var day_num=$(this).parents(".day-planner").index();
-				var city_num=$(this).siblings(".day-num").html()-1;
-				if(cDay!=day_num+1){
-					cDay=day_num+1;
-					fn_marker(map);
-				}
-				var lats=[];
-				var lngs=[];
-				for(var i=0; i<planList[cDay-1].length; i++){
-					lats.push(planList[cDay-1][i]['tourLat']);
-					lngs.push(planList[cDay-1][i]['tourLng']);
-				}
-				var cityLat=lats[city_num];
-				var cityLng=lngs[city_num];
-				var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
-				map.setCenter(cityLatLng);
-				map.setZoom(14);
+		//좋아요버튼 호버
+		$("#like_btn").hover(function(){
+			if(!like){
+				$(this).css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"0.5"});
+			}
+		},function(){
+			if(!like){
+				$(this).css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+			}
+		});
 
-			});
-		
+		//초대 클릭이벤트
+		$("#planner-member-invite").click(function(){
+			location.href="<%=request.getContextPath()%>/invite";
+		});
+
+		//관광지 줌 클릭이벤트
+		$(".day-tour-zoom").click(function(){
+			var day_num=$(this).parents(".day-planner").index();
+			var city_num=$(this).siblings(".day-num").html()-1;
+			if(cDay!=day_num+1){
+				cDay=day_num+1;
+				fn_marker(map);
+			}
+			var lats=[];
+			var lngs=[];
+			for(var i=0; i<planList[cDay-1].length; i++){
+				lats.push(planList[cDay-1][i]['tourLat']);
+				lngs.push(planList[cDay-1][i]['tourLng']);
+			}
+			var cityLat=lats[city_num];
+			var cityLng=lngs[city_num];
+			var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
+			map.setCenter(cityLatLng);
+			map.setZoom(14);
+
+		});
+	
 	});
 	</script>
 

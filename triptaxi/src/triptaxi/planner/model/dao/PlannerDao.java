@@ -267,5 +267,24 @@ public class PlannerDao {
 		return result;
 	}
 	
+	public int updateCoverImg(Connection conn, String plannerId, String coverImg) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateCoverImg");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, coverImg);
+			pstmt.setString(2, plannerId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+
+			close(pstmt);
+		}
+		return result;
+	
+	}
+	
 
 }

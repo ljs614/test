@@ -104,7 +104,7 @@ public class PlannerService {
 		
 	}
 	
-	public int updateTitle(String plannerId, String title) {
+	public void updateTitle(String plannerId, String title) {
 		Connection conn=getConnection();
 		int result=dao.updateTitle(conn, plannerId, title);
 		if(result>0) {
@@ -114,7 +114,19 @@ public class PlannerService {
 			rollback(conn);
 		}
 		close(conn);
-		return result;
+		
+	}
+	
+	public void updateCoverImg(String plannerId, String coverImg) {
+		Connection conn=getConnection();
+		int result=dao.updateCoverImg(conn, plannerId, coverImg);
+		if(result>0) {
+			commit(conn);
+		}else {
+			result=-1;
+			rollback(conn);
+		}
+		close(conn);
 	}
 
 

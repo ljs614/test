@@ -11,8 +11,8 @@ section#header-container{
 div#cover-container{
     margin-top:50px;
     width:100%; 
-    background-size: 100% 300px;
-    height:300px;
+    background-size: 100% 303px;
+    height:303px;
 }
 div#cover-content{
     position: relative;
@@ -20,9 +20,33 @@ div#cover-content{
     height:280px;
     /* border:1px solid black;  */
     margin:0 auto;
-    top:15px;
-    
+    top:15px;   
 }
+
+label#cover-change {
+    position: relative;
+    display: inline-block;
+    padding: 3px;
+    color: white;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #49506a;
+    border-radius: .25em;
+    left:80px;
+}
+
+input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
+
 div#like_btn{
     width:40px;
     height:40px;
@@ -33,12 +57,12 @@ div#like_btn{
     opacity: 0.5;
     right:40px;
 }
-div#like_btn:hover{
+div#like_btn, #cover-change:hover{
     cursor: pointer;
 }
 div#planner-info{
     position: relative;
-    top:80px;
+    top:60px;
     /* border:1px solid red; */
     width:100%;
     height:200px;
@@ -314,7 +338,7 @@ td.day-day{
     text-align: center;
     color:white;
     font-weight: 900;
-    background-color: rgb(247, 217, 49);
+    background-color: #49506a;
 }
 td.day-date{
     width:400px;
@@ -335,7 +359,7 @@ td.day-num{
     width: 50px;
     font-size: 30px;
     font-weight: 900;
-    color:olive;
+    color:#49506a;
 }
 td.day-tourImg{
     width:100px;
