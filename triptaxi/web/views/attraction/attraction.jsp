@@ -15,6 +15,7 @@
 	double reviewScore=a.getReviewScore();
 	String category=a.getCategory();
 	int count=0;
+	int clipCount1=0;
 	int clip=0;
 	List<Attraction> list=(List)request.getAttribute("list");
 	
@@ -52,7 +53,7 @@ td{
 		color:gray;
 		width:500px;
 		text-align:left;
-		font-family: 'Nanum Gothic', sans-serif;
+		font-family: arial;
 	}
 	#clipCount{
 	font-size:20px;
@@ -176,7 +177,7 @@ img {
 
 }
 .mySlides{
-  	height:400px;
+  	height:350px;
 
 }
 
@@ -365,25 +366,31 @@ text-align: center;
   to {opacity: 1}
 }
 </style>
-	<script>
-	var count=0;
+<script>
+	var clipcount=0;
+	$(function(){
 		$("#clipClick").click(function(){
-			count++;
-			console.log(count);
-			if(parseInt(count)%2!=0){
+			clipcount++;
+			console.log(clipcount);
+			if(clipcount%2!=0){
 			$("#topButtonClip").css("color","orange");
 			$("#imageText").html("클립해제");
-        	alert("클립보드에 추가됐습니다.")
-        	<%=clip=1 %>
+        	<%clip=1;%>
+        	console.log(<%=clip%>);
+        	
 			}else{$("#topButtonClip").css("color","gray");
-			<%=clip=-1%>
 			$("#imageText").text("클립보드");
-      		alert("클립보드에서 제거됐습니다.")
-      }
+      		<%clip=2;%>
+      		
+ 			}
+			console.log(<%=clip%>);
 		});
+
+	});
+	
 	</script>
  
-
+ 
 	<section id=sectionHead>
 	<br><br>
 	<table>
@@ -398,7 +405,7 @@ text-align: center;
 	<br>
 	<td>
 	<div class=attractionName>
-	<h2><%=attName%> (<%=attEng%>)</h2>
+	<h1><%=attName%></h1><h3>(<%=attEng%>)</h3>
 	</div><br>
 	<div id=clipCount>
   	<i class="fas fa-paperclip"><%=clipCount%></i> 
@@ -418,7 +425,7 @@ text-align: center;
 	</td>
 	<td class=topButton>
 	<div class=topButton>
-	<a id="clipClick" href="<%=request.getContextPath()%>/attraction/clipCount?score=<%=clip%>"><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
+	<a id="clipClick" <%-- href="<%=request.getContextPath()%>/attraction/clipCount?clip=<%=clip%>" --%>><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
 	<a href=""><i class="fas fa-map-marked-alt" id="topButtonMap"><h4 id="imageText">지도보기</h4></i></a>&nbsp
 	<a href=""><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰작성</h4></i></a>&nbsp
 	<a href=""><i class="far fa-calendar-plus" id="topButtonAdd"><h4 id="imageText">일정추가</h4></i></a>
@@ -437,23 +444,23 @@ text-align: center;
 		<div class="container">
   <div class="mySlides">
     <div class="numbertext">1 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:500px;height:350px">
     <%-- <img src="images/"<%=attName%>/<%=thumbnailUrl%>" style="width:600px;height:400px"> --%>
   </div>
 
   <div class="mySlides">
     <div class="numbertext">2 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:500px;height:350px">
   </div>
 
   <div class="mySlides">
     <div class="numbertext">3 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:500px;height:350px">
   </div>
     
   <div class="mySlides">
     <div class="numbertext">4 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:600px;height:400px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:500px;height:350px">
   </div>
 
 

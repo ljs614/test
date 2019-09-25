@@ -98,18 +98,18 @@ public class AttractionDao {
 		return list;
 	}
 	
-	public int clipCount(Connection conn,int clip,String attId) {
+	public int clipCount(Connection conn,String attId,String table) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("clipCount");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			
+			pstmt.setString(1, table);
+			pstmt.setString(2, table);
+			pstmt.setString(3, attId);
+			pstmt.setString(4, attId);
 			result=pstmt.executeUpdate();
-			
-				
-				
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -119,6 +119,28 @@ public class AttractionDao {
 		}
 		return result;
 	}
+	public int clipCountMinus(Connection conn,String attId,String table) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("clipCountMinus");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, table);
+			pstmt.setString(2, table);
+			pstmt.setString(3, attId);
+			pstmt.setString(4, attId);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	
 	
 }

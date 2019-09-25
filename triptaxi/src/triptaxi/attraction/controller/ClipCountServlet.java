@@ -31,9 +31,13 @@ public class ClipCountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
+			int result=0;
 			int clip=Integer.parseInt(request.getParameter("clip"));
-			int result=new AttractionService().clipCount(clip);
-			
+			if(clip==1) {result=new AttractionService().clipCount();
+			}else {
+				result=new AttractionService().clipCountMinus();
+			}
+			request.getRequestDispatcher("/views/attraction/attraction.jsp").forward(request, response);
 		
 	}
 

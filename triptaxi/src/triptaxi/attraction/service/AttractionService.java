@@ -17,12 +17,18 @@ public class AttractionService {
 	private AttractionDao dao=new AttractionDao();
 	private String city;
 	private String attId;
+	private String table;
 	public Attraction selectAttraction(String attId) {
 			Connection conn=getConnection();
 		Attraction a=dao.selectAttraction(conn,attId);
 		close(conn);
 		city=a.getCity();
-		attId=a.getAttractionId();
+		this.attId=a.getAttractionId();
+		switch(attId.substring(0,1)) {
+		case "at": table="tt_attraction";break;
+		case "ac": table="tt_activity";break;
+		case "fe": table="tt_festival";break;
+		}
 		return a;
 		
 	}
@@ -34,9 +40,18 @@ public class AttractionService {
 		return list;
 	}
 	
-	public int clipCount(int clip) {
+	public int clipCount() {
+		System.out.println(attId+"askllklkj"+table);
 		Connection conn=getConnection();
-		int result=dao.clipCount(conn,clip,attId);
+		int result=dao.clipCount(conn,attId,table);
+		close(conn);
+		return result;
+	}
+	
+	public int clipCountMinus() {
+		System.out.println(attId+"agsdgsdg"+table);
+		Connection conn=getConnection();
+		int result=dao.clipCountMinus(conn,attId,table);
 		close(conn);
 		return result;
 	}
