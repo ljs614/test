@@ -81,6 +81,7 @@ public class PlannerDao {
 	            c.setCityName(rs.getString("city_name"));
 	            c.setLatitude(rs.getDouble("latitude"));
 	            c.setLongitude(rs.getDouble("longitude"));
+	            c.setFlagUrl(rs.getString("flag_url"));
 	            
 	            list.add(c);
 	         }

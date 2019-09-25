@@ -187,11 +187,11 @@
     	
 	    for(var i=0;i<nations.size;i++){
 	    	var value = iterator.next().value;
-	    	html+="<li class='country'>"+value+"</li>";
+	    	html += "<li class='country'>"+value + "</li>";
 	    	
     		$.each(jsonList,function(index,item){
 	    		if(value == item['nationName']){
-	    			html+="<li class='city' onclick='addCity(event);'>"+item['cityName']+"</li>";
+	    			html += "<li class='city' onclick='addCity(event);'>"+item['cityName']+"</li>";
 	    		}
     		});
 	    }
