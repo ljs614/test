@@ -42,9 +42,8 @@ public class PlannerViewServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
-		String plannerId=request.getParameter("plannerId");
+		String plannerId="PL-13";
 		PlannerService service=new PlannerService();
-		
 		Planner planner=service.selectPlanner(plannerId);
 		String view;
 		if(planner!=null) {
@@ -52,8 +51,8 @@ public class PlannerViewServlet extends HttpServlet {
 			List<Tour[]> list=new ArrayList<Tour[]>();
 			for(int i=0; i<pdList.size(); i++) {
 				String[] tours=pdList.get(i).getTourList().split(",");
-				Tour[] tourList=new Tour[tours[i].length()];
-				for(int j=0; j<tourList.length; j++) {
+				Tour[] tourList=new Tour[tours.length];
+				for(int j=0; j<tours.length; j++) {
 						tourList[j]=service.selectTour(tours[j]);
 				}
 				list.add(tourList);

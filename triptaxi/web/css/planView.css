@@ -11,28 +11,115 @@ section#header-container{
 div#cover-container{
     margin-top:50px;
     width:100%; 
-    background-image:url("https://content.skyscnr.com/2816df3a348f8ca308b79749a31c232e/las-vegas-hero.jpg?resize=2400px:800px&quality=100");
-    background-size: 100% 400px;
-    height:400px;
+    background-size: 100% 300px;
+    height:300px;
 }
 div#cover-content{
     position: relative;
-    width:960px;
-    height:390px;
-    border:1px solid black;
-    z-index:990;
+    width:1024px;
+    height:280px;
+    /* border:1px solid black;  */
     margin:0 auto;
-    top:5px;
+    top:15px;
     
 }
-button#like_Btn{
+div#like_btn{
     width:40px;
     height:40px;
     position: relative;
     float:right;
-    border:none;
-    background-image: url("<%=request.getContextPath()%>/views/planner/img/heart_off.png");
+    background-image: url("../views/planner/img/heart_off.png");
     background-size: 40px 40px;
+    opacity: 0.5;
+    right:40px;
+}
+div#like_btn:hover{
+    cursor: pointer;
+}
+div#planner-info{
+    position: relative;
+    top:80px;
+    /* border:1px solid red; */
+    width:100%;
+    height:200px;
+    background-image:url("../views/planner/img/planner_info_cover.png");
+    background-size: 100%;
+    
+}
+div#planner-info>div{
+    top:50px;
+    left:60px;
+}
+div#planner-writer{
+    position: relative;
+    display: inline-block;
+    /* width:150px; */
+    height:45px;
+    /* border:1px solid blue; */
+    left:5px;
+    
+    
+}
+div#planner-writer-profile{
+    position: relative;
+    display: inline-block;
+    height:40px;
+    /* border:1px solid yellow; */
+    
+}
+div#planner-writer-name{
+    position: relative;
+    display: inline-block;
+    /* width:40px; */
+    height:40px;
+    /* border:1px solid yellow; */
+    font-size:23px;
+    color:white;
+    font-weight: 600;
+    top:-10px;
+    padding-left:5px;
+    padding-right:5px;
+}
+div#planner-member{
+    position: relative;
+    display: inline-block;
+    width:700px;
+    height:45px;
+    /* border:1px solid blue; */
+}
+div#planner-name{
+    position: relative;
+    display: inline-block;
+    width:200px;
+    height:40px;
+    /* border:1px solid yellow; */
+    font-size:30px;
+    color:white;
+    font-weight: 600;
+    left:10px;
+}
+div#planner-etc{
+    position: relative;
+    width:300px;
+    height:30px;
+    /* border:1px solid green; */
+    left:10px;
+    margin-top:10px;
+}
+div#planner-etc-date{
+    position: relative;
+    display: inline-block;
+    color:white;
+    padding-right: 5px;
+}
+div#planner-etc-theme{
+    position: relative;
+    display: inline-block;
+    width:80px;
+    background-color:silver;
+    text-align: center;
+    border-radius: 5px;
+    top:1px;
 }
 div#planView-nav{
     width:100%;
@@ -279,26 +366,33 @@ div#main-map-navi{
     top:0;
     right:0;
     z-index: 999;
-    background-color: navy;
+    background-color: whitesmoke;
 }
 
 div#exit-main{
-    text-align: right;
+    text-align: center;
     
+}
+button#exit-mainMap{
+    width:170px;
+    height:35px;
+    border:none;
+    background-color:navy;
+    color:white;
 }
 div.mmn-div{
     position: relative;
     color:white;
-    margin:5px;
-    margin-top:10px;
+    /* margin:5px; */
+    margin-top:5px;
 }
 table.mmn-tbl{
-    border-top:2px solid lavender;
-    border-bottom:2px solid lavender;
+    border-top:2px solid navy;
+    border-bottom:2px solid navy;
     border-collapse: none;
-    width:160px;
-    padding-top: 5px;
-    padding-bottom:5px;
+    width:170px;
+    padding-top: 3px;
+    padding-bottom:3px;
 }
 table.mmn-tbl:hover{
     cursor: pointer;

@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, triptaxi.planner.model.vo.Planner,com.triptaxi.attraction.model.vo.Attraction, java.text.SimpleDateFormat"%>
+<%@ page import="java.util.*, triptaxi.planner.model.vo.Planner"%>
 <%
-	List<Attraction[]> list=(List)request.getAttribute("atts");
 	Planner planner=(Planner)request.getAttribute("planner");
-
+	String coverImg=planner.getPlannerCoverimg();
 %>
-
-
 <%@ include file="/views/common/header.jsp" %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -94,6 +91,13 @@
 	</div>
 	<script>
 		var planList=${jlist};
+		//커버 이미지
+		var coverImg="<%=coverImg%>";
+		console.log(coverImg);
+		if(coverImg=='null'){
+			coverImg="<%=request.getContextPath()%>/images/"+planList[0][0]['city']+"/Bangkok1.jpg";
+		}
+		$("#cover-container").css("background-image","url('"+coverImg+"')");
 		var html="";
 		//일정 날짜 생성
 		var date_=new Date('<%=planner.getPlannerDate()%>');
@@ -102,7 +106,6 @@
 		date_.setDate(date_.getDate()+dayLong-1);
 		html+=date_.getFullYear()+"."+(date_.getMonth()+1)+"."+date_.getDate()+"("+dayLong+"일)";
 		$("#planner-etc-date").html(html);
-		
 		
 		//개요 테이블 생성
 		html="";
@@ -124,7 +127,7 @@
 				html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
 				html+="<td class='day-tourImg' rowspan='3'>";
 				html+="<img src='<%=request.getContextPath()%>/"+planList[i][j]["imageUrl"]+"' width='100px' height='100px' /></td>";
-				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['attractionName']+"</td>";
+				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['tourName']+"</td>";
 				html+="<td class='day-city-zoom'>";
 				html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
 				html+="</tr>";
@@ -161,7 +164,7 @@
 			html+="<td class='schedule-city'>ㆍ"+planList[i][0]['city']+"</td>";
 			html+="<td class='schedule-att'>";
 			for(var j=0; j<planList[i].length; j++){
-				html+="<p>&nbsp;&nbsp;"+(j+1)+".&nbsp;"+planList[i][j]['attractionName']+"</p>";
+				html+="<p>&nbsp;&nbsp;"+(j+1)+".&nbsp;"+planList[i][j]['tourName']+"</p>";
 			}
 			html+="</td></tr>";
 		}
@@ -178,22 +181,7 @@
 		html+='<input type="button" class="side-navi-btn" onclick="bottom_go();" value="▼"/>';
 		$("#side-navi").html(html);
 
-		var lats="";
-		var lngs="";
-		for(var i=0; i<planList.length; i++){
-			for(var j=0; j<planList[i].length; j++){
-				lats+=planList[i][j]['attractionLat'];
-				lngs+=planList[i][j]['attractionLng'];
-				if(j<planList[i].length-1){
-					lats+=",";
-					lngs+=",";
-				}
-			}
-			if(i<planList.length-1){
-				lats+="/";
-				lngs+="/";
-			}
-		}
+		
 		//메인 내비 생성
 		html='<div id="exit-main"><button id="exit-mainMap" onclick="exit_mainMap();">전체 지도 닫기 X</button></div>';
 		for(var i=0; i<planList.length; i++){
@@ -215,14 +203,14 @@
 				
 		//초기화
 		var cDay=1;
-		var attrsLat=lats.split("/");
-		var attrsLng=lngs.split("/");
 		var map;
 		var attrLat_marker;
 		var attrLng_marker;
 		var markers=[];
 		var flightPath;
 		var path;
+		var markerLat;
+		var markerLng;
 		
 
 		$(window).ready(function(){
@@ -262,8 +250,8 @@
 		//거리 리턴 함수
 		function returnDistance(i, j){
 			var r=6371e3;
-			var loc1={lat:planList[i][j]['attractionLat'],lng:planList[i][j]['attractionLng']};
-			var loc2={lat:planList[i][j+1]['attractionLat'],lng:planList[i][j+1]['attractionLng']};
+			var loc1={lat:planList[i][j]['tourLat'],lng:planList[i][j]['tourLng']};
+			var loc2={lat:planList[i][j+1]['tourLat'],lng:planList[i][j+1]['tourLng']};
 			var lat1=loc1['lat']/180*3.141592;
 			var lat2=loc2['lat']/180*3.141592;
 			var lat_del=(loc2['lat']-loc1['lat'])/180*3.141592;
@@ -297,17 +285,21 @@
 			fullscreenControl:false,
 			streetViewControl:false
 			});
-			ployMarker_draw(map);
-			
+			polyMarker_draw(map);
 		}
-
-		function ployMarker_draw(map){
-			attrLat_marker=attrsLat[cDay-1].split(",");
-			attrLng_marker=attrsLng[cDay-1].split(",");
+		console.log(planList);
+	
+		function polyMarker_draw(map){	
+			var lats=[];
+			var lngs=[];
+			for(var i=0; i<planList[cDay-1].length; i++){
+				lats.push(planList[cDay-1][i]['tourLat']);
+				lngs.push(planList[cDay-1][i]['tourLng']);
+			}
 			var bounds=new google.maps.LatLngBounds();
 			//화살표 연결
 			var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
-			flightPath = new google.maps.Polyline({
+				flightPath = new google.maps.Polyline({
 				geodesic: true,
 				icons: [{icon: lineSymbol, offset: '100%', repeat:"100px"}],
 				strokeColor: '#FF0000',
@@ -318,20 +310,21 @@
 
 			//마커
 			path=flightPath.getPath();
-			for(var i=0; i<attrLat_marker.length; i++){
-				var loc=new google.maps.LatLng(attrLat_marker[i]*1,attrLng_marker[i]*1);
+			for(var i=0; i<lats.length; i++){
+				var loc=new google.maps.LatLng(lats[i],lngs[i]);
 				path.push(loc);
 				var marker = new google.maps.Marker(
 						{ position: loc, 
 						  map: map
 						});
 				bounds.extend(loc);
-				if(planList[cDay-1][i]['attractionId'].substring(0,2)=='at'){
+				if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
 					marker.setIcon("<%=request.getContextPath()%>/views/images/attraction/camera.png");
+				}else{
+					marker.setIcon("https://img.icons8.com/office/40/000000/marker.png");
 				}
 				markers.push(marker);
 			}
-			
 			map.fitBounds(bounds);
 			map.panToBounds(bounds);
 		}
@@ -400,7 +393,7 @@
 				markers[i].setMap(null);
 			}	
 			markers=[];
-			ployMarker_draw(map);
+			polyMarker_draw(map);
 		}
 		//메인 맵
 		var mainM;
@@ -412,11 +405,15 @@
 			mainM=new google.maps.Map(document.getElementById("main-map-map"),{
 				gestureHandling: 'cooperative'
 			});
-			ployMarkerM_draw(mainM);
+			polyMarkerM_draw(mainM);
 		}
-		function ployMarkerM_draw(mainM){
-			attrLat_marker=attrsLat[cDay-1].split(",");
-			attrLng_marker=attrsLng[cDay-1].split(",");
+		function polyMarkerM_draw(mainM){
+			var lats=[];
+			var lngs=[];
+			for(var i=0; i<planList[cDay-1].length; i++){
+				lats.push(planList[cDay-1][i]['tourLat']);
+				lngs.push(planList[cDay-1][i]['tourLng']);
+			}
 			var bounds=new google.maps.LatLngBounds();
 			//화살표 연결
 			var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
@@ -431,8 +428,8 @@
 
 			//마커
 			pathM=flightPathM.getPath();
-			for(var i=0; i<attrLat_marker.length; i++){
-				var loc=new google.maps.LatLng(attrLat_marker[i]*1,attrLng_marker[i]*1);
+			for(var i=0; i<lats.length; i++){
+				var loc=new google.maps.LatLng(lats[i],lngs[i]);
 				pathM.push(loc);
 				var markerM = new google.maps.Marker({ position: loc, map: mainM });
 				bounds.extend(loc);
@@ -447,7 +444,7 @@
 				markersM[i].setMap(null);
 			}	
 			markersM=[];
-			ployMarkerM_draw(mainM);
+			polyMarkerM_draw(mainM);
 		}
 
 	$(function(){

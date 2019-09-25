@@ -188,7 +188,7 @@ public class PlannerDao {
 		Statement stmt=null;
 		Tour tour=null;
 		ResultSet rs=null;
-		String sql="SELECT * FROM "+table+" WHERE "+idName+"="+tourId;
+		String sql="SELECT * FROM "+table+" WHERE "+idName+"='"+tourId+"'";
 		try {
 			stmt=conn.createStatement();
 			rs=stmt.executeQuery(sql);

@@ -52,7 +52,6 @@ public class PlannerService {
 	public int insertPlannerDay(List<PlannerDay> dayList) {
 		Connection conn = getConnection();
 		int result = 0;
-
 		for(int i=0;i<dayList.size();i++) {
 			result = dao.insertPlannerDay(conn, dayList.get(i));
 			if(result==0) {
