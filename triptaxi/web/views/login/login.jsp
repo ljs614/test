@@ -1,25 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
-<%@page import="triptaxi.user.model.vo.User" %>
 <link href="<%=request.getContextPath()%>/css/login.css" rel="stylesheet">
 
-<%
-	User loginUser=(User)session.getAttribute("loginUser");
-	Cookie[] cookies=request.getCookies();
-	String saveId=null;
-	 if(cookies!=null){
-		for(Cookie c:cookies){
-			//getName() -> key값 가져오기 / getValue() -> 값!
-			System.out.println("key : "+c.getName());
-			System.out.println("value: "+c.getValue());
-			if(c.getName().equals("saveId")){
-				saveId=c.getValue();
-			} 
-		}
-	 }
-
-%>
 
 <section>
 	<div class="login_1">

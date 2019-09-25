@@ -151,61 +151,61 @@
 	<div id="transcroller-body" class="aos-all">
 		<h3>어디로 갈까?</h3>
 		<p>트립택시를 이용하는 회원들이 가장 애호하는 여행지를 추천해드립니다.</p>
-		<div class="aos-item" data-aos="fade-up">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<div class="aos-item" data-aos="fade-down">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<div class="aos-item" data-aos="zoom-out-down">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<div class="aos-item" data-aos="flip-down">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<div class="aos-item" data-aos="flip-up">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<div class="aos-item" data-aos="fade-down">
-			<a href="#">
-				<div class="aos-item__inner">
-					<img src="1.jpg" />
-					<h3>홍콩</h3>
-					<p>HongKong</p>
-				</div>
-			</a>
-		</div>
-		<button class="" onclick="">인기도시 모두보기</button>
+			<!-- <div class="aos-item" data-aos="fade-up">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div>
+			<div class="aos-item" data-aos="fade-down">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div>
+			<div class="aos-item" data-aos="zoom-out-down">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div>
+			<div class="aos-item" data-aos="flip-down">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div>
+			<div class="aos-item" data-aos="flip-up">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div>
+			<div class="aos-item" data-aos="fade-down">
+				<a href="#">
+					<div class="aos-item__inner">
+						<img src="1.jpg" />
+						<h3>홍콩</h3>
+						<p>HongKong</p>
+					</div>
+				</a>
+			</div> 
+		<button class="" onclick="">인기도시 모두보기</button> -->
 	</div>
 	
 	<div class="con3">
@@ -411,7 +411,18 @@
 		easing : 'ease-in-out-sine'
 	});
 	
-	<%-- $(function(){
+	
+	/* <div class="aos-item" data-aos="fade-up">
+	<a href="#">
+		<div class="aos-item__inner">
+			<img src="1.jpg" />
+			<h3>홍콩</h3>
+			<p>HongKong</p>
+		</div>
+	</a>
+</div> */
+
+	$(function(){
 		$(document).ready(function(){
 			$.ajax({
 				url:"<%=request.getContextPath() %>/indexcityservlet",
@@ -426,14 +437,23 @@
 				 		console.log(data[i]["cityEng"]);
 				 		var imgurl=data[i]["imageUrl"].split(",");
 				 		console.log(imgurl[0]);
-				 		cityArr+="<img src='<%=request.getContextPath() %>/images/';
-				 		+data[i]["cityEng"]+imgurl[0]";
+				 		
+				 		cityArr+="<div class='aos-item' data-aos='fade-down'>";
+				 		cityArr+="<a href='#'>";
+				 		cityArr+="<div class='aos-item__inner'>";
+				 		cityArr+="<img src='<%=request.getContextPath() %>"+imgurl[0]+"' width='100%' height='100%'/>";
+				 		cityArr+="<h3>"+data[i]["cityName"]+"</h3>";
+				 		cityArr+="<p>"+data[i]["cityEng"]+"</p>";
+				 		cityArr+="</div>";
+				 		cityArr+="</a>";
+				 		cityArr+="</div>";
 					} 
-				 	"<img src='"<%=request.getContextPath() %>/images/"+data[i]['cityEng']+"/"+imgurl[0] '/>"
+				 	$("#transcroller-body").append(cityArr);
+				 	$("#transcroller-body").append("<button class='' onclick=''>인기도시 모두보기</button>");
 				}
 			});
 		});
-	}); --%>
+	});
 	
 	
 	
@@ -473,4 +493,4 @@
 </script>
 
 
-<%@ include file="/views/common/footer.jsp"%>
+<%@ include file="/views/common/footer.jsp" %>

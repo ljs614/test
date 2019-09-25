@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="triptaxi.user.model.vo.User" %>
+
+<%
+	User loginUser=(User)session.getAttribute("loginUser");
+	Cookie[] cookies=request.getCookies();
+	String saveId=null;
+	 if(cookies!=null){ 
+		for(Cookie c:cookies){
+			if(c.getName().equals("saveId")){
+				saveId=c.getValue();
+			}
+		}
+	 } 
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,11 +193,13 @@
                         <li class="main_menu"><a href="">여행 준비</a></li>
                     </ul>
                 </div>
+                <% if(loginUser==null){ %>
                 <div class="top_btn">
-                    <button id="btn_login" name="btn_login" class="" onclick="">로그인</button>
-                    <button id="btn_join" name="btn_join" class="" onclick="">회원가입</button>
+                    <button id="btn_login" name="btn_login" onclick="location.href='<%=request.getContextPath() %>/loginswitch'">로그인</button>
+                    <button id="btn_join" name="btn_join" onclick="location.href='<%=request.getContextPath() %>/UserEnroll'">회원가입</button>
                 </div>
-                <!-- <div class="top_btn1">
+                <%} else{%>
+                <div class="top_btn1">
                 	<a href="#" class="top_login" title="마이페이지">
 	                	<i class="material-icons login_i">
 							person_pin
@@ -193,16 +209,17 @@
 						<i class="material-icons login_i">
 							notifications_active
 						</i>
-						<i class="material-icons top_i">
+						<!-- <i class="material-icons top_i">
 							notifications_off
-						</i>
+						</i> -->
 					</a>
-					<a href="#" class="top_login" title="로그아웃">
+					<a href="<%=request.getContextPath() %>/logout" id="btn_logout" name="btn_logout" class="top_login" title="로그아웃">
 						<i class="material-icons login_i">
 							emoji_people
 						</i>
                 	</a>
-                </div> -->
+                </div>
+                <%} %>
             </div>
 
             <div class="sub_menu">
