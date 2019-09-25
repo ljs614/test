@@ -10,7 +10,7 @@ public class CityList {
    public CityList() {
       // TODO Auto-generated constructor stub
    }
-
+ 
    public CityList(String continentName, String nationName, String cityName, Double latitude, Double longitude) {
       super();
       this.continentName = continentName;

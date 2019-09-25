@@ -61,8 +61,6 @@ public class MakePlan1EndServlet extends HttpServlet {
 		
 		List<PlannerDay> dayList = new ArrayList<PlannerDay>();
 		
-
-		
 		if(plannerId != null) {
 			for(int i=0;i<list.size();i++) {
 				int count = list.get(i).getCount();
@@ -75,17 +73,17 @@ public class MakePlan1EndServlet extends HttpServlet {
 			result = service.insertPlannerDay(dayList);
 		}
 		
-		List<Tour> tourList = new ArrayList<Tour>();
+		List<Tour> AttrList = new ArrayList<Tour>();
 		
 		if(result>0) {
 			dayList = service.selectPlannerDayList(plannerId);
-			tourList = service.selectTourList(list.get(0).getCity(), month);
+			AttrList = service.selectTourList("tt_attraction", "city", list.get(0).getCity());
 		}
 		
 		for(PlannerDay p : dayList) {
 			System.out.println(p.getPlannerDayNo());
 		}
-		for(Tour t : tourList) {
+		for(Tour t : AttrList) {
 			System.out.println(t.getTourName());
 		}
 		

@@ -1,0 +1,140 @@
+@charset "UTF-8";
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        section {
+            border:1px solid red;
+            margin-top:52px;
+            
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        div#continentSelect{
+            /* border:1px solid black; */
+            width:100%;
+            background-color:rgba(228, 227, 227, 0.356);
+            /* height:580px; */
+        }
+        div#continentSelect #innerContinentSelect{
+            border:1px solid blue;
+            width:1024px;
+            position:relative;
+            top:15%;
+            margin:0 auto;
+        }
+
+        div#innerContinentSelect #continent-container{
+            position:relative;
+            top:40px;
+            left:110px;
+        }
+        ul#continents {
+            list-style: none;
+            background: url(map_big.png) no-repeat 0 0;
+            /* 
+            The important declaration to pay attention to here is 
+            its position value of relative.
+             This will allow for us to absolutely position our li elements next.  
+            */
+            position: relative;
+            width: 850px;
+            height: 330px;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#continents li {
+            /* border: 1px solid #000; */
+            position: absolute;
+            border-radius: 70px;
+        }
+
+        ul#continents li a {
+            display: block;
+            height: 100%;
+            text-indent: -9000px;
+        }
+
+        ul#continents li a:hover {
+            background: url(map_big.png) no-repeat 0 0;
+        }
+
+        ul#continents li#northAmerica a:hover {
+            background-position: 0px -335px;
+        }
+
+        ul#continents li#southAmerica a:hover {
+            background-position: -344px -327px;
+        }
+
+        ul#continents li#africa a:hover {
+            background-position: -300px -514px;
+        }
+
+        ul#continents li#europe a:hover {
+            background-position: -30px -535px;
+        }
+
+        ul#continents li#asia a:hover {
+            background-position: -532px -337px;
+        }
+
+        ul#continents li#australia a:hover {
+            background-position: -600px -569px;
+        }
+
+
+        #northAmerica {
+            width: 350px;
+            height: 170px;
+            top: 0px;
+            left: 0px;
+        }
+
+        #southAmerica {
+            width: 135px;
+            height: 175px;
+            top: 150px;
+            left: 125px;
+        }
+
+        #africa {
+            width: 185px;
+            height: 183px;
+            top: 98px;
+            left: 300px;
+        }
+
+        #europe {
+            width: 185px;
+            height: 102px;
+            top: 5px;
+            left: 307px;
+        }
+
+        #asia {
+            width: 320px;
+            height: 210px;
+            top: 4px;
+            left: 415px;
+        }
+
+        #australia {
+            width: 165px;
+            height: 130px;
+            top: 190px;
+            left: 630px;
+        }
+
+        #continentSelectContent{
+            width:100%;
+
+
+        }
+        #totalList{
+            width:100%;
+            height:600px;
+            background-color:gray;
+        }

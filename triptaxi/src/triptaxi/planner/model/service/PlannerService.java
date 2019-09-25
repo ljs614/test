@@ -93,14 +93,16 @@ public class PlannerService {
 	}
 	
 	
-	public List<Tour> selectTourList(String city, String month){
+	public List<Tour> selectTourList(String table, String col, String city){
 		Connection conn = getConnection();
 		
+//		수정해야됨
 		List<Tour> tourList = dao.selectTourList(conn, city, month);
 		
 		close(conn);
 		return tourList;
 		
 	}
+
 
 }

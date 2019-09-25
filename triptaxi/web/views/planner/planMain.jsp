@@ -245,6 +245,8 @@
 		
 	});
 
+	
+	
 	$('#planSort>div').click(function () {
 		$('#planSort>div').removeClass('clickColor');
 		$(this).addClass('clickColor');
