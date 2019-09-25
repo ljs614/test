@@ -35,9 +35,9 @@ public class PlannerService {
 	      return list;
 	   }
 	
-	public String insertPlanner(String plannerName, String plannerDate) {
+	public String insertPlanner(String plannerName, String plannerDate, String imgUrl) {
 		Connection conn = getConnection();
-		int result = dao.insertPlanner(conn, plannerName, plannerDate);
+		int result = dao.insertPlanner(conn, plannerName, plannerDate, imgUrl);
 		String plannerId = null;
 		if(result>0) {
 			commit(conn);
@@ -134,6 +134,14 @@ public class PlannerService {
 		List<Planner> list=dao.selectPlannerList(conn);
 		close(conn);
 		return list;
+	}
+	
+	public String selectCityImg(String cityName) {
+		Connection conn = getConnection();
+		String url = dao.selectCityImg(conn, cityName);
+		
+		close(conn);
+		return url;
 	}
 
 

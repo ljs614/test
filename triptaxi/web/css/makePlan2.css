@@ -184,6 +184,9 @@
       padding-bottom:3px;
       color:rgb(97, 96, 96);
     }
+    #mm_weekday{
+    	margin-left:10px;
+    }
 
     ul#addDayBox{
       /* border:1px solid red; */
@@ -234,6 +237,8 @@
       height:40px;
       min-height:40px;
       text-align:center;
+      position:relative;
+      bottom:0;
     }
 
     ul#userGuide>li{

@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
-<!-- jquery 경로 수정해야됨 -->
+
 <script src="<%=request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 
 <link href="<%=request.getContextPath() %>/css/makePlan2.css" rel="stylesheet">
@@ -47,18 +47,7 @@
           <li id="showFullPlan">전체일정보기</li>
         </ul>
         <ul class="mainMenu">
-          <li class="clickColor">
-            <div id="mm_dayCount">DAY <span>1</span></div>
-            <div id="mm_date">00.00</div>
-            <div id="mm_weekday">일요일</div>
-            <div id="mm_city">서울</div>
-          </li>
-          <li>
-            <div id="mm_dayCount">DAY <span>2</span></div>
-            <div id="mm_date">00.00</div>
-            <div id="mm_weekday">일요일</div>
-            <div id="mm_city">서울</div>
-          </li>
+          
         </ul>
       
         <ul id="addDayBox" onclick='fn_addDay();'>
@@ -102,6 +91,10 @@
 
       <div id="map"></div>
     <script>
+
+      var planner = ${planner};
+      var dayList = ${dayList};
+      
       var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
        $('#planTitle').mouseover(function(){
            $(this).css("background-color","#F2F2F2");
@@ -147,19 +140,33 @@
 
       
       $(window).ready(function () {
-          var h = $(document).height() - $('.mainMenu').height() - 213;
+          var h = $(document).height() - $('.mainMenu').height() - 149;
           var mainMenu = $(document).height() - 250;
           $('.mainMenu').css("max-height", mainMenu + "px");
           $('#addDayBox').css("height", h + "px");
-          $('#sm_date').text($('.clickColor').find('#mm_date').text());
-          $('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
           
           var map_width = $(window).width() - leftDiv;
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
    
-          console.log(1);
+          $('#title').text(planner['plannerName']);
+   
+          var date = new Date(planner['plannerDate']);
+          var resultDate = calDate(date, dayList.length);
+          $('#fullDate').text(date.getMonth()+1+"."+date.getDate()+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
+          console.log(resultDate.getDay());
+          
+          $.each(dayList, function(index, item){
+        	  console.log(dayList);
+        	  console.log("day : " + item['plannerDayNo']);
+        	  fn_addDay(item['plannerDayNo'], item['cityName'],date);
+          });
+          $('.mainMenu>li:first').addClass("clickColor");
+          
+          $('#sm_date').text($('.clickColor').find('#mm_date').text());
+          $('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
+          
         });
 
         $(window).resize(function () {
@@ -173,15 +180,17 @@
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
+          
         });
 
-        function fn_addDay() {
-          var day = $('.mainMenu>li:last-of-type').children().first().children().text() * 1;
-          var add = "<li><div id='mm_dayCount'>DAY <span>" + (day + 1);
+        
+        function fn_addDay(dayNo, cityName, startDate) {
+          var currDate = calDate(startDate, (dayNo-1));
+          var add = "<li><div id='mm_dayCount'>DAY <span>" + dayNo;
           add += "</span></div>";
-          add += "<div id='mm_date'>00.00</div>";
-          add += "<div id='mm_weekday'>일요일</div>";
-          add += "<div id='mm_city'>서울</div></li>";
+          add += "<div id='mm_date'>"+ (currDate.getMonth()+1)+"."+currDate.getDate() +"</div>";
+          add += "<div id='mm_weekday'>"+ returnDay(currDate.getDay()) +"</div>";
+          add += "<div id='mm_city'>"+ cityName +"</div></li>";
 
             console.log($(document).height()-235);
           $('.mainMenu').append(add);
@@ -191,6 +200,20 @@
           }
 
         };
+        
+        function returnDay(day){
+			var dayK="";
+			switch(day){
+				case 0 : dayK="일요일";break;
+				case 1 : dayK="월요일";break;
+				case 2 : dayK="화요일";break;
+				case 3 : dayK="수요일";break;
+				case 4 : dayK="목요일";break;
+				case 5 : dayK="금요일";break;
+				case 6 : dayK="토요일";break;
+			}
+			return dayK;
+		}
 
         $('#showFullPlan').click(function () {
           $(this).addClass("clickColor");
@@ -275,6 +298,15 @@
         	$('.sc_icon').removeClass("iconColor");
         	$(this).addClass("iconColor	");
         });
+        
+        function calDate(receiveDate, addDay){
+            var addDate = new Date(receiveDate);
+            var addResult = new Date(addDate.setDate(receiveDate.getDate() + addDay));
+              
+            return addResult;            
+        }
+        
+        
 
       </script>
     <script

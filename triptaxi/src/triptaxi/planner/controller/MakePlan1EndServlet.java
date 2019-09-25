@@ -68,8 +68,9 @@ public class MakePlan1EndServlet extends HttpServlet {
 		List<JsonCityCount> list = gson.fromJson(request.getParameter("jsonData"), 
 													new TypeToken<List<JsonCityCount>>(){}.getType());
 		
+		String imageUrl = service.selectCityImg(list.get(0).getCity());
 		
-		String plannerId = service.insertPlanner(plannerName, plannerDate);
+		String plannerId = service.insertPlanner(plannerName, plannerDate, imageUrl);
 		
 		Planner planner = new Planner();
 		planner.setPlannerId(plannerId);

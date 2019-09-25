@@ -95,7 +95,7 @@ public class PlannerDao {
 	      return list;
 	   }
 	
-	public int insertPlanner(Connection conn, String plannerName, String plannerDate) {
+	public int insertPlanner(Connection conn, String plannerName, String plannerDate, String imgUrl) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertPlanner");
@@ -105,6 +105,7 @@ public class PlannerDao {
 			
 			pstmt.setString(1, plannerName);
 			pstmt.setString(2, plannerDate);
+			pstmt.setString(3, imgUrl);
 			
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
@@ -315,6 +316,27 @@ public class PlannerDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public String selectCityImg(Connection conn, String cityName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectCityImg");
+		String result = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 
