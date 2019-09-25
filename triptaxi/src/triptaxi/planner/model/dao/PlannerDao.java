@@ -214,43 +214,61 @@ public class PlannerDao {
 		return tour;
 	}
 	
-	public List<Tour> selectTourList(Connection conn, String city, String month){
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = prop.getProperty("selectTourList");
-		List<Tour> tourList = new ArrayList<Tour>();
-		
+//	public List<Tour> selectTourList(Connection conn, String city, String month){
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = prop.getProperty("selectTourList");
+//		List<Tour> tourList = new ArrayList<Tour>();
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, city);
+//			pstmt.setString(2, city);
+//			pstmt.setString(3, city);
+//			pstmt.setString(4, month);
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				Tour t = new Tour();
+//				t.setTourId(rs.getString(1));
+//				t.setTourName(rs.getString(2));
+//				t.setTourEng(rs.getString(3));
+//				t.setCity(rs.getString(4));
+//				t.setTourLat(rs.getDouble(5));
+//				t.setTourLng(rs.getDouble(6));
+//				t.setImageUrl(rs.getString(7));
+//				t.setClipCount(rs.getInt(9));
+//				t.setReviewScore(rs.getInt(10));
+//				t.setCategory(rs.getString(11));
+//				tourList.add(t);
+//			}
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		
+//		return tourList;
+//	}
+	
+	public int updateTitle(Connection conn, String plannerId, String title) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateTitle");
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, city);
-			pstmt.setString(2, city);
-			pstmt.setString(3, city);
-			pstmt.setString(4, month);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				Tour t = new Tour();
-				t.setTourId(rs.getString(1));
-				t.setTourName(rs.getString(2));
-				t.setTourEng(rs.getString(3));
-				t.setCity(rs.getString(4));
-				t.setTourLat(rs.getDouble(5));
-				t.setTourLng(rs.getDouble(6));
-				t.setImageUrl(rs.getString(7));
-				t.setClipCount(rs.getInt(9));
-				t.setReviewScore(rs.getInt(10));
-				t.setCategory(rs.getString(11));
-				tourList.add(t);
-			}
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, plannerId);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
-			close(rs);
+
 			close(pstmt);
 		}
-		
-		return tourList;
+		return result;
 	}
 	
 

@@ -27,15 +27,27 @@
 							<img src="<%=request.getContextPath()%>/views/planner/img/pButton.png" width='40px' height='40px'/>
 						</div>
 					</div>
-					<div id="planner-name">
-						<%=planner.getPlannerName()%>
+					<div id="planner-name">	
+						<div id="planTitle">
+							<div id="title">
+								<%=planner.getPlannerName()%>
+							</div>
+							<i class="far fa-edit"></i>
+						</div>
+						<div id="editTitle">
+							<input type="text" id='editT' name="editT" maxlength="15" onkeyup="fn_lengthCheck(this);">
+							<input type="button" id='editBT' value="수정" onclick="fn_titleChange()">
+							<div id='titleCnt'>0/15</div>
+						</div> 
 					</div>
+
+
 					<div id="planner-etc">
 						<div id="planner-etc-date">
 							
 						</div>
 						<div id="planner-etc-theme">
-							비즈니스
+							<%=planner.getPlannerTheme()%>
 						</div>
 					</div>
 				</div>
@@ -99,7 +111,8 @@
 		}
 		$("#cover-container").css("background-image","url('"+coverImg+"')");
 		var html="";
-		//일정 날짜 생성
+
+		//커버 일정 날짜 생성
 		var date_=new Date('<%=planner.getPlannerDate()%>');
 		var dayLong=planList.length;
 		html+=date_.getFullYear()+"."+(date_.getMonth()+1)+"."+date_.getDate()+"~";
@@ -128,7 +141,7 @@
 				html+="<td class='day-tourImg' rowspan='3'>";
 				html+="<img src='<%=request.getContextPath()%>/"+planList[i][j]["imageUrl"]+"' width='100px' height='100px' /></td>";
 				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['tourName']+"</td>";
-				html+="<td class='day-city-zoom'>";
+				html+="<td class='day-tour-zoom'>";
 				html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
 				html+="</tr>";
 				html+="<tr>";
@@ -467,6 +480,58 @@
 			like=true;
 		}
 	}
+
+	//일정 이름 바꾸기
+	$('#planTitle').mouseover(function(){
+		// $(this).css("background-color","#F2F2F2");
+		$('#planTitle>i').css("color","skyblue");
+	});
+	$('#planTitle').mouseleave(function(){
+		// $(this).css("background-color", "white");
+		$('#planTitle>i').css("color","white");
+	});
+
+	$('#planTitle').on('click',function(){
+		$(this).hide();
+		$('#editTitle').show();
+		$("#editT").val($('#title').text().trim());
+		$('#titleCnt').text($('#editT').val().length+"/15");
+	});
+	$('#editBT').on('click',function(){
+		$('#editTitle').hide();
+		$('#planTitle').show();
+		$('#title').text($('#editT').val());
+
+	});
+	function fn_lengthCheck(input) {
+		var text = $(input).val();
+		var maxlength = $(input).prop("maxlength");
+		var count = 0;
+
+		for (var i = 0; i < text.length; i++) {
+		var ch = escape(text.charAt(i)).length;
+		if (ch == 6) {
+			count++;
+		}
+
+		if (count > maxlength) {
+			$(input).val(text.substr(0, 15));
+		}
+		}
+
+		var totalLength = $(input).val().length;
+		$('#titleCnt').text(totalLength+"/15");
+    }
+	function fn_titleChange(){
+		$.ajax({
+                url:"<%=request.getContextPath()%>/planner/titleChange",
+                type:"get",//default:get
+                dataType:"text",
+				data:{"title":$("#editT").val(), "plannerId":"<%=planner.getPlannerId()%>"}
+            });
+	}
+
+
 	$(function(){
 			//좋아요버튼 호버
 			$("#like_btn").hover(function(){
@@ -486,16 +551,22 @@
 
 
 
-			//도시 줌 클릭이벤트
-			$(".day-city-zoom").click(function(){
+			//관광지 줌 클릭이벤트
+			$(".day-tour-zoom").click(function(){
 				var day_num=$(this).parents(".day-planner").index();
 				var city_num=$(this).siblings(".day-num").html()-1;
 				if(cDay!=day_num+1){
 					cDay=day_num+1;
 					fn_marker(map);
 				}
-				var cityLat=(attrsLat[day_num].split(","))[city_num];
-				var cityLng=(attrsLng[day_num].split(","))[city_num];
+				var lats=[];
+				var lngs=[];
+				for(var i=0; i<planList[cDay-1].length; i++){
+					lats.push(planList[cDay-1][i]['tourLat']);
+					lngs.push(planList[cDay-1][i]['tourLng']);
+				}
+				var cityLat=lats[city_num];
+				var cityLng=lngs[city_num];
 				var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
 				map.setCenter(cityLatLng);
 				map.setZoom(14);

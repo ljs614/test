@@ -50,6 +50,67 @@ div#planner-info>div{
     top:50px;
     left:60px;
 }
+#planner-name>div {
+    width: 300px;
+    height:30px;
+    display: inline-block;
+    position:absolute;
+    /* top:9px; */
+    /* left:70px; */
+    padding-left:5px;
+  }
+  
+  div#planTitle{
+    border-radius:5px;
+    cursor:pointer;
+    padding-top:10px; 
+  }
+  #planTitle>#title{
+    display:inline-block;
+    font-weight:bolder;
+  }
+ #planner-name>div#editTitle{
+    display:none;
+    height:40px;
+  }
+  #editTitle input#editT{
+    position:relative;
+    top:7px;
+    height:20px;
+    width:240px;
+  }
+  #editTitle input#editBT{
+    position:relative;
+    top:6px;
+    left:4px;
+    height:26px;
+    border:none;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:bold;
+    border-radius: 3px;
+    background-color:rgb(253, 214, 94);
+  }
+  #editTitle #editBT:hover{
+  background-color:#fde396;
+  }
+  #editTitle #editBT:focus{
+      outline:none;
+  }
+  #editTitle #titleCnt{
+    display:inline-block;
+    position:relative;
+    top:-38px;
+    left:196px;
+    width:45px;
+    text-align:right;
+
+    color:gray;
+    font-size:11px;
+  }
+
+
+
+
 div#planner-writer{
     position: relative;
     display: inline-block;
@@ -111,6 +172,7 @@ div#planner-etc-date{
     display: inline-block;
     color:white;
     padding-right: 5px;
+    padding-left:5px;
 }
 div#planner-etc-theme{
     position: relative;
