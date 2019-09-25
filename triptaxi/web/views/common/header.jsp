@@ -35,13 +35,14 @@
         $(function(){
             $("nav").hover(function(){
                 $("nav .sub_menu").stop().slideDown("fast");
-                $("nav").css("backgroundColor","white");
-                $("nav").css("borderBottom","1px solid lightgray");
-                $(".main_menu>a").css("color","black");
+                $("nav").css("backgroundColor","#49506a");
+                $("nav").css("borderBottom","1px solid #404559");
+                $(".main_menu>a").css("color","#a6abbe");
+                $(".sub_menu1>ul>li>a").css("color","#a6abbe");
             }, function(){
                 if($(window).scrollTop()){
                     $("nav .sub_menu").stop().slideUp("fast");
-                    $("nav").css("backgroundColor","white");
+                    $("nav").css("backgroundColor","#49506a");
                     $("nav").css("borderBottom","");
                     $(".main_menu>a").css("color","black");
                 }
@@ -58,19 +59,19 @@
             $(window).scroll(function(){ 
                 var scroll = $(window).scrollTop(); 
                 if(scroll>1){ 
-                    $("nav").css("backgroundColor","white"); 
-                    $(".main_menu>a").css("color","black");
+                    $("nav").css("backgroundColor","#49506a"); 
+                    $(".main_menu>a").css("color","#a6abbe");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","black");
+                    	$(".main_menu>a").css("color","#a6abbe");
                     }, function(){
-                    	$(".main_menu>a").css("color","black");
+                    	$(".main_menu>a").css("color","#a6abbe");
                     });
                 } 
                 else{
                     $("nav").css("backgroundColor",""); 
                     $(".main_menu>a").css("color","black");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","black");
+                    	$(".main_menu>a").css("color","#a6abbe");
                     }, function(){
                     	$(".main_menu>a").css("color","black");
                     });
@@ -178,31 +179,30 @@
                         <li class="main_menu"><a href="">여행 준비</a></li>
                     </ul>
                 </div>
-                <!-- <div class="top_btn">
+                <div class="top_btn">
                     <button id="btn_login" name="btn_login" class="" onclick="">로그인</button>
                     <button id="btn_join" name="btn_join" class="" onclick="">회원가입</button>
-                	<div class="spinner">
-					  <div class="double-bounce1"></div>
-					  <div class="double-bounce2"></div>
-					</div>
-                </div> -->
-                <div class="top_btn1">
-                	<a href="#" class="top_login">
-	                	<i class="material-icons">
+                </div>
+                <!-- <div class="top_btn1">
+                	<a href="#" class="top_login" title="마이페이지">
+	                	<i class="material-icons login_i">
 							person_pin
 						</i>
 					</a>
-					<a href="#" class="top_login">
-						<i class="material-icons">
-							how_to_vote
+					<a href="#" class="top_login" title="메세지함">
+						<i class="material-icons login_i">
+							notifications_active
+						</i>
+						<i class="material-icons top_i">
+							notifications_off
 						</i>
 					</a>
-					<a href="#" class="top_login">
-						<i class="material-icons">
-							person_add_disabled
+					<a href="#" class="top_login" title="로그아웃">
+						<i class="material-icons login_i">
+							emoji_people
 						</i>
                 	</a>
-                </div>
+                </div> -->
             </div>
 
             <div class="sub_menu">

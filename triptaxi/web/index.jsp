@@ -76,7 +76,7 @@
 						<div class="top_con1_2_12 hvr-icon-spin">
 							<!-- <i class="fas fa-map top_con_i"></i> -->
 								<i class="material-icons top_con_i1 top_i">
-									card_travel
+									flight_takeoff
 								</i>
 						</div>
 					</div>
@@ -188,11 +188,13 @@
 			</a>
 		</div>
 		<div class="aos-item" data-aos="flip-up">
-			<div class="aos-item__inner">
-				<img src="1.jpg" />
-				<h3>홍콩</h3>
-				<p>HongKong</p>
-			</div>
+			<a href="#">
+				<div class="aos-item__inner">
+					<img src="1.jpg" />
+					<h3>홍콩</h3>
+					<p>HongKong</p>
+				</div>
+			</a>
 		</div>
 		<div class="aos-item" data-aos="fade-down">
 			<a href="#">
@@ -400,7 +402,7 @@
 		</div>
 	</div>
 		
-	"<img src='"<%=request.getContextPath() %>/images/"+data[i]['cityEng']+"/"+imgurl[0] '/>"
+	
 	
 
 
@@ -409,7 +411,7 @@
 		easing : 'ease-in-out-sine'
 	});
 	
-	$(function(){
+	<%-- $(function(){
 		$(document).ready(function(){
 			$.ajax({
 				url:"<%=request.getContextPath() %>/indexcityservlet",
@@ -427,10 +429,11 @@
 				 		cityArr+="<img src='<%=request.getContextPath() %>/images/';
 				 		+data[i]["cityEng"]+imgurl[0]";
 					} 
+				 	"<img src='"<%=request.getContextPath() %>/images/"+data[i]['cityEng']+"/"+imgurl[0] '/>"
 				}
 			});
 		});
-	});
+	}); --%>
 	
 	
 	
