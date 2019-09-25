@@ -178,13 +178,30 @@
                         <li class="main_menu"><a href="">여행 준비</a></li>
                     </ul>
                 </div>
-                <div class="top_btn">
+                <!-- <div class="top_btn">
                     <button id="btn_login" name="btn_login" class="" onclick="">로그인</button>
                     <button id="btn_join" name="btn_join" class="" onclick="">회원가입</button>
-                	<!-- <div class="spinner">
+                	<div class="spinner">
 					  <div class="double-bounce1"></div>
 					  <div class="double-bounce2"></div>
-					</div> -->
+					</div>
+                </div> -->
+                <div class="top_btn1">
+                	<a href="#" class="top_login">
+	                	<i class="material-icons">
+							person_pin
+						</i>
+					</a>
+					<a href="#" class="top_login">
+						<i class="material-icons">
+							how_to_vote
+						</i>
+					</a>
+					<a href="#" class="top_login">
+						<i class="material-icons">
+							person_add_disabled
+						</i>
+                	</a>
                 </div>
             </div>
 

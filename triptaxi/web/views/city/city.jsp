@@ -265,9 +265,9 @@
 		$("#tourist").one('click', function () {
 			$.ajax({
 				url:"<%=request.getContextPath() %>/tourist",
-				type:"get",
+				type:"post",
 				success:function(data){
-					
+					console.log(data);
 					var addDiv="";
 					for(var i=0;i<data.length;i++){
 						  console.log(data[i]["touristTitle"]);
@@ -280,9 +280,6 @@
 					}
 					$(".city_right").html(addDiv);
 					$("section").css("height",$(".city_leftmenu").height());
-					console.log($(".city_right").height());
-					console.log($(".city_con2").height());
-					console.log($("section").height());
 				}
 			});
 		});

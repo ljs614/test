@@ -1,7 +1,6 @@
-package triptaxi.city.controller;
+package triptaxi.index.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,16 +18,16 @@ import triptaxi.city.model.service.CityService;
 import triptaxi.city.model.vo.City;
 
 /**
- * Servlet implementation class TouristServlet
+ * Servlet implementation class IndexCityServlet
  */
-@WebServlet("/tourist")
-public class TouristServlet extends HttpServlet {
+@WebServlet("/indexcityservlet")
+public class IndexCityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TouristServlet() {
+    public IndexCityServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,6 +52,8 @@ public class TouristServlet extends HttpServlet {
 		
 		response.setContentType("application/json;charset=UTF-8");
 		new Gson().toJson(list,response.getWriter());
+		
+		
 		
 		
 		

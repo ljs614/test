@@ -400,14 +400,73 @@
 		</div>
 	</div>
 		
-
-
+	"<img src='"<%=request.getContextPath() %>/images/"+data[i]['cityEng']+"/"+imgurl[0] '/>"
+	
 
 
 <script>
 	AOS.init({
 		easing : 'ease-in-out-sine'
 	});
+	
+	$(function(){
+		$(document).ready(function(){
+			$.ajax({
+				url:"<%=request.getContextPath() %>/indexcityservlet",
+				type:"get",
+				dataType: 'json',
+				success:function(data){
+					console.log(data);
+					
+					var cityArr="";
+				 	for(var i=0; i<=5; i++){
+				 		console.log(data[i]["cityName"]);
+				 		console.log(data[i]["cityEng"]);
+				 		var imgurl=data[i]["imageUrl"].split(",");
+				 		console.log(imgurl[0]);
+				 		cityArr+="<img src='<%=request.getContextPath() %>/images/';
+				 		+data[i]["cityEng"]+imgurl[0]";
+					} 
+				}
+			});
+		});
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 
