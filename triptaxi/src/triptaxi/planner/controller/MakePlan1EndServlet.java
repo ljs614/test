@@ -1,7 +1,10 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.JsonCityCount;
+import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
 import triptaxi.planner.model.vo.Tour;
 
@@ -43,18 +47,34 @@ public class MakePlan1EndServlet extends HttpServlet {
 //		
 		String plannerName = request.getParameter("planTitle");
 		String plannerDate = request.getParameter("startDay");
+		System.out.println(plannerDate);
+	
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date to=null;
+		try {
+			to = transFormat.parse(plannerDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 		String month = plannerDate.substring(5, 7);
 	
 		PlannerService service = new PlannerService(); 
 		Gson gson = new Gson();
+		
 		List<JsonCityCount> list = gson.fromJson(request.getParameter("jsonData"), 
 													new TypeToken<List<JsonCityCount>>(){}.getType());
 		
-		for(JsonCityCount c : list) {
-			System.out.println(c.toString());
-		}
 		
 		String plannerId = service.insertPlanner(plannerName, plannerDate);
+		
+		Planner planner = new Planner();
+		planner.setPlannerId(plannerId);
+		planner.setPlannerName(plannerName);
+		planner.setPlannerDate(to);
 		
 		int dayNo = 1;
 		int result = 0;
@@ -86,7 +106,12 @@ public class MakePlan1EndServlet extends HttpServlet {
 		for(Tour t : AttrList) {
 			System.out.println(t.getTourName());
 		}
+		System.out.println("json : " + gson.toJson(planner));
 		
+		request.setAttribute("planner", gson.toJson(planner));
+		request.setAttribute("dayList", gson.toJson(dayList));
+		request.setAttribute("tourList", gson.toJson(AttrList));
+		request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request, response);
 		
 	
 	}

@@ -215,44 +215,39 @@ public class PlannerDao {
 		return tour;
 	}
 	
-//	public List<Tour> selectTourList(Connection conn, String city, String month){
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		String sql = prop.getProperty("selectTourList");
-//		List<Tour> tourList = new ArrayList<Tour>();
-//		
-//		try {
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, city);
-//			pstmt.setString(2, city);
-//			pstmt.setString(3, city);
-//			pstmt.setString(4, month);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				Tour t = new Tour();
-//				t.setTourId(rs.getString(1));
-//				t.setTourName(rs.getString(2));
-//				t.setTourEng(rs.getString(3));
-//				t.setCity(rs.getString(4));
-//				t.setTourLat(rs.getDouble(5));
-//				t.setTourLng(rs.getDouble(6));
-//				t.setImageUrl(rs.getString(7));
-//				t.setClipCount(rs.getInt(9));
-//				t.setReviewScore(rs.getInt(10));
-//				t.setCategory(rs.getString(11));
-//				tourList.add(t);
-//			}
-//		}catch(SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			close(rs);
-//			close(pstmt);
-//		}
-//		
-//		return tourList;
-//	}
+	public List<Tour> selectTourList(Connection conn, String table, String col, String city){
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql="SELECT * FROM "+table+" WHERE "+col+"='"+city+"'";
+		List<Tour> tourList = new ArrayList<Tour>();
+		
+		try {
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				Tour tour=new Tour();
+				tour.setTourId(rs.getString(1));
+				tour.setTourName(rs.getString(2));
+				tour.setTourEng(rs.getString(3));
+				tour.setCity(rs.getString(4));
+				tour.setTourLat(rs.getDouble(5));
+				tour.setTourLng(rs.getDouble(6));
+				tour.setImageUrl(rs.getString(7));
+				tour.setClipCount(rs.getInt(9));
+				tour.setReviewScore(rs.getInt(10));
+				tour.setCategory(rs.getString(11));
+			
+				tourList.add(tour);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return tourList;
+	}
 	
 	public int updateTitle(Connection conn, String plannerId, String title) {
 		PreparedStatement pstmt=null;

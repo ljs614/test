@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="triptaxi.planner.model.vo.Planner"%>
+<%
+	
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +24,6 @@
         <img logo src="" width="60px" height="60px">
         <div id="planTitle">
           <div id="title">
-            가나다라마바사아자차카타파하하
           </div>
           <i class="far fa-edit"></i>
         </div>
@@ -37,7 +41,7 @@
       <nav>
         <ul class="dateInfo">
           <li>
-            <div id="fullDate">00.00 ~ 00.00</div>
+            <div id="fullDate"></div>
             <div id="fullDateEdit"><i class="fas fa-cog"></i> EDIT</div>   
           </li>
           <li id="showFullPlan">전체일정보기</li>
@@ -141,6 +145,7 @@
           $('#titleCnt').text(totalLength+"/15");
         };
 
+      
       $(window).ready(function () {
           var h = $(document).height() - $('.mainMenu').height() - 213;
           var mainMenu = $(document).height() - 250;
@@ -153,6 +158,8 @@
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
+   
+          console.log(1);
         });
 
         $(window).resize(function () {

@@ -93,16 +93,16 @@ public class PlannerService {
 	}
 	
 	
-//	public List<Tour> selectTourList(String table, String col, String city){
-//		Connection conn = getConnection();
-//		
-////		수정해야됨
-//		List<Tour> tourList = dao.selectTourList(conn, table, col, city);
-//		
-//		close(conn);
-//		return tourList;
-//		
-//	}
+	public List<Tour> selectTourList(String table, String col, String city){
+		Connection conn = getConnection();
+		
+//		수정해야됨
+		List<Tour> tourList = dao.selectTourList(conn, table, col, city);
+		
+		close(conn);
+		return tourList;
+		
+	}
 	
 	public int updateTitle(String plannerId, String title) {
 		Connection conn=getConnection();
