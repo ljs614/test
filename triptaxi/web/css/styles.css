@@ -39,10 +39,12 @@
 	position:relative;
 	top:-100px;
 	font-weight:600;
+	color:white;
 }
 .aos-item__inner>p{
 	position:relative;
 	top:-115px;
+	color:white;
 }
 
 /* @media screen and (max-width: 800px) {

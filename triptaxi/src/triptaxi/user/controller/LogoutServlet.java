@@ -1,34 +1,25 @@
-package triptaxi.city.controller;
+package triptaxi.user.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
-
-import triptaxi.city.model.service.CityService;
-import triptaxi.city.model.vo.City;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class TouristServlet
+ * Servlet implementation class LogoutServlet
  */
-@WebServlet("/tourist")
-public class TouristServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TouristServlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +28,17 @@ public class TouristServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<City> list=new CityService().selectCityList();
-		
-		JSONArray jarr=new JSONArray();
-		
-		/*
-		 * for(City t : list) { JSONObject j=new JSONObject();
-		 * j.put("cityName",t.getCityName()); j.put("cityEng",t.getCityEng());
-		 * j.put("nationName",t.getNationName()); jarr.add(t); }
-		 * System.out.println(jarr);
-		 */
-		
-		response.setContentType("application/json;charset=UTF-8");
-		new Gson().toJson(list,response.getWriter());
-		
-		
-		
+		// TODO Auto-generated method stub
+		//getSession(true) : 세션아이디가 있으면? 가져오고
+						   //없으면 생성해서 가져와라
+		//getSessoin(false) : 세션아이디 있으면 가져오고 
+		                   //없으면 null값!
+		HttpSession session=request.getSession(false);
+		if(session!=null) {
+			session.invalidate(); //세션종료
+		}
+		response.sendRedirect(request.getContextPath());
+	
 	}
 
 	/**

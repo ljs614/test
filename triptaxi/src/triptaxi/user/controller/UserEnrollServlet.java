@@ -1,34 +1,23 @@
-package triptaxi.city.controller;
+package triptaxi.user.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
-
-import triptaxi.city.model.service.CityService;
-import triptaxi.city.model.vo.City;
-
 /**
- * Servlet implementation class TouristServlet
+ * Servlet implementation class MemberEnrollServlet
  */
-@WebServlet("/tourist")
-public class TouristServlet extends HttpServlet {
+@WebServlet("/UserEnroll")
+public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TouristServlet() {
+    public UserEnrollServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,22 +26,9 @@ public class TouristServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<City> list=new CityService().selectCityList();
-		
-		JSONArray jarr=new JSONArray();
-		
-		/*
-		 * for(City t : list) { JSONObject j=new JSONObject();
-		 * j.put("cityName",t.getCityName()); j.put("cityEng",t.getCityEng());
-		 * j.put("nationName",t.getNationName()); jarr.add(t); }
-		 * System.out.println(jarr);
-		 */
-		
-		response.setContentType("application/json;charset=UTF-8");
-		new Gson().toJson(list,response.getWriter());
-		
-		
+		//페이지 전환용 서블릿!
+		request.getRequestDispatcher("/views/login/UserEnroll.jsp")
+		.forward(request, response);
 		
 	}
 

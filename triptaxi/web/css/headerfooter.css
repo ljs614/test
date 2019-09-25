@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-	a:link {color:black; text-decoration: none;}
-	a:visited {color:black; text-decoration: none;}
+	a:link {text-decoration: none;}
+	a:visited {text-decoration: none;}
 	a:hover {font-weight: 0};
 	
 	body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, 
@@ -75,18 +75,24 @@
 
 	.top_btn>button:hover {
 	  background-color: #a5c6f4;
-	  box-shadow: 0px 15px 20px rgba(153, 204, 255, 0.7);
+	  box-shadow: 0px 7px 7px rgba(166, 171, 190, 0.3);
 	  color: #fff;
 	  transform: translateY(-3px);
 	}
     .top_btn1{
-    	font-size
+    	padding-top:9px;
+    	margin-left: 170px;
+        height: 50px;
     }  
-    
+    .login_i{
+    	font-size:30px;
+    	color:#a6abbe;
+    	margin:0 6px;
+    }
     .sub_menu{
         margin-top: -3px;
         width: 100%;
-        background-color: white;
+        background-color: #49506a;
         height: 150px;
         display: none;
     }
@@ -104,6 +110,9 @@
         margin-top:25px;
         width: 130px;
         font-size: 13px;
+    }
+    .sub_menu1>ul>li>a{
+        color:#a6abbe;
     }
     .sub_menu1_1{
         margin-left:5px;
