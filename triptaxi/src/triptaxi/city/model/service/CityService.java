@@ -24,6 +24,8 @@ public class CityService {
 	public List<CityList> selectAllCityList() {
 		Connection conn = getConnection();
 		List<CityList> list = dao.selectAllCityList(conn);
+		close(conn);
+		return list;
 		
 	}
 

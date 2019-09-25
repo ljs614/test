@@ -1,5 +1,7 @@
 package triptaxi.city.model.dao;
 
+import static triptaxi.common.template.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import triptaxi.city.model.vo.City;
-import static triptaxi.common.template.JDBCTemplate.close;
+import triptaxi.planner.model.vo.CityList;
 
 public class CityDao {
 	
@@ -58,5 +60,36 @@ public class CityDao {
 			close(pstmt);
 		}return list;
 	}		
+	
+	public List<CityList> selectAllCityList(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectAllCityList");
+		List<CityList> list = new ArrayList<CityList>();
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         
+	         while(rs.next()) {
+	            CityList c = new CityList();
+	            c.setContinentName(rs.getString("continent_name"));
+	            c.setNationName(rs.getString("nation_name"));
+	            c.setCityName(rs.getString("city_name"));
+	            c.setLatitude(rs.getDouble("latitude"));
+	            c.setLongitude(rs.getDouble("longitude"));
+	            
+	            list.add(c);
+	         }
+	      }catch(SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      
+	      return list;
+		
+	}
 
 }
