@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import triptaxi.user.model.service.UserService;
+
 /**
  * Servlet implementation class GetLikePlannerServlet
  */
@@ -29,6 +31,9 @@ public class GetLikePlannerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
 		String plannerId=request.getParameter("plannerId");
+		String like=new UserService().selectLike(userId, plannerId);
+		response.getWriter().append("true");
+	
 		
 	}
 

@@ -7,11 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import triptaxi.planner.model.vo.Tour;
 import triptaxi.user.model.vo.User;
 
-import static triptaxi.common.template.JDBCTemplate.getConnection;
+
 import static triptaxi.common.template.JDBCTemplate.close;
 
 
@@ -103,6 +106,91 @@ import static triptaxi.common.template.JDBCTemplate.close;
 			close(rs);
 			close(pstmt);
 		}return u;
+	}
+	
+	public List<Tour> getClipboard(Connection conn, String userId){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Tour> list=new ArrayList<Tour>();
+		String sql=prop.getProperty("selectClipboard");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Tour tour=new Tour();
+				tour.setTourId(rs.getString(1));
+				tour.setTourName(rs.getString(2));
+				tour.setTourEng(rs.getString(3));
+				tour.setCity(rs.getString(4));
+				tour.setImageUrl(rs.getString(7));
+				tour.setClipCount(rs.getInt(9));
+				tour.setCategory(rs.getString(11));
+				list.add(tour);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int insertLike(Connection conn, String userId, String plannerId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertLike");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setString(2,  userId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteLike(Connection conn, String userId, String plannerId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteLike");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setString(2,  userId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectLike(Connection conn, String userId, String plannerId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String result="false";
+		String sql=prop.getProperty("selectLike");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setString(2, userId);
+			if(rs.next()) {
+				result="true";
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+		
 	}
 	
 	

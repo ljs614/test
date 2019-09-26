@@ -1,25 +1,28 @@
 package triptaxi.user.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import triptaxi.planner.model.vo.Tour;
 import triptaxi.user.model.service.UserService;
 
 /**
- * Servlet implementation class LikePlannerServlet
+ * Servlet implementation class ClipboardServlet
  */
-@WebServlet("/user/likePlanner")
-public class LikePlannerServlet extends HttpServlet {
+@WebServlet("/user/clipboard")
+public class ClipboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LikePlannerServlet() {
+    public ClipboardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,16 +33,12 @@ public class LikePlannerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
-		String plannerId=request.getParameter("plannerId");
-		String like=request.getParameter("like");
-		if(like.equals("true")) {
-			new UserService().deleteLike(userId, plannerId);
-			like="false";
-		}else {
-			new UserService().insertLike(userId, plannerId);
-			like="true";
+		System.out.println(userId);
+		List<Tour> list=new UserService().getClipboard(userId);
+		for(Tour t : list) {
+			System.out.println(t.toString());
 		}
-		response.getWriter().append(like);
+		response.getWriter().append("ad");
 	}
 
 	/**
