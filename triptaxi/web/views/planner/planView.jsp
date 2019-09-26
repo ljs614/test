@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, triptaxi.planner.model.vo.Planner"%>
+<%@ include file="/views/common/header.jsp" %>
 <%
 	Planner planner=(Planner)request.getAttribute("planner");
 	String coverImg=planner.getPlannerCoverimg();
+	boolean login=false;
+	if(loginUser!=null){
+		login=true;
+	}
 %>
-<%@ include file="/views/common/header.jsp" %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
 	<section id="header-container">
@@ -72,34 +76,6 @@
 
 
 	<section id="planView-main">
-		<div id="planView-outline" class="planView-main-container">
-			<div id="side-navi">
-			</div>
-			<div id="planner-containerNmap">
-				<div id="planner-container">
-					<div id="planner-outline">
-					</div>
-				</div>
-				<div id="right-side">
-					<div id="side-map">
-					</div>
-					<div id="side-attrs">
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div id="planView-schedule" class="planView-main-container">
-		</div>
-		<div id="main-map">
-			<div id="main-map-map">
-
-			</div>
-			<div id="main-map-navi">
-				
-			</div>
-		</div>
 	</section>
 	<div id="bot-container" style="width:100%; height:600px; border:1px solid red;">
 			
@@ -108,12 +84,8 @@
 		var planList=${jlist};
 		//커버 이미지
 		var coverImg="<%=coverImg%>";
-		if(coverImg=='null'){
-			coverImg="<%=request.getContextPath()%>/images/"+planList[0][0]['city']+"/Bangkok1.jpg";
-			$("#cover-container").css("background-image","url('"+coverImg+"')");
-		}else{
-			$("#cover-container").css("background-image","url('../views/planner/img/coverImg/"+coverImg+"')");
-		}
+		$("#cover-container").css("background-image","url('../"+coverImg+"')");
+
 		var html="";
 
 		//커버 일정 날짜 생성
@@ -123,70 +95,75 @@
 		date_.setDate(date_.getDate()+dayLong-1);
 		html+=date_.getFullYear()+"."+(date_.getMonth()+1)+"."+date_.getDate()+"("+dayLong+"일)";
 		$("#planner-etc-date").html(html);
-		
 		//개요 테이블 생성
-		html="";
+		var outline_html='<div id="planView-outline" class="planView-main-container">';
+		outline_html+='<div id="side-navi"></div>';
+		outline_html+='<div id="planner-containerNmap"><div id="planner-container"><div id="planner-outline">';
 		for(var i=0; i<planList.length; i++){
-			html+="<div id='planner-day"+(i+1)+"' class='day-planner'>";
-			html+="<table class='day-table'>";
-			html+="<tr>";
-			html+="<td class='day-day' rowspan='2' colspan='2'>DAY"+(i+1)+"</td>";
-			html+="<td class='day-date' colspan='5'>";
+			outline_html+="<div id='planner-day"+(i+1)+"' class='day-planner'>";
+			outline_html+="<table class='day-table'>";
+			outline_html+="<tr>";
+			outline_html+="<td class='day-day' rowspan='2' colspan='2'>DAY"+(i+1)+"</td>";
+			outline_html+="<td class='day-date' colspan='5'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
-			html+="&nbsp;&nbsp;"+date_.getFullYear()+"년 "+(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")</td>";
-			html+="</tr>";
-			html+="<tr>";
-			html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i][0]["city"]+"</td>";
-			html+="</tr>";
+			outline_html+="&nbsp;&nbsp;"+date_.getFullYear()+"년 "+(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")</td>";
+			outline_html+="</tr>";
+			outline_html+="<tr>";
+			outline_html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i][0]["city"]+"</td>";
+			outline_html+="</tr>";
 			for(var j=0; j<planList[i].length; j++){
-				html+="<tr>";
-				html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
-				html+="<td class='day-tourImg' rowspan='3'>";
-				html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
-				html+="<td class='day-tourName' colspan='3'>&nbsp;"+planList[i][j]['tourName']+"</td>";
-				html+="<td class='day-tour-zoom'>";
-				html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
-				html+="</tr>";
-				html+="<tr>";
-				html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;"+planList[i][j]['category']+"</td>";
-				html+="<td class='day-score'>8/10 b</td>";//수정하기
-				html+="<td></td>"
-				html+="</tr>";
-				html+="<tr>";
-				html+="<td colspan='3'></td>";
-				html+="</tr>";
+				outline_html+="<tr>";
+				outline_html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
+				outline_html+="<td class='day-tourImg' rowspan='3'>";
+				outline_html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
+				outline_html+="<td class='day-tourName' colspan='3'>&nbsp;<span>"+planList[i][j]['tourName']+"</span></td>";
+				outline_html+="<td class='day-tour-zoom'>";
+				outline_html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
+				outline_html+="</tr>";
+				outline_html+="<tr>";
+				outline_html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;<span>"+planList[i][j]['category']+"</span></td>";
+				outline_html+="<td class='day-score'><span>"+planList[i][j]["reviewScore"]+"/10</span></td>";//수정하기
+				outline_html+="<td></td>"
+				outline_html+="</tr>";
+				outline_html+="<tr>";
+				outline_html+="<td colspan='3'></td>";
+				outline_html+="</tr>";
 				if(j!=planList[i].length-1){
-					html+="<tr>";
-					html+="<td class='day-tourDistance1'></td>";
-					html+="<td class='day-tourDistance2'>&nbsp;"+returnDistance(i, j)+"km</td>";
-					html+="</tr>";
+					outline_html+="<tr>";
+					outline_html+="<td class='day-tourDistance1'></td>";
+					outline_html+="<td class='day-tourDistance2'>&nbsp;"+returnDistance(i, j)+"km</td>";
+					outline_html+="</tr>";
 				}
 			}
-			html+="</table>";
-			html+="</div>";
+			outline_html+="</table>";
+			outline_html+="</div>";
 		}
-		$("#planner-outline").html(html);
+		outline_html+="</div></div>";
+		outline_html+='<div id="right-side"><div id="side-map"></div></div></div></div>';
+		$("#planView-main").append(outline_html);
 
 		//일정표 테이블 생성
-		html="<table id='planner-schedule-tbl'>";
-		html+="<tr><th>날짜</th><th>도시</th><th>일정</th></tr>";
+		var schedul_html='<div id="planView-schedule" class="planView-main-container">';
+		schedul_html+="<table id='planner-schedule-tbl'>";
+		schedul_html+="<tr><th>날짜</th><th>도시</th><th>일정</th></tr>";
 		for(var i=0; i<planList.length; i++){
-			html+="<tr>";
-			html+="<td class='schedule-day'>";
+			schedul_html+="<tr>";
+					schedul_html+="<td class='schedule-day'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
-			html+=(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")";
-			html+="<p class='p-day'>DAY"+(i+1)+"</p></td>";
-			html+="<td class='schedule-city'>ㆍ"+planList[i][0]['city']+"</td>";
-			html+="<td class='schedule-att'>";
+			schedul_html+=(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")";
+			schedul_html+="<p class='p-day'>DAY"+(i+1)+"</p></td>";
+			schedul_html+="<td class='schedule-city'>ㆍ"+planList[i][0]['city']+"</td>";
+			schedul_html+="<td class='schedule-att'>";
 			for(var j=0; j<planList[i].length; j++){
-				html+="<p>&nbsp;&nbsp;"+(j+1)+".&nbsp;"+planList[i][j]['tourName']+"</p>";
+				schedul_html+="<p>&nbsp;&nbsp;"+(j+1)+".&nbsp;"+planList[i][j]['tourName']+"</p>";
 			}
-			html+="</td></tr>";
+			schedul_html+="</td></tr>";
 		}
-		html+="</table>";
-		$("#planView-schedule").html(html);
+		schedul_html+="</table></div>";
+		$("#planView-main").append(schedul_html);
+		$("#planView-schedule").hide();
 
 		//사이드내비 생성
 		html='<input type="button" class="side-navi-btn" onclick="top_go();" value="▲"/>';
@@ -199,24 +176,30 @@
 		$("#side-navi").html(html);
 
 		
-		//메인 내비 생성
-		html='<div id="exit-main"><button id="exit-mainMap" onclick="exit_mainMap();">전체 지도 닫기 X</button></div>';
+		//메인맵 내비 생성
+		var mmn_html='<div id="main-map">';
+		mmn_html+='<div id="main-map-map"></div>';
+		mmn_html+='<div id="main-map-navi">';
+		mmn_html+='<div id="exit-main"><button id="exit-mainMap" onclick="exit_mainMap();">전체 지도 닫기 X</button></div>';
 		for(var i=0; i<planList.length; i++){
-			html+="<div class='mmn-div'>";
-			html+="<input type='hidden' value='"+(i+1)+"' />";
-			html+="<table class='mmn-tbl'>";
-			html+="<tr>";
-			html+="<td class='mmn-day' rowspan='2' colspan='2'>DAY"+(i+1)+"</td>";
-			html+="<td class='mmn-date' colspan='3'>";
+			mmn_html+="<div class='mmn-div'>";
+			mmn_html+="<input type='hidden' value='"+(i+1)+"' />";
+			mmn_html+="<table class='mmn-tbl'>";
+			mmn_html+="<tr>";
+			mmn_html+="<td class='mmn-day' rowspan='2' colspan='2'>DAY"+(i+1)+"</td>";
+			mmn_html+="<td class='mmn-date' colspan='3'>";
 			var date_=new Date('<%=planner.getPlannerDate()%>');
 			date_.setDate(date_.getDate()+i);
-			html+="<p>"+date_.getFullYear()+"."+(date_.getMonth()+"."+date_.getDate()+1)+"("+returnDay(date_.getDay())+")</p>";
-			html+="<p class='mmn-date-city'>"+planList[i][0]["city"]+"</p></td>";
-			html+="</td>";
-			html+="</table>";
-			html+="</div>";
+			mmn_html+="<p>"+date_.getFullYear()+"."+(date_.getMonth()+"."+date_.getDate()+1)+"("+returnDay(date_.getDay())+")</p>";
+			mmn_html+="<p class='mmn-date-city'>"+planList[i][0]["city"]+"</p></td>";
+			mmn_html+="</td>";
+			mmn_html+="</table>";
+			mmn_html+="</div>";
 		}
-		$("#main-map-navi").html(html);
+		mmn_html+="</div></div>";
+		$("#planView-main").append(mmn_html);
+		$("#main-map").hide();
+
 				
 		//초기화
 		var cDay=1;
@@ -231,15 +214,11 @@
 		
 
 		$(window).ready(function(){
-			$(".planView-main-container").hide();
-			$("#planView-outline").show();
 			$(".navs").css("font-weight","");
 			$($(".navs")[0]).css("font-weight","bold");
 			$($(".side-navi-btn")[1]).css("color","red");
-			$("#main-map").hide();
 			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
-			$("#main-map-map").css("width",$("#planView-main").width()-150+"px");
-			$($(".mmn-div")[0]).css({"background-color":"lavender","color":"navy"});
+			$("#main-map-map").css("width",$(document).width()-150+"px");
 			$('#planTitle>i').hide();
 			$("#cover-change").css("opacity",0);
 		});
@@ -337,7 +316,7 @@
 						});
 				bounds.extend(loc);
 				if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
-					marker.setIcon("<%=request.getContextPath()%>/views/images/attraction/camera.png");
+					marker.setIcon("<%=request.getContextPath()%>/views/planner/img/camera1.png");
 				}else{
 					marker.setIcon("https://img.icons8.com/office/40/000000/marker.png");
 				}
@@ -389,21 +368,60 @@
 				}
 			});
 			//메인내비 클릭 이벤트
+			var cPage=0;
 			$(".navs").click(function(){
 				switch($(this).html()){
-					case "개요":$(".navs").css("font-weight","");$(".planView-main-container").hide();$("#planView-outline").show();$("#planView-main").css("height", $("#planner-container").height()+100+"px");$(this).css("font-weight","bold");break;
-					case "일정표":$("#planView-main").css("height", $("#planView-schedule").height()+100+"px");$(".navs").css("font-weight","");$(".planView-main-container").hide();$("#planView-schedule").show();$(this).css("font-weight","bold");break;
-					case "지도":cDay=1;$(".mmn-div").css({"background-color":"white","color":"navy"});$($(".mmn-div")[0]).css({"background-color":"navy","color":"white"});$("html, section").scrollTop(0);$("html, section").css("overflow-y","hidden");$("#main-map").show();mainMap();break;
+					case "개요": fn_outline(this);break;
+					case "일정표":fn_schedule(this);break;
+					case "지도":fn_mainMap();break;
 					default:;
 				}
 			});
 
 
 		});
-		function exit_mainMap(){
-			$("#main-map").hide();
-			$("html, section").css("overflow-y","auto");
+		cPage=0;
+		function fn_outline(tag){
+			cPage=0;
+			$(".navs").css("font-weight","");
+			$(".planView-main-container").hide();
+			$("#planView-outline").show();
+			$("")
+			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
+			$(tag).css("font-weight","bold");
+			initMap();
 		}
+		function fn_schedule(tag){
+			cPage=1;
+			$(".planView-main-container").hide();
+			$(".navs").css("font-weight","");
+			$(tag).css("font-weight","bold");
+			$("#planView-schedule").show();
+			$("#planView-main").css("height", $("#planner-schedule-tbl").height()+100+"px");
+		}
+		function fn_mainMap(){
+			$(".planView-main-container").hide();
+			cDay=1;
+			$(".mmn-div").css({"background-color":"white","color":"navy"});
+			$($(".mmn-div")[0]).css({"background-color":"navy","color":"white"});
+			$("html, section").scrollTop(0);
+			$("html, section").css("overflow-y","hidden");
+			$("#main-map").show();
+			mainMap();
+		}
+
+		function exit_mainMap(){
+			$("html, section").css("overflow-y","auto");
+			$("#main-map").hide();
+			if(cPage==0){
+				$("#planView-outline").show();
+			}else{
+				$("#planView-schedule").show();
+			}
+			cDay=1;
+			fn_marker(map);
+		}
+
 
 		function fn_marker(map){
 			flightPath.getPath().clear();
@@ -413,6 +431,10 @@
 			markers=[];
 			polyMarker_draw(map);
 		}
+
+
+
+
 		//메인 맵
 		var mainM;
 		var markerM;
@@ -464,36 +486,52 @@
 			markersM=[];
 			polyMarkerM_draw(mainM);
 		}
-
-	$(function(){
-		$(".mmn-div").click(function(){
-			cDay=$($(this).children('input')).val();
-			fn_markerM(mainM);
-			$($(".mmn-div")).css({"background-color":"white","color":"navy"});
-			$(this).css({"background-color":"navy","color":"white"});
+	
+	// var like=false;
+	var login="<%=login%>";
+	var like;
+	if(login){
+		fn_like_tf(login);
+	}else{
+		like=false;
+	}
+	//좋아요 데이터 가져오기
+	function fn_like_tf(login){
+		$.ajax({
+			url:"<%=request.getContextPath()%>/user/getLikePlanner",
+			type:"get",
+			dataType:"text",
+			data:{"plannerId":"<%=planner.getPlannerId()%>", "userId":"<%=loginUser.getUserId()%>"},
+			success:function(data){
+				like=data;
+				if(data){
+					$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
+				}
+			}
 		});
-	});	
-	var like=false;
-
+	}
+	
 	//좋아요버튼 클릭이벤트
 	function like_click(){
 		if(like){
-			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.7"});
 			like=false;
 		}else{
 			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
 			like=true;
 		}
 	}
+	
+
 
 
 	//일정 이름 바꾸기
-	$('#header-container').mouseover(function(){
+	$('#cover-container').mouseover(function(){
 		// $(this).css("background-color","#F2F2F2");
 		$('#planTitle>i').show();
 		$("#cover-change").css("opacity",1);
 	});
-	$('#header-container').mouseleave(function(){
+	$('#cover-container').mouseleave(function(){
 		// $(this).css("background-color", "white");
 		$('#planTitle>i').hide();
 		$("#cover-change").css("opacity",0);
@@ -517,14 +555,14 @@
 		var count = 0;
 
 		for (var i = 0; i < text.length; i++) {
-		var ch = escape(text.charAt(i)).length;
-		if (ch == 6) {
-			count++;
-		}
+			var ch = escape(text.charAt(i)).length;
+			if (ch == 6) {
+				count++;
+			}
 
-		if (count > maxlength) {
-			$(input).val(text.substr(0, 15));
-		}
+			if (count > maxlength) {
+				$(input).val(text.substr(0, 15));
+			}
 		}
 
 		var totalLength = $(input).val().length;
@@ -538,9 +576,10 @@
 				data:{"title":$("#editT").val(), "plannerId":"<%=planner.getPlannerId()%>"}
             });
 	}
-
+	
 
 	$(function(){
+		
 		//커버 이미지 바꾸기
 		$("#cover-img").change(function(){
 			var fd=new FormData();
@@ -561,18 +600,21 @@
 			});
 		});
 
-
+		
 
 		//좋아요버튼 호버
 		$("#like_btn").hover(function(){
 			if(!like){
-				$(this).css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"0.5"});
+				$(this).css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"0.7"});
 			}
 		},function(){
 			if(!like){
-				$(this).css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.5"});
+				$(this).css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.7"});
 			}
 		});
+
+		//좋아요 클릭 이벤트
+
 
 		//초대 클릭이벤트
 		$("#planner-member-invite").click(function(){
@@ -598,7 +640,14 @@
 			var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
 			map.setCenter(cityLatLng);
 			map.setZoom(14);
+		});
 
+		//메인맵 내비 클릭이벤트
+		$(".mmn-div").click(function(){
+			cDay=$($(this).children('input')).val();
+			fn_markerM(mainM);
+			$($(".mmn-div")).css({"background-color":"white","color":"navy"});
+			$(this).css({"background-color":"navy","color":"white"});
 		});
 	
 	});

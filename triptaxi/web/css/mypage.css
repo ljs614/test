@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+section{
+    position: relative;
+    top:80px;
+    height:1000px;
+    width:100%;
+}
+div#mypage-container{
+    position: relative;
+    width: 100%;
+    height:300px;
+    margin:0 auto;
+    
+    text-align: center;
+    background-color:#49506a;
+
+}
+div#mypage-nav{
+    width:490px;
+    height:45px;
+    margin:0 auto;
+    
+}
+div#mypage-nav li{
+    position: relative;
+    float: left;
+    font-size: 20px;
+    font-weight: 100;
+    width:100px;
+    height: 40px;
+    padding:0 10px;
+    border-bottom:none;
+    cursor: pointer;
+    color:white;
+    top:5px;
+}
+
+div#mypage-nav li:hover{
+    background-color:#a6abbe;
+}
+
+div#mypage-content{
+    position: relative;
+    width:100%;
+    height:500px;
+    top:-6px;
+    background-color: white;
+    
+}
+
+div#mypage-content>div{
+    position: relative;
+    width:960px;
+    height:500px;
+    background-color: white;
+    border:1px solid black;
+    border-top:none;
+    margin:0 auto;
+}

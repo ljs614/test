@@ -45,12 +45,15 @@ public class PlannerCoverChangeServlet extends HttpServlet {
 		String coverImg=mr.getFilesystemName("cover");
 		String plannerId=mr.getParameter("plannerId");
 		String plannerCoverImg=mr.getParameter("plannerCoverImg");
-		if(!plannerCoverImg.equals("null")) {
-			File file=new File(path+"/"+plannerCoverImg);
-			file.delete();
+		if(!coverImg.equals("null")) {			
+			if(!plannerCoverImg.substring(0, 3).equals("/im")) {
+				File file=new File(path+"/"+plannerCoverImg);
+				file.delete();
+			}
+			new PlannerService().updateCoverImg(plannerId, "/views/planner/img/coverImg/"+coverImg);
+			response.getWriter().append(coverImg);	
 		}
-		new PlannerService().updateCoverImg(plannerId, coverImg);
-		response.getWriter().append(coverImg);	
+		
 	}
 
 	/**
