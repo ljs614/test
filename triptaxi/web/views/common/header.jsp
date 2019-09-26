@@ -200,7 +200,7 @@
                 </div>
                 <%} else{%>
                 <div class="top_btn1">
-                	<a href="#" class="top_login" title="마이페이지">
+                	<a href="<%=request.getContextPath() %>/user/mypage" class="top_login" title="마이페이지">
 	                	<i class="material-icons login_i">
 							person_pin
 						</i>

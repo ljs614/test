@@ -55,8 +55,8 @@
 				<p><%=c.getCityName() %></p>
 			</div>
 			<div class="video_con1_2">
-				<span>12:49:47 (시차 -8시간 )</span>
-				<span>약 12시간 25분(직항기준)</span>
+				<span id="time"></span>
+				<span><%=c.getFlightTime() %></span>
 				<span>1EUR = 1,316.15원</span>
 			</div>
 			<div class="video_con1_3">
@@ -267,6 +267,19 @@
 </section>
 
 	<script>
+	
+	$(function(){
+		$(document).ready(function(){
+			setInterval(function(){
+				var time=new Date();
+				var year = time.getFullYear();
+				var hour = time.getHours()<%=c.getTimeDiffence()%>;
+			    var minute = time.getMinutes();
+			    var second = time.getSeconds();
+				$("#time").html(year+"년 "+hour+":"+minute+":"+second+"(시차 "+<%=c.getTimeDiffence()%>+"시간)");
+			},1000);
+		});
+	});
 	$(function (){
 		$("#tourist").one('click', function () {
 			$.ajax({
