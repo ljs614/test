@@ -131,7 +131,7 @@
 	var lngs=[];
 	var jsonList;
 	const nations = new Set([]);
-	var iconBase = 'http://maps.google.com/mapfiles/kml/paddle/';
+	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
 	makeCityList(${asiaList});
 
 	
@@ -217,14 +217,14 @@
     	
     	for(var i=0;i<lats.length;i++){
     		var loc = new google.maps.LatLng(lats[i], lngs[i]);
-    		var marker = new google.maps.Marker({position:loc, map:map , icon:"https://img.icons8.com/office/40/000000/marker.png" });
+    		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+"marker-40.png" });
     			bounds.extend(loc);
     			markers.push(marker);
     	}
 	    	console.log(lats);
 	    	console.log(lngs);
-    	map.fitBounds(bounds);
-    	map.panToBounds(bounds);
+    		map.fitBounds(bounds);
+    		map.panToBounds(bounds);
     	
     	$(document).on("mouseover", '.city', function(){
  			var ct = $(this).text();
@@ -235,13 +235,13 @@
     				var longitude = item['longitude'];
     				
     				beforeIndex = index;
-    				markers[beforeIndex].setIcon("https://img.icons8.com/office/80/000000/marker.png");
+    				markers[beforeIndex].setIcon(iconBase+"marker-80.png");
     			}   			
     		});
     		
     	});
     	$(document).on("mouseout", '.city', function(){
-    		markers[beforeIndex].setIcon("https://img.icons8.com/office/40/000000/marker.png");
+    		markers[beforeIndex].setIcon(iconBase+"marker-40.png");
     	})
     	
     }

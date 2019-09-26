@@ -31,6 +31,8 @@ public class PlannerTitleChangeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String title=request.getParameter("title");
 		String plannerId=request.getParameter("plannerId");
+		System.out.println(title);
+		System.out.println(plannerId);
 		new PlannerService().updateTitle(plannerId, title);
 	}
 

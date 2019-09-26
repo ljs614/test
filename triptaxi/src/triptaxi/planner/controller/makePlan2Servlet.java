@@ -1,7 +1,6 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,26 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import triptaxi.planner.model.service.PlannerService;
-import triptaxi.planner.model.vo.JsonCityCount;
 import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
 import triptaxi.planner.model.vo.Tour;
 
 /**
- * Servlet implementation class MakePlan1EndServlet
+ * Servlet implementation class makePlan2Servlet
  */
-@WebServlet("/makePlan1End")
-public class MakePlan1EndServlet extends HttpServlet {
+@WebServlet("/makePlan2")
+public class makePlan2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MakePlan1EndServlet() {
+    public makePlan2Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,42 +40,33 @@ public class MakePlan1EndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String plannerName = request.getParameter("planTitle");
-		String plannerDate = request.getParameter("startDay");
-	
-	
-		PlannerService service = new PlannerService(); 
-		Gson gson = new Gson();
+		System.out.println(request.getParameter("plannerId"));
+		String plannerId = request.getParameter("plannerId");
+		PlannerService service = new PlannerService();
 		
-		List<JsonCityCount> list = gson.fromJson(request.getParameter("jsonData"), 
-				new TypeToken<List<JsonCityCount>>(){}.getType());
-		
-		
-		String imageUrl = service.selectCityImg(list.get(0).getCity());
-		String plannerId = service.insertPlanner(plannerName, plannerDate, imageUrl);
-		
-		int dayNo = 1;
-		int result = 0;
+		Planner planner = service.selectPlanner(plannerId);
 		
 		List<PlannerDay> dayList = new ArrayList<PlannerDay>();
+		dayList = service.selectPlannerDayList(plannerId);
 		
-		if(plannerId != null) {
-			for(int i=0;i<list.size();i++) {
-				int count = list.get(i).getCount();
-				for(int j=0;j<count;j++) {
-					PlannerDay pd = new PlannerDay(null, dayNo, list.get(i).getCity(),null,plannerId);
-					dayNo++;
-					dayList.add(pd);
-				}
-			}			
-			result = service.insertPlannerDay(dayList);
-		}
+		List<Tour> attrList = new ArrayList<Tour>();
+		attrList = service.selectTourList("tt_attraction", "city", dayList.get(0).getCityName());
+
 		
-		
-		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/views/planner/makePlan2.jsp?plannerId="+plannerId);
-		}
+		Gson gson = new Gson();
+
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(planner.getPlannerDate());
+	
+		JSONObject list = new JSONObject();
+		list.put("plannerId", planner.getPlannerId());
+		list.put("plannerName", planner.getPlannerName());
+		list.put("plannerDate", date);
+		list.put("plannerId", planner.getPlannerId());
+		list.put("dayList", dayList);
+		list.put("attrList", attrList);
+
+		response.setContentType("application/json;charset=UTF-8");
+	    new Gson().toJson(list, response.getWriter());
 		
 	}
 

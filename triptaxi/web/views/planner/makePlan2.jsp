@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ page import="triptaxi.planner.model.vo.Planner"%>
 <%
 	
@@ -9,113 +9,147 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
+	rel="stylesheet">
 <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
 
 <script src="<%=request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 
-<link href="<%=request.getContextPath() %>/css/makePlan2.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/makePlan2.css"
+	rel="stylesheet">
 <title>Insert title here</title>
 
 </head>
 <body>
 
-    <header>
-        <img logo src="" width="60px" height="60px">
-        <div id="planTitle">
-          <div id="title">
-          </div>
-          <i class="far fa-edit"></i>
-        </div>
-        <div id="editTitle">
-          <form action="">
-            <input type="text" id='editT' name="editT" maxlength="15" onkeyup="fn_lengthCheck(this);">
-            <input type="button" id='editBT' value="수정">
-          </form>
-          <div id='titleCnt'>0/15</div>
-        </div> 
-        <button id="close">저장 & 닫기</button>
-      </header>
+	<header>
+		<img logo src="" width="60px" height="60px">
+		<div id="planTitle">
+			<div id="pltitle"></div>
+			<i class="far fa-edit"></i>
+		</div>
+		<div id="editTitle">
+			<form name='titleChangeFrm'>
+				<input type="text" id='title' name="title" maxlength="15"
+					onkeyup="fn_lengthCheck(this);"> 
+			</form>
+				<input type="button" id='editBT' value="수정" onclick="fn_titleChange();">
+			<div id='titleCnt'>0/15</div>
+		</div>
+		<button id="close">저장 & 닫기</button>
+	</header>
 
 
-      <nav>
-        <ul class="dateInfo">
-          <li>
-            <div id="fullDate"></div>
-            <div id="fullDateEdit"><i class="fas fa-cog"></i> EDIT</div>   
-          </li>
-          <li id="showFullPlan">전체일정보기</li>
-        </ul>
-        <ul class="mainMenu">
-          
-        </ul>
+	<nav>
+		<ul class="dateInfo">
+			<li>
+				<div id="fullDate"></div>
+				<div id="fullDateEdit">
+					<i class="fas fa-cog"></i> EDIT
+				</div>
+			</li>
+			<li id="showFullPlan">전체일정보기</li>
+		</ul>
+		<ul class="mainMenu">
+
+		</ul>
+
+		<ul id="addDayBox" onclick='fn_addDay();'>
+			<li>
+				<div id="addDay">
+					<span>DAY 추가</span>
+				</div>
+			</li>
+		</ul>
+		<ul id="userGuide">
+			<li><i class="fas fa-book"></i> 이용방법</li>
+		</ul>
+	</nav>
+	<div id="subMenu">
+		<ul>
+			<li>
+				<div id='sm_dayCount'>DAY 1</div>
+				<div id="sm_prevBT"><</div>
+				<div id="sm_nextBT">></div>
+				<div id="sm_date"></div>
+				<div id="sm_weekday"></div>
+				<div id="sm_refresh">
+					<i class="fas fa-redo"></i>
+				</div>
+			</li>
+		</ul>
+	</div>
+	</div>
+
+	<div id="searchCityMenu">
+		<ul>
+			<li>
+				<div id="sc_title"></div>
+				<div id="iconWrap">
+					<div class='sc_icon iconColor'>
+						<div id='attractionIcon'>
+							<i class="fas fa-camera"></i>
+						</div>
+					</div>
+					<div class='sc_icon'>
+						<div id='activityIcon'>
+							<i class="fas fa-running"></i>
+						</div>
+					</div>
+					<div class='sc_icon'>
+						<div id='festivalIcon'>
+							<i class="fas fa-drum"></i>
+						</div>
+					</div>
+					<div class='sc_icon'>
+						<div id='clipIcon'>
+							<i class="fas fa-paperclip"></i>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		
+		<ul id='tourListMenu'>
+      		
+		</ul>
+	</div>
+	<div id="searchCityMenuClose"><</div>
+
+
+	<div id="map"></div>
+	<script>
+    	const url = new URL(window.location.href);
+		var plannerId = url.searchParams.get('plannerId');
+		
+      	var planner;
+      	var dayList;
+      	var tourList;
       
-        <ul id="addDayBox" onclick='fn_addDay();'>
-          <li>
-            <div id="addDay"><span>DAY 추가</span></div>
-          </li>
-        </ul>
-        <ul id="userGuide">
-          <li><i class="fas fa-book"></i> 이용방법</li>
-        </ul>
-      </nav>
-      <div id="subMenu">
-        <ul>
-          <li>
-            <div id='sm_dayCount'>DAY 1</div>
-            <div id="sm_prevBT"><</div>
-            <div id="sm_nextBT">></div>
-            <div id="sm_date"></div>
-            <div id="sm_weekday"></div>
-            <div id="sm_refresh"><i class="fas fa-redo"></i></div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="searchCityMenu">
-      <ul>
-        <li>
-          <div id="sc_title">서울</div>
-          <div id="iconWrap">
-          <div class='sc_icon' id="attractionIcon"><i class="fas fa-camera"></i></div>
-          <div class='sc_icon' id="activityIcon"><i class="fas fa-running"></i></div>
-          <div class='sc_icon' id="festivalIcon"><i class="fas fa-drum"></i></div>
-          <div class='sc_icon' id="clipIcon"><i class="fas fa-paperclip"></i></div>
-        </div>
-        </li>
-      </ul>
-    </div>
-    <div id="searchCityMenuClose"><</div>
-
-
-      <div id="map"></div>
-    <script>
-
-      var planner = ${planner};
-      var dayList = ${dayList};
-      
-      var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
-       $('#planTitle').mouseover(function(){
+      	var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
+       	
+      	$('#planTitle').mouseover(function(){
            $(this).css("background-color","#F2F2F2");
            $('#planTitle>i').css("color","black");
-       });
-       $('#planTitle').mouseleave(function(){
+       	});
+       
+      	$('#planTitle').mouseleave(function(){
            $(this).css("background-color", "white");
            $('#planTitle>i').css("color","white");
-       });
+       	});
 
        $('#planTitle').on('click',function(){
          $(this).hide();
          $('#editTitle').show();
-         $("#editT").val($('#title').text().trim());
-         $('#titleCnt').text($('#editT').val().length+"/15");
+         $("#title").val($('#pltitle').text().trim());
+         $('#titleCnt').text($('#title').val().length+"/15");
        });
        $('#editBT').on('click',function(){
          $('#editTitle').hide();
          $('#planTitle').show();
 
-         $('#title').text($('#editT').val());
+         $('#pltitle').text($('#title').val());
        });
 
        function fn_lengthCheck(input) {
@@ -149,24 +183,41 @@
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
-   
-          $('#title').text(planner['plannerName']);
-   
-          var date = new Date(planner['plannerDate']);
-          var resultDate = calDate(date, dayList.length);
-          $('#fullDate').text(date.getMonth()+1+"."+date.getDate()+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
-          console.log(resultDate.getDay());
           
-          $.each(dayList, function(index, item){
-        	  console.log(dayList);
-        	  console.log("day : " + item['plannerDayNo']);
-        	  fn_addDay(item['plannerDayNo'], item['cityName'],date);
-          });
-          $('.mainMenu>li:first').addClass("clickColor");
-          
-          $('#sm_date').text($('.clickColor').find('#mm_date').text());
-          $('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
-          
+          $.ajax({
+           	  url:"<%=request.getContextPath()%>/makePlan2",
+           	  type:"post",
+           	  data:{"plannerId":plannerId},
+           	  dataType:"json",
+           	  success:function(data){
+           		  	planner=data['plannerName'];
+             			dayList = data['dayList'];
+           		  	
+     				  	$('#pltitle').text(data['plannerName']);
+             			var date = new Date(data['plannerDate']);
+        
+             			var resultDate = calDate(date, dayList.length);
+             			$('#fullDate').text(date.getMonth()+1+"."+date.getDate()
+             					+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
+             			
+             			$.each(dayList, function(index, item){
+           	  				fn_addDay(item['plannerDayNo'], item['cityName'],date);
+             			});
+          				$('.mainMenu>li:first').addClass("clickColor");
+          				$('#sm_date').text($('.clickColor').find('#mm_date').text());
+          				$('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
+          				$('#sc_title').text($('.clickColor').find('#mm_city').text());
+          				
+          				console.log(data['attrList']);
+          				tourList = data['attrList'];
+          				$.each(tourList, function(index, item){
+          					console.log(item['city']);
+          					addTourList(item['city'], item['tourName'], item['category'], item['clipCount'], item['reviewScore']);
+          				});
+           	  }
+           	  
+             });
+     
         });
 
         $(window).resize(function () {
@@ -215,6 +266,23 @@
 			return dayK;
 		}
 
+    function addTourList(city, tourName, category, clipCount, reviewScore){
+    	console.log("들어감");
+		var add = "<li><div class='tourImg'>";
+		add += "<img src='<%=request.getContextPath()%>/images/"+city+"/"+tourName+"/"+tourName+"1.jpg' width='90px' height='70px' />";
+		add += "</div><div class='rightContent'><div class='tourTitle'>" + tourName + "</div>";
+		add += "<div class='tourCategory'>" + category + "</div>";
+		add += "<div class='tourClip'><i class='fas fa-paperclip'></i> " + clipCount + "</div>";
+        add += "<div class='tourScore'><i class='fas fa-star'></i> " + reviewScore + "</div></div></li>";
+  		
+        $('#tourListMenu').append(add);
+        $('#tourListMenu').css("height", $('#tourListMenu').height()+76+"px");
+        if ($('#tourListMenu').height() >= ($(window).height() - 83)) {
+          $('#tourListMenu').css("overflow-y", "scroll");
+        }
+        
+    }
+
         $('#showFullPlan').click(function () {
           $(this).addClass("clickColor");
           $('.mainMenu>li').removeClass("clickColor");
@@ -235,6 +303,7 @@
           $('#sm_dayCount').text($(this).children().first().text());
           $('#sm_date').text($(this).find('#mm_date').text());
           $('#sm_weekday').text($(this).find('#mm_weekday').text());
+          $('#sc_title').text($('.clickColor').find('#mm_city').text());
           console.log($(this).find('#mm_date').text());
 
           if(!($('#subMenu').is(':visible'))){
@@ -293,6 +362,10 @@
         $('#sm_refresh').click(function(){
           alert("초기화");
         });
+        
+        $('#sm_prevBT').click(function(){
+        	
+        })
 
         $('.sc_icon').click(function(){
         	$('.sc_icon').removeClass("iconColor");
@@ -306,11 +379,33 @@
             return addResult;            
         }
         
+        function fn_titleChange(){
+        	if(titleChangeFrm_validate()==true){
+        		$.ajax({
+        			url:"<%=request.getContextPath()%>/planner/titleChange",
+        			type:"post",
+        			data:{"title":$('#title').val(),"plannerId":plannerId}
+        		});
+        		
+        	}
+        }
+        
+        function titleChangeFrm_validate(){
+        	if($('#title').val().trim().length!=0){
+       		  return true;
+       	  	}else if($('#title').val().trim().length==0){
+       	  		$('#title').focus();
+       	  		return false;
+       	  	}
+        		
+        }
+        
+        
         
 
       </script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaRHnlHeqjt3QdNCzoC3PYBnyPuvr6caE&callback=initMap"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaRHnlHeqjt3QdNCzoC3PYBnyPuvr6caE&callback=initMap"></script>
 
 </body>
 </html>
