@@ -1,36 +1,50 @@
 @charset "UTF-8";
 
-<style>
-    body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, 
-	fieldset, legend, textarea, p, blockquote, th, td, input,
-	select, textarea, button, ul, li, span, section, header, 
-	footer, nav{
-	    margin:0;
-	    padding:0;
-	}
-    table, th, td {border:1px solid #333333; border-collapse:collapse; padding:5px}
 
-   section{
+   section#logi{
        width:100%;
-       height: 1000px;
-       margin-top:100px;
+       height: 100%;
+       display:none;
+       z-index: 999;
+       background-color: rgba(0, 0, 0,0.5);
+       position: fixed;
+
    }
    .login{
-   		width:1024px;
-   		margin:0 auto;
-   		
+       position: relative;
+   		width:100%;
+        margin:0 auto;
+        
    }
    .login_1{
    		position:relative;
    		width: 700px;
-   		height:500px;
+   		height:350px;
    		border:1px solid lightgray;
-   		margin:0 auto;
-   		margin-top: 100px;
+        margin:0 auto;
+        background-color: white;
+        top:300px;
+   }
+   #login-container{
+       position: relative;
+       width:100%;
+       border-top:1px solid lightgray;
+       padding-top:20px;
+    
    }
    .login_h2{
-   		border-bottom:1px solid lightgray;
-   		padding:5px 0;
+        position: relative;
+   	    /* border-bottom:1px solid lightgray; */
+        padding:5px 0;
+        display: inline-block;
+           
+   }
+   #login_exit{
+        position: absolute;
+        left:670px;
+        border:none;
+        top:3px;
+
    }
    .login_h2>h2{
    		margin-left:30px;
@@ -38,11 +52,9 @@
    .login_2{
    		width:180px;
 	   	position:absolute;
-	   	top:100px;
-	   	left:150px;
-	   	margin-top :100px;
-	  
-	   	
+        left:150px;
+        top:40px;
+   	
    }
    .login_3{
    		margin-top : 100px;
@@ -98,10 +110,11 @@
     align-items: center;
     justify-content: center;
     margin-left : 200px;
+    width:100%;
     }
 
     .button1 {
-    margin: 10px 10px;
+    margin: 10px 5px;
     width: 200px;
     height: 30px;
     font-family: 'Roboto', sans-serif;
@@ -144,7 +157,7 @@
     font-weight: 500;
     color: #000;
     background-color: #fff;
-    border: none;f
+    border: none;
     border-radius: 5px;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
@@ -158,9 +171,8 @@
     color: #fff;
     transform: translateY(-7px);
     }
-
+   
 
     
 
    
-</style>
