@@ -1,6 +1,7 @@
 package triptaxi.attraction.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
 import com.triptaxi.attraction.model.vo.Attraction;
 import com.triptaxi.attraction.model.vo.TourReview;
 
@@ -42,10 +47,35 @@ public class SelectAttractionServlet extends HttpServlet {
 				List<TourReview> list2=service.reviewList(attId);
 				request.setAttribute("selectatt", a);
 				request.setAttribute("list", list);
-				request.setAttribute("reviewList", list2);
 				request.getRequestDispatcher("/views/attraction/attraction.jsp").forward(request, response);
 
-
+				
+				JSONObject jobj=new JSONObject();
+				JSONArray jarr=new JSONArray();
+				for(TourReview tr:list2) {
+					JSONObject j=new JSONObject();
+					j.put("reviewNo",tr.getTourReviewNo());
+					j.put("reviewWriter",tr.getTourReviewWriter());
+					j.put("reviewContent",tr.getTourReviewContent());
+					j.put("tourId",tr.getTourId());
+					j.put("reviewScore",tr.getTourReviewScore());
+					j.put("reviewDate",tr.getTourReviewDate());
+					jarr.add(j);
+				}
+				
+				
+				response.setContentType("application/json;charset=UTF-8");
+//				response.getWriter().print(jobj);
+//				response.getWriter().print(jarr);
+				new Gson().toJson(list,response.getWriter());
+				
+				
+				
+				
+				
+				
+				
+				
 	}
 
 	

@@ -20,7 +20,6 @@
 	int clip=0;
 	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
-	List<TourReview> list2=(List)request.getAttribute("reviewList");
 	if(loginUser!=null){
 		userId=loginUser.getUserId();
 	}
@@ -514,17 +513,16 @@ margin-left:20px;
 
 	
 }
-#review-user{
+#user-name-ajax{
 	display:inline-block;
+	color:orange;
+	font-size:15px;
+	font-family:arial;
 
 }
-#review2{
-	width:100px;
-	display:inline-block;
 
-}
-#review-star-grade{
-	width:100%;
+#star-grade-ajax{
+width:100px;
 	display:inline-block;
 	font-size:15px;
     color: gold;
@@ -535,8 +533,20 @@ margin-left:20px;
 	width:80%;
 	vertical-align: top;
 	margin-top:10px;
+	color:black;
+	font-size:13px;
 }
 
+#review-user{
+width:100px;
+font-size:52px;
+color:gray
+}
+#review-write-time{
+width:100px;
+color:hotpink;
+font-size:12px;
+}
 
  @-webkit-keyframes fade {
   from {opacity: 0} 
@@ -731,33 +741,60 @@ margin-left:20px;
  		</td>
  		</tr>
  		</table>
+ 		<div id="json-container">
+ 		</div>
  		
- 		<table>
- 	  <% for(TourReview tr : list2){%>
- 			<tr>
+<%--  		<table id=table-ajax>
+ 			<tr id=table-ajax>
  			<td id="review-td">
- 			<div id="review-user" style="font-size:52px;color:gray;"><i class="fas fa-user"></i></div>
+ 			<div id="review-user" style=";"><i class="fas fa-user"></i></div>
  			<div id="review2">
-	 			<div id="review-user-name" style="color:orange;font-size:15px;font-family:arial" ><b><%=tr.getTourReviewWriter()%></b></div>
-	 			<div id="review-star-grade">
-	 		
+	 			<div id="user-name-ajax" >
+	 			<%=tr.getTourReviewWriter()%>
 	 			</div>
-			switch(Math.abs(<%=(int)tr.getTourReviewScore()/2%>)){
- 		 	case 1: $("#review-star-grade").html("<i class='fas fa-star'></i>"); break;
-  			case 2: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
-  			case 3: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
-  			case 4: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
-  			case 5: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
-  			}
-	 			<div id="review-write-time" style="color:hotpink;font-size:12px;" ><%=tr.getTourReviewDate()%></div>
+	 			
+	 			<div id="star-grade-ajax">
+	 			</div>
+
+	 			<div id="review-write-time">
+	 			<%=tr.getTourReviewDate()%>
+	 			</div>
  			</div>
- 			<div id="review-list-comment" style="color:black;font-size:13px;"><%=tr.getTourReviewContent()%>
+ 			<div id="review-list-comment">
+ 			<%=tr.getTourReviewContent()%>
  			</div>
  			</td>		
  			</tr>
- 			<%} %>
- 			
  		</table>
+ 		 --%>
+		<script>
+		$(function(){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/attraction/select",
+				type:"get",
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					 var table=$("<table id='table-ajax'>");
+					 var tr=$("<table id='tr-ajax'>")
+					 var td=$("<table id='review-td'")
+						for(var i=0;i<data.length;i++){
+						var div=$("<div id='review-user'>").html("<i class='fas fa-user'></i>");
+						var div2=$("<div id='user-name-ajax'>").html(data[i]['reviewWriter'])			
+						var div3=$("<div id='star-grade-ajax'>").html(data[i]['reviewScore']);
+						var div4=$("<div id='review-write-time'>").html(data[i]['reviewDate']);
+						var div5=$("<div id='star-grade-ajax'>").html(data[i]['reviewDate']);
+						var div5=$("<div id='review-list-comment'>").html(data[i]['reviewComment']);
+						td.append(div).append(div2).append(div3).append(div4).append(div5)
+						tr.append(td)
+						}
+					 table.append(tr)
+					$("#json-container").html(table); 
+				}
+			});
+		});
+	
+	</script>
  		
  		<table>
  		<tr>
@@ -787,9 +824,11 @@ margin-left:20px;
 	</span>
 
  	</td>
- 	</tr>
- 		
+ 	</tr> 		
 	</table>
+		
+	
+	
 	<table>
 		<tr>
 		<td>
