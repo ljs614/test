@@ -66,11 +66,9 @@ public class CityDao {
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectAllCityList");
 		List<CityList> list = new ArrayList<CityList>();
-	      
 	      try {
 	         pstmt = conn.prepareStatement(sql);
 	         rs = pstmt.executeQuery();
-	         
 	         while(rs.next()) {
 	            CityList c = new CityList();
 	            c.setContinentName(rs.getString("continent_name"));
@@ -79,7 +77,6 @@ public class CityDao {
 	            c.setLatitude(rs.getDouble("latitude"));
 	            c.setLongitude(rs.getDouble("longitude"));
 	            c.setFlagUrl(rs.getString("flag_url"));
-	            
 	            list.add(c);
 	         }
 	      }catch(SQLException e) {
@@ -88,9 +85,58 @@ public class CityDao {
 	         close(rs);
 	         close(pstmt);
 	      }
-	      
 	      return list;
-		
+	}
+	
+	public City cityChoice(Connection conn, String cityName) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		City c=null;
+		String sql=prop.getProperty("cityChoice");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				c=new City();
+				c.setCityName(rs.getString("city_name"));
+				c.setCityEng(rs.getString("city_eng"));
+				c.setNationName(rs.getString("nation_name"));
+				c.setLatitude(rs.getInt("latitude"));
+				c.setLongitude(rs.getInt("longitude"));
+				c.setImageUrl(rs.getString("image_url"));
+				c.setCityVideoUrl(rs.getString("cityvideo_url"));
+				c.setPeakSeason(rs.getString("peak_season"));
+				c.setVolt(rs.getString("volt"));
+				c.setTimeDiffence(rs.getInt("time_difference"));
+				c.setFlightTime(rs.getString("flight_time"));
+				c.setCityIntro(rs.getString("city_intro"));
+				c.setClipCount(rs.getInt("clip_count"));				
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return c;
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

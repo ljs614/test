@@ -26,7 +26,13 @@ public class CityService {
 		List<CityList> list = dao.selectAllCityList(conn);
 		close(conn);
 		return list;
-		
+	}
+	
+	public City cityChoice(String cityName) {
+		Connection conn=getConnection();
+		City c=dao.cityChoice(conn, cityName);
+		close(conn);
+		return c;
 	}
 
 }

@@ -51,8 +51,8 @@
                 $("nav .sub_menu").stop().slideDown("fast");
                 $("nav").css("backgroundColor","#49506a");
                 $("nav").css("borderBottom","1px solid #404559");
-                $(".main_menu>a").css("color","#a6abbe");
-                $(".sub_menu1>ul>li>a").css("color","#a6abbe");
+                $(".main_menu>a").css("color","white");
+                $(".sub_menu1>ul>li>a").css("color","white");
             }, function(){
                 if($(window).scrollTop()){
                     $("nav .sub_menu").stop().slideUp("fast");
@@ -74,18 +74,18 @@
                 var scroll = $(window).scrollTop(); 
                 if(scroll>1){ 
                     $("nav").css("backgroundColor","#49506a"); 
-                    $(".main_menu>a").css("color","#a6abbe");
+                    $(".main_menu>a").css("color","white");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","#a6abbe");
+                    	$(".main_menu>a").css("color","white");
                     }, function(){
-                    	$(".main_menu>a").css("color","#a6abbe");
+                    	$(".main_menu>a").css("color","white");
                     });
                 } 
                 else{
                     $("nav").css("backgroundColor",""); 
                     $(".main_menu>a").css("color","black");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","#a6abbe");
+                    	$(".main_menu>a").css("color","white");
                     }, function(){
                     	$(".main_menu>a").css("color","black");
                     });

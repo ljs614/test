@@ -104,6 +104,34 @@
     	width:200px;
     	heigth:200px;
     }
+    .coco{
+    	overflow: hidden;
+    }
+    .con3_coco{
+    	position:relative;
+    	top:-56px;
+    	color:black;
+    }
+    .con3_coco1{
+    	width:30%;
+    	background-color:RGB(255,255,255,0.8);
+    	padding:1px 0;	
+    }
+    .con3_coco1>p{
+    	font-family: 'Kaushan Script', cursive;
+    }
+    .con3_coco2{
+    	display:none;
+    	background-color:RGB(0,0,0,0.7);
+    	padding:20px 0;
+    	color:white;
+    }
+    .con3_coco2>h4{
+    	margin:-5px 0;
+    }
+    .con3_coco2>h5{
+    	margin-bottom:14px;
+    }
     .con3_content{
     	position:relative;
     	top:-205px;

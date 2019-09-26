@@ -3,55 +3,7 @@
 <%@ include file="/views/common/header.jsp"%>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet">
-	<script>
-		$(document).ready(function(){
-        $('.bxslider').bxSlider({
-            slideWidth: 682,
-            captions: true
-        	});
-        });
-		
-		$(document).ready(function(){
-			$(".con3_content").hide();
-			
-			$(".aos_a").first().hover(function(){
-				$(".con3_content").first().show("fast");
-			},function(){
-				$(".con3_content").first().hide("fast");
-			});
-			
-			$(".aos_a").eq(1).hover(function(){
-				$(".con3_content").eq(1).show("fast");
-			},function(){
-				$(".con3_content").eq(1).hide("fast");
-			});
-			
-			$(".aos_a").eq(2).hover(function(){
-				$(".con3_content").eq(2).show("fast");
-			},function(){
-				$(".con3_content").eq(2).hide("fast");
-			});
-			
-			$(".aos_a").eq(3).hover(function(){
-				$(".con3_content").eq(3).show("fast");
-			},function(){
-				$(".con3_content").eq(3).hide("fast");
-			});
-			
-			$(".aos_a").eq(4).hover(function(){
-				$(".con3_content").eq(4).show("fast");
-			},function(){
-				$(".con3_content").eq(4).hide("fast");
-			});
-			
-			$(".aos_a").last().hover(function(){
-				$(".con3_content").last().show("fast");
-			},function(){
-				$(".con3_content").last().hide("fast");
-			});
-		});
-		
-	</script>
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
 <section>
 
 	
@@ -166,17 +118,20 @@
 	</div>
 	
 	<div class="con3">
-		<div id="transcroller-body" class="aos-all">
+		<div id="transcroller-body" class="aos-all con3_2">
 			<h3>인기 여행일정</h3>
 			<p>다른 여행자들의 일정을 참고해 나만의 여행을 계획해보세요!</p>
-				<div class="aos-item" data-aos="fade-up">
+				<!-- <div class="aos-item" data-aos="fade-up">
 					<a href="#" class="aos_a">
-						<div class="aos-item__inner">
+						<div class="aos-item__inner coco">
 							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
+							<div class="con3_coco">
+								<div class="con3_coco1">
+									<p>best</p>								
+								</div>
+								<div class="con3_coco2">
+									<h4>여행 일정이름</h4>
+									<h5>가족여행, 친구</h5>
 									<i class="material-icons con3_met"> 
 										remove_red_eye
 									</i>
@@ -185,120 +140,13 @@
 										favorite
 									</i>
 									23
-								</p>
+								</div>
 							</div>
 						</div>
 					</a>
-				</div>
-			
-			<div class="aos-item" data-aos="fade-down">
-				<a href="#" class="aos_a">
-						<div class="aos-item__inner">
-							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
-									<i class="material-icons con3_met"> 
-										remove_red_eye
-									</i>
-									123
-									<i class="material-icons con3_met"> 
-										favorite
-									</i>
-									23
-								</p>
-							</div>
-						</div>
-					</a>
+				</div> -->
 			</div>
-			<div class="aos-item" data-aos="zoom-out-down">
-				<a href="#" class="aos_a">
-						<div class="aos-item__inner">
-							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
-									<i class="material-icons con3_met"> 
-										remove_red_eye
-									</i>
-									123
-									<i class="material-icons con3_met"> 
-										favorite
-									</i>
-									23
-								</p>
-							</div>
-						</div>
-					</a>
-			</div>
-			<div class="aos-item" data-aos="flip-down">
-				<a href="#" class="aos_a">
-						<div class="aos-item__inner">
-							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
-									<i class="material-icons con3_met"> 
-										remove_red_eye
-									</i>
-									123
-									<i class="material-icons con3_met"> 
-										favorite
-									</i>
-									23
-								</p>
-							</div>
-						</div>
-					</a>
-			</div>
-			<div class="aos-item" data-aos="flip-up">
-				<a href="#" class="aos_a">
-						<div class="aos-item__inner">
-							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
-									<i class="material-icons con3_met"> 
-										remove_red_eye
-									</i>
-									123
-									<i class="material-icons con3_met"> 
-										favorite
-									</i>
-									23
-								</p>
-							</div>
-						</div>
-					</a>
-			</div>
-			<div class="aos-item" data-aos="fade-down">
-				<a href="#" class="aos_a">
-						<div class="aos-item__inner">
-							<img src="1.jpg" />
-							<div class="con3_content">
-								<h3>홍콩</h3>
-								<h4>여행 일정이름</h4>
-								<p>
-									<i class="material-icons con3_met"> 
-										remove_red_eye
-									</i>
-									123
-									<i class="material-icons con3_met"> 
-										favorite
-									</i>
-									23
-								</p>
-							</div>
-						</div>
-					</a>
-			</div>
-			<button class="" onclick="">추천일정 모두보기</button>
-		</div>
-	</div>
+	
 	
 	<div class="parallax-window" data-parallax="scroll"
 		data-image-src="<%=request.getContextPath() %>/images/4.jpg">
@@ -394,41 +242,124 @@
 			});
 		});
 	});
+
 	
-	$(function(){
+
+	
+ 	$(function(){
 		$(document).ready(function(){
 			$.ajax({
 				url:"<%=request.getContextPath() %>/indexplanner",
 				type:"get",
 				success:function(data){
 					console.log(data);
+					
 					var plannerArr="";
 				 	for(var i=0; i<=5; i++){
-				 		console.log(data[i]["cityName"]);
-				 		console.log(data[i]["cityEng"]);
-				 		var imgurl=data[i]["imageUrl"].split(",");
-				 		console.log(imgurl[0]);
-				 		
-				 		cityArr+="<div class='aos-item' data-aos='zoom-out-down'>";
-				 		cityArr+="<a href='#'>";
-				 		cityArr+="<div class='aos-item__inner'>";
-				 		cityArr+="<img src='<%=request.getContextPath() %>"+imgurl[0]+"' width='100%' height='100%'/>";
-				 		cityArr+="<h3>"+data[i]["cityName"]+"</h3>";
-				 		cityArr+="<p>"+data[i]["cityEng"]+"</p>";
-				 		cityArr+="</div>";
-				 		cityArr+="</a>";
-				 		cityArr+="</div>";
+				 		plannerArr+="<div class='aos-item' data-aos='fade-down'>";
+				 		plannerArr+="<a href='#' class='aos_a'>";
+				 		plannerArr+="<div class='aos-item__inner coco'>";
+				 		plannerArr+="<img src='<%=request.getContextPath() %>"+data[i]['plannerCoverimg']+"'/>";
+				 		plannerArr+="<div class='con3_coco'>";
+				 		plannerArr+="<div class='con3_coco1'>";
+				 		plannerArr+="<p>BEST</p>";
+				 		plannerArr+="</div>";
+				 		plannerArr+="<div class='con3_coco2'>";
+				 		plannerArr+="<h4>"+data[i]["plannerName"]+"</h4>";
+				 		plannerArr+="<h5>"+data[i]["plannerTheme"]+"<h5>";
+				 		plannerArr+="<i class='material-icons con3_met'>remove_red_eye</i>&nbsp;";
+				 		plannerArr+=data[i]["plannerCount"]+"&nbsp;";
+				 		plannerArr+="<i class='material-icons con3_met'>favorite</i>&nbsp;";
+				 		plannerArr+=data[i]["plannerLike"];
+				 		plannerArr+="</div>";
+				 		plannerArr+="</div>";
+				 		plannerArr+="</div>";
+				 		plannerArr+="</a>";
+				 		plannerArr+="</div>";
 					} 
-				 	$("#transcroller-body").append(cityArr);
-				 	$("#transcroller-body").append("<button class='' onclick=''>인기도시 모두보기</button>");
+				 	
+				 	$(".con3_2").append(plannerArr);
+				 	$(".con3_2").append("<button class='' onclick=''>인기도시 모두보기</button>");
+				 	
+				 	$(function(){
+						$(".coco").first().hover(function(){
+							$(".con3_coco2").first().css("display","block");
+							$(".con3_coco").first().css("transform","translateY(-120px)");
+							$(".con3_coco").first().css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").first().css("display","none");
+							$(".con3_coco").first().css("transform","translateY(1px)");
+							$(".con3_coco").first().css("transition","1s");
+						});
+						$(".coco").eq(1).hover(function(){
+							$(".con3_coco2").eq(1).css("display","block");
+							$(".con3_coco").eq(1).css("transform","translateY(-120px)");
+							$(".con3_coco").eq(1).css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").eq(1).css("display","none");
+							$(".con3_coco").eq(1).css("transform","translateY(1px)");
+							$(".con3_coco").eq(1).css("transition","1s");
+						});
+						$(".coco").eq(2).hover(function(){
+							$(".con3_coco2").eq(2).css("display","block");
+							$(".con3_coco").eq(2).css("transform","translateY(-120px)");
+							$(".con3_coco").eq(2).css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").eq(2).css("display","none");
+							$(".con3_coco").eq(2).css("transform","translateY(1px)");
+							$(".con3_coco").eq(2).css("transition","1s");
+						});
+						$(".coco").eq(3).hover(function(){
+							$(".con3_coco2").eq(3).css("display","block");
+							$(".con3_coco").eq(3).css("transform","translateY(-120px)");
+							$(".con3_coco").eq(3).css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").eq(3).css("display","none");
+							$(".con3_coco").eq(3).css("transform","translateY(1px)");
+							$(".con3_coco").eq(3).css("transition","1s");
+						});
+						$(".coco").eq(4).hover(function(){
+							$(".con3_coco2").eq(4).css("display","block");
+							$(".con3_coco").eq(4).css("transform","translateY(-120px)");
+							$(".con3_coco").eq(4).css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").eq(4).css("display","none");
+							$(".con3_coco").eq(4).css("transform","translateY(1px)");
+							$(".con3_coco").eq(4).css("transition","1s");
+						});
+						$(".coco").last().hover(function(){
+							$(".con3_coco2").last().css("display","block");
+							$(".con3_coco").last().css("transform","translateY(-120px)");
+							$(".con3_coco").last().css("transition","1s");
+
+						},function(){
+							$(".con3_coco2").last().css("display","none");
+							$(".con3_coco").last().css("transform","translateY(1px)");
+							$(".con3_coco").last().css("transition","1s");
+						});
+					});
+					
 				}
 			});
 		});
 	});
+ 	
+
+	$(document).ready(function(){
+    $('.bxslider').bxSlider({
+        slideWidth: 682,
+        captions: true
+    	});
+    });
 	
+		
 	
-	
-	
+
 	
 	
 	

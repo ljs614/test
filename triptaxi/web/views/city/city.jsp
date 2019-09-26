@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
+<%@ page import="triptaxi.city.model.vo.City" %>
 <link href="<%=request.getContextPath() %>/css/city.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/swiper.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/js/swiper.min.js"></script>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
+<%
+	City c=(City)request.getAttribute("City");
+	String[] getImgUrl=c.getImageUrl().split(",");
+%>
+
 	<script>
 		$(document).ready(function(){
         $('.bxslider').bxSlider({
@@ -40,13 +46,13 @@
 <section>
 	<div class="video_con">
 		<video autoplay loop muted="false">
-			<source src="../../video/city.mp4" type="video/mp4">
+			<source src="<%=c.getCityVideoUrl() %>" type="video/mp4">
 		</video>
 		<div class="video_opacity">
 		</div>
 		<div class="video_con1">
 			<div class="video_con1_1">
-				<p>로마</p>
+				<p><%=c.getCityName() %></p>
 			</div>
 			<div class="video_con1_2">
 				<span>12:49:47 (시차 -8시간 )</span>

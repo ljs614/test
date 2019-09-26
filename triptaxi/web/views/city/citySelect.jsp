@@ -23,6 +23,7 @@
 	<div id="continentSelectContent">
 		<div id="innerContent">
 			<div id="contentTitle"></div>
+			<button onclick="city_btn(event);" id="Losangeles">도시페이지 ㄱ</button>
 		</div>
 
 	</div>
@@ -36,6 +37,11 @@
 </section>
 
 <script>
+
+	function city_btn(event){
+		location.href="<%=request.getContextPath() %>/citychoice?cityName="+$(event.target).attr('id');
+		
+	}
 	$(document).ready(function() {
 		$('#continentSelect').css("height", $(window).height() - 52 + "px");
 		$('#continentSelectContent').css("height",$(window).height() + "px");
