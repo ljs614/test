@@ -111,7 +111,8 @@ public class CityDao {
 				c.setTimeDiffence(rs.getInt("time_difference"));
 				c.setFlightTime(rs.getString("flight_time"));
 				c.setCityIntro(rs.getString("city_intro"));
-				c.setClipCount(rs.getInt("clip_count"));				
+				c.setClipCount(rs.getInt("clip_count"));
+				c.setErCode(rs.getString("er_code"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

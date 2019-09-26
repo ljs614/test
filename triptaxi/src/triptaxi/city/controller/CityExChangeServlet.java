@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +39,41 @@ public class CityExChangeServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         
-        String addr = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=2M2nzLJKePBXRnne3PUuBuA2dhceGxQl&searchdate=20190920&data=AP01";
+        Calendar cal = Calendar.getInstance();
+        System.out.println("달력"+cal);
+        
+        int year=cal.get(Calendar.YEAR);
+        int month=cal.get(Calendar.MONTH)+1;
+        int date=cal.get(Calendar.DATE);
+        int dayofWeek=cal.get(Calendar.DAY_OF_WEEK);
+        
+        String yearStr=String.valueOf(year);
+        String monthStr="";
+        String dateStr="";
+        if((monthStr = String.valueOf(month)).length()==1) {
+        	monthStr="0"+monthStr;
+        };
+        if((dateStr = String.valueOf(date)).length()==1) {
+        	dateStr="0"+dateStr;
+        };
+        System.out.println("년도 : "+yearStr + "월 : "+monthStr + "일 : "+dateStr + "요일 : "+dayofWeek);
+        String today=yearStr+monthStr+dateStr;
+        System.out.println(today);
+        
+        int todayInt = Integer.parseInt(today);
+        
+        if(dayofWeek==1) {
+        	todayInt=todayInt-2;
+        }
+        else if(dayofWeek==1) {
+        	todayInt=todayInt-3;
+        }
+        else {
+        	todayInt=todayInt-1;
+        }
+        System.out.println(todayInt);
+        
+        String addr = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=2M2nzLJKePBXRnne3PUuBuA2dhceGxQl&searchdate="+todayInt+"&data=AP01";
 //        String serviceKey = "자신의 키값 입력";
 //        String parameter = "";
 //        serviceKey = URLEncoder.encode(serviceKey,"utf-8");

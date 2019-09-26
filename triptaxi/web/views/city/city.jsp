@@ -55,9 +55,13 @@
 				<p><%=c.getCityName() %></p>
 			</div>
 			<div class="video_con1_2">
-				<span id="time"></span>
+				<span id="time">
+					<i class="material-icons">
+						timer
+					</i>
+				</span>
 				<span><%=c.getFlightTime() %></span>
-				<span>1EUR = 1,316.15원</span>
+				<span id="exchange_span">1<%=c.getErCode() %> = </span>
 			</div>
 			<div class="video_con1_3">
 				<div>
@@ -276,10 +280,11 @@
 				var hour = time.getHours()<%=c.getTimeDiffence()%>;
 			    var minute = time.getMinutes();
 			    var second = time.getSeconds();
-				$("#time").html(year+"년 "+hour+":"+minute+":"+second+"(시차 "+<%=c.getTimeDiffence()%>+"시간)");
+				$("#time").html(year+"년 "+hour+"시 "+minute+"분 "+second+"초 (시차 "+<%=c.getTimeDiffence()%>+"시간)");
 			},1000);
 		});
 	});
+	
 	$(function (){
 		$("#tourist").one('click', function () {
 			$.ajax({
@@ -305,16 +310,22 @@
 	});
 	
 
-	$(function (){
-		$("#activity").one('click', function () {
+	$(function(){
+		$(document).ready(function(){
 		      $.ajax({          
 		            url: "<%=request.getContextPath() %>/exChange",
 		            type: 'get',
 		            dataType: 'json',
 		            success: function(data){
-		            	
 		            	console.log(data);
-		            	console.log(data[1]["deal_bas_r"]);        
+		            	for(var i=0 ; i<22 ;i++){
+		            		console.log(data[i]["cur_unit"]);
+		            		 if(data[i]["cur_unit"]=="<%=c.getErCode() %>"){
+		            			var exchange=data[i]["deal_bas_r"]
+		            		} 
+		            	}
+		            	console.log(exchange);
+		            	$("#exchange_span").append(exchange)+"원";
 		            }
 		        });  
 		  });

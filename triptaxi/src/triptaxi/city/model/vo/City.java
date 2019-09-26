@@ -15,6 +15,7 @@ public class City {
 	private String flightTime;
 	private String cityIntro;
 	private int clipCount;
+	private String erCode;
 	
 	public City() {
 		// TODO Auto-generated constructor stub
@@ -22,7 +23,7 @@ public class City {
 
 	public City(String cityName, String cityEng, String nationName, int latitude, int longitude, String imageUrl,
 			String cityVideoUrl, String peakSeason, String volt, int timeDiffence, String flightTime, String cityIntro,
-			int clipCount) {
+			int clipCount, String erCode) {
 		super();
 		this.cityName = cityName;
 		this.cityEng = cityEng;
@@ -37,6 +38,7 @@ public class City {
 		this.flightTime = flightTime;
 		this.cityIntro = cityIntro;
 		this.clipCount = clipCount;
+		this.erCode = erCode;
 	}
 
 	public String getCityName() {
@@ -143,14 +145,24 @@ public class City {
 		this.clipCount = clipCount;
 	}
 
+	public String getErCode() {
+		return erCode;
+	}
+
+	public void setErCode(String erCode) {
+		this.erCode = erCode;
+	}
+
 	@Override
 	public String toString() {
 		return "City [cityName=" + cityName + ", cityEng=" + cityEng + ", nationName=" + nationName + ", latitude="
 				+ latitude + ", longitude=" + longitude + ", imageUrl=" + imageUrl + ", cityVideoUrl=" + cityVideoUrl
 				+ ", peakSeason=" + peakSeason + ", volt=" + volt + ", timeDiffence=" + timeDiffence + ", flightTime="
-				+ flightTime + ", cityIntro=" + cityIntro + ", clipCount=" + clipCount + "]";
+				+ flightTime + ", cityIntro=" + cityIntro + ", clipCount=" + clipCount + ", erCode=" + erCode + "]";
 	}
 
+	
+	
 	
 	
 }
