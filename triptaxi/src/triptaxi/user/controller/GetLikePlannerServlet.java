@@ -32,7 +32,7 @@ public class GetLikePlannerServlet extends HttpServlet {
 		String userId=request.getParameter("userId");
 		String plannerId=request.getParameter("plannerId");
 		String like=new UserService().selectLike(userId, plannerId);
-		response.getWriter().append("true");
+		response.getWriter().append(like);
 	
 		
 	}

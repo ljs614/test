@@ -492,7 +492,6 @@
 	var like;
 	if(userId!='null'){
 		fn_like_tf();
-		like=true;
 	}else{
 		like=false;
 	}
@@ -504,9 +503,11 @@
 			dataType:"text",
 			data:{"plannerId":"<%=planner.getPlannerId()%>", "userId":userId},
 			success:function(data){
-				like=data;
-				if(like){
+				if(data=='true'){
 					$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
+					like=true;
+				}else{
+					like=false;
 				}
 			}
 		});
@@ -514,18 +515,22 @@
 	
 	//좋아요버튼 클릭이벤트
 	function like_click(){
-		$.ajax({
-			url:"<%=request.getContextPath()%>/user/likePlanner",
-			type:"get",
-			dataType:"text",
-			data:{"plannerId":"<%=planner.getPlannerId()%>", "userId":userId, "like":like}
-		});
-		if(like){
-			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.7"});
-			like=false;
+		if(userId=='null'){
+			alert("로그인하시오");
 		}else{
-			$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
-			like=true;
+			$.ajax({
+				url:"<%=request.getContextPath()%>/user/likePlanner",
+				type:"get",
+				dataType:"text",
+				data:{"plannerId":"<%=planner.getPlannerId()%>", "userId":userId, "like":""+like}
+			});
+			if(like){
+				$("#like_btn").css({"background-image":"url('../views/planner/img/heart_off.png')","opacity":"0.7"});
+				like=false;
+			}else{
+				$("#like_btn").css({"background-image":"url('../views/planner/img/heart_on.png')","opacity":"1"});
+				like=true;
+			}
 		}
 		
 	}

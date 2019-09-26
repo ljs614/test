@@ -180,6 +180,7 @@ import static triptaxi.common.template.JDBCTemplate.close;
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, plannerId);
 			pstmt.setString(2, userId);
+			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				result="true";
 			}
