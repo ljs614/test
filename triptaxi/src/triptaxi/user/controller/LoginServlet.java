@@ -41,17 +41,17 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		String saveId=request.getParameter("saveId");
-		System.out.println(saveId);
-	 
+		String location=request.getParameter("location");
 	
 		UserService service=new UserService();
 		User u=service.selectId(id,pw);
 		
 	
 		String msg="";
-		String loc="/";
 		String view="";
-	
+		String loc="/";
+		loc=location.replaceAll("/triptaxi", "");
+		System.out.println(loc);
 		if(u!=null) {
 			HttpSession session=request.getSession();
 			session.setAttribute("loginUser", u);
@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 			
 			view="/";
 			
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(location);
 			
 		}else {
 			//로그인이 안됨!

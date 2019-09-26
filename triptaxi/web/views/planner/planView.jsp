@@ -386,7 +386,6 @@
 			$(".navs").css("font-weight","");
 			$(".planView-main-container").hide();
 			$("#planView-outline").show();
-			$("")
 			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
 			$(tag).css("font-weight","bold");
 			initMap();
@@ -512,7 +511,6 @@
 			}
 		});
 	}
-	
 	//좋아요버튼 클릭이벤트
 	function like_click(){
 		if(userId=='null'){

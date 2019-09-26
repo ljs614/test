@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link href="<%=request.getContextPath() %>/css/jquerybxslider.css" rel="stylesheet">
     <link href="<%=request.getContextPath() %>/css/aos.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/login.css" rel="stylesheet">
     <script src="<%=request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
     <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -169,7 +170,12 @@
         		$(".material-icons_con1").last().css("color","lightslategray");
         	});
         });
-        
+        function fn_login(){
+            $("#logi").show();
+        }
+        function fn_login_exit(){
+            $("#logi").hide();
+        }
         
     </script>
 
@@ -195,7 +201,7 @@
                 </div>
                 <% if(loginUser==null){ %>
                 <div class="top_btn">
-                    <button id="btn_login" name="btn_login" onclick="location.href='<%=request.getContextPath() %>/loginswitch'">로그인</button>
+                    <button id="btn_login" name="btn_login" onclick="fn_login();">로그인</button>
                     <button id="btn_join" name="btn_join" onclick="location.href='<%=request.getContextPath() %>/UserEnroll'">회원가입</button>
                 </div>
                 <%} else{%>
@@ -241,3 +247,54 @@
             </div>
         </nav>
     </header>
+
+    <section id="logi">
+            <div class="login_1">
+               
+                <form action="<%=request.getContextPath()%>/login" method="post" onsubmit="validate();">
+                <div class="login">
+                    <div class="login_h2">
+                        <h2>회원 로그인</h2>
+                    </div>
+                    <div id="login-container">
+                        <div class="login_2">
+                            <input type="text" name="userId" id="userId" value="<%=saveId !=null?saveId:""%>" placeholder="아이디"> <br/>
+                            <input type="password" id="password" name="password" placeholder="비밀번호"/><br>
+                            <label><input type="checkbox" name="saveId" id="saveId" <%=saveId != null ? "checked" : ""%> />아이디 저장</label>
+                            <div class="wrap">
+                                <button class="button1">로그인</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="wrap1">
+                                <button class="button1">
+                                    <i class="fab fa-google"></i>네이버
+                                </button>
+                            </div>
+                            <div class="wrap1">
+                                <button class="button1">
+                                    <i class="fab fa-google"></i>페이스북
+                                </button>
+                            </div>
+            
+                        </div>
+                        <div>
+                            <div class="wrap1">
+                                <button class="button1">
+                                    <i class="fab fa-google"></i>구글
+                                </button>
+                            </div>
+                            <span class="search"><a href="">회원가입</a></span> <span class="search"><a
+                                href="">아이디/비밀번호 찾기</a></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="location" name="location"/>
+                </form>
+                <button id="login_exit" onclick="fn_login_exit();">X</button>
+            </div>
+        
+        </section>
+        <script>
+            $("#location").val(window.location.pathname);
+        </script>
