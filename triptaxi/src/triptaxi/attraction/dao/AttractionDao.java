@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.triptaxi.attraction.model.vo.Attraction;
+import com.triptaxi.attraction.model.vo.TourReview;
 public class AttractionDao {
 	private Properties prop=new Properties();
 	public AttractionDao() {
@@ -141,6 +142,54 @@ public class AttractionDao {
 		return result;
 	}
 	
+	public int writeReview(Connection conn,TourReview tr) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("writeReview");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, tr.getTourReviewWriter());
+			pstmt.setString(2, tr.getTourReviewContent());
+			pstmt.setString(3, tr.getTourId());
+			pstmt.setInt(4, tr.getTourReviewScore());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+		
+	}
+	
+	public List<TourReview> reviewList(Connection conn,String attId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("reviewList");
+		List<TourReview> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, attId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				TourReview tr=new TourReview();
+				tr.setTourReviewNo(rs.getInt("tour_review_no"));
+				tr.setTourReviewWriter(rs.getString("tour_review_writer"));
+				tr.setTourReviewContent(rs.getString("tour_review_content"));
+				tr.setTourId(rs.getString("tour_id"));
+				tr.setTourReviewScore(rs.getInt("tour_review_score"));
+				tr.setTourReviewDate(rs.getDate("tour_review_date"));
+				
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
 	
 	
 }

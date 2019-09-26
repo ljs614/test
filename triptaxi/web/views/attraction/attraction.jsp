@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.triptaxi.attraction.model.vo.Attraction,java.util.List" %>
+<%@ page import="com.triptaxi.attraction.model.vo.Attraction,java.util.List,com.triptaxi.attraction.model.vo.TourReview" %>
+<%@ include file="/views/common/header.jsp" %>
 <%
 	Attraction a =(Attraction)request.getAttribute("selectatt");
 	String attId=a.getAttractionId();
@@ -17,10 +18,16 @@
 	int count=0;
 	int clipCount1=0;
 	int clip=0;
+	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
+	List<TourReview> list2=(List)request.getAttribute("reviewList");
+	if(loginUser!=null){
+		userId=loginUser.getUserId();
+	}
+	
 	
 %>
-<%@ include file="/views/common/header.jsp" %>
+
 
 <style>
 
@@ -344,6 +351,10 @@ text-align: center;
  #reviewComment{
  	height:500px;
  }
+  #review-comment1{
+  	height:50px;
+ 	text-align:center;
+ }
  
   #mapTd{
  	height:500px;
@@ -363,13 +374,26 @@ text-align: center;
 	#review-intro{
 		text-align: left;
 		margin-left:15px;
-		height:50px;
+		height:50px; 
 	}
 	#review-comment{
 		width:60px;
 		text-align:left;
 		height:50px;
+		vertical-align: middle;
 	}
+	#review-comment1{
+		width:60px;
+		text-align:right;
+		height:50px;
+		vertical-align: middle;
+	}
+	#review-td{
+		width:60px;
+		height:40px;
+		vertical-align: middle
+	}
+	
 	.star-input>.input,
 .star-input>.input>label:hover,
 .star-input>.input>input:focus+label,
@@ -469,7 +493,48 @@ text-align: center;
     vertical-align: middle;
 }
 #att-review{
-	margin-left:65px;
+float: left;
+	width:825px;
+	margin-left:100px;
+	vertical-align: middle;
+}
+#review-button-div{
+float: left;
+margin-top:25px;
+margin-left:20px;
+}
+#review-td{
+	height:50px;
+
+}
+
+#review-list{
+	width:20%;
+	height:50px;
+
+	
+}
+#review-user{
+	display:inline-block;
+
+}
+#review2{
+	width:100px;
+	display:inline-block;
+
+}
+#review-star-grade{
+	width:100%;
+	display:inline-block;
+	font-size:15px;
+    color: gold;
+}
+
+#review-list-comment{
+	display:inline-block;
+	width:80%;
+	vertical-align: top;
+	margin-top:10px;
 }
 
 
@@ -499,6 +564,8 @@ text-align: center;
 		});
 
 	});
+	
+
 	
 	</script>
  
@@ -533,6 +600,7 @@ text-align: center;
   	case 4: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	case 5: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	}
+  
 	</script>
 	</td>
 	<td class=topButton>
@@ -630,7 +698,7 @@ text-align: center;
   <td id="recommendTD">
   <div id="recommendDiv">
   <a href="<%=request.getContextPath()%>/attraction/select?attId=<%=arr.getAttractionId()%>" name="attId"><img id="recommendPic1" src="<%=request.getContextPath() %>/images/<%=arr.getCity()%>/<%=arr.getAttractionName()%>/<%=recommendImageUrl[0]%>"></a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip"><%=arr.getClipCount() %></i>
+   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip"><%=arr.getClipCount()%></i>
    &nbsp <%=arr.getAttractionName()%> </h4>
  </td>
   <%if(count==4){%>
@@ -663,15 +731,45 @@ text-align: center;
  		</td>
  		</tr>
  		</table>
+ 		
+ 		<table>
+ 	  <% for(TourReview tr : list2){%>
+ 			<tr>
+ 			<td id="review-td">
+ 			<div id="review-user" style="font-size:52px;color:gray;"><i class="fas fa-user"></i></div>
+ 			<div id="review2">
+	 			<div id="review-user-name" style="color:orange;font-size:15px;font-family:arial" ><b><%=tr.getTourReviewWriter()%></b></div>
+	 			<div id="review-star-grade">
+	 		
+	 			</div>
+			switch(Math.abs(<%=(int)tr.getTourReviewScore()/2%>)){
+ 		 	case 1: $("#review-star-grade").html("<i class='fas fa-star'></i>"); break;
+  			case 2: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  			case 3: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  			case 4: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  			case 5: $("#review-star-grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
+  			}
+	 			<div id="review-write-time" style="color:hotpink;font-size:12px;" ><%=tr.getTourReviewDate()%></div>
+ 			</div>
+ 			<div id="review-list-comment" style="color:black;font-size:13px;"><%=tr.getTourReviewContent()%>
+ 			</div>
+ 			</td>		
+ 			</tr>
+ 			<%} %>
+ 			
+ 		</table>
+ 		
  		<table>
  		<tr>
- 		<td id=review-comment>
- 		<div id=review-comment>
- 			<h4 style="color:gray;margin-top:-5px;font-size:40px;"><i class="fas fa-user"></i></h4>
- 		</div>
+ 		<td id=review-comment1>
+ 		<div id="review-user" style="font-size:40px;color:gray;"><i class="fas fa-user"></i></div>
  		</td>
- 		<form type="submit">
  		<td>
+ 		
+ 	<form action="<%=request.getContextPath()%>/attraction/reviewWrite" method="post">
+ 	<input type="hidden" name="tour-id" value="<%=attId%>"/>
+ 	<input type="hidden" name="user-id" value="pkw2813"/>
+ 	
 	<span class="star-input">
  	<span class="input">
     <input type="radio" name="star-input" id="p1" value="1"><label for="p1">1</label>
@@ -685,21 +783,26 @@ text-align: center;
     <input type="radio" name="star-input" id="p9" value="9"><label for="p9">9</label>
     <input type="radio" name="star-input" id="p10" value="10"><label for="p10">10</label>
  	</span>
- 	
-  	<output for="star-input" name="star-value"><b></b></output>
+  	<output for="star-input" name="star-value"><b>0</b></output>
 	</span>
+
  	</td>
  	</tr>
+ 		
 	</table>
 	<table>
 		<tr>
 		<td>
 		<div id=att-review>
-		<textarea rows="4" cols="100" name="att-review" style="resize:none"></textarea>
+		<textarea rows="4" cols="120" name="review-comment" style="resize:none"></textarea>
+		</div>
+		<div id=review-button-div>
+		<input type="submit" id="review-button" value="입력"></input>
 		</div>
 		</td>
 		</tr>
 	</table>
+	</form>
 	</section>
 	<script>
 

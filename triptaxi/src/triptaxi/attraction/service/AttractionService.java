@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.triptaxi.attraction.model.vo.Attraction;
+import com.triptaxi.attraction.model.vo.TourReview;
 
 import triptaxi.attraction.dao.AttractionDao;
 
@@ -54,6 +55,22 @@ public class AttractionService {
 		int result=dao.clipCountMinus(conn,attId,table);
 		close(conn);
 		return result;
+	}
+	
+	public int writeReview(TourReview tr) {
+		Connection conn=getConnection();
+		int result=dao.writeReview(conn,tr);
+		close(conn);
+		return result;
+		
+	}
+	
+	public List<TourReview> reviewList(String attId){
+		Connection conn=getConnection();
+		List<TourReview> list=dao.reviewList(conn,attId);
+		close(conn);
+		return list;
+		
 	}
 	
 }
