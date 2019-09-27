@@ -636,7 +636,7 @@ display:inline-block;
   	case 4: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	case 5: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	}
-  
+  asdf
 	</script>
 	</td>
 	<td class=topButton>
