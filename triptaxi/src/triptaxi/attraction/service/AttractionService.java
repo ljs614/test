@@ -25,11 +25,12 @@ public class AttractionService {
 		close(conn);
 		city=a.getCity();
 		this.attId=a.getAttractionId();
+		
 		switch(attId.substring(0,1)) {
 		case "at": table="tt_attraction";break;
 		case "ac": table="tt_activity";break;
 		case "fe": table="tt_festival";break;
-		}
+			}
 		return a;
 		
 	}
