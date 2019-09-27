@@ -35,7 +35,6 @@ public class GetClipboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
-		System.out.println(userId);
 		List<Tour> list=new UserService().selectClipboard(userId);
 		Gson gson=new Gson();
 		response.getWriter().append(gson.toJson(list));
