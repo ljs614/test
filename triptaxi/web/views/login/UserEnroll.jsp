@@ -5,17 +5,27 @@
 <style>
 table, th, td {border:1px solid #333333; border-collapse:collapse; padding:10px}
 td{font-size:18px; font-weight:bold;  padding:20px;}
-.userid_1{
-	position : relative;
+#wrap{
+    position : relative;
+    
 	width : 600px;
 	height: 600px;
-	margin-top : 100px;
+    margin:0 auto;
 
 }
-</style>
+#enroll{
+    height:900px;
+    width:100%;
+}
+#frm_enroll{
+    position: relative;
+    top:100px;
+}
 
+</style>
+<section id="enroll">
     <div id="wrap">
-        <form action="<%=request.getContextPath() %>/UserEnrollEnd" method="post" onsubmit="return enroll_validate();">
+        <form id="frm_enroll" action="<%=request.getContextPath() %>/UserEnrollEnd" method="post" onsubmit="return enroll_validate();">
             <table class="userid_1">
                 <tr>
                     <td id="title">아이디</td>
@@ -102,6 +112,7 @@ td{font-size:18px; font-weight:bold;  padding:20px;}
 
         
     </div>
+</section>
     <script>
     function enroll_validate(){
 		//정규표현식을 적용해서 유효성검사 

@@ -171,11 +171,15 @@
         	});
         });
         function fn_login(){
-            $("#logi").show();
+            $("#logi").css("display","inline-block");
             $("#userId").focus();
+            $('html').css("overflow","hidden");
+                        
         }
         function fn_login_exit(){
             $("#logi").hide();
+            $('html').css("overflow","auto");
+            
         }
         
     </script>
@@ -249,7 +253,7 @@
         </nav>
     </header>
 
-    <section id="logi">
+    <div id="logi">
             <div class="login_1">
                
                 <form action="<%=request.getContextPath()%>/login" method="post" onsubmit="validate();">
@@ -295,7 +299,7 @@
                 <button id="login_exit" onclick="fn_login_exit();">X</button>
             </div>
         
-        </section>
+        </div>
         <script>
             $("#location").val(window.location.pathname);
         </script>
