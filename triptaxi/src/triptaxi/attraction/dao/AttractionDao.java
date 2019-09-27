@@ -191,5 +191,39 @@ public class AttractionDao {
 		return list;
 	}
 	
+	public List<Attraction> cityAttraction(Connection conn,String cityName) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("cityAttraction");
+		List<Attraction> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Attraction a=new Attraction();
+				a.setAttractionId(rs.getString("attraction_id"));
+				a.setAttractionName(rs.getString("attraction_name"));
+				a.setAttractionEng(rs.getString("attraction_eng"));
+				a.setCity(rs.getString("city"));
+				a.setAttractionLat(rs.getDouble("attraction_lat"));
+				a.setAttractionLng(rs.getDouble("attraction_lng"));
+				a.setImageUrl(rs.getString("image_url"));
+				a.setAttractionComment(rs.getString("attraction_comment"));
+				a.setClipCount(rs.getInt("clip_count"));
+				a.setReviewScore(rs.getDouble("review_score"));
+				a.setCategory(rs.getString("category"));
+				list.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	
 }
