@@ -56,36 +56,40 @@
 			</div>
 			<div class="video_con1_2">
 				<span id="time">
-					<i class="material-icons">
-						timer
-					</i>
 				</span>
-				<span><%=c.getFlightTime() %></span>
-				<span id="exchange_span">1<%=c.getErCode() %> = </span>
+				<span>
+					&nbsp;<i class="material-icons">
+						flight_land
+					</i>&nbsp;<%=c.getFlightTime() %>
+				</span>&nbsp;
+				<span id="exchange_span">
+					<i class="material-icons">
+						attach_money
+					</i>&nbsp;1<%=c.getErCode() %> = 
+				</span>
 			</div>
 			<div class="video_con1_3">
 				<div>
 					<i class="fas fa-cloud-sun"></i>
 					<h3>현지 날씨</h3>
-					<p>
-						최저 19 /최고 27℃ <br />
-						<a href="#">월별 날씨 보기</a>
+					<p id="weather">
+						
+						
 					</p>
 				</div>
 				<div class="con1_weather">
 					<i class="far fa-calendar-alt"></i>
 					<h3>여행 최적기</h3>
 					<p>
-						4~6월 or 9~10월<br/>
-						여행의 최적기, 봄과 가을
+						<%=c.getPeakSeason() %>
 					</p>
 				</div>
 				<div>
 					<i class="fas fa-bolt"></i>
 					<h3>사용 전압</h3>
 					<p>
-						220V<br/>
-						볼트
+						<%=c.getNationName() %><br/>
+						<%=c.getVolt() %>
 					</p>
 				</div>
 			</div>
@@ -280,7 +284,7 @@
 				var hour = time.getHours()<%=c.getTimeDiffence()%>;
 			    var minute = time.getMinutes();
 			    var second = time.getSeconds();
-				$("#time").html(year+"년 "+hour+"시 "+minute+"분 "+second+"초 (시차 "+<%=c.getTimeDiffence()%>+"시간)");
+				$("#time").html("<i class='material-icons'>alarm</i>&nbsp;"+year+"년 "+hour+"시 "+minute+"분 "+second+"초 (시차 "+<%=c.getTimeDiffence()%>+"시간)");
 			},1000);
 		});
 	});
@@ -317,39 +321,38 @@
 		            type: 'get',
 		            dataType: 'json',
 		            success: function(data){
-		            	console.log(data);
 		            	for(var i=0 ; i<22 ;i++){
-		            		console.log(data[i]["cur_unit"]);
 		            		 if(data[i]["cur_unit"]=="<%=c.getErCode() %>"){
 		            			var exchange=data[i]["deal_bas_r"]
 		            		} 
 		            	}
-		            	console.log(exchange);
 		            	$("#exchange_span").append(exchange)+"원";
 		            }
 		        });  
 		  });
 	});
 	
-	$(function (){
-		$("#festival").one('click', function () {
-			var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&appid=98d4971f2e14753dd582c6f4443133d8";
+	$(function(){
+		$(document).ready(function(){
+			var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+"<%=c.getCityEng()%>"+"&units=metric&appid=98d4971f2e14753dd582c6f4443133d8";
 		    $.ajax({
 		        url: apiURI,
 		        dataType: "json",
 		        type: "GET",
 		        async: "false",
-		        success: function(resp) {
-		            console.log(resp);
-		            console.log("현재온도 : "+ resp.main.temp );
-		            console.log("현재습도 : "+ resp.main.humidity);
-		            console.log("날씨 : "+ resp.weather[0].main );
-		            console.log("상세날씨설명 : "+ resp.weather[0].description );
-		            console.log("날씨 이미지 : "+ resp.weather[0].icon );
-		            console.log("바람   : "+ resp.wind.speed );
-		            console.log("나라   : "+ resp.sys.country );
-		            console.log("도시이름  : "+ resp.name );
-		            console.log("구름  : "+ (resp.clouds.all) +"%" );                 
+		        success: function(data) {
+		        	$("#weather").append("현재온도 : "+Math.ceil(data.main.temp)+"도 현재습도 : "+data.main.humidity+"%<br><a href='#'>월별 날씨 보기</a>");
+		            console.log(data);
+		            console.log("현재온도 : "+ data.main.temp );
+		            console.log("현재온도 : "+ Math.ceil(data.main.temp));
+		            console.log("현재습도 : "+ data.main.humidity);
+		            console.log("날씨 : "+ data.weather[0].main );
+		            console.log("상세날씨설명 : "+ data.weather[0].description );
+		            console.log("날씨 이미지 : "+ data.weather[0].icon );
+		            console.log("바람   : "+ data.wind.speed );
+		            console.log("나라   : "+ data.sys.country );
+		            console.log("도시이름  : "+ data.name );
+		            console.log("구름  : "+ (data.clouds.all) +"%" );                 
 		        }
 		    })
 		});

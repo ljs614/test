@@ -29,7 +29,7 @@
     <link href="<%=request.getContextPath() %>/css/aos.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/css/login.css" rel="stylesheet">
     <script src="<%=request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
+    <link href="<%=request.getContextPath() %>/fontAwesome/css/all.css" rel="stylesheet">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="<%=request.getContextPath() %>/js/parallax.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
@@ -231,7 +231,7 @@
             <div class="sub_menu">
                 <div class="sub_menu1">
                     <ul class="sub_menu1_1">
-                        <li class="hvr-float-shadow"><a href="">해외 여행지</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/citySelect">해외 여행지</a></li>
                     </ul>
                     <ul class="sub_menu1_2">
                         <li class="hvr-float-shadow"><a href="">내 일정 만들기</a></li>
