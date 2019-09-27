@@ -52,7 +52,6 @@ public class ReviewListServlet extends HttpServlet {
 			j.put("reviewScore",tr.getTourReviewScore());
 			j.put("reviewDate",tr.getTourReviewDate());
 			jarr.add(j);
-			System.out.println(tr);
 		}
 		
 		

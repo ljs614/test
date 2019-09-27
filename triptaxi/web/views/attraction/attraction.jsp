@@ -21,7 +21,7 @@
 	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
-		userId=loginUser.getUserId();
+	userId=loginUser.getUserId();
 	}
 	
 	
@@ -31,22 +31,22 @@
 <style>
 
 div{
-     border: 1px solid hotpink;
-  border-radius: 1px;    
+  /*    border: 1px solid hotpink;
+  border-radius: 1px;     */
 }
 
 table{
 margin:0 auto;
 width:1024px;
-border: 1px solid #444444;
+
 }
 
 tr{
-border: 1px solid #444444;
+
 }
 
 td{
-   border: 1px solid #444444; 
+   /* border: 1px solid #444444; */ 
 }
 
 	#root{
@@ -60,6 +60,7 @@ td{
 		width:500px;
 		text-align:left;
 		font-family: arial;
+		font-size:30px;
 	}
 	#clipCount{
 	font-size:20px;
@@ -172,6 +173,11 @@ td{
   font-family: Arial;
 }
 
+#slide-img{
+
+
+}
+
 img {
   vertical-align: middle;
 }
@@ -180,6 +186,7 @@ img {
 .container {
   position: relative;
   height:300px;
+  
 
 }
 .mySlides{
@@ -271,8 +278,6 @@ img {
   opacity: 1;
 	-webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
-
-  
 }
 
 /* Add a transparency effect for thumnbail images */
@@ -521,12 +526,7 @@ margin-left:20px;
 
 }
 
-#star-grade-ajax{
-width:100px;
-	display:inline-block;
-	font-size:15px;
-    color: gold;
-}
+
 
 #review-list-comment{
 	display:inline-block;
@@ -538,15 +538,41 @@ width:100px;
 }
 
 #review-user{
-width:100px;
+width:70px;
 font-size:52px;
-color:gray
+color:gray;
+float:left;
+text-align:center;
 }
+
+#review-writer{
+width:100px;
+color:skyblue;
+font-size:15px;
+display:inline-block;
+
+}
+
+#star-grade-ajax{
+width:100px;
+	display:inline-block;
+	font-size:15px;
+    color: gold;
+
+}
+
 #review-write-time{
 width:100px;
 color:hotpink;
 font-size:12px;
+display:inline-block;
 }
+	#json-container {
+  opacity: 1;
+	-webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+}
+
 
  @-webkit-keyframes fade {
   from {opacity: 0} 
@@ -634,23 +660,23 @@ font-size:12px;
 		<div class="container">
   <div class="mySlides">
     <div class="numbertext">1 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" id="slide-img" style="width:500px;height:350px">
     <%-- <img src="images/"<%=attName%>/<%=thumbnailUrl%>" style="width:600px;height:400px"> --%>
   </div>
 
   <div class="mySlides">
     <div class="numbertext">2 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" id="slide-img" style="width:500px;height:350px">
   </div>
 
   <div class="mySlides">
     <div class="numbertext">3 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" id="slide-img" style="width:500px;height:350px">
   </div>
     
   <div class="mySlides">
     <div class="numbertext">4 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" id="slide-img" style="width:500px;height:350px">
   </div>
 
 
@@ -770,6 +796,12 @@ font-size:12px;
 		<script>
 		$(function(){
 			$(document).ready(function(){
+				fn_review();
+			}); 
+			
+		});
+		
+		function fn_review(){
 			$.ajax({
 				url:"<%=request.getContextPath()%>/attraction/reviewlist?attId=<%=attId%>",
 				type:"get",
@@ -783,7 +815,9 @@ font-size:12px;
 					 	arr+="<td id='review-td'>";
 						for(var i=0;i<data.length;i++){
 						arr+="<div id='review-user'><i class='fas fa-user'></i></div>";
-						var result=Math.abs(Integer.parseInt(data[i][reviewScore])/2);
+						arr+="<div id='review-writer'>"+data[i]['reviewWriter']+"</div>";
+						var result=Math.floor((data[i]['reviewScore']*1)/2);
+					
 						switch(result){
 								case 1:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i>"+"</div>";break;
 								case 2:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i><i class='fas fa-star'></i>"+"</div>";break;
@@ -794,14 +828,14 @@ font-size:12px;
 						
 						arr+="<div id='review-write-time'>"+data[i]['reviewDate']+"</div>";
 						arr+="<div id='review-list-comment'>"+data[i]['reviewContent']+"</div>";
+						arr+="<br><br><hr>";
 						}
 					 	arr+="</td></tr></table>"
 
 					$("#json-container").html(arr); 
 				}
 			});
-		}); 
-	});
+		}
 
 	
 	</script>
@@ -813,10 +847,10 @@ font-size:12px;
  		</td>
  		<td>
  		
- 	<form action="<%=request.getContextPath()%>/attraction/reviewWrite" method="post">
-<%--  	<input type="hidden" name="tour-id" value="<%=attId%>"/> --%>
- 	<input type="hidden" name="user-id" value="pkw2813"/>
- 	
+
+  	<input type="hidden" name="tour-id" id="tour-id" value="<%=attId%>"/> 
+ 	<input type="hidden" name="user-id" id="user-id" value="pkw2813"/>
+ 
 	<span class="star-input">
  	<span class="input">
     <input type="radio" name="star-input" id="p1" value="1"><label for="p1">1</label>
@@ -830,29 +864,59 @@ font-size:12px;
     <input type="radio" name="star-input" id="p9" value="9"><label for="p9">9</label>
     <input type="radio" name="star-input" id="p10" value="10"><label for="p10">10</label>
  	</span>
-  	<output for="star-input" name="star-value"><b>0</b></output>
+  	<output for="star-input" name="star-value" id="star-value"><b>0</b></output>
 	</span>
 
  	</td>
  	</tr> 		
 	</table>
-		
-	
-	
 	<table>
 		<tr>
 		<td>
 		<div id=att-review>
-		<textarea rows="4" cols="120" name="review-comment" style="resize:none"></textarea>
+		<textarea rows="4" cols="120" name="review-comment" id="review-content" style="resize:none" required></textarea>
 		</div>
 		<div id=review-button-div>
 		<input type="submit" id="review-button" value="입력"></input>
+		</form>
 		</div>
 		</td>
 		</tr>
 	</table>
-	</form>
+	
 	</section>
+		<script>
+
+		$("#review-button").click(function(){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/attraction/reviewWrite",
+				type:"get",
+				data:{"user-id":$("#user-id").val(),
+					  "tour-id":$("#tour-id").val(),
+					  "star-input":$("#star-value").val(),
+					  "review-comment":$("#review-content").val()
+				}, 
+				/* var userId = $("user-id").val();
+				var tourId = $("tour-id").val();
+				var starInput = $("star-input").val();
+				var reviewComment = $("review-content").val(); */
+				dataType:"text",
+				success:function(){//data
+					$("#review-content").val("");
+					$("#star-input").val("0");
+					
+					fn_review();
+					//data객체에서 뽑아온 변수를 
+					//var 변수로 지정한다음에 
+					/* location.href=url+"?userId="+userId+"&tourId="+tourId+"&starInput="+starInput+"&reviewComment="+reviewComment; */
+				}
+			});
+		});
+		
+	
+	</script>
+	
+	
 	<script>
 
 var slideIndex = 1;

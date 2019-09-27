@@ -31,22 +31,21 @@ public class AttractionReaviewWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		int star=Integer.parseInt(request.getParameter("star-input"));
 		String reviewComment=request.getParameter("review-comment");
 		String userId=request.getParameter("user-id");
 		String tourId=request.getParameter("tour-id");
-		System.out.println(star);
-		System.out.println(userId);
-		System.out.println(reviewComment);
-		System.out.println(tourId);
+		String userId2= request.getParameter("userId");
+		
 		TourReview tr=new TourReview();
 		tr.setTourId(tourId);
 		tr.setTourReviewContent(reviewComment);
 		tr.setTourReviewScore(star);
 		tr.setTourReviewWriter(userId);
 		int result =new AttractionService().writeReview(tr);
-		request.getRequestDispatcher("/views/attraction/selectAttraction.jsp").forward(request,response);
+		System.out.println(result);
+		
 	}
 
 	/**
