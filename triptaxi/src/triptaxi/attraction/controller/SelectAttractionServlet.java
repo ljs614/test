@@ -42,7 +42,6 @@ public class SelectAttractionServlet extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				String attId=request.getParameter("attId");
-				System.out.println(":"+attId);
 				Attraction a=service.selectAttraction(attId);
 				
 				List<Attraction> list=service.recommendAttraction(attId);
