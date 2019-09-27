@@ -769,30 +769,40 @@ font-size:12px;
  		 --%>
 		<script>
 		$(function(){
+			$(document).ready(function(){
 			$.ajax({
-				url:"<%=request.getContextPath()%>/attraction/select",
+				url:"<%=request.getContextPath()%>/attraction/reviewlist?attId=<%=attId%>",
 				type:"get",
 				dataType:"json",
 				success:function(data){
 					console.log(data);
-					 var table=$("<table id='table-ajax'>");
-					 var tr=$("<table id='tr-ajax'>")
-					 var td=$("<table id='review-td'")
+					 var arr="";
+					 
+					 	arr+="<table id='table-ajax'>";
+					 	arr+="<tr id='tr-ajax'>";
+					 	arr+="<td id='review-td'>";
 						for(var i=0;i<data.length;i++){
-						var div=$("<div id='review-user'>").html("<i class='fas fa-user'></i>");
-						var div2=$("<div id='user-name-ajax'>").html(data[i]['reviewWriter'])			
-						var div3=$("<div id='star-grade-ajax'>").html(data[i]['reviewScore']);
-						var div4=$("<div id='review-write-time'>").html(data[i]['reviewDate']);
-						var div5=$("<div id='star-grade-ajax'>").html(data[i]['reviewDate']);
-						var div5=$("<div id='review-list-comment'>").html(data[i]['reviewComment']);
-						td.append(div).append(div2).append(div3).append(div4).append(div5)
-						tr.append(td)
+						arr+="<div id='review-user'><i class='fas fa-user'></i></div>";
+						var result=Math.abs(Integer.parseInt(data[i][reviewScore])/2);
+						switch(result){
+								case 1:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i>"+"</div>";break;
+								case 2:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i><i class='fas fa-star'></i>"+"</div>";break;
+								case 3:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"+"</div>";break;
+								case 4:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"+"</div>";break;
+								case 5:arr+="<div id='star-grade-ajax'>"+"<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"+"</div>";break;
 						}
-					 table.append(tr)
-					$("#json-container").html(table); 
+						
+						arr+="<div id='review-write-time'>"+data[i]['reviewDate']+"</div>";
+						arr+="<div id='review-list-comment'>"+data[i]['reviewContent']+"</div>";
+						}
+					 	arr+="</td></tr></table>"
+
+					$("#json-container").html(arr); 
 				}
 			});
-		});
+		}); 
+	});
+
 	
 	</script>
  		
@@ -804,7 +814,7 @@ font-size:12px;
  		<td>
  		
  	<form action="<%=request.getContextPath()%>/attraction/reviewWrite" method="post">
- 	<input type="hidden" name="tour-id" value="<%=attId%>"/>
+<%--  	<input type="hidden" name="tour-id" value="<%=attId%>"/> --%>
  	<input type="hidden" name="user-id" value="pkw2813"/>
  	
 	<span class="star-input">
