@@ -391,5 +391,46 @@ public class PlannerDao {
 		return result;
 	}
 	
+	public int deletePlannerDay(Connection conn, String plannerId, int dayNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deletePlannerDay");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setInt(2, dayNo);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int updatePlannerDayNo(Connection conn, String plannerDayId, int dayNo){
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updatePlannerDayNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dayNo);
+			pstmt.setString(2, plannerDayId);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 
 }

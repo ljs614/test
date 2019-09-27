@@ -1,7 +1,6 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,16 +15,16 @@ import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.Tour;
 
 /**
- * Servlet implementation class ChangeTourListServlet
+ * Servlet implementation class ChangeTourListCity
  */
-@WebServlet("/changeTourList")
-public class ChangeTourListServlet extends HttpServlet {
+@WebServlet("/changeTourListCity")
+public class ChangeTourListCity extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeTourListServlet() {
+    public ChangeTourListCity() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,23 +33,10 @@ public class ChangeTourListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String table = request.getParameter("table");
-		String cityName = request.getParameter("cityName");
-		String select = request.getParameter("select");
-		PlannerService service = new PlannerService();
-
-		List<Tour> tourList = new ArrayList();
-		
-		if(table.equals("tt_attraction") || table.equals("tt_activity")) {
-			tourList = service.selectTourList(table, "city", cityName);
-		}else if(table.equals("tt_festival")) {
-			tourList = service.selectFestivalList(table, "city", cityName, "category", select+"월");
-		}else if(table.equals("tt_clip")) {
-//			나중에 추가
-		}
+		List<Tour> list = new PlannerService().selectTourList("tt_attraction", "city_name", request.getParameter("cityName"));
 		
 		response.setContentType("application/json;charset=UTF-8");
-	    new Gson().toJson(tourList, response.getWriter());
+	     new Gson().toJson(list, response.getWriter());
 	}
 
 	/**
