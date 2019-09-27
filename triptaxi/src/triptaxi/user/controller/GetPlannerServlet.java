@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import triptaxi.planner.model.vo.Tour;
+import com.google.gson.Gson;
+
+import triptaxi.planner.model.vo.Planner;
 import triptaxi.user.model.service.UserService;
 
 /**
- * Servlet implementation class ClipboardServlet
+ * Servlet implementation class GetPlannerServlet
  */
-@WebServlet("/user/clipboard")
-public class ClipboardServlet extends HttpServlet {
+@WebServlet("/user/planner")
+public class GetPlannerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClipboardServlet() {
+    public GetPlannerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,12 +35,10 @@ public class ClipboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
-		System.out.println(userId);
-		List<Tour> list=new UserService().getClipboard(userId);
-		for(Tour t : list) {
-			System.out.println(t.toString());
-		}
-		response.getWriter().append("ad");
+		List<Planner> list=new UserService().selectPlanner(userId);
+		Gson gson=new Gson();
+		response.getWriter().append(gson.toJson(list));
+		
 	}
 
 	/**

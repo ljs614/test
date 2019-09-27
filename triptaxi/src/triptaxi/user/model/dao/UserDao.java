@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.Tour;
 import triptaxi.user.model.vo.User;
 
@@ -108,7 +109,7 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		}return u;
 	}
 	
-	public List<Tour> getClipboard(Connection conn, String userId){
+	public List<Tour> selectClipboard(Connection conn, String userId){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Tour> list=new ArrayList<Tour>();
@@ -127,6 +128,39 @@ import static triptaxi.common.template.JDBCTemplate.close;
 				tour.setClipCount(rs.getInt(9));
 				tour.setCategory(rs.getString(11));
 				list.add(tour);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<Planner> selectPlanner(Connection conn, String userId){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Planner> list=new ArrayList<Planner>();
+		String sql=prop.getProperty("selectPlanner");
+		Planner planner=null;
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				planner=new Planner();
+				planner.setPlannerId(rs.getString("planner_id"));
+				planner.setPlannerName(rs.getString("planner_name"));
+				planner.setPlannerDate(rs.getDate("planner_date"));
+				planner.setPlannerWriter(rs.getString("planner_writer"));
+				planner.setPlannerTheme(rs.getString("planner_theme"));
+				planner.setPlannerLike(rs.getInt("planner_like"));
+				planner.setPlannerCount(rs.getInt("planner_count"));
+				planner.setPlannerPublic(rs.getString("planner_public").charAt(0));
+				planner.setPlannerWritedate(rs.getDate("planner_writedate"));
+				planner.setPlannerCoverimg(rs.getString("planner_coverimg"));
+				list.add(planner);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

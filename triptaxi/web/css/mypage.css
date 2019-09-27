@@ -2,7 +2,7 @@
 
 section{
     position: relative;
-    top:80px;
+    top:55px;
     height:1000px;
     width:100%;
 }
@@ -12,7 +12,7 @@ div#mypage-container{
     height:300px;
     margin:0 auto;
     
-    text-align: center;
+    /* text-align: center; */
     background-color:#49506a;
 
 }
@@ -34,10 +34,17 @@ div#mypage-nav li{
     cursor: pointer;
     color:white;
     top:5px;
+    text-align: center;
 }
 
 div#mypage-nav li:hover{
     background-color:#a6abbe;
+}
+
+div#mypage-cover{
+    width:100%;
+    height:300px;
+    background-size: 100% 300px;
 }
 
 div#mypage-content{
@@ -46,10 +53,17 @@ div#mypage-content{
     height:500px;
     top:-6px;
     background-color: white;
+    margin:0 auto;
     
 }
+div#mypage-content-planner{
+    position: relative;
+    margin:0 auto;
+    width:840px;
+    height:400px;
+}
 
-div#mypage-content>div{
+/* div#mypage-content>div{
     position: relative;
     width:960px;
     height:500px;
@@ -57,4 +71,91 @@ div#mypage-content>div{
     border:1px solid black;
     border-top:none;
     margin:0 auto;
+} */
+
+
+
+div.planList_div {
+	border: 1px solid rgb(180, 177, 177);
+	display: inline-block;
+	width: 268px;
+	height: 250px;
+	margin: 20px 5px 0px 5px;
+	margin-top: 20px;
+	margin-right: 5px;
+    overflow: hidden;
+}
+
+div.planList_div .planList_thumbnail {
+	height: 180px;
+}
+
+div.planList_div:hover .planList_thumbnail {
+	transform: translateY(-50%);
+	transition: 0.5s;
+}
+
+div.planList_div .planList_content {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 148px;
+}
+
+div.planList_content>div.plan_title {
+	padding-left: 30px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+div.planList_content>div.plan_date, div.plan_totalDay {
+	font-weight: 900;
+	display: inline-block;
+	padding-top: 10px;
+	color: #66a1f4;
+}
+
+div.planList_content>div.plan_totalDay {
+	color: gray;
+}
+
+div.planList_div:hover .planList_content {
+	transform: translateY(-56%);
+	transition: 0.6s;
+	transition-delay: 0.05s;
+}
+
+div.plan_city {
+	padding-top: 13px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+div.plan_theme {
+	padding-top: 10px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+div.plan_users {
+	display: inline-block;
+	padding-top: 10px;
+	text-align: left;
+	position: relative;
+	left: -15px;
+}
+
+div.plan_like {
+	/* border:1px solid #66a1f4bd; */
+	background-color: #66a1f41a;
+	border-radius: 5px;
+	display: inline-block;
+	position: relative;
+	padding: 2px;
+	left: 40px;
+}
+
+div.planList_div:hover .plan_like {
+	transform: translateX(-25%);
+	transition: 1.8s;
 }

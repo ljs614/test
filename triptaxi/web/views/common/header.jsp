@@ -172,6 +172,7 @@
         });
         function fn_login(){
             $("#logi").show();
+            $("#userId").focus();
         }
         function fn_login_exit(){
             $("#logi").hide();

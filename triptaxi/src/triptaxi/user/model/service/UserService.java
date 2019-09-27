@@ -8,6 +8,7 @@ import static triptaxi.common.template.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.Tour;
 import triptaxi.user.model.dao.UserDao;
 import triptaxi.user.model.vo.User;
@@ -38,9 +39,16 @@ public class UserService {
 		return result;
 	}
 	
-	public List<Tour> getClipboard(String userId){
+	public List<Tour> selectClipboard(String userId){
 		Connection conn=getConnection();
-		List<Tour> list=dao.getClipboard(conn, userId);
+		List<Tour> list=dao.selectClipboard(conn, userId);
+		close(conn);
+		return list;
+	}
+	
+	public List<Planner> selectPlanner(String userId){
+		Connection conn=getConnection();
+		List<Planner> list=dao.selectPlanner(conn, userId);
 		close(conn);
 		return list;
 	}
