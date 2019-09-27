@@ -8,7 +8,8 @@ import java.util.List;
 
 import triptaxi.city.model.dao.CityDao;
 import triptaxi.city.model.vo.City;
-import triptaxi.planner.model.vo.CityList;;
+import triptaxi.planner.model.vo.CityList;
+import triptaxi.planner.model.vo.Planner;;
 
 public class CityService {
 	
@@ -34,5 +35,28 @@ public class CityService {
 		close(conn);
 		return c;
 	}
+	
+	public List<Planner> cityPlanList(String cityName){
+		Connection conn=getConnection();
+		List<Planner> p=dao.cityPlanList(conn, cityName);
+		close(conn);
+		return p;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

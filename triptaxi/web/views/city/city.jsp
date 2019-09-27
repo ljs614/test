@@ -117,32 +117,18 @@
 	
 				<div class="city_schedule">
 					<h2><%=c.getCityName() %>여행 추천일정</h2>
-					
 					<div class="city_schedule1">
-						<figure class="snip1382">
-							<img
+						<!-- <figure class="snip1382">
+							<a href="#"> <img
 								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg" />
-							<figcaption>
-								<h2>Gustav Purpleson</h2>
-								<p>Weekends don't count unless you spend them doing something
-									completely pointless.</p>
-								<div class="icons">
-									<a href="#"><i class="fas fa-heartbeat"></i></a>
-								</div>
-							</figcaption>
-						</figure>
-						<figure class="snip1382">
-							<img
-								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg" />
-							<figcaption>
-								<h2>Gustav Purpleson</h2>
-								<p>Weekends don't count unless you spend them doing something
-									completely pointless.</p>
-								<div class="icons">
-									<a href="#"><i class="fas fa-heartbeat"></i></a>
-								</div>
-							</figcaption>
-						</figure>
+								<figcaption>
+									<h2>Gustav Purpleson</h2>
+									<p>Weekends don't count unless you spend them doing
+										something completely pointless.</p>
+								</figcaption>
+							</a>
+						</figure> -->
+						
 					</div>
 				</div>
 				
@@ -155,54 +141,6 @@
 				<div class="swiper-container">
 				    <div class="swiper-wrapper">
 				     	 <!--  <div class="swiper-slide">
-					      	  <img src="../../4.jpg" width="400" height="320"/>
-					      	  <div class="swiper-slide_right">
-									<h2>영국 박물관&브룸즈버리 지역</h2>
-									<p>영국 박물관 주변을 브룸즈버리 지역이라고 통칭한다.
-									King's Cross기차역을 중심으로 영국 도서관, 찰스 디킨스 박물관 등이 모두 이곳에
-									 몰려 있는데 동선을 잘 짜면 꽤 근사한 일정이 완성된다. 
-									걸어서 다닐정도로 가까운 편이라 느긋느긋 산책을 즐기면서 둘러보는 것을 추천한다.</p>
-									<br>
-									<p class="red"><i class="fas fa-exclamation-triangle"></i> 영국 박물관은 많은 여행자가 몰리기 때문에 아침 일찍 찾는것을 추천한다.</p>
-									<br/>
-									<div>
-										<button onclick="" />자세히 보기</button>
-									</div>
-							  </div>
-					   	  </div>
-					      <div class="swiper-slide">
-					      	  <img src="../../4.jpg" width="400" height="320"/>
-					      	  <div class="swiper-slide_right">
-									<h2>영국 박물관&브룸즈버리 지역</h2>
-									<p>영국 박물관 주변을 브룸즈버리 지역이라고 통칭한다.
-									King's Cross기차역을 중심으로 영국 도서관, 찰스 디킨스 박물관 등이 모두 이곳에
-									 몰려 있는데 동선을 잘 짜면 꽤 근사한 일정이 완성된다. 
-									걸어서 다닐정도로 가까운 편이라 느긋느긋 산책을 즐기면서 둘러보는 것을 추천한다.</p>
-									<br>
-									<p class="red"><i class="fas fa-exclamation-triangle"></i> 영국 박물관은 많은 여행자가 몰리기 때문에 아침 일찍 찾는것을 추천한다.</p>
-									<br/>
-									<div>
-										<button onclick="" />자세히 보기</button>
-									</div>
-							  </div>
-					   	  </div>
-					   	  <div class="swiper-slide">
-					      	  <img src="../../4.jpg" width="400" height="320"/>
-					      	  <div class="swiper-slide_right">
-									<h2>영국 박물관&브룸즈버리 지역</h2>
-									<p>영국 박물관 주변을 브룸즈버리 지역이라고 통칭한다.
-									King's Cross기차역을 중심으로 영국 도서관, 찰스 디킨스 박물관 등이 모두 이곳에
-									 몰려 있는데 동선을 잘 짜면 꽤 근사한 일정이 완성된다. 
-									걸어서 다닐정도로 가까운 편이라 느긋느긋 산책을 즐기면서 둘러보는 것을 추천한다.</p>
-									<br>
-									<p class="red"><i class="fas fa-exclamation-triangle"></i> 영국 박물관은 많은 여행자가 몰리기 때문에 아침 일찍 찾는것을 추천한다.</p>
-									<br/>
-									<div>
-										<button onclick="" />자세히 보기</button>
-									</div>
-							  </div>
-					   	  </div>
-					   	  <div class="swiper-slide">
 					      	  <img src="../../4.jpg" width="400" height="320"/>
 					      	  <div class="swiper-slide_right">
 									<h2>영국 박물관&브룸즈버리 지역</h2>
@@ -293,16 +231,41 @@
 			},1000);
 		});
 	});
-
+	
+	
+	 $(function(){
+		 $(document).ready(function(){
+			 $.ajax({
+					url:"<%=request.getContextPath()%>"+"/city/plan?cityName="+"<%=c.getCityName()%>",
+					type:"post",
+					success:function(data){
+						console.log(data);
+						var planArr="";
+						 for(var i=0; i<data.length; i++){
+							planArr+="<figure class='snip1382'>";
+							planArr+="<a href='#'>";
+							planArr+="<img src=<%=request.getContextPath()%>"+data[i]["plannerCoverimg"]+">";
+							planArr+="<figcaption>";
+							planArr+="<h2>"+data[i]["plannerName"]+"</h2>";
+							planArr+="<p>"+data[i]["plannerTheme"]+"</p>";
+							planArr+="</figcaption>";
+							planArr+="</a>";
+							planArr+="</figure>";
+						} 
+						 $(".city_schedule1").append(planArr);
+					}
+			 });
+		 });
+	 });
 	  
-	$(function (){
+	window.onload=$(function (){
 		$(document).ready(function(){
 			$.ajax({
 				url:"<%=request.getContextPath()%>"+"/city/attraction?cityName="+"<%=c.getCityName()%>",
 				type:"post",
 				success:function(data){
 					console.log(data);
-					console.log(data[0]["imageUrl"]);
+					/* console.log(data[0]["imageUrl"]); */
 					 var attArr="";
 					for(var i=0; i<data.length; i++){
 						var attImg=data[i]["imageUrl"].split(",");
