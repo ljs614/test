@@ -5,9 +5,7 @@
         }
 
         section {
-            border:1px solid red;
             margin-top:52px;
-            
             font-family: 'Nanum Gothic', sans-serif;
         }
 
@@ -18,30 +16,22 @@
             /* height:580px; */
         }
         div#continentSelect #innerContinentSelect{
-            border:1px solid blue;
             width:1024px;
             position:relative;
-            top:15%;
+            top:20%;
             margin:0 auto;
+            height:400px;
         }
 
-        div#innerContinentSelect #continent-container{
-            position:relative;
-            top:40px;
-            left:110px;
-        }
+        
         ul#continents {
             list-style: none;
-            background: url(map_big.png) no-repeat 0 0;
-            /* 
-            The important declaration to pay attention to here is 
-            its position value of relative.
-             This will allow for us to absolutely position our li elements next.  
-            */
+            background: url("../views/planner/img/map_big.png") no-repeat 0 0;
+            background-size:850px 830px;
             position: relative;
             width: 850px;
-            height: 330px;
-            margin: 0;
+            height: 400px;
+            margin: 0 auto;
             padding: 0;
         }
 
@@ -58,31 +48,32 @@
         }
 
         ul#continents li a:hover {
-            background: url(map_big.png) no-repeat 0 0;
+            background: url("../views/planner/img/map_big.png") no-repeat 0 0;
+            background-size:850px 830px;
         }
 
         ul#continents li#northAmerica a:hover {
-            background-position: 0px -335px;
+            background-position: 0px -395px;
         }
 
         ul#continents li#southAmerica a:hover {
-            background-position: -344px -327px;
+            background-position: -344px -357px;
         }
 
         ul#continents li#africa a:hover {
-            background-position: -300px -514px;
+            background-position: -300px -590px;
         }
 
         ul#continents li#europe a:hover {
-            background-position: -30px -535px;
+            background-position: -30px -635px;
         }
 
         ul#continents li#asia a:hover {
-            background-position: -532px -337px;
+            background-position: -532px -397px;
         }
 
         ul#continents li#australia a:hover {
-            background-position: -600px -569px;
+            background-position: -600px -639px;
         }
 
 
@@ -130,11 +121,68 @@
 
         #continentSelectContent{
             width:100%;
-
-
+            display:none;
+        }
+        #innerContent #contentTitle{
+        	position:relative;
+        	top:70px;
+        	padding-left:20px;
+        	height:70px;
+        	font-weight:bold;
+        	font-size:50px;
+        	font-family:"Russo One";
+        	letter-spacing:2px;
         }
         #totalList{
             width:100%;
             height:600px;
-            background-color:gray;
+            background-color:#a6abbe;
+        }
+        #innertotalList{
+        	width:1024px;
+            position:relative;
+            margin:0 auto;
+  
+        }
+        #totalListTitle{
+        	font-size:25px;
+        	font-weight:bold;
+        	text-align:center;
+        	padding-top:30px;
+        	padding-bottom:30px;
+
+        }
+        .listContent{
+        	padding-top:10px;
+        	margin-bottom:25px;
+        }
+        .listContent>.city{
+        	display:inline-block;
+        	padding:20px;
+        }
+        
+        .listContent>.city>a{
+        	text-decoration:none;
+        	color:black;
+        	position:relative;
+        	top:-2px;
+        }
+        .listContent>.city span{
+        	color:white;
+        	padding-left:5px;
+        	font-weight:bold;
+        	font-size:13px;
+        	
+        }
+        .continentName{
+        	border-bottom: 1px solid white;
+        	font-size:20px;
+        	font-weight:bolder;
+        }
+        #comingSoon{
+        	font-family:"Russo One";
+        	letter-spacing:2px;
+        	font-size:23px;
+        	padding-left:40px;
+        	color:white;
         }

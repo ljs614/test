@@ -96,12 +96,19 @@ public class PlannerService {
 	public List<Tour> selectTourList(String table, String col, String city){
 		Connection conn = getConnection();
 		
-//		수정해야됨
 		List<Tour> tourList = dao.selectTourList(conn, table, col, city);
 		
 		close(conn);
 		return tourList;
 		
+	}
+	
+	public List<Tour> selectFestivalList(String table, String col, String city, String col2, String month){
+		Connection conn = getConnection();
+		
+		List<Tour> tourList = dao.selectFestivalList(conn, table, col, city, col2, month);
+		close(conn);
+		return tourList;
 	}
 	
 	public void updateTitle(String plannerId, String title) {
@@ -142,6 +149,14 @@ public class PlannerService {
 		
 		close(conn);
 		return url;
+	}
+	
+	public int updateStartDate(String plannerId, String date) {
+		Connection conn = getConnection();
+		int result = dao.updatStartDate(conn, plannerId, date);
+		close(conn);
+		return result;
+		
 	}
 
 

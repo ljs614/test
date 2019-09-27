@@ -250,6 +250,40 @@ public class PlannerDao {
 		return tourList;
 	}
 	
+	public List<Tour> selectFestivalList(Connection conn, String table, String col, String city, String col2, String month){
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + table + " WHERE " + col +"="+ city + " AND " + col2 + "=" + month;
+		List<Tour> tourList = new ArrayList<Tour>();
+		
+		try {
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				Tour tour=new Tour();
+				tour.setTourId(rs.getString(1));
+				tour.setTourName(rs.getString(2));
+				tour.setTourEng(rs.getString(3));
+				tour.setCity(rs.getString(4));
+				tour.setTourLat(rs.getDouble(5));
+				tour.setTourLng(rs.getDouble(6));
+				tour.setImageUrl(rs.getString(7));
+				tour.setClipCount(rs.getInt(9));
+				tour.setReviewScore(rs.getInt(10));
+				tour.setCategory(rs.getString(11));
+			
+				tourList.add(tour);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return tourList;
+	}
+	
 	public int updateTitle(Connection conn, String plannerId, String title) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -336,6 +370,24 @@ public class PlannerDao {
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+	
+	public int updatStartDate(Connection conn, String plannerId, String date) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateStartDate");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, date);
+			pstmt.setString(2, plannerId);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
 		return result;
 	}
 	

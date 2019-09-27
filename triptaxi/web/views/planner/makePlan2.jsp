@@ -14,7 +14,12 @@
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
 
-<script src="<%=request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
+<!-- // jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<!-- // jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<!-- // jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 
 <link href="<%=request.getContextPath() %>/css/makePlan2.css"
 	rel="stylesheet">
@@ -112,13 +117,32 @@
 		</ul>
 		
 		<ul id='tourListMenu'>
-      		
+      		<!-- 관광지, 액티비티, 축제 리스트 들어가는 부분 -->
 		</ul>
 	</div>
-	<div id="searchCityMenuClose"><</div>
+  <div id="searchCityMenuClose"><</div>
 
+  <div id="map"></div>
+  
+  <div id="dayEditModal">
+      <div id="dayEditModal-content">
+        <ul id="dayEditModal-main">
+          <li>
+            <div id='dayEditClose'>완료</div>         
+          </li>
+          <li>
+            <div id="dayEditDate">
+            </div>
+            <div id="datepicker"></div>
+          </li>
+        </ul>
+        
+        <ul id="dayEditModal-list">
+        	
+        </ul>
+      </div>
 
-	<div id="map"></div>
+  </div>
 	<script>
     	const url = new URL(window.location.href);
 		var plannerId = url.searchParams.get('plannerId');
@@ -126,6 +150,11 @@
       	var planner;
       	var dayList;
       	var tourList;
+      	var date;
+      	
+      	var lats=[];
+    	var lngs=[];
+    	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
       
       	var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
        	
@@ -194,8 +223,9 @@
              			dayList = data['dayList'];
            		  	
      				  	$('#pltitle').text(data['plannerName']);
-             			var date = new Date(data['plannerDate']);
-        
+             			date = new Date(data['plannerDate']);
+						var dateString = data['plannerDate'] + " <i class='fas fa-calendar-alt'></i>";
+						$('#dayEditDate').html(dateString);
              			var resultDate = calDate(date, dayList.length);
              			$('#fullDate').text(date.getMonth()+1+"."+date.getDate()
              					+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
@@ -211,9 +241,12 @@
           				console.log(data['attrList']);
           				tourList = data['attrList'];
           				$.each(tourList, function(index, item){
-          					console.log(item['city']);
+       
           					addTourList(item['city'], item['tourName'], item['category'], item['clipCount'], item['reviewScore']);
+          					lats.push(item['tourLat']);
+          					lngs.push(item['tourLng']);
           				});
+          				Marker_draw(map);
            	  }
            	  
              });
@@ -251,6 +284,23 @@
           }
 
         };
+        
+        function fn_addEditDay(dayNo, cityName, startDate) {
+            var currDate = calDate(startDate, (dayNo-1));
+            var add = "<li><div class='md_dayCount'>DAY <span>" + dayNo;
+            add += "</span></div>";
+            add += "<div class='md_weekday'>"+ returnDay(currDate.getDay()) +"</div>";
+            add += "<div class='md_date'>"+ (currDate.getMonth()+1)+"."+currDate.getDate() +"</div>";
+            add += "<div class='md_city'>"+ cityName +"</div>";
+            add += "<div class='delete_md_day'>X</div></li>";
+
+              console.log($(document).height()-235);
+            $('#dayEditModal-list').append(add);
+            if ($('#dayEditModal-list').height() >= ($(window).height() - 84)) {
+              $('#dayEditModal-list').css("overflow-y", "scroll");
+            }
+
+          };
         
         function returnDay(day){
 			var dayK="";
@@ -338,25 +388,53 @@
         });
 
         var map;
-        var d = { lat: 37.551326, lng: 126.957865 };
+     
         function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: d,
-            zoom: 10,
-            gestureHandling: 'cooperative',
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.TOP_CENTER
-            }
-          });
-
-          // google.maps.event.addListener(map,'click',function(event){
-          //   placeMarker(event.latLng);
-          // });
-
-          var marker = new google.maps.Marker({ position: d, map: map });
-
+            map = new google.maps.Map(document.getElementById('map'), {
+              gestureHandling: 'cooperative',
+              mapTypeControlOptions: {
+                  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                  position: google.maps.ControlPosition.TOP_CENTER
+              }
+            });
+            Marker_draw(map);
+          }
+        
+        var markers=[];
+        function Marker_draw(map){
+        	var beforeIndex;
+        	var bounds = new google.maps.LatLngBounds();
+        	
+        	console.log("lats : " + lats);
+        	for(var i=0;i<lats.length;i++){
+        		var loc = new google.maps.LatLng(lats[i], lngs[i]);
+        		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+"atMarker-40.png" });
+        			bounds.extend(loc);
+        			markers.push(marker);
+        	}
+    	    	console.log(lats);
+    	    	console.log(lngs);
+        		map.fitBounds(bounds);
+        		map.panToBounds(bounds);
+        		
+        		$(document).on("mouseover", '#tourListMenu>li', function(){
+         			var ct = $(this).find('.tourTitle').text();
+         			var list = tourList;
+         			console.log($(this).find('.tourTitle').text());
+            		$.each(list, function(index, item){
+            			if(item['tourName']==ct){
+            				var latitude = item['latitude'];
+            				var longitude = item['longitude'];
+            				
+            				beforeIndex = index;
+            				markers[beforeIndex].setIcon(iconBase+"atMarker-80.png");
+            			}   			
+            		});
+            		
+            	});
+            	$(document).on("mouseout", '#tourListMenu>li', function(){
+            		markers[beforeIndex].setIcon(iconBase+"atMarker-40.png");
+            	})
         }
 
         $('#sm_refresh').click(function(){
@@ -399,6 +477,78 @@
        	  	}
         		
         }
+
+        $(function () {
+      $("#datepicker").datepicker({
+        dayNamesMin: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+        minDate: "0D",
+        maxDate: "1Y",
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (dateText) {
+          var dateIcon = '<i class="fas fa-calendar-alt"></i>';
+          $('div#dayEditDate').text(dateText);
+          $('div#dayEditDate').append(" " + dateIcon);
+          $('#datepicker').fadeOut(800);
+          $('#startDay').val(dateText);
+        }
+      });
+    });
+
+    $('div#dayEditDate').toggle(function () {
+      $('div#datepicker').css("display", "block");
+    }, function () {
+      $('div#datepicker').css("display", "none");
+    })
+    
+    $('#fullDateEdit').click(function(){
+      $('#dayEditModal').css("display","block");
+      
+      $.each(dayList, function(index, item){
+    	  fn_addEditDay(item['plannerDayNo'], item['cityName'], date)
+      })
+    })
+    
+    $('#dayEditClose').click(function(){
+    	console.log($('#dayEditDate').text());
+    	var newDate = $('#dayEditDate').text();
+    	if(date != newDate){
+    		$.ajax({
+				url:"<%=request.getContextPath()%>/changeStartDate",
+    	        type:"post",
+    	        data:{"plannerId":plannerId, "date" : newDate},
+    	        dataType:"text",
+    	        success:function(data){
+    	        	if(data=="true"){
+    	        		location.reload();
+    	        	}
+    	        }
+    		})
+    	}
+    });
+    
+    $('.sc_icon').click(function(){
+    	var category = $($(this).children()).attr('id');
+    	var table;
+    	var select=0;
+    	console.log(date.getMonth()+1);
+    	
+    	switch(category){
+    		case "attractionIcon" : table = "tt_attraction"; break;
+    		case "activityIcon" : table = "tt_activity"; break;
+    		case "festivalIcon" : table = "tt_festival"; select = (date.getMonth()+1);break;
+    		case "clipIcon" : table = "tt_clip";  break;
+    	}
+    	
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/changeTourList",
+    		type:"post",
+    		data:{"table":table,"cityName": dayList[0]['cityName'],"select":select},
+    		dataType:"json",
+    		success:function(data){
+    			console.log(data);
+    		}
+    	});
+    })
         
         
         

@@ -74,6 +74,7 @@ public class CityDao {
 	            c.setContinentName(rs.getString("continent_name"));
 	            c.setNationName(rs.getString("nation_name"));
 	            c.setCityName(rs.getString("city_name"));
+	            c.setCityEng(rs.getString("city_eng"));
 	            c.setLatitude(rs.getDouble("latitude"));
 	            c.setLongitude(rs.getDouble("longitude"));
 	            c.setFlagUrl(rs.getString("flag_url"));

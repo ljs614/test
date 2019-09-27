@@ -4,6 +4,7 @@ public class CityList {
 	private String continentName;
 	private String nationName;
 	private String cityName;
+	private String cityEng;
 	private Double latitude;
 	private Double longitude;
 	private String flagUrl;
@@ -12,12 +13,13 @@ public class CityList {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CityList(String continentName, String nationName, String cityName, Double latitude, Double longitude,
-			String flagUrl) {
+	public CityList(String continentName, String nationName, String cityName, String cityEng, Double latitude,
+			Double longitude, String flagUrl) {
 		super();
 		this.continentName = continentName;
 		this.nationName = nationName;
 		this.cityName = cityName;
+		this.cityEng = cityEng;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.flagUrl = flagUrl;
@@ -47,6 +49,14 @@ public class CityList {
 		this.cityName = cityName;
 	}
 
+	public String getCityEng() {
+		return cityEng;
+	}
+
+	public void setCityEng(String cityEng) {
+		this.cityEng = cityEng;
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -74,9 +84,14 @@ public class CityList {
 	@Override
 	public String toString() {
 		return "CityList [continentName=" + continentName + ", nationName=" + nationName + ", cityName=" + cityName
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", flagUrl=" + flagUrl + "]";
+				+ ", cityEng=" + cityEng + ", latitude=" + latitude + ", longitude=" + longitude + ", flagUrl="
+				+ flagUrl + "]";
 	}
 
+	
+
+
+	
 
 
 
