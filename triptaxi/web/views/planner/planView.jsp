@@ -537,11 +537,13 @@
 
 
 	//일정 이름 바꾸기
-	$('#cover-container').mouseover(function(){
-		// $(this).css("background-color","#F2F2F2");
-		$('#planTitle>i').show();
-		$("#cover-change").css("opacity",1);
-	});
+	if(userId!='null'){
+		$('#cover-container').mouseover(function(){
+			// $(this).css("background-color","#F2F2F2");
+			$('#planTitle>i').show();
+			$("#cover-change").css("opacity",1);
+		});
+	}
 	$('#cover-container').mouseleave(function(){
 		// $(this).css("background-color", "white");
 		$('#planTitle>i').hide();

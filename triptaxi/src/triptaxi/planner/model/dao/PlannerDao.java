@@ -45,7 +45,7 @@ public class PlannerDao {
 				p.setPlannerId(rs.getString("planner_id"));
 				p.setPlannerName(rs.getString("planner_name"));
 				p.setPlannerDate(rs.getDate("planner_date"));
-				p.setPlannerWriter(rs.getString("planner_writer"));
+				p.setPlannerWriter(rs.getString("user_name"));
 				p.setPlannerTheme(rs.getString("planner_theme"));
 				p.setPlannerLike(rs.getInt("planner_like"));
 				p.setPlannerCount(rs.getInt("planner_count"));
@@ -368,6 +368,8 @@ public class PlannerDao {
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 		
 		return result;
@@ -430,6 +432,27 @@ public class PlannerDao {
 		}
 		
 		return result;
+	}
+	
+	public List<String> selectShareUser(Connection conn, String plannerId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("selectShareUser");
+		List<String> userList=new ArrayList<String>();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {	
+				userList.add(rs.getString(1));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userList;
 	}
 	
 

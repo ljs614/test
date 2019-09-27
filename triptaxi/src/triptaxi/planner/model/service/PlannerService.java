@@ -182,6 +182,7 @@ public class PlannerService {
 				}
 			}
 		}
+		close(conn);
 		return list;
 	}
 	
@@ -195,7 +196,16 @@ public class PlannerService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
+	}
+	
+	public List<String> selectShareUser(String plannerId) {
+		Connection conn=getConnection();
+		List<String> shareUsers=dao.selectShareUser(conn, plannerId);
+		close(conn);
+		return shareUsers;
+		
 	}
 
 

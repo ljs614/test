@@ -32,7 +32,7 @@
         $(window).ready(function(){
             $(".my-content").css("opacity",0);
             $("#mypage-content-clipboard").css("opacity",1);
-            fn_planner();
+            fn_planner("완성된 일정");
             $($("#mypage-nav>li")[0]).addClass('mn_clicked');
         });
 
@@ -53,34 +53,13 @@
 
         var userId="<%=userId%>";
 
-        function fn_planner(){
+        function fn_planner(plannerType){
             $.ajax({
                 url:"<%=request.getContextPath()%>/user/planner",
-                data:{"userId":userId},
+                data:{"userId":userId, "plannerType":plannerType},
                 success:function(data){
                     var plannerList=JSON.parse(data);
-                    var planner_html="<div id='mypage-content-planner'>";
-                    planner_html+="<div id='planList_nav'>";
-                    planner_html+="<li class='pn_clicked'>완성된 일정</li><span>|</span>";
-                    planner_html+="<li>계획중인 일정</li><span>|</span>";
-                    planner_html+="<li>좋아요 일정</li>";
-                    planner_html+="</div>";
-                    for(var i=0; i<plannerList.length; i++){
-                        planner_html+="<div class='planList_div'><div class='planList_thumbnail'>";
-                        planner_html+="<img src='<%=request.getContextPath()%>"+plannerList[i]['plannerCoverimg']+"'width='268px' height='180px'/></div>";
-                        planner_html+="<div class='planList_content'>";
-                        planner_html+="<div class='plan_title'>"+plannerList[i]['plannerName']+"</div>";
-                        var p_date=plannerList[i]['plannerDate'].split(' ');
-                        planner_html+="<div class='plan_date'>"+p_date[2]+"-"+p_date[0].split('월')[0]+"-"+p_date[1].split(',')[0]+"</div>";
-                        planner_html+="<div class='plan_totalDay'>"+plannerList.length+" DAY</div>";
-                        planner_html+="<div class='plan_city'>도시</div>";
-                        planner_html+="<div class='plan_theme'>"+plannerList[i]['plannerTheme']+"</div>";
-                        planner_html+="<div class='plan_users'>누구, 누구, 누구</div>";
-                        planner_html+="<div class='plan_like'>10</div>";
-                        planner_html+="</div></div>";
-                    }
-                    planner_html+="</div>";
-                    var h=Math.ceil(plannerList.length/3);
+                    fn_plannerChange(plannerList)
                     $("#mypage-content").append(planner_html);
                     $("#mypage").css("height",h*220+700+"px");
                      //일정 내비 클릭이벤트
@@ -96,7 +75,30 @@
                 }
             });
         }
-       
+        function fn_plannerChange(plannerList){
+            var planner_html="<div id='mypage-content-planner'>";
+            planner_html+="<div id='planList_nav'>";
+            planner_html+="<li>완성된 일정</li><span>|</span>";
+            planner_html+="<li>계획중인 일정</li><span>|</span>";
+            planner_html+="<li>좋아요 일정</li>";
+            planner_html+="</div>";
+            for(var i=0; i<plannerList.length; i++){
+                planner_html+="<div class='planList_div'><div class='planList_thumbnail'>";
+                planner_html+="<img src='<%=request.getContextPath()%>"+plannerList[i]['plannerCoverimg']+"'width='268px' height='180px'/></div>";
+                planner_html+="<div class='planList_content'>";
+                planner_html+="<div class='plan_title'>"+plannerList[i]['plannerName']+"</div>";
+                var p_date=plannerList[i]['plannerDate'].split(' ');
+                planner_html+="<div class='plan_date'>"+p_date[2]+"-"+p_date[0].split('월')[0]+"-"+p_date[1].split(',')[0]+"</div>";
+                planner_html+="<div class='plan_totalDay'>"+plannerList.length+" DAY</div>";
+                planner_html+="<div class='plan_city'>도시</div>";
+                planner_html+="<div class='plan_theme'>"+plannerList[i]['plannerTheme']+"</div>";
+                planner_html+="<div class='plan_users'>누구, 누구, 누구</div>";
+                planner_html+="<div class='plan_like'>10</div>";
+                planner_html+="</div></div>";
+            }
+            planner_html+="</div>";
+            var h=Math.ceil(plannerList.length/3);
+        }
 
 
 
