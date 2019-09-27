@@ -33,6 +33,7 @@ public class CityChoiceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cityName=request.getParameter("cityName");
 		
+		
 		City c=new CityService().cityChoice(cityName);
 		
 		System.out.println(c);

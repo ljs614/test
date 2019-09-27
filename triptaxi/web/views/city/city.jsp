@@ -8,20 +8,11 @@
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
 <%
 	City c=(City)request.getAttribute("City");
-	String[] getImgUrl=c.getImageUrl().split(",");
+	/* String[] getImgUrl=c.getImageUrl().split(","); */
 %>
 
 	<script>
-		$(document).ready(function(){
-        $('.bxslider').bxSlider({
-            slideWidth: 800,
-            controls : false,
-            auto : true,
-            pause : 3000,
-            mode : "fade",
-            captions: true
-        	});
-        });
+		
 		
 		$(".hover").mouseleave(
 			function () {
@@ -43,7 +34,7 @@
 				});
 	</script>
 
-<section>
+<section id="section">
 	<div class="video_con">
 		<video autoplay loop muted="false">
 			<source src="<%=c.getCityVideoUrl() %>" type="video/mp4">
@@ -69,23 +60,22 @@
 				</span>
 			</div>
 			<div class="video_con1_3">
-				<div>
-					<i class="fas fa-cloud-sun"></i>
-					<h3>현지 날씨</h3>
-					<p id="weather">
-						
-						
-					</p>
+				<div id="weather_div">
+					
 				</div>
 				<div class="con1_weather">
-					<i class="far fa-calendar-alt"></i>
+					<i class="material-icons">
+						flight_takeoff
+					</i>
 					<h3>여행 최적기</h3>
 					<p>
 						<%=c.getPeakSeason() %>
 					</p>
 				</div>
 				<div>
-					<i class="fas fa-bolt"></i>
+					<i class="material-icons">
+						battery_charging_full
+					</i>
 					<h3>사용 전압</h3>
 					<p>
 						<%=c.getNationName() %><br/>
@@ -98,7 +88,7 @@
 	
 	<div class="con1_bottom">
 		<div class="con1_bottom1">
-			<p class="con1_bottom_p1">하와이 여행 준비할 때 꼭 필요한 최신의 하와이 여행정보를 보고 있습니다.</p>
+			<p class="con1_bottom_p1"><%=c.getCityName() %>여행 준비할 때 꼭 필요한 최신의 <%=c.getCityName() %> 여행정보를 보고 있습니다.</p>
 			<p class="con1_bottom_p2"><a href="#"><i class="fas fa-angle-double-down"></i>&nbsp다른 여행도시 보기</a></p>
 		</div>
 	</div>
@@ -106,7 +96,7 @@
 	<div class="city_content">
 		<div class="city_con2" id="adsideWrapper">
 				<div class="city_leftmenu" id="adside">
-					<h1>로마</h1>
+					<h1><%=c.getCityName() %></h1>
 					<ul class="city_ul">
 						<li><a href="#">홈</a></li>
 						<li><a href="#" id="tourist">관광지</a></li>
@@ -117,28 +107,17 @@
 			</div>
 			<div class="city_right">
 				<div class="bxslider">
-					<div>
+					<!-- <div>
 						<img src="../../1.jpg" height="300" title="#" />
-					</div>
-					<div>
-						<img src="../../2.jpg" height="300" title="#" />
-					</div>
-					<div>
-						<img src="../../3.jpg" height="300" title="#" />
-					</div>
-					<div>
-						<img src="../../4.jpg" height="300" title="#" />
-					</div>
+					</div> -->
 				</div>
 				<div class="city_right1">
-					<p>테베레 강 하류에 위치한 이탈리아 수도 로마, 수많은 문화유산과 다양한 예술작품들을 볼수 있는 도시이다.
-						'모든길은 로마로 통한다'라는 말이 있듯이 로마를 중심으로 육로, 수로 교통이 잘 발달되어 있다. 젤라또, 파스타,
-						에스프레소를 정통의 맛 그대로 즐길수 있는 미의 도시 로마를 여행해보자.</p>
+					<p><%=c.getCityIntro() %></p>
 				</div>
 	
 				<div class="city_schedule">
-					<h2>로마여행 추천일정</h2>
-					<br />
+					<h2><%=c.getCityName() %>여행 추천일정</h2>
+					
 					<div class="city_schedule1">
 						<figure class="snip1382">
 							<img
@@ -275,6 +254,27 @@
 </section>
 
 	<script>
+	$(function(){
+		$(document).ready(function(){
+				var slideArr="";
+				var imgUrl="<%=c.getImageUrl()%>".split(",");
+				for(var i=0 ; i<imgUrl.length ; i++){
+					slideArr+="<div>";
+					slideArr+="<img src='<%=request.getContextPath()%>"+imgUrl[i]+"' height='400' title='<%=c.getCityName()%>' />";
+					slideArr+="</div>";
+				}
+				$(".bxslider").html(slideArr);
+				
+				$('.bxslider').bxSlider({
+		            slideWidth: 800,
+		            controls : false,
+		            auto : true,
+		            pause : 3000,
+		            mode : "fade",
+		            captions: true
+		        	});
+		});
+	});
 	
 	$(function(){
 		$(document).ready(function(){
@@ -331,22 +331,35 @@
 		        });  
 		  });
 	});
-	
+
 	$(function(){
 		$(document).ready(function(){
-			var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+"<%=c.getCityEng()%>"+"&units=metric&appid=98d4971f2e14753dd582c6f4443133d8";
+			var city=("<%=c.getCityName()%>"=='나트랑'?'Danang':"<%=c.getCityEng()%>");
+			console.log(city);
+			var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=98d4971f2e14753dd582c6f4443133d8";
 		    $.ajax({
 		        url: apiURI,
 		        dataType: "json",
 		        type: "GET",
 		        async: "false",
 		        success: function(data) {
-		        	$("#weather").append("현재온도 : "+Math.ceil(data.main.temp)+"도 현재습도 : "+data.main.humidity+"%<br><a href='#'>월별 날씨 보기</a>");
-		            console.log(data);
+					
+		          
+		        	
+		        	var wetherArr="";
+		        	wetherArr+="<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' width='60px' height='60px' style='margin-bottom:-20px;'/>";
+		        	wetherArr+="<h3>현재날씨</h3>";
+		        	wetherArr+="<p>현재온도 : "+Math.ceil(data.main.temp)+"도 현재습도 : "+data.main.humidity+"%<br><a href='#'>월별 날씨 보기</a></p>";
+		        	
+		        	$("#weather_div").html(wetherArr);
+		        	
+		        	
+		        	
+		        	console.log(data);
 		            console.log("현재온도 : "+ data.main.temp );
 		            console.log("현재온도 : "+ Math.ceil(data.main.temp));
 		            console.log("현재습도 : "+ data.main.humidity);
-		            console.log("날씨 : "+ data.weather[0].main );
+			            console.log("날씨 : "+ data.weather[0].main );
 		            console.log("상세날씨설명 : "+ data.weather[0].description );
 		            console.log("날씨 이미지 : "+ data.weather[0].icon );
 		            console.log("바람   : "+ data.wind.speed );
