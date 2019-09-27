@@ -40,11 +40,11 @@ public class ChangeTourListServlet extends HttpServlet {
 		List<Tour> tourList = new ArrayList();
 		
 		if(table.equals("tt_attraction") || table.equals("tt_activity")) {
-			service.selectTourList(table, "city", cityName);
+			tourList = service.selectTourList(table, "city", cityName);
 		}else if(table.equals("tt_festival")) {
-			service.selectFestivalList(table, "city", cityName, "category", select+"월");
+			tourList = service.selectFestivalList(table, "city", cityName, "category", select+"월");
 		}else if(table.equals("tt_clip")) {
-			
+//			나중에 추가
 		}
 	}
 

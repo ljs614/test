@@ -157,7 +157,7 @@
 		console.log($(this).text());
 		$('#continentSelectContent').css("display","block");
 		$('#contentTitle').text("- " + str.toUpperCase());
-		$('section').css("height", 600 + $('#continentSelect').height() 
+		$('section').css("height", $('#totalList').height() + $('#continentSelect').height() 
 				+$('#continentSelectContent').height()+ "px");
 	});
 	
