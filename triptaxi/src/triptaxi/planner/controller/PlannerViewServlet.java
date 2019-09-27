@@ -42,7 +42,7 @@ public class PlannerViewServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
-		String plannerId="PL-13";
+		String plannerId=request.getParameter("plannerId");
 		PlannerService service=new PlannerService();
 		Planner planner=service.selectPlanner(plannerId);
 		String view;
