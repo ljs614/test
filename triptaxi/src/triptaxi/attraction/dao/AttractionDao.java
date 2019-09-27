@@ -162,7 +162,7 @@ public class AttractionDao {
 		
 	}
 	
-	public List<TourReview> reviewList(Connection conn,String attId) {
+	public List<TourReview> reviewList(Connection conn,String attId, int reviewmore) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql=prop.getProperty("reviewList");
@@ -170,6 +170,7 @@ public class AttractionDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, attId);
+			pstmt.setInt(2, reviewmore);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				TourReview tr=new TourReview();

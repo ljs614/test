@@ -18,6 +18,7 @@
 	int count=0;
 	int clipCount1=0;
 	int clip=0;
+	int reviewmore=5;
 	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
@@ -31,22 +32,22 @@
 <style>
 
 div{
-  /*    border: 1px solid hotpink;
-  border-radius: 1px;     */
+     border: 1px solid hotpink;
+  border-radius: 1px;     
 }
 
 table{
 margin:0 auto;
 width:1024px;
-
+ border: 1px solid #444444; 
 }
 
 tr{
-
+ border: 1px solid #444444; 
 }
 
 td{
-   /* border: 1px solid #444444; */ 
+    border: 1px solid #444444; 
 }
 
 	#root{
@@ -175,7 +176,13 @@ td{
 
 #slide-img{
 
-
+width:600px;
+height:350px;
+border-radius: 5px;
+}
+#slide-mini{
+width:100%;
+border-radius: 5px;
 }
 
 img {
@@ -296,12 +303,12 @@ img {
 
 #info{
 	margin-left:15px;
-	width:500px;
+	width:400px;
     font-family: Arial;
 }
 
 #infoMent{
-	width:500px;
+	width:400px;
 }
 
 #recommendTB{
@@ -498,7 +505,7 @@ text-align: center;
 }
 #att-review{
 float: left;
-	width:825px;
+	width:800px;
 	margin-left:100px;
 	vertical-align: middle;
 }
@@ -530,7 +537,7 @@ margin-left:20px;
 
 #review-list-comment{
 	display:inline-block;
-	width:80%;
+	width:700px;
 	vertical-align: top;
 	margin-top:10px;
 	color:black;
@@ -554,7 +561,7 @@ display:inline-block;
 }
 
 #star-grade-ajax{
-width:100px;
+	width:100px;
 	display:inline-block;
 	font-size:15px;
     color: gold;
@@ -580,11 +587,12 @@ display:inline-block;
 }
 </style>
 <script>
+
 	var clipcount=0;
 	$(function(){
 		$("#clipClick").click(function(){
 			clipcount++;
-			console.log(clipcount);
+
 			if(clipcount%2!=0){
 			$("#topButtonClip").css("color","orange");
 			$("#imageText").html("클립해제");
@@ -636,7 +644,7 @@ display:inline-block;
   	case 4: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	case 5: $("#star_grade").html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>"); break;
   	}
-  asdf
+ 
 	</script>
 	</td>
 	<td class=topButton>
@@ -660,23 +668,23 @@ display:inline-block;
 		<div class="container">
   <div class="mySlides">
     <div class="numbertext">1 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" id="slide-img" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" id="slide-img">
     <%-- <img src="images/"<%=attName%>/<%=thumbnailUrl%>" style="width:600px;height:400px"> --%>
   </div>
 
   <div class="mySlides">
     <div class="numbertext">2 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" id="slide-img" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" id="slide-img">
   </div>
 
   <div class="mySlides">
     <div class="numbertext">3 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" id="slide-img" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" id="slide-img">
   </div>
     
   <div class="mySlides">
     <div class="numbertext">4 / 4</div>
-    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" id="slide-img" style="width:500px;height:350px">
+    <img src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" id="slide-img"">
   </div>
 
 
@@ -687,16 +695,16 @@ display:inline-block;
 
   <div class="row">
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" style="width:100%" onclick="currentSlide(1)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[0]%>" id="slide-mini" onclick="currentSlide(1)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" style="width:100%" onclick="currentSlide(2)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[1]%>" id="slide-mini" onclick="currentSlide(2)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" style="width:100%" onclick="currentSlide(3)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[2]%>" id="slide-mini" onclick="currentSlide(3)">
     </div>
     <div class="column">
-      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" style="width:100%" onclick="currentSlide(4)">
+      <img class="demo cursor" src="<%=request.getContextPath() %>/images/<%=city%>/<%=attName%>/<%=imageUrl[3]%>" id="slide-mini" onclick="currentSlide(4)">
     </div>
 	</div>
 	</div>
@@ -794,7 +802,10 @@ display:inline-block;
  		</table>
  		 --%>
 		<script>
+	
+		
 		$(function(){
+			
 			$(document).ready(function(){
 				fn_review();
 			}); 
@@ -802,14 +813,15 @@ display:inline-block;
 		});
 		
 		function fn_review(){
+			
 			$.ajax({
-				url:"<%=request.getContextPath()%>/attraction/reviewlist?attId=<%=attId%>",
+				url:"<%=request.getContextPath()%>/attraction/reviewlist?reviewmore1=<%=reviewmore%>&attId=<%=attId%>",
 				type:"get",
 				dataType:"json",
 				success:function(data){
 					console.log(data);
 					 var arr="";
-					 
+					 	
 					 	arr+="<table id='table-ajax'>";
 					 	arr+="<tr id='tr-ajax'>";
 					 	arr+="<td id='review-td'>";
@@ -835,11 +847,23 @@ display:inline-block;
 					$("#json-container").html(arr); 
 				}
 			});
+		
+		
 		}
 
+		function fn_reviewmore(){
+			<%=reviewmore+=5%>
+			console.log(<%=reviewmore%>)
+			fn_review();
+				
+		}
+		
+			
 	
 	</script>
- 		
+ 		<div id="review-more">
+ 			<button id="review-more" value="5개 더보기" onclick="fn_reviewmore()">5개더보기</button>
+ 		</div>
  		<table>
  		<tr>
  		<td id=review-comment1>
@@ -874,7 +898,7 @@ display:inline-block;
 		<tr>
 		<td>
 		<div id=att-review>
-		<textarea rows="4" cols="120" name="review-comment" id="review-content" style="resize:none" required></textarea>
+		<textarea rows="4" cols="108" name="review-comment" id="review-content" style="resize:none" required></textarea>
 		</div>
 		<div id=review-button-div>
 		<input type="submit" id="review-button" value="입력"></input>

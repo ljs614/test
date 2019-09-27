@@ -36,11 +36,13 @@ public class ReviewListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	
 		
 		String attId=request.getParameter("attId");
-
-		List<TourReview> list=new AttractionService().reviewList(attId);
+		int reviewmore=Integer.parseInt(request.getParameter("reviewmore1"));		
+		System.out.println(reviewmore);
+		System.out.println(attId);
+		List<TourReview> list=new AttractionService().reviewList(attId,reviewmore);
 	
 		JSONArray jarr=new JSONArray();
 		for(TourReview tr:list) {
@@ -56,8 +58,8 @@ public class ReviewListServlet extends HttpServlet {
 		
 		
 		response.setContentType("application/json;charset=UTF-8");
-//		response.getWriter().print(jobj);
-//		response.getWriter().print(jarr);
+
+		
 		response.getWriter().append(new Gson().toJson(jarr));
 		
 		

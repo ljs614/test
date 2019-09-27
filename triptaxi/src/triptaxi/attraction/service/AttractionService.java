@@ -68,9 +68,9 @@ public class AttractionService {
 		
 	}
 	
-	public List<TourReview> reviewList(String attId){
+	public List<TourReview> reviewList(String attId,int reviewmore){
 		Connection conn=getConnection();
-		List<TourReview> list=dao.reviewList(conn,attId);
+		List<TourReview> list=dao.reviewList(conn,attId,reviewmore);
 
 		close(conn);
 		return list;

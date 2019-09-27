@@ -36,7 +36,6 @@ public class AttractionReaviewWriteServlet extends HttpServlet {
 		String reviewComment=request.getParameter("review-comment");
 		String userId=request.getParameter("user-id");
 		String tourId=request.getParameter("tour-id");
-		String userId2= request.getParameter("userId");
 		
 		TourReview tr=new TourReview();
 		tr.setTourId(tourId);
@@ -44,7 +43,6 @@ public class AttractionReaviewWriteServlet extends HttpServlet {
 		tr.setTourReviewScore(star);
 		tr.setTourReviewWriter(userId);
 		int result =new AttractionService().writeReview(tr);
-		System.out.println(result);
 		
 	}
 
