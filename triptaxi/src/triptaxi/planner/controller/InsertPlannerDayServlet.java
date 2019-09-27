@@ -1,8 +1,6 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,22 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import triptaxi.planner.model.service.PlannerService;
-import triptaxi.planner.model.vo.Tour;
+import triptaxi.planner.model.vo.PlannerDay;
 
 /**
- * Servlet implementation class ChangeTourListServlet
+ * Servlet implementation class InsertPlannerDayServlet
  */
-@WebServlet("/changeTourList")
-public class ChangeTourListServlet extends HttpServlet {
+@WebServlet("/insertPlannerDay")
+public class InsertPlannerDayServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeTourListServlet() {
+    public InsertPlannerDayServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,23 +30,17 @@ public class ChangeTourListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String table = request.getParameter("table");
-		String cityName = request.getParameter("cityName");
-		String select = request.getParameter("select");
-		PlannerService service = new PlannerService();
-
-		List<Tour> tourList = new ArrayList();
 		
-		if(table.equals("tt_attraction") || table.equals("tt_activity")) {
-			tourList = service.selectTourList(table, "city", cityName);
-		}else if(table.equals("tt_festival")) {
-			tourList = service.selectFestivalList(table, "city", cityName, "category", select+"월");
-		}else if(table.equals("tt_clip")) {
-//			나중에 추가
+		PlannerDay pd = new PlannerDay();
+		pd.setPlannerDayNo(Integer.parseInt(request.getParameter("dayNo"))+1);
+		pd.setCityName(request.getParameter("cityName"));
+		pd.setPlannerId(request.getParameter("plannerId"));
+		int result = new PlannerService().insertPlannerDayOne(pd);
+		
+		if(result>0) {
+			response.setContentType("text/csv;charset=UTF-8");
+			response.getWriter().append("true");
 		}
-		
-		response.setContentType("application/json;charset=UTF-8");
-	    new Gson().toJson(tourList, response.getWriter());
 	}
 
 	/**
