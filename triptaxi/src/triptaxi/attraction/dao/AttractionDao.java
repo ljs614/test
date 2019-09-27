@@ -179,7 +179,7 @@ public class AttractionDao {
 				tr.setTourId(rs.getString("tour_id"));
 				tr.setTourReviewScore(rs.getInt("tour_review_score"));
 				tr.setTourReviewDate(rs.getDate("tour_review_date"));
-				
+				list.add(tr);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

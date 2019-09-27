@@ -19,8 +19,9 @@ public class AttractionService {
 	private String city;
 	private String attId;
 	private String table;
+	
 	public Attraction selectAttraction(String attId) {
-			Connection conn=getConnection();
+		Connection conn=getConnection();
 		Attraction a=dao.selectAttraction(conn,attId);
 		close(conn);
 		city=a.getCity();
@@ -31,8 +32,9 @@ public class AttractionService {
 		case "ac": table="tt_activity";break;
 		case "fe": table="tt_festival";break;
 			}
-		return a;
 		
+		return a;
+
 	}
 	
 	public List<Attraction> recommendAttraction(String attId){
@@ -40,10 +42,11 @@ public class AttractionService {
 		List<Attraction> list=dao.recommendAttraction(conn,city,attId);
 		close(conn);
 		return list;
+		
 	}
 	
 	public int clipCount() {
-		System.out.println(attId+"askllklkj"+table);
+		
 		Connection conn=getConnection();
 		int result=dao.clipCount(conn,attId,table);
 		close(conn);
@@ -51,7 +54,6 @@ public class AttractionService {
 	}
 	
 	public int clipCountMinus() {
-		System.out.println(attId+"agsdgsdg"+table);
 		Connection conn=getConnection();
 		int result=dao.clipCountMinus(conn,attId,table);
 		close(conn);
@@ -69,9 +71,11 @@ public class AttractionService {
 	public List<TourReview> reviewList(String attId){
 		Connection conn=getConnection();
 		List<TourReview> list=dao.reviewList(conn,attId);
+
 		close(conn);
 		return list;
 		
+
 	}
 	
 	public List<Attraction> cityAttraction(String cityName){

@@ -1,7 +1,6 @@
 package triptaxi.attraction.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,61 +13,65 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
-import com.triptaxi.attraction.model.vo.Attraction;
 import com.triptaxi.attraction.model.vo.TourReview;
 
 import triptaxi.attraction.service.AttractionService;
 
 /**
- * Servlet implementation class AttractionSelectServlet
+ * Servlet implementation class ReviewListServlet
  */
-@WebServlet("/attraction/select")
-public class SelectAttractionServlet extends HttpServlet {
+@WebServlet("/attraction/reviewlist")
+public class ReviewListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAttractionServlet() {
+    public ReviewListServlet() {
         super();
- 
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				AttractionService service=new AttractionService();
-				request.setCharacterEncoding("UTF-8");
-				response.setCharacterEncoding("UTF-8");
-				String attId=request.getParameter("attId");
-				System.out.println(":"+attId);
-				Attraction a=service.selectAttraction(attId);
-				
-				List<Attraction> list=service.recommendAttraction(attId);
-				
-			
-				request.setAttribute("selectatt", a);
-				request.setAttribute("list", list);
-				request.getRequestDispatcher("/views/attraction/attraction.jsp").forward(request, response);
 
+		
+		String attId=request.getParameter("attId");
 
-				
-				
-				
-				
-				
-				
-				
+		List<TourReview> list=new AttractionService().reviewList(attId);
+	
+		JSONArray jarr=new JSONArray();
+		for(TourReview tr:list) {
+			JSONObject j=new JSONObject();
+			j.put("reviewNo",tr.getTourReviewNo());
+			j.put("reviewWriter",tr.getTourReviewWriter());
+			j.put("reviewContent",tr.getTourReviewContent());
+			j.put("tourId",tr.getTourId());
+			j.put("reviewScore",tr.getTourReviewScore());
+			j.put("reviewDate",tr.getTourReviewDate());
+			jarr.add(j);
+			System.out.println(tr);
+		}
+		
+		
+		response.setContentType("application/json;charset=UTF-8");
+//		response.getWriter().print(jobj);
+//		response.getWriter().print(jarr);
+		response.getWriter().append(new Gson().toJson(jarr));
+		
+		
+		
+		
 	}
 
-	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

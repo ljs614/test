@@ -12,7 +12,8 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
 	rel="stylesheet">
-<script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
+
+<link href="<%=request.getContextPath() %>/fontAwesome/css/all.css" rel="stylesheet">
 
 <!-- // jQuery UI CSS파일  -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -60,7 +61,7 @@
 
 		</ul>
 
-		<ul id="addDayBox" onclick='fn_addDay();'>
+		<ul id="addDayBox">
 			<li>
 				<div id="addDay">
 					<span>DAY 추가</span>
@@ -116,7 +117,7 @@
 			</li>
 		</ul>
 		
-		<ul id='tourListMenu'>
+		<ul id='tourListMenu'  style="overflow-x:'hidden'">
       		<!-- 관광지, 액티비티, 축제 리스트 들어가는 부분 -->
 		</ul>
 	</div>
@@ -155,9 +156,10 @@
       	var lats=[];
     	var lngs=[];
     	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
+    	var icon;
       
       	var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
-       	
+       	console.log("leftDiv : " + leftDiv );
       	$('#planTitle').mouseover(function(){
            $(this).css("background-color","#F2F2F2");
            $('#planTitle>i').css("color","black");
@@ -212,6 +214,9 @@
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
+          $('#map').css("left", leftDiv + "px");
+          $('#dayEditModal-list').css("height", $(window).height()-84 + "px");
+          $('#tourListMenu').css("height", $(window).height()-144+"px");
           
           $.ajax({
            	  url:"<%=request.getContextPath()%>/makePlan2",
@@ -246,6 +251,7 @@
           					lats.push(item['tourLat']);
           					lngs.push(item['tourLng']);
           				});
+          				icon = "atMarker";
           				Marker_draw(map);
            	  }
            	  
@@ -264,7 +270,13 @@
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
           $('#map').css("height", map_height + 'px');
+          $('#map').css("left", leftDiv + "px");
+          $('#dayEditModal-list').css("height", $(window).height()-84 + "px");
+          $('#tourListMenu').css("height", $(window).height()-144+"px");
           
+          if($('#tourListMenu').css("height")>=$(window).height()-144+"px"){
+        	  $('#tourListMenu').css("overflow-y", "scroll");
+          }
         });
 
         
@@ -326,9 +338,9 @@
         add += "<div class='tourScore'><i class='fas fa-star'></i> " + reviewScore + "</div></div></li>";
   		
         $('#tourListMenu').append(add);
-        $('#tourListMenu').css("height", $('#tourListMenu').height()+76+"px");
-        if ($('#tourListMenu').height() >= ($(window).height() - 83)) {
-          $('#tourListMenu').css("overflow-y", "scroll");
+        /* $('#tourListMenu').css("height", $('#tourListMenu').height()+76+"px"); */
+        if($('#tourListMenu').css("height")>=$(window).height()-144+"px"){
+      	  $('#tourListMenu').css("overflow-y", "scroll");
         }
         
     }
@@ -353,7 +365,12 @@
           $('#sm_dayCount').text($(this).children().first().text());
           $('#sm_date').text($(this).find('#mm_date').text());
           $('#sm_weekday').text($(this).find('#mm_weekday').text());
-          $('#sc_title').text($('.clickColor').find('#mm_city').text());
+          console.log("도시 : " + $('.clickColor').find('#mm_city').text());
+          if($('.clickColor').find('#mm_city').text() != $('#sc_title')){
+        	fn_changeTourListCity($('.clickColor').find('#mm_city').text());
+          	$('#sc_title').text($('.clickColor').find('#mm_city').text());
+          }
+        	  
           console.log($(this).find('#mm_date').text());
 
           if(!($('#subMenu').is(':visible'))){
@@ -364,6 +381,9 @@
             $('#map').css('left',(leftDiv+2)+"px");
             $('#map').css('width', ($(window).width() - leftDiv+2) + 'px');
           }
+          
+          
+          
         });
 
         $('#searchCityMenuClose').click(function(){
@@ -402,13 +422,14 @@
         
         var markers=[];
         function Marker_draw(map){
+
         	var beforeIndex;
         	var bounds = new google.maps.LatLngBounds();
         	
         	console.log("lats : " + lats);
         	for(var i=0;i<lats.length;i++){
         		var loc = new google.maps.LatLng(lats[i], lngs[i]);
-        		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+"atMarker-40.png" });
+        		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+icon+"-40.png" });
         			bounds.extend(loc);
         			markers.push(marker);
         	}
@@ -427,13 +448,13 @@
             				var longitude = item['longitude'];
             				
             				beforeIndex = index;
-            				markers[beforeIndex].setIcon(iconBase+"atMarker-80.png");
+            				markers[beforeIndex].setIcon(iconBase+icon+"-80.png");
             			}   			
             		});
             		
             	});
             	$(document).on("mouseout", '#tourListMenu>li', function(){
-            		markers[beforeIndex].setIcon(iconBase+"atMarker-40.png");
+            		markers[beforeIndex].setIcon(iconBase+icon+"-40.png");
             	})
         }
 
@@ -545,13 +566,94 @@
     		data:{"table":table,"cityName": dayList[0]['cityName'],"select":select},
     		dataType:"json",
     		success:function(data){
+    			tourList=data;
+    			
+    			var category = data[0]['tourId'].substring(0,2);
+    			console.log(category);
+    			
+    			switch(category){
+    				case "at": icon="atMarker"; break;
+    				case "ac": icon="acMarker"; break;
+    				case "fe": icon="feMarker"; break;
+    				case "cl": icon="clipMarker"; break;
+    			}
+    			
+    			fn_resetTourList(tourList);
+    			
+    		}
+    	});
+    });
+    
+    $(document).on('click', '.delete_md_day',function(){
+    	console.log($(this).siblings('.md_dayCount').find('span').text()); // dayNo
+    	console.log(plannerId);
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/deletePlannerDay",
+    		type:"post",
+    		data:{"plannerId":plannerId,"dayNo": $(this).siblings('.md_dayCount').find('span').text()},
+    		dataType:"json",
+    		success:function(data){
+    			$('#dayEditModal-list>li').remove();
     			console.log(data);
+    			dayList = data;
+    			$.each(dayList, function(index, item){
+    		    	  fn_addEditDay(item['plannerDayNo'], item['cityName'], date)
+    		     });
+    			
+    		}
+    	});
+    	
+    });
+    
+    $('#addDay').click(function(){
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/insertPlannerDay",
+    		type:"post",
+    		data:{"cityName":$('.mainMenu>li:last-child').find('#mm_city').text(), "dayNo": $('.mainMenu>li:last-child').find('#mm_dayCount>span').text(),
+    				"plannerId":plannerId},
+    		dataType:"text",
+    		success:function(data){
+    			if(data=="true"){
+	        		location.reload();
+	        	}
     		}
     	});
     })
-        
-        
-        
+    
+    function fn_resetTourList(data){
+    	$('#tourListMenu>li').remove(); 
+		lats=[];
+		lngs=[];
+		$.each(data, function(index, item){     
+			addTourList(item['city'], item['tourName'], item['category'], item['clipCount'], item['reviewScore']);
+			lats.push(item['tourLat']);
+			lngs.push(item['tourLng']);
+		});
+		
+		for(var i=0;i<markers.length;i++){
+    		markers[i].setMap(null);
+    	}
+    	markers=[];
+	  	if(data.length>0){
+	  		Marker_draw(map);  
+	  	}
+	  	else{
+		  map.setCenter(new google.maps.LatLng(32.982518, 155.563655));
+		  map.setZoom(2);
+	  	}
+    }
+    
+    function fn_changeTourListCity(city){
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/changeTourListCity",
+    		data:{"cityName":city},
+    		dataType:"json",
+    		success:function(data){
+    			
+    		}
+    	})
+    }
+  
 
       </script>
 	<script

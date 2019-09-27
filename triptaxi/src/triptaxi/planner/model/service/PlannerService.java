@@ -6,6 +6,7 @@ import static triptaxi.common.template.JDBCTemplate.getConnection;
 import static triptaxi.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import triptaxi.planner.model.dao.PlannerDao;
@@ -157,6 +158,44 @@ public class PlannerService {
 		close(conn);
 		return result;
 		
+	}
+	
+	public List<PlannerDay> deletePlannerDay(String plannerId, int dayNo){
+		Connection conn = getConnection();
+		
+		int result = dao.deletePlannerDay(conn, plannerId, dayNo);
+		
+		List<PlannerDay> list = new ArrayList<PlannerDay>();
+		
+		if(result>0) {
+			list = dao.selectPlannerDayList(conn, plannerId);
+			
+			for(int i=0;i<list.size();i++) {
+				result = dao.updatePlannerDayNo(conn, list.get(i).getPlannerDayId(), (i+1));
+				
+				if(result>0) {
+					commit(conn);
+					list = dao.selectPlannerDayList(conn, plannerId);
+				}else {
+					rollback(conn);
+					return null;
+				}
+			}
+		}
+		return list;
+	}
+	
+	public int insertPlannerDayOne(PlannerDay pd) {
+		Connection conn = getConnection();
+		
+		int result = dao.insertPlannerDay(conn, pd);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 
 
