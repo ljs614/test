@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<%@ page import="triptaxi.city.model.vo.City" %>
+<%@ page import="triptaxi.city.model.vo.City,com.triptaxi.attraction.model.vo.Attraction,java.util.List" %>
 <link href="<%=request.getContextPath() %>/css/city.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/swiper.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/js/swiper.min.js"></script>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
 <%
 	City c=(City)request.getAttribute("City");
-	/* String[] getImgUrl=c.getImageUrl().split(","); */
 %>
 
 	<script>
@@ -35,6 +34,7 @@
 	</script>
 
 <section id="section">
+
 	<div class="video_con">
 		<video autoplay loop muted="false">
 			<source src="<%=c.getCityVideoUrl() %>" type="video/mp4">
@@ -154,7 +154,7 @@
 							<div class="swiper">
 				<div class="swiper-container">
 				    <div class="swiper-wrapper">
-				     	  <div class="swiper-slide">
+				     	 <!--  <div class="swiper-slide">
 					      	  <img src="../../4.jpg" width="400" height="320"/>
 					      	  <div class="swiper-slide_right">
 									<h2>영국 박물관&브룸즈버리 지역</h2>
@@ -169,7 +169,6 @@
 										<button onclick="" />자세히 보기</button>
 									</div>
 							  </div>
-							  
 					   	  </div>
 					      <div class="swiper-slide">
 					      	  <img src="../../4.jpg" width="400" height="320"/>
@@ -218,13 +217,13 @@
 										<button onclick="" />자세히 보기</button>
 									</div>
 							  </div>
-					   	  </div>
+					   	  </div> -->
 					    </div>
 					    <!-- Add Pagination -->
 					    
 					    <!-- Add Arrows -->
-					    <div class="swiper-button-next"></div>
-					    <div class="swiper-button-prev"></div>
+					    <!-- <div class="swiper-button-next"></div>
+					    <div class="swiper-button-prev"></div> -->
 					  </div>
 				</div>
 							<div class="swiper-pagination"></div>
@@ -235,14 +234,19 @@
 				<div class="city_pdf">
 					<div class="pdf_con">
 						<p>
-							로마의 대한 여행 TIP!<br>
-							트립택시에서 PDF파일로 잘 정리하여 어디서나 볼수있도록 제공해드립니다.
+							<%=c.getCityName()%>의 대한 여행 TIP!<br>
+							트립택시에서 여행객들을 위한 <%=c.getCityName()%>여행 PDF파일을 제공합니다.
 						</p>
 					</div>
 					<div>
-						<button>
-							PDF파일 다운로드
-						</button>
+						<div class="pdf_con2">
+							<a href="<%=request.getContextPath()%>/pdf/<%=c.getCityEng()%>.pdf" download>
+								파일 다운로드
+								<i class="material-icons hvr-pulse-grow">
+									system_update_alt
+								</i>
+							</a>
+						</div>
 					</div>	
 				</div>
 			</div>
@@ -253,7 +257,8 @@
 
 </section>
 
-	<script>
+	<script>   
+	
 	$(function(){
 		$(document).ready(function(){
 				var slideArr="";
@@ -288,6 +293,53 @@
 			},1000);
 		});
 	});
+
+	  
+	$(function (){
+		$(document).ready(function(){
+			$.ajax({
+				url:"<%=request.getContextPath()%>"+"/city/attraction?cityName="+"<%=c.getCityName()%>",
+				type:"post",
+				success:function(data){
+					console.log(data);
+					console.log(data[0]["imageUrl"]);
+					 var attArr="";
+					for(var i=0; i<data.length; i++){
+						var attImg=data[i]["imageUrl"].split(",");
+						attArr+="<div class='swiper-slide'>";
+						attArr+="<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"' width='400' height='320' />";
+						attArr+="<div class='swiper-slide_right'>";
+						attArr+="<h2>"+data[i]['attractionName']+"</h2>";
+						attArr+="<p>"+data[i]['attractionComment']+"</p><br>";
+						attArr+="<p class='red'>category : <i class='material-icons'>thumb_up</i>"+data[i]['category']+"</p><br>";
+						attArr+="<div>";
+						attArr+="<button onclick=''>자세히 보기</button>";
+						attArr+="</div>";
+						attArr+="</div>";
+						attArr+="</div>";
+					}
+					$(".swiper-wrapper").append(attArr);
+					var arrArr2="";
+					arrArr2+="<div class='swiper-button-next'></div>";
+					arrArr2+="<div class='swiper-button-prev'></div>";
+					$(".swiper-container").append(arrArr2); 
+					
+					 var swiper = new Swiper('.swiper-container', {
+					      pagination: {
+					        el: '.swiper-pagination',
+					        type: 'fraction',
+					      },
+					      navigation: {
+					        nextEl: '.swiper-button-next',
+					        prevEl: '.swiper-button-prev',
+					      },
+					    });
+				}
+			});
+		});
+	});
+	
+	
 	
 	$(function (){
 		$("#tourist").one('click', function () {
@@ -326,7 +378,7 @@
 		            			var exchange=data[i]["deal_bas_r"]
 		            		} 
 		            	}
-		            	$("#exchange_span").append(exchange)+"원";
+		            	$("#exchange_span").append(exchange+"원");
 		            }
 		        });  
 		  });
@@ -343,23 +395,18 @@
 		        type: "GET",
 		        async: "false",
 		        success: function(data) {
-					
-		          
-		        	
 		        	var wetherArr="";
 		        	wetherArr+="<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png' width='60px' height='60px' style='margin-bottom:-20px;'/>";
 		        	wetherArr+="<h3>현재날씨</h3>";
-		        	wetherArr+="<p>현재온도 : "+Math.ceil(data.main.temp)+"도 현재습도 : "+data.main.humidity+"%<br><a href='#'>월별 날씨 보기</a></p>";
+		        	wetherArr+="<p>현재온도 : "+Math.ceil(data.main.temp)+"도<br>현재습도 : "+data.main.humidity+"%</p>";
 		        	
 		        	$("#weather_div").html(wetherArr);
-		        	
-		        	
-		        	
+
 		        	console.log(data);
 		            console.log("현재온도 : "+ data.main.temp );
 		            console.log("현재온도 : "+ Math.ceil(data.main.temp));
 		            console.log("현재습도 : "+ data.main.humidity);
-			            console.log("날씨 : "+ data.weather[0].main );
+			        console.log("날씨 : "+ data.weather[0].main );
 		            console.log("상세날씨설명 : "+ data.weather[0].description );
 		            console.log("날씨 이미지 : "+ data.weather[0].icon );
 		            console.log("바람   : "+ data.wind.speed );
@@ -371,16 +418,7 @@
 		});
 	});
 		
-    var swiper = new Swiper('.swiper-container', {
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'fraction',
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
+   
   </script>
 
 <%@ include file="/views/common/footer.jsp"%>

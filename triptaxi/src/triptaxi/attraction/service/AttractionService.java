@@ -78,4 +78,11 @@ public class AttractionService {
 
 	}
 	
+	public List<Attraction> cityAttraction(String cityName){
+		Connection conn=getConnection();
+		List<Attraction> list=dao.cityAttraction(conn,cityName);
+		close(conn);
+		return list;
+	}
+	
 }
