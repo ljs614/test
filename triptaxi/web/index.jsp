@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>	
 <%@ include file="/views/common/header.jsp"%>
+<%@ page import="triptaxi.user.model.vo.User" %>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
@@ -214,6 +215,18 @@
 <script>
 	AOS.init({
 		easing : 'ease-in-out-sine'
+	});
+	
+	$(function(){
+		$(document).ready(function(){
+			$.ajax({
+				url:"<%=request.getContextPath() %>/dayCity",
+				type:"get",
+				success:function(data){
+					console.log(data);
+				}
+			});	
+		});
 	});
 	
 

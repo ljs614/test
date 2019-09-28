@@ -96,9 +96,9 @@
 	<div class="city_content">
 		<div class="city_con2" id="adsideWrapper">
 				<div class="city_leftmenu" id="adside">
-					<h1><%=c.getCityName() %></h1>
+					<h2><%=c.getCityName() %></h2>
 					<ul class="city_ul">
-						<li><a href="#">홈</a></li>
+						<li><a href="<%=request.getContextPath()%>/citychoice?cityName=<%=c.getCityEng()%>">홈</a></li>
 						<li><a href="#" id="tourist">관광지</a></li>
 						<li><a href="#" id="activity">액티비티</a></li>
 						<li><a href="#" id="festival">축제</a></li>
@@ -106,6 +106,21 @@
 					</ul>
 			</div>
 			<div class="city_right">
+				<%-- <div class="right-att">
+					<h2><%=c.getCityName() %> / 주요 관광지</h2>
+				</div>
+				<div class="card card-1">
+					<a href="#">
+						<div>
+							<img src="<%=request.getContextPath() %>/images/다낭/Danang1.jpg" width="250px"/>
+						</div>
+						<div class="card-att">
+							<h3><%=c.getCityName() %> / 미케비치</h3>
+							<p>영국 최대의 국립 공공박물관이다. 대영박물관은 과거 영국이 제국주의시대부터 전세계 모든 대륙에서 수집한 방대한 유물들을 소장 및 전시하고 있다.</p>
+						</div>
+					</a>
+				</div> --%>
+			
 				<div class="bxslider">
 					<!-- <div>
 						<img src="../../1.jpg" height="300" title="#" />
@@ -301,33 +316,95 @@
 			});
 		});
 	});
-	
-	
-	
 	$(function (){
-		$("#tourist").one('click', function () {
+		$("#festival").on('click', function () {
 			$.ajax({
-				url:"<%=request.getContextPath() %>/tourist",
+				url:"<%=request.getContextPath() %>/page/festival?cityName=<%=c.getCityName() %>",
 				type:"post",
 				success:function(data){
 					console.log(data);
-					var addDiv="";
+					var attDiv="";
 					for(var i=0;i<data.length;i++){
-						  console.log(data[i]["touristTitle"]);
-						  addDiv += "<div class='aos-item aos-init aos-animate' data-aos='flip-up'>";
-						  addDiv += "<div class='aos-item__inner'>";
-				          addDiv += "<h3>";
-				          addDiv += data[i]["touristTitle"];
-				          addDiv += "</h3>";
-				          addDiv += "</div></div>";
+						  var attImg=data[i]["imageUrl"].split(",");
+						  attDiv += "<div class='card card-1'>";
+						  attDiv += "<a href='#'>";
+						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
+						  attDiv += "<div class='card-att'>";
+						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
+						  attDiv += "<p>"+data[i]["attractionComment"]+"</p></div></a></div>";
 					}
-					$(".city_right").html(addDiv);
-					$("section").css("height",$(".city_leftmenu").height());
+					var atth2="";
+					atth2+="<div class='right-att'>";
+					atth2+="<h2><%=c.getCityName() %> / Festival</h2>";
+					atth2+="</div>";
+					$(".city_right").html(atth2);
+					$(".city_right").append(attDiv);
+					$("#section").css("height",$(".card").height()*4.8);
 				}
 			});
 		});
 	});
 	
+	
+	
+	$(function (){
+		$("#activity").on('click', function () {
+			$.ajax({
+				url:"<%=request.getContextPath() %>/page/activity?cityName=<%=c.getCityName() %>",
+				type:"post",
+				success:function(data){
+					console.log(data);
+					var attDiv="";
+					for(var i=0;i<data.length;i++){
+						  var attImg=data[i]["imageUrl"].split(",");
+						  attDiv += "<div class='card card-1'>";
+						  attDiv += "<a href='#'>";
+						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
+						  attDiv += "<div class='card-att'>";
+						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
+						  attDiv += "<p>"+data[i]["attractionComment"]+"</p></div></a></div>";
+					}
+					var atth2="";
+					atth2+="<div class='right-att'>";
+					atth2+="<h2><%=c.getCityName() %> / Activity</h2>";
+					atth2+="</div>";
+					$(".city_right").html(atth2);
+					$(".city_right").append(attDiv);
+					$("#section").css("height",$(".card").height()*4.8);
+				}
+			});
+		});
+	});
+	
+	$(function (){
+		$("#tourist").on('click', function () {
+			$.ajax({
+				url:"<%=request.getContextPath() %>/page/attraction?cityName=<%=c.getCityName() %>",
+				type:"post",
+				success:function(data){
+					console.log(data);
+					var attDiv="";
+					for(var i=0;i<data.length;i++){
+						  var attImg=data[i]["imageUrl"].split(",");
+						  attDiv += "<div class='card card-1'>";
+						  attDiv += "<a href='#'>";
+						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
+						  attDiv += "<div class='card-att'>";
+						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
+						  attDiv += "<p>"+data[i]["attractionComment"]+"</p></div></a></div>";
+					}
+					var atth2="";
+					atth2+="<div class='right-att'>";
+					atth2+="<h2><%=c.getCityName() %> / Tourist Spot</h2>";
+					atth2+="</div>";
+					$(".city_right").html(atth2);
+					$(".city_right").append(attDiv);
+					$("#section").css("height",$(".card").height()*6.5);
+				}
+			});
+		});
+	});
+
 
 	$(function(){
 		$(document).ready(function(){
