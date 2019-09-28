@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.triptaxi.attraction.model.vo.Attraction;
+
 import triptaxi.city.model.vo.City;
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
@@ -155,7 +157,110 @@ public class CityDao {
 		}
 		return list;
 	}
-
+	
+	public List<Attraction> attractionList(Connection conn, String cityName) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("attractionList");
+		List<Attraction> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Attraction a=new Attraction();
+				a.setAttractionId(rs.getString("attraction_id"));
+				a.setAttractionName(rs.getString("attraction_name"));
+				a.setAttractionEng(rs.getString("attraction_eng"));
+				a.setCity(rs.getString("city"));
+				a.setAttractionLat(rs.getDouble("attraction_lat"));
+				a.setAttractionLng(rs.getDouble("attraction_lng"));
+				a.setImageUrl(rs.getString("image_url"));
+				a.setAttractionComment(rs.getString("attraction_comment"));
+				a.setClipCount(rs.getInt("clip_count"));
+				a.setReviewScore(rs.getDouble("review_score"));
+				a.setCategory(rs.getString("category"));
+				list.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<Attraction> activityList(Connection conn, String cityName) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("activityList");
+		List<Attraction> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Attraction a=new Attraction();
+				a.setAttractionId(rs.getString("activity_id"));
+				a.setAttractionName(rs.getString("activity_name"));
+				a.setAttractionEng(rs.getString("activity_eng"));
+				a.setCity(rs.getString("city"));
+				a.setAttractionLat(rs.getDouble("activity_lat"));
+				a.setAttractionLng(rs.getDouble("activity_lng"));
+				a.setImageUrl(rs.getString("image_url"));
+				a.setAttractionComment(rs.getString("activity_comment"));
+				a.setClipCount(rs.getInt("clip_count"));
+				a.setReviewScore(rs.getDouble("review_score"));
+				a.setCategory(rs.getString("category"));
+				list.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<Attraction> festivalList(Connection conn, String cityName) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("festivalList");
+		List<Attraction> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, cityName);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Attraction a=new Attraction();
+				a.setAttractionId(rs.getString("festival_id"));
+				a.setAttractionName(rs.getString("festival_name"));
+				a.setAttractionEng(rs.getString("festival_eng"));
+				a.setCity(rs.getString("city"));
+				a.setAttractionLat(rs.getDouble("festival_lat"));
+				a.setAttractionLng(rs.getDouble("festival_lng"));
+				a.setImageUrl(rs.getString("image_url"));
+				a.setAttractionComment(rs.getString("festival_comment"));
+				a.setClipCount(rs.getInt("clip_count"));
+				a.setReviewScore(rs.getDouble("review_score"));
+				a.setCategory(rs.getString("category"));
+				list.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
 }
 
 

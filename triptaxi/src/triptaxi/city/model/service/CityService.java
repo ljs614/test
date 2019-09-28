@@ -6,6 +6,8 @@ import static triptaxi.common.template.JDBCTemplate.getConnection;
 import java.sql.Connection;
 import java.util.List;
 
+import com.triptaxi.attraction.model.vo.Attraction;
+
 import triptaxi.city.model.dao.CityDao;
 import triptaxi.city.model.vo.City;
 import triptaxi.planner.model.vo.CityList;
@@ -42,6 +44,27 @@ public class CityService {
 		close(conn);
 		return p;
 	}
+	
+	public List<Attraction> attractionList(String cityName){
+		Connection conn=getConnection();
+		List<Attraction> a=dao.attractionList(conn, cityName);
+		close(conn);
+		return a;
+	}
+	public List<Attraction> activityList(String cityName){
+		Connection conn=getConnection();
+		List<Attraction> a=dao.activityList(conn, cityName);
+		close(conn);
+		return a;
+	}
+	
+	public List<Attraction> festivalList(String cityName){
+		Connection conn=getConnection();
+		List<Attraction> a=dao.festivalList(conn, cityName);
+		close(conn);
+		return a;
+	}
+	
 
 }
 

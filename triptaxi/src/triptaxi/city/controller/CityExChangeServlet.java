@@ -65,7 +65,7 @@ public class CityExChangeServlet extends HttpServlet {
         if(dayofWeek==1) {
         	todayInt=todayInt-2;
         }
-        else if(dayofWeek==1) {
+        else if(dayofWeek==2) {
         	todayInt=todayInt-3;
         }
         else {
@@ -74,29 +74,14 @@ public class CityExChangeServlet extends HttpServlet {
         System.out.println(todayInt);
         
         String addr = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=2M2nzLJKePBXRnne3PUuBuA2dhceGxQl&searchdate="+todayInt+"&data=AP01";
-//        String serviceKey = "자신의 키값 입력";
-//        String parameter = "";
-//        serviceKey = URLEncoder.encode(serviceKey,"utf-8");
         PrintWriter out = response.getWriter();
-//        parameter = parameter + "&" + "areaCode=1";
-//        parameter = parameter + "&" + "eventStartDate=20170401";
-//        parameter = parameter + "&" + "eventEndDate=20171231";
-//        parameter = parameter + "&" + "pageNo=1&numOfRows=10";
-//        parameter = parameter + "&" + "MobileOS=ETC";
-//        parameter = parameter + "&" + "MobileApp=aa";
-//        parameter = parameter + "&" + "_type=json";
-        
-        
-//        addr = addr + serviceKey + parameter;
         URL url = new URL(addr);
-        
+
         InputStream in = url.openStream(); 
         CachedOutputStream bos = new CachedOutputStream();
         IOUtils.copy(in, bos);
         in.close();
         bos.close();
-        
-//        out.println(addr);
         
         String data = bos.getOut().toString();        
         out.println(data);

@@ -41,7 +41,8 @@ public class CityPlannerServlet extends HttpServlet {
 		List<Planner> list=new CityService().cityPlanList(cityName);
 		
 		response.setContentType("application/json;charset=UTF-8");
-		new Gson().toJson(list,response.getWriter());
+		Gson gson=new Gson();
+		gson.toJson(list,response.getWriter());
 	}
 
 	/**
