@@ -30,22 +30,22 @@
 <style>
 
 div{
-     border: 1px solid hotpink;
-  border-radius: 1px;     
+     /* border: 1px solid hotpink;
+  border-radius: 1px;   */   
 }
 
 table{
 margin:0 auto;
 width:1024px;
- border: 1px solid #444444; 
+
 }
 
 tr{
- border: 1px solid #444444; 
+
 }
 
 td{
-    border: 1px solid #444444; 
+   /*  border: 1px solid #444444;  */
 }
 
 	#root{
@@ -300,6 +300,7 @@ img {
 	
 }
 
+
 #info{
 	margin-left:15px;
 	width:400px;
@@ -323,6 +324,7 @@ img {
   text-align: center;
   color: black;
  overflow:hidden;
+ margin-top:20px;
 }
 #recommendDiv1{
 	font-size:17px;
@@ -331,6 +333,7 @@ img {
 		 font-weight:bold;
 	
 }
+
   #recomend-clip-div{
   inline:block;
   color:orange;
@@ -350,15 +353,18 @@ img {
   }
 
 #recommendPic1{
+
  width:230px;
- height:200px;
+ height:150px;
  opacity: 0.8;
+ border-radius: 5px;
 }
 #recommendPic1:hover{
   	   cursor:pointer;
        transform:scale(1.5);
 		transition: transform 5s;  
   		opacity: 1;
+  		 border-radius: 5px;
   			-webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
 }
@@ -410,6 +416,7 @@ img {
 		font-size:23px;
 		font-family:arial;
 		 font-weight:bold;
+		 margin-top:20px;
 	}
 	#review-comment{
 		width:60px;
@@ -604,13 +611,15 @@ display:inline-block;
   -webkit-animation-duration: 1.5s;
 }
 #review-more-div{
-	width:70%
-	margin-left:20%;
+	width:70%;
+	margin-left:15%;
 	text-align:center;
 	height:40px;
+
 }
 #review-more{
 	width:300px;
+	height:30px;
 font-family:arial;
 		 font-weight:bold;
 	font-size:20px;
@@ -618,7 +627,6 @@ font-family:arial;
 
 }
 #review-more:hover{
-	
 	-webkit-animation-name: show;
   	 animation-iteration-count: infinite;
   	animation-duration:1s;
@@ -630,9 +638,19 @@ text-align:center;
 font-size:13px;
 color:skyblue;
 }
-#review-button{
-	
+#no-review{
+font-size:100px;
+color:skyblue;
+opacity:0.5;
+
 }
+#no-review-ment{
+font-size:20px;
+color:skyblue;
+opacity:0.5;
+}
+
+
 
  @-webkit-keyframes fade {
   from {opacity: 0} 
@@ -712,10 +730,10 @@ color:skyblue;
 	</td>
 	<td class=topButton>
 	<div class=topButton>
-	<a id="clipClick" <%-- href="<%=request.getContextPath()%>/attraction/clipCount?clip=<%=clip%>" --%>><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
-	<a href=""><i class="fas fa-map-marked-alt" id="topButtonMap"><h4 id="imageText">지도보기</h4></i></a>&nbsp
-	<a href=""><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰작성</h4></i></a>&nbsp
-	<a href=""><i class="far fa-calendar-plus" id="topButtonAdd"><h4 id="imageText">일정추가</h4></i></a>
+	<a id="top-button-clip" <%-- href="<%=request.getContextPath()%>/attraction/clipCount?clip=<%=clip%>" --%>><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
+	<a id="top-button-map"><i class="fas fa-map-marked-alt" id="topButtonMap"><h4 id="imageText">지도보기</h4></i></a>&nbsp
+	<a id="top-button-review"><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰보기</h4></i></a>&nbsp
+	<a id="top-button-add"><i class="far fa-calendar-plus" id="topButtonAdd"><h4 id="imageText">일정추가</h4></i></a>
 	</div>
 	</td>
 	
@@ -781,9 +799,10 @@ color:skyblue;
 	</div>
 	</td>
 	</tr>
+	
 	</table>
 	<br><br>
-	
+	<hr>
 	 <table>
 	 <tr>
 	 <td id="mapTd">
@@ -808,7 +827,7 @@ color:skyblue;
   </div>
   <div id="recommendDiv1">
   <div id="recomend-clip-div">
-  <i class="fas fa-paperclip">:&nbsp<%=arr.getClipCount()%></i>
+  <i class="fas fa-paperclip">&nbsp<%=arr.getClipCount()%></i>
   </div>
    <div id="recomend-star-div">
   <i class="fas fa-star">&nbsp<%=reviewScore%></i>
@@ -821,6 +840,7 @@ color:skyblue;
   <%if(count==4){%>
     </tr>
     <tr>
+    
  <%count=0;}} %>
    
  </tr>
@@ -836,7 +856,8 @@ color:skyblue;
  		
 
  		
- 		<div id="json-container">		</div>
+ 		<div id="json-container">
+ 		</div>
  		
 <%--  		<table id=table-ajax>
  			<tr id=table-ajax>
@@ -862,6 +883,21 @@ color:skyblue;
  		</table>
  		 --%>
 		<script>
+		$("#top-button-map").click(function(){
+				var offset = $('#map').offset();
+				console.log(offset);
+				$('html').animate({scrollTop : offset.top-150}, 1000);
+				console.log("map");
+		});
+		$("#top-button-review").click(function(){
+			var offset = $('#reviewTitleR').offset();
+			console.log(offset);
+			$('html').animate({scrollTop : offset.top-150}, 1000);
+			console.log("map");
+	});
+	
+		
+		
 		var reviewmore="<%=reviewmore%>"*1;
 		
 		$(function(){
@@ -872,7 +908,7 @@ color:skyblue;
 			}); 
 			
 		});
-		
+	
 		function fn_review(){
 			console.log(reviewmore)
 			$.ajax({
@@ -880,11 +916,19 @@ color:skyblue;
 				type:"get",
 				data:{data1:reviewmore},
 				
-				
 				success:function(data){
-					console.log(data);
+					
+						
+					if(data.length==0){
+						$("#json-container").css("text-align","center");
+						$("#json-container").html('<i class="far fa-frown" id="no-review"></i><br><span id="no-review-ment">리뷰가 없어요</span>')
+						$(".review-more").hide();
+						$(".review-remove").hide();
+						console.log("nodata")
+					}else{
+					$("#json-container").css("text-align","left");
+				
 					 var arr="";
-					 	
 					 	arr+="<table id='table-ajax'>";
 					 	arr+="<tr id='tr-ajax'>";
 					 	arr+="<td id='review-td'>";
@@ -907,7 +951,9 @@ color:skyblue;
 						}
 					 	arr+="</td></tr></table>"
 
-					$("#json-container").html(arr); 
+					$("#json-container").html(arr);
+			}
+					
 				}
 			});
 		
@@ -1026,6 +1072,11 @@ color:skyblue;
 		});
 	
 		$("#review-button").click(function(){
+			var string=$("#review-content").val();
+			
+			if(string.length<1){
+				alert("리뷰내용을 입력해주세요")
+			}else{
 			$.ajax({
 				url:"<%=request.getContextPath()%>/attraction/reviewWrite",
 				type:"get",
@@ -1050,7 +1101,8 @@ color:skyblue;
 				}
 			});
 			$("#review-button").hide();
-		});
+			}
+			});
 		
 	
 	</script>
