@@ -19,7 +19,7 @@
 	int clipCount1=0;
 	int clip=0;
 	int reviewmore=5;
-	String userId="";
+	String userId="pkw2813";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
 	userId=loginUser.getUserId();
@@ -27,8 +27,6 @@
 	
 	
 %>
-
-
 <style>
 
 div{
@@ -61,7 +59,7 @@ td{
 		width:500px;
 		text-align:left;
 		font-family: arial;
-		font-size:30px;
+		font-size:25px;
 	}
 	#clipCount{
 	font-size:20px;
@@ -131,6 +129,7 @@ td{
 	width:500px;
 	text-align:right;
 	margin-top:10px;
+	vertical-align:top;
 }
 #topButtonClip:hover{
 	font-size: 52px;
@@ -165,7 +164,7 @@ td{
 }
 
 #sectionBody{
-  background-color: rgb(238, 238, 238);
+  background-color: #F7F6F6;
   border-top: 2px solid rgb(132, 220, 255);
   border-bottom: 2px solid rgb(132, 220, 255);
 }
@@ -325,6 +324,30 @@ img {
   color: black;
  overflow:hidden;
 }
+#recommendDiv1{
+	font-size:17px;
+	color:gray;
+	font-family:arial;
+		 font-weight:bold;
+	
+}
+  #recomend-clip-div{
+  inline:block;
+  color:orange;
+  float:left;
+  padding:2px;
+  margin-left:8px;
+  }
+  #recomend-star-div{
+  color:#CCB205;
+ padding:2px;
+    float:left;
+  }
+  #recommend-name-div{
+  font-size:14px;
+   padding:2px;
+  float:left;
+  }
 
 #recommendPic1{
  width:230px;
@@ -346,19 +369,16 @@ img {
  }
  
  #reviewTitleR{
-text-align: center;
-    background-color: rgb(175, 230, 255);
-    width:50%;
+	text-align: center;
 	color:gray;
+	-webkit-animation-name: background-ani;
+  	animation-iteration-count: infinite;
+  	animation-duration:3s;
+  	animation-direction: alternate;
  }
 
  
- #reviewTitleQ{
-    background-color: rgb(246, 196, 102);
-    text-align: center;
-    color:gray;
- }
- 
+
  #reviewComment{
  	height:500px;
  }
@@ -383,9 +403,13 @@ text-align: center;
 
     }
 	#review-intro{
-		text-align: left;
-		margin-left:15px;
-		height:50px; 
+		vertical-align: middle;
+		text-align: center;
+		height:50px;
+		color:gray;
+		font-size:23px;
+		font-family:arial;
+		 font-weight:bold;
 	}
 	#review-comment{
 		width:60px;
@@ -521,10 +545,9 @@ margin-left:20px;
 
 #review-list{
 	width:20%;
-	height:50px;
-
-	
+	height:50px;	
 }
+
 #user-name-ajax{
 	display:inline-block;
 	color:orange;
@@ -574,17 +597,57 @@ color:hotpink;
 font-size:12px;
 display:inline-block;
 }
-	#json-container {
+	#review-td {
+	width:100%;
   opacity: 1;
 	-webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
 }
+#review-more-div{
+	width:70%
+	margin-left:20%;
+	text-align:center;
+	height:40px;
+}
+#review-more{
+	width:300px;
+font-family:arial;
+		 font-weight:bold;
+	font-size:20px;
+	color:darkgray;
 
+}
+#review-more:hover{
+	
+	-webkit-animation-name: show;
+  	 animation-iteration-count: infinite;
+  	animation-duration:1s;
+  	animation-direction: alternate;
+}
+#user-name-h3{
+height:25px;
+text-align:center;
+font-size:13px;
+color:skyblue;
+}
+#review-button{
+	
+}
 
  @-webkit-keyframes fade {
   from {opacity: 0} 
   to {opacity: 1}
 }
+@-webkit-keyframes show{
+	from{color:silver;}
+	to{color:black;}
+}
+@-webkit-keyframes background-ani{
+	from{background-color:skyblue;}
+	to{background-color:rgb(238, 238, 238);}
+	
+}
+
 </style>
 <script>
 
@@ -733,7 +796,7 @@ display:inline-block;
   <tr>
   <td>
   <div id="recommendTitle">
-	<h3>이장소와 함께 포함된 장소</h3>
+	<h3><%=attName%>>주변관광지</h3>
 	</div>
 	</td>
   </tr>
@@ -741,9 +804,19 @@ display:inline-block;
   <% for(Attraction arr : list){ count++; String[] recommendImageUrl=arr.getImageUrl().split(",");%>
   <td id="recommendTD">
   <div id="recommendDiv">
-  <a href="<%=request.getContextPath()%>/attraction/select?attId=<%=arr.getAttractionId()%>" name="attId"><img id="recommendPic1" src="<%=request.getContextPath() %>/images/<%=arr.getCity()%>/<%=arr.getAttractionName()%>/<%=recommendImageUrl[0]%>"></a></div>
-   <h4 style="color:gray;margin-top:-1px;text-align:center;font-size:13px;"><i class="fas fa-paperclip"><%=arr.getClipCount()%></i>
-   &nbsp <%=arr.getAttractionName()%> </h4>
+  <a href="<%=request.getContextPath()%>/attraction/select?attId=<%=arr.getAttractionId()%>" name="attId"><img id="recommendPic1" src="<%=request.getContextPath() %>/images/<%=arr.getCity()%>/<%=arr.getAttractionName()%>/<%=recommendImageUrl[0]%>"></a>
+  </div>
+  <div id="recommendDiv1">
+  <div id="recomend-clip-div">
+  <i class="fas fa-paperclip">:&nbsp<%=arr.getClipCount()%></i>
+  </div>
+   <div id="recomend-star-div">
+  <i class="fas fa-star">&nbsp<%=reviewScore%></i>
+  </div>
+  <div id="recommend-name-div">
+  <%=arr.getAttractionName()%>
+  </div>
+  </div>
  </td>
   <%if(count==4){%>
     </tr>
@@ -756,27 +829,14 @@ display:inline-block;
  <table>
  	<tr>
  		<td id=reviewTitleR>
- 		<a href=""><h2>Review</h2></a>
- 		</td>
- 
- 		<td id=reviewTitleQ>
- 		<a href=""><h2>Q&A</h2></a>
+ 		<h2>다른 여행자들의 <%=attName%> 여행리뷰를 확인하세요</h2></a>
  		</td>
  		</tr>
  </table>
  		
- 		<table>
- 		<tr>
- 		<td>
- 		<div id=review-intro>
- 			<h4 style="color:gray;margin-top:-1px;font-size:20px;">
- 			<%=a.getAttractionName()%>에 대한 리뷰를 남겨주세요~<br>다음여행자에 큰도움이 됩니다</h4>
- 		 </div>
- 		</td>
- 		</tr>
- 		</table>
- 		<div id="json-container">
- 		</div>
+
+ 		
+ 		<div id="json-container">		</div>
  		
 <%--  		<table id=table-ajax>
  			<tr id=table-ajax>
@@ -802,22 +862,25 @@ display:inline-block;
  		</table>
  		 --%>
 		<script>
-	
+		var reviewmore="<%=reviewmore%>"*1;
 		
 		$(function(){
 			
 			$(document).ready(function(){
+				$("#review-button").hide();
 				fn_review();
 			}); 
 			
 		});
 		
 		function fn_review(){
-			
+			console.log(reviewmore)
 			$.ajax({
-				url:"<%=request.getContextPath()%>/attraction/reviewlist?reviewmore1=<%=reviewmore%>&attId=<%=attId%>",
+				url:"<%=request.getContextPath()%>/attraction/reviewlist?attId=<%=attId%>",
 				type:"get",
-				dataType:"json",
+				data:{data1:reviewmore},
+				
+				
 				success:function(data){
 					console.log(data);
 					 var arr="";
@@ -852,22 +915,45 @@ display:inline-block;
 		}
 
 		function fn_reviewmore(){
-			<%=reviewmore+=5%>
-			console.log(<%=reviewmore%>)
+			reviewmore+=5;
+			console.log(reviewmore);
 			fn_review();
+		}
+		function fn_reviewremove(){
+			reviewmore=2;
+	
+			fn_review();
+		}
+		
+		$(document).ready(function(){
+			if(!$("#star-value").val()){
+				$("#review-content").attr("placeholder","별점을 선택하고 리뷰를 작성해주세요");
+				$("#review-content").attr("readonly","readonly");
 				
 		}
 		
-			
-	
+	});
+		
 	</script>
- 		<div id="review-more">
- 			<button id="review-more" value="5개 더보기" onclick="fn_reviewmore()">5개더보기</button>
+	<table>
+	<tr>
+	<td>
+ 		<div id="review-more-div">
+ 		<button class="review-more" id="review-more"  onclick="fn_reviewmore()"><i class="fas fa-angle-down"></i></button>
+ 		<button class="review-remove" id="review-more" onclick="fn_reviewremove()"><i class="fas fa-angle-up"></i></button>
  		</div>
+ 		<div id=review-intro>
+
+ 			<%=a.getAttractionName()%> 에 대한 리뷰를 남겨주세요~다음여행자에 큰도움이 됩니다</h3>
+ 		 </div>
+ 	</td>
+ 		</tr>
+ 		</table>
  		<table>
  		<tr>
  		<td id=review-comment1>
  		<div id="review-user" style="font-size:40px;color:gray;"><i class="fas fa-user"></i></div>
+ 		<br><h3 id="user-name-h3"><%=userId%></h3>
  		</td>
  		<td>
  		
@@ -877,6 +963,7 @@ display:inline-block;
  
 	<span class="star-input">
  	<span class="input">
+
     <input type="radio" name="star-input" id="p1" value="1"><label for="p1">1</label>
     <input type="radio" name="star-input" id="p2" value="2"><label for="p2">2</label>
     <input type="radio" name="star-input" id="p3" value="3"><label for="p3">3</label>
@@ -888,7 +975,7 @@ display:inline-block;
     <input type="radio" name="star-input" id="p9" value="9"><label for="p9">9</label>
     <input type="radio" name="star-input" id="p10" value="10"><label for="p10">10</label>
  	</span>
-  	<output for="star-input" name="star-value" id="star-value"><b>0</b></output>
+  	<output for="star-input" name="star-value" id="star-value"><b></b></output>
 	</span>
 
  	</td>
@@ -902,15 +989,42 @@ display:inline-block;
 		</div>
 		<div id=review-button-div>
 		<input type="submit" id="review-button" value="입력"></input>
-		</form>
+		
 		</div>
+		
 		</td>
 		</tr>
 	</table>
 	
 	</section>
 		<script>
-
+		$(".review-more").mouseover(function (){
+				$(".review-more").css("font-size","15px")
+				$(".review-more").text("<%=attName%>리뷰더보기");
+			});
+			
+		 	$(".review-more").mouseout(function (){
+				$(".review-more").css("font-size","20px")
+				$(".review-more").html("<i class='fas fa-angle-down'></i>");
+			});
+		 	
+		 	$(".review-remove").mouseover(function (){
+				$(".review-remove").css("font-size","15px")
+				$(".review-remove").text("리뷰접기");
+			});
+			
+		 	$(".review-remove").mouseout(function (){
+				$(".review-remove").css("font-size","20px")
+				$(".review-remove").html("<i class='fas fa-angle-up'></i>");
+			});
+		
+		$(".star-input").click(function(){
+			console.log("클릭");
+			$("#review-content").removeAttr("readonly");
+			$("#review-content").attr("placeholder","리뷰를 입력하세요~");
+			$("#review-button").show();
+		});
+	
 		$("#review-button").click(function(){
 			$.ajax({
 				url:"<%=request.getContextPath()%>/attraction/reviewWrite",
@@ -935,6 +1049,7 @@ display:inline-block;
 					/* location.href=url+"?userId="+userId+"&tourId="+tourId+"&starInput="+starInput+"&reviewComment="+reviewComment; */
 				}
 			});
+			$("#review-button").hide();
 		});
 		
 	

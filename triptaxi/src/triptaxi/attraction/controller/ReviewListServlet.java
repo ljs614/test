@@ -39,7 +39,8 @@ public class ReviewListServlet extends HttpServlet {
 	
 		
 		String attId=request.getParameter("attId");
-		int reviewmore=Integer.parseInt(request.getParameter("reviewmore1"));		
+		int reviewmore=Integer.parseInt(request.getParameter("data1"));
+
 		System.out.println(reviewmore);
 		System.out.println(attId);
 		List<TourReview> list=new AttractionService().reviewList(attId,reviewmore);
