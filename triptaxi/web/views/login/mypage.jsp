@@ -96,20 +96,18 @@
                 planner_html+="<div class='plan_title'>"+planner['plannerName']+"</div>";
                 var p_date=planner['plannerDate'].split(' ');
                 planner_html+="<div class='plan_date'>"+p_date[2]+"-"+p_date[0].split('월')[0]+"-"+p_date[1].split(',')[0]+"</div>";
-                planner_html+="<div class='plan_totalDay'>"+plannerList['plannerList'].length+" DAY</div>";
+                planner_html+="<div class='plan_totalDay'> "+plannerList['plannerList'].length+" DAY</div>";
                 planner_html+="<div class='plan_city'>"+plannerList['cities'][i]+"</div>";
                 var plan_theme=planner['plannerTheme']==null?"계획중":planner['plannerTheme'];
                 planner_html+="<div class='plan_theme'>"+plan_theme+"</div>";
-                planner_html+="<div class='plan_users'>"+planner['plannerWriter'];
+                planner_html+="<div class='plan_users'><i class='fas fa-user'></i>"+planner['plannerWriter'];
                 var userList=plannerList['userList'][i];
                 for(var j=0; j<userList.length; j++){
                     planner_html+=", ";
-                    planner_html+=userList[j];
-                    
-                    
+                    planner_html+=userList[j];   
                 }
                 planner_html+="</div>";
-                planner_html+="<div class='plan_like'>10</div>";
+                planner_html+="<div class='plan_popularity'><i class='fas fa-eye'></i> "+planner['plannerCount']+"<i class='fas fa-heart'></i> "+planner['plannerLike']+"</div>";
                 planner_html+="</div></div>";
             }
             planner_html+="</div>";
@@ -132,18 +130,31 @@
                         cityList.add(clip_list[i]['city']);
                     }
                     var it=cityList.values();
+                    var clipboard_html="<div id='mypage-content-planner'>";
+                    clipboard_html+="<div id='clipList_nav'>";
+                    var j=0; 
+                    var city;
+                    console.log(clip_list);
                     for(var i=0; i<cityList.size; i++){
-                        console.log(it.next().value);
+                        city=it.next().value;
+                        clipboard_html+="<li>"+city+"</li>";
+                        for(;j<clip_list.length;j++){
+                            if(clip_list[j]['city']!=city){
+                                break;
+                            }
+                            var clip_content_html="<div class='clipList'>"
+                            clip_content_html+="<div class='clipList_div'><div class='clipList_thumbnail'>";
+                            clip_content_html+="<img src='<%=request.getContextPath()%>/images/"+clip_list[j]['city']+"/"+clip_list[j]['tourName']+"/"+clip_list[j]['imageUrl'].split(",")[0]+"'width='268px' height='180px'/></div>";
+                            clip_content_html+="<div class='clipList_content'>";
+                            clip_content_html+="<div class='clip_name'>"+clip_list[j]['tourName']+"</div>";
+                            clip_content_html+="<div class='clip_clipcount'>"+clip_list[j]['clipCount']+"</div>";
+                            clip_content_html+="<div class='clip_reviewscore'>"+clip_list[j]['reviewScore']+"</div>";
+                            clip_content_html+="</div></div>";
+                            clipboard_html+=clip_content_html;
+                        }
+                        clipboard_html+="</div>";
                     }
-                //     var clipboard_html="<div id='mypage-content-planner'>";
-                //     clipboard_html+="<div id='planList_nav'>";
-                //     for(var i=0; i<clipboard_list.length; i++){
-                //         clipboard_html+="<li>완성된 일정</li>";
-                //         if(i<clipboard_list.length-1){
-                //             clipboard_html+="<span>|</span>";
-                //         }
-                //     }
-                //     clipboard_html+="</div>";
+                $("#mypage-content").html(clipboard_html);
                 }
             });
         }

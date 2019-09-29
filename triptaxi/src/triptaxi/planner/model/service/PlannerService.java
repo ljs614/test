@@ -227,6 +227,18 @@ public class PlannerService {
 		close(conn);
 		return result;
 	}
+	
+	/////추가
+	public void plannerCountUp(String plannerId) {
+		Connection conn = getConnection();
+		int result = dao.plannerCountUp(conn, plannerId);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	}
 
 
 }

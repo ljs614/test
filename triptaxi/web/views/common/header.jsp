@@ -172,14 +172,10 @@
         });
         function fn_login(){
             $("#logi").css("display","inline-block");
-            $("#userId").focus();
-            $('html').css("overflow","hidden");
-                        
+            $("#userId").focus();         
         }
         function fn_login_exit(){
             $("#logi").hide();
-            $('html').css("overflow","auto");
-            
         }
         
     </script>

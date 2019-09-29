@@ -33,7 +33,7 @@ public class MypageServlet extends HttpServlet {
 		HttpSession session=request.getSession();
 		User user=(User)session.getAttribute("loginUser");
 		String view="";
-		String[] cities= {"/나트랑/Nahtrang2.jpg","/다낭/Danang2.jpg","/라스베이거스/Lasvegas2.jpg","/라오스/Laos2.jpg","/런던/UnitedKingdom2.jpg","/로마/Rome2.jpg","/로스앤젤레스/Losangeles2.jpg","/방콕/Bangkok2.jpg","/베이징/Beijing2.jpg","/싱가포르/Singapore2.jpg","/칭다오/Qingdao2.jpg","/파리/Paris2.jpg","/푸켓/Phuket2.jpg"};
+		String[] cities= {"/나트랑/Nahtrang2.jpg","/다낭/Danang2.jpg","/라스베이거스/Lasvegas2.jpg","/라오스/Laos2.jpg","/런던/UnitedKingdom2.jpg","/로마/Rome2.jpg","/로스앤젤레스/Los angeles2.jpg","/방콕/Bangkok2.jpg","/베이징/Beijing2.jpg","/싱가포르/Singapore2.jpg","/칭다오/Qingdao2.jpg","/파리/Paris2.jpg","/푸켓/Phuket2.jpg"};
 		int index=(int)(Math.random()*13);
 		String choice=cities[index];
 		request.setAttribute("cityImg", choice);

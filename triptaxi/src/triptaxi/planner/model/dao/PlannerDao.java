@@ -45,7 +45,7 @@ public class PlannerDao {
 				p.setPlannerId(rs.getString("planner_id"));
 				p.setPlannerName(rs.getString("planner_name"));
 				p.setPlannerDate(rs.getDate("planner_date"));
-				p.setPlannerWriter(rs.getString("planner_writer"));
+				p.setPlannerWriter(rs.getString("user_name"));
 				p.setPlannerTheme(rs.getString("planner_theme"));
 				p.setPlannerLike(rs.getInt("planner_like"));
 				p.setPlannerCount(rs.getInt("planner_count"));
@@ -480,6 +480,23 @@ public class PlannerDao {
 			pstmt.setString(1, tourList);
 			pstmt.setString(2, plannerId);
 			pstmt.setInt(3, dayNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int plannerCountUp(Connection conn, String plannerId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("plannerCountUp");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

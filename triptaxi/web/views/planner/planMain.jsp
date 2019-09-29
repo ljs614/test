@@ -107,7 +107,7 @@
 					<td colspan='2' style='text-align: left; padding-left: 40px'>15일이상</td>
 
 				</tr>
-				<tr>
+				<tr>	
 					<th>여행테마</th>
 					<td>가족여행</td>
 					<td>나홀로여행</td>
