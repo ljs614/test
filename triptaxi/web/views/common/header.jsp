@@ -240,7 +240,7 @@
                         <li class="hvr-float-shadow"><a href="">다른사람 일정보기</a></li>
                     </ul>
                     <ul class="sub_menu1_3">
-                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>//board/boardform">Q&A 게시판</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/boardForm">Q&A 게시판</a></li>
                         <li class="hvr-float-shadow"><a href="">후기 게시판</a></li>
                         <li class="hvr-float-shadow"><a href="">동행 게시판</a></li>
                     </ul>
