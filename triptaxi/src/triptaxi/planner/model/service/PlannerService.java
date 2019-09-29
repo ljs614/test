@@ -239,6 +239,16 @@ public class PlannerService {
 		}
 		close(conn);
 	}
+	
+	public int refreshDay(String plannerId, int dayNo) {
+		Connection conn = getConnection();
+		int result = dao.refreshDay(conn, plannerId, dayNo);
+		
+		close(conn);
+		return result;
+	}
+	
+	
 
 
 }

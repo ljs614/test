@@ -505,5 +505,23 @@ public class PlannerDao {
 		}
 		return result;
 	}
+	
+	public int refreshDay(Connection conn, String plannerId, int dayNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("refreshDay");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setInt(2, dayNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
