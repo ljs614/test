@@ -55,8 +55,8 @@ public class BoardDao {
 		List<Board> list=new ArrayList();
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, (cPage-1)*numPerPage+1);
-			pstmt.setInt(2, cPage*numPerPage);
+			pstmt.setInt(1,(cPage-1)*numPerPage+1);
+			pstmt.setInt(2,cPage*numPerPage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Board b=new Board();
@@ -67,6 +67,7 @@ public class BoardDao {
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
 				list.add(b);
+				System.out.println(b);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

@@ -42,7 +42,7 @@ public class QnaBoardListServlet extends HttpServlet {
 		BoardService service=new BoardService();
 		int totalData=service.selectBoardCount();
 		List<Board> list=service.selectBoardList(cPage,numPerPage);
-		
+
 		//pagebar만들기
 		
 		int totalPage=(int)Math.ceil((double)totalData/numPerPage);
@@ -78,7 +78,7 @@ public class QnaBoardListServlet extends HttpServlet {
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("cPage",cPage);
-		request.getRequestDispatcher("/views/board/boardList.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/board/QNAboardlist.jsp").forward(request, response);
 	
 	}
 

@@ -37,7 +37,6 @@ public class BoardService {
 			int result=dao.updateReadCount(conn,no);
 			if(result>0) {commit(conn);}
 			else {rollback(conn);
-		
 			}
 		}return b;
 	}

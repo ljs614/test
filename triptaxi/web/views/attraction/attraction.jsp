@@ -1029,7 +1029,7 @@ opacity:0.5;
 		</td>
 		</tr>
 	</table>
-	
+	<a href="<%=request.getContextPath()%>/board/boardList">게시판</a>
 	</section>
 		<script>
 		$(".review-more").mouseover(function (){

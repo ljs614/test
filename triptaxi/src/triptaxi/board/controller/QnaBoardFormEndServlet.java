@@ -52,7 +52,7 @@ public class QnaBoardFormEndServlet extends HttpServlet {
 			loc="/board/boardView?no="+result;
 			msg="게시글 등록성공";
 		}else {
-			loc="/board/boardForm";
+			loc="/board/Qnaboardform";
 			msg="게시글 등록실패";
 		}
 		request.setAttribute("msg", msg);

@@ -9,7 +9,8 @@
 %>
 <style>
 	section#board-container{width:600px; margin:0 auto; text-align:center;}
-	section#board-container h2{margin:10px 0;}
+	section#board-container h2{margin:10px 0;
+	margin-top:50px}
 	table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
 	table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
 	/*글쓰기버튼*/
@@ -40,7 +41,6 @@
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
-				<th>첨부파일</th>
 				<th>조회수</th>
 			</tr>
 		<!--내용작성-->
@@ -62,7 +62,6 @@
 					</td>
 					<td><%=b.getQnaWriter() %></td>
 					<td><%=b.getQnaDate() %></td>
-					
 					<td><%=b.getQnaReadCount() %></td>
 				</tr>
 			<%}

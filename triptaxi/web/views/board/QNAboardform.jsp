@@ -13,9 +13,8 @@
     </style>
 		<section id="board-container">
 		<h2>게시판</h2>
-   	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post" enctype="multipart/form-data">
+   	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post">
 		<table id="tbl-board">
-
 			<tr>
 				<th>제 목</th>
 				<td>
