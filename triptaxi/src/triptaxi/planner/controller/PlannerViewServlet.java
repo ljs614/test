@@ -44,6 +44,7 @@ public class PlannerViewServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String plannerId=request.getParameter("plannerId");
 		PlannerService service=new PlannerService();
+		service.plannerCountUp(plannerId);
 		Planner planner=service.selectPlanner(plannerId);
 		String view;
 		if(planner!=null) {

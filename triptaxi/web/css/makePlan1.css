@@ -57,7 +57,7 @@
     }
 
     nav {
-      background-color: white;
+      background-color:rgb(73,80,106);
       /* border:1px solid red; */
       width: 55px;
       height: 100%;
@@ -76,7 +76,6 @@
     }
 
     nav ul#mainMenu>li {
-
       border-bottom: 1px solid rgba(180, 177, 177, 0.664);;
       text-align: center;
       vertical-align: middle;
@@ -94,11 +93,12 @@
       padding-top: 20px;
       width: 55px;
       height: 35px;
-
+	  color:white;
     }
 
     .clickColor{
-      background-color:#fde396;
+      background-color:rgb(165, 198, 244);
+      color:black !important;
     }
 
     nav ul#mainMenu>li:nth-of-type(2) {
@@ -112,7 +112,7 @@
     }
 
     ul#mainMenu>li:hover {
-      background-color: #fde396;
+      background-color: rgba(165, 198, 244,0.5);
     }
 
     div#subMenu {
@@ -140,7 +140,7 @@
 
     div#subMenu>ul>li:first-child {
       height: 38px;
-      background-color: #fde396;
+      background-color: rgba(165, 198, 244,0.7);
       font-weight: 900;
       padding-top: 17px;
       padding-bottom: 0px;
@@ -148,7 +148,7 @@
     }
 
     .country {
-      background-color: rgb(233, 232, 232);
+      background-color: rgba(166,171,190,0.5);
       padding-top:3px;
       height:22px !important;
     }
@@ -181,7 +181,7 @@
     }
 
     div#selectPopup>#selTitle {
-      background-color: rgb(253, 214, 94);
+      background-color: rgb(73,80,106);
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       height: 55px;
@@ -193,6 +193,7 @@
       margin-left: 15px;
       font-size: 18px;
       font-weight: 900;
+      color:white;
     }
 
     div#selTitle>#selDate {
@@ -202,9 +203,10 @@
       top: 19px;
       right: 15px;
       font-weight:500;
+      color:white;
     }
     div#selTitle>#selDate:hover{
-      border-bottom:1px solid black;
+      border-bottom:1px solid white;
       cursor:pointer;
     }
 
@@ -296,14 +298,18 @@
       position:absolute;
       top:9px;
       left: 22px;
-      background-color: #fde396;
+      background-color: rgba(165, 198, 244);
       text-align:center;
       padding-top:8px;
       font-weight:500;
+      cursor:pointer;
       /* font-weight:bolder; */
     }
     div.selButton>.makePlanBt:hover{
-      background-color: #fde396a2;
+      background-color: rgba(165, 198, 244,0.5);
+    }
+    div.selButton>.makePlanBt:active{
+      background-color: rgba(165, 198, 244);
     }
 
 
@@ -350,17 +356,15 @@
     }
 
     .ui-datepicker-calendar .ui-state-active {
-      border-radius: 50%;
-      background-color: rgb(253, 214, 94);
+      background-color: rgb(165, 198, 244);
       color: white;
       height: 30px;
       width: 32px;
     }
 
     .ui-datepicker-calendar .ui-state-hover {
-      border-radius: 50%;
-      background-color: rgb(255, 233, 168);
-      color: white;
+      background-color: rgb(165, 198, 244,0.2);
+      color: black;
       height: 30px;
       width: 32px;
     }
@@ -437,17 +441,17 @@
     height:35px;
     top:11px;
     left:280px;
-    background-color:rgb(253, 214, 94);
+    background-color:rgb(165, 198, 244);
     border:none;
     font-weight:900;
     font-size:15px;
     color:rgb(0, 0, 0);
   }
   input[type="button"]:hover{
-    background-color:#fde396;
+    background-color:rgb(165, 198, 244,0.5);
   }
   input[type="button"]:active{
-    background-color:rgb(253, 214, 94);
+    background-color:rgb(165, 198, 244);
   }
   input[type="button"]:focus{
   	outline:none;
@@ -484,14 +488,15 @@
   #cbmBT-Y, #cbmBT-N{
     margin-top:14px;
     display:inline-block;
-    border:1px solid rgba(253, 213, 94, 0.61);
+    border:2px solid rgb(165, 198, 244);
     width:100px;
     height:27px;
     padding-top:7px;
     margin-left:10px;
     margin-right:10px;
     cursor:pointer;
+    font-weight:bolder;
   }
   #cbmBT-Y:hover, #cbmBT-N:hover{
-    background-color:rgba(253, 213, 94, 0.61);
+    background-color:rgb(165, 198, 244);
   }

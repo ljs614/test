@@ -36,7 +36,6 @@ public class CityChoiceServlet extends HttpServlet {
 		
 		City c=new CityService().cityChoice(cityName);
 		
-		System.out.println(c);
 		request.setAttribute("City", c);
 		request.getRequestDispatcher("/views/city/city.jsp").forward(request, response);
 	}

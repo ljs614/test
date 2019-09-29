@@ -23,7 +23,6 @@ public class PlannerService {
 		Connection conn=getConnection();
 		
 		Planner planner=dao.selectPlanner(conn, plannerId);
-		
 		close(conn);
 		return planner;
 	}
@@ -36,9 +35,9 @@ public class PlannerService {
 	      return list;
 	   }
 	
-	public String insertPlanner(String plannerName, String plannerDate, String imgUrl) {
+	public String insertPlanner(String plannerName, String plannerDate, String plannerWriter, String imgUrl) {
 		Connection conn = getConnection();
-		int result = dao.insertPlanner(conn, plannerName, plannerDate, imgUrl);
+		int result = dao.insertPlanner(conn, plannerName, plannerDate, plannerWriter, imgUrl);
 		String plannerId = null;
 		if(result>0) {
 			commit(conn);
@@ -207,6 +206,49 @@ public class PlannerService {
 		return shareUsers;
 		
 	}
+	
+///////////////////////////추가한 부분/////////////////////////////////////////////////////
+	public String selectPlannerTourList(String plannerId, int dayNo) {
+		Connection conn = getConnection();
+		String tourList = dao.selectPlannerTourList(conn, plannerId, dayNo);
+		close(conn);
+		return tourList;
+	}
+	
+	public int updateDayTourList(String tourList, String plannerId, int dayNo) {
+		Connection conn = getConnection();
+		int result = dao.updateDayTourList(conn, tourList, plannerId, dayNo);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/////추가
+	public void plannerCountUp(String plannerId) {
+		Connection conn = getConnection();
+		int result = dao.plannerCountUp(conn, plannerId);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	}
+	
+	public int refreshDay(String plannerId, int dayNo) {
+		Connection conn = getConnection();
+		int result = dao.refreshDay(conn, plannerId, dayNo);
+		
+		close(conn);
+		return result;
+	}
+	
+	
 
 
 }

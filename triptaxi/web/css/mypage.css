@@ -77,11 +77,11 @@ div#mypage-content-planner{
     border-top:none;
     margin:0 auto;
 } */
-div#planList_nav{
+div#planList_nav, div#clipList_nav{
     position: relative;
     top:10px;
 }
-div#planList_nav>li{
+div#planList_nav>li, div#clipList_nav>li{
     position: relative;
     display: inline-block;
     margin:5px 10px;
@@ -94,7 +94,7 @@ div#planList_nav>li{
     text-shadow: 0px 0px 10px #a5c6f4;
 }
 
-div.planList_div {
+div.planList_div, div.clipList_div{
 	border: 1px solid rgb(180, 177, 177);
 	display: inline-block;
 	width: 268px;
@@ -106,22 +106,22 @@ div.planList_div {
     cursor: pointer;
 }
 
-div.planList_div .planList_thumbnail {
+div.planList_div .planList_thumbnail, div.clipList_div .clipList_thumbnail {
 	height: 180px;
 }
 
-div.planList_div:hover .planList_thumbnail {
+div.planList_div:hover .planList_thumbnail, div.clipList_div:hover .clipList_thumbnail {
 	transform: translateY(-50%);
 	transition: 0.5s;
 }
 
-div.planList_div .planList_content {
+div.planList_div .planList_content, div.clipList_div .clipList_content {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	height: 148px;
 }
 
-div.planList_content>div.plan_title {
+div.planList_content>div.plan_title, div.clipList_content>div.clip_name {
 	padding-left: 30px;
 	text-align: left;
 	font-weight: bold;
@@ -139,7 +139,7 @@ div.planList_content>div.plan_totalDay {
 	color: gray;
 }
 
-div.planList_div:hover .planList_content {
+div.planList_div:hover .planList_content, div.clipList_div:hover .clipList_content {
 	transform: translateY(-56%);
 	transition: 0.6s;
 	transition-delay: 0.05s;
@@ -165,7 +165,7 @@ div.plan_users {
 	left: -15px;
 }
 
-div.plan_like {
+div.plan_popularity {
 	/* border:1px solid #66a1f4bd; */
 	background-color: #66a1f41a;
 	border-radius: 5px;
@@ -175,7 +175,7 @@ div.plan_like {
 	left: 40px;
 }
 
-div.planList_div:hover .plan_like {
+div.planList_div:hover .plan_popularity {
 	transform: translateX(-25%);
 	transition: 1.8s;
 }

@@ -2,18 +2,24 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/views/common/header.jsp"%>
-
+<%
+	String userId="null";
+	if(loginUser!=null){
+		userId=loginUser.getUserId();
+	}
+%>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <link href="<%=request.getContextPath()%>/css/planMain.css" rel="stylesheet">
 
 <section>
+
 	<div id='planMainHeaderColor'></div>
 
 	<div id="planMainHeader">
 		<div id="innerHeader">
 			<div id="pmh_title">누구나 쉽게 일정을 계획할 수 있습니다.</div>
-			<div id='makePlanBT' onclick="location.href='<%=request.getContextPath()%>/makePlan1';">
+			<div id='makePlanBT' onclick="fn_openMakePlan1();">
 				<i class="far fa-calendar-plus"></i> 새 일정 만들기
 			</div>
 			<div id='planViewBT' onclick="location.href''">
@@ -101,7 +107,7 @@
 					<td colspan='2' style='text-align: left; padding-left: 40px'>15일이상</td>
 
 				</tr>
-				<tr>
+				<tr>	
 					<th>여행테마</th>
 					<td>가족여행</td>
 					<td>나홀로여행</td>
@@ -209,6 +215,7 @@
 </section>
 
 <script>
+
 	var aa;
 	var selectId;
 	var flag=true;
@@ -251,6 +258,14 @@
 		$('#planSort>div').removeClass('clickColor');
 		$(this).addClass('clickColor');
 	})
+	
+	function fn_openMakePlan1(){
+		if('<%=userId%>'== 'null'){
+			fn_login();
+		}else{
+			location.href='<%=request.getContextPath()%>/makePlan1';
+		}
+	}
 	
 
 </script>

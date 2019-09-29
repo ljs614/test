@@ -25,12 +25,18 @@
 	<div id="continentSelect">
 		<div id="innerContinentSelect">
 				<ul id="continents">
-					<li id="northAmerica"><a href='#continentSelectContent'>NorthAmerica</a></li>
-					<li id="southAmerica"><a href='#continentSelectContent'>SouthAmerica</a></li>
-					<li id="asia"><a href='#continentSelectContent'>Asia</a></li>
-					<li id="australia"><a href='#continentSelectContent'>Australia</a></li>
-					<li id="africa"><a href='#continentSelectContent'>Africa</a></li>
-					<li id="europe"><a href='#continentSelectContent'>Europe</a></li>
+					<li id="northAmerica"><a href='#continentSelectContent'>NorthAmerica</a>
+					<div id='continentTooltip'>NORTHAMERICA</div></li>
+					<li id="southAmerica"><a href='#continentSelectContent'>SouthAmerica</a>
+					<div id='continentTooltip'>SOUTHAMERICA</div></li>
+					<li id="asia"><a href='#continentSelectContent'>Asia</a>
+					<div id='continentTooltip'>ASIA</div></li>
+					<li id="australia"><a href='#continentSelectContent'>Australia</a>
+					<div id='continentTooltip'>AUSTRALIA</div></li>
+					<li id="africa"><a href='#continentSelectContent'>Africa</a>
+					<div id='continentTooltip'>AFRICA</div></li>
+					<li id="europe"><a href='#continentSelectContent'>Europe</a>
+					<div id='continentTooltip'>EUROPE</div></li>
 				</ul>
 		</div>
 	</div>

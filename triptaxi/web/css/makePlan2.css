@@ -156,6 +156,7 @@
       min-height:61px;
       max-height:370px;
       overflow-x:hidden;
+      overflow-y:auto !important;
     }
     nav ul.mainMenu>li{
       border-bottom:1px solid rgba(180, 177, 177, 0.664);
@@ -443,6 +444,7 @@
     }
     #tourListMenu{
     	overflow-x: hidden;
+    	overflow-y:auto !important;
     }
     #tourListMenu::-webkit-scrollbar {
    		width: 6px;
@@ -475,14 +477,18 @@
     	width: 130px;
     	height: 60;
     	top: 11px;
-    	left: 5px;
+    	left: -13px;
     }
     
     .rightContent div{
     	display:block;
     }
     .tourTitle{
-    	font-size: 17px;
+    	font-size: 15px;
+    	width:130px;
+    	height:17px;
+    	overflow:hidden;
+    	text-overflow:ellipsis;
     }
     .rightContent>.tourCategory{
     	font-weight: 300;
@@ -505,11 +511,41 @@
     	font-size: 15px;
     	font-weight: 500;
     	position: relative;
-    	left: 15px;
+    	left: 2px;
     	top:2px;
     }
     .tourScore>i{
     	color:#fde396;
+    }
+    .rightContent>.plusTour{
+    	display: inline-block;
+    	font-size: 20px;
+    	border: 1px solid rgba(180, 177, 177, 0.664);
+    	width: 22px;
+    	height: 22px;
+    	text-align: center;
+    	float: right;
+    	backgound-color:white;
+    }
+     .plusTour:hover{
+      background-color:rgba(166,171,190,0.1) !important;
+      cursor:pointer;
+    }
+    
+    #dataNullalertIcon{
+    	color:rgb(166,171,190);
+    	display: block !important;
+    	text-align: center;
+    	font-size: 39px;
+    	padding-top: 50px;
+    }
+    #dataNullalertContent{
+    	color:rgb(166,171,190);
+    	display: block !important;
+    	text-align: center;
+   		padding-top: 18px;
+    	letter-spacing: 3px;
+    	line-height: 34px;
     }
 
     #dayEditModal{
@@ -575,6 +611,7 @@
     }
     #dayEditModal-list{
     	overflow-x:hidden;
+    	overflow-y:auto !important;
     }
     #dayEditModal-list::-webkit-scrollbar {
     	width: 6px;
@@ -718,5 +755,68 @@
     .delete_md_day:hover{
       background-color:rgba(255, 255, 255,0.6);
     }
+    
+    #sm_plannerList{
+    	overflow-x: hidden;
+    	overflow-y: auto !important;
+    	padding:0 !important;
+    }
+    #sm_plannerList::-webkit-scrollbar {
+   		width: 6px;
+    	background-color: #F5F5F5;
+  	}
+  	#sm_plannerList::-webkit-scrollbar-thumb {
+    background-color: rgb(189, 189, 189);
+  } 
+  	
+    
+    #sm_plannerList>li{
+    	border-bottom:1px solid rgba(180, 177, 177, 0.664);
+    	height:80px;
+    }
+    
+    #sm_plannerList>li>div{
+    	display:inline-block;
+    }
+    .sm_plannerListImg{
+    	position: relative;
+    	left: 20px;
+    	top: 4px;
+    	font-size: 30px;
+    	color: rgb(73,80,106);
+    }
+    .sm_plannerListTitle{
+    	font-size: 16px;
+    	display: block !important;
+    	font-weight: bolder;
+    	padding-top: 1px;
+    	padding-left: 8px;
+    }
+    .sm_plannerListCategory{
+    	font-size: 13px;
+    	position: relative;
+    	top: 2px;
+    	display: block !important;
+    	padding-left: 14px;
+    }
+    .sm_plannerDelete{
+    	width:22px;
+    	height:22px;
+    	text-align:center;
+    	border: 1px solid rgba(180, 177, 177, 0.664);
+      	font-size: 17px;
+      	font-weight:bolder;
+    	cursor: pointer;
+    	float:right;
+    	margin-right:10px;
+    	margin-top:7px;
+    }
+    .sm_plannerDelete:hover{
+      background-color:rgba(166,171,190,0.1) !important;
+      pointer:cursor;
+    }
+    
+    
+    
  
     

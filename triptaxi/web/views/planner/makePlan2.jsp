@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="triptaxi.planner.model.vo.Planner"%>
 <%
-	
-	
+	System.out.println("user : " + session.getAttribute("loginUser"));
+
 %>
 <!DOCTYPE html>
 <html>
@@ -55,7 +55,7 @@
 					<i class="fas fa-cog"></i> EDIT
 				</div>
 			</li>
-			<li id="showFullPlan">전체일정보기</li>
+			<li id="showFullPlan" >서브메뉴 접기</li>
 		</ul>
 		<ul class="mainMenu">
 
@@ -75,7 +75,7 @@
 	<div id="subMenu">
 		<ul>
 			<li>
-				<div id='sm_dayCount'>DAY 1</div>
+				<div id='sm_dayCount'>DAY <span>1</span></div>
 				<div id="sm_prevBT"><</div>
 				<div id="sm_nextBT">></div>
 				<div id="sm_date"></div>
@@ -84,6 +84,9 @@
 					<i class="fas fa-redo"></i>
 				</div>
 			</li>
+		</ul>
+		<ul id="sm_plannerList">
+		
 		</ul>
 	</div>
 	</div>
@@ -147,14 +150,19 @@
 	<script>
     	const url = new URL(window.location.href);
 		var plannerId = url.searchParams.get('plannerId');
+		var receiveList = ${list};
 		
-      	var planner;
-      	var dayList;
-      	var tourList;
-      	var date;
+     	var planner = receiveList['plannerName']; 
+      	console.log(receiveList['plannerName']);
+      	var dayList = receiveList['dayList'];
+      	var tourList = receiveList['attrList'];
+      	var date = new Date(receiveList['plannerDate']);;
       	
       	var lats=[];
     	var lngs=[];
+    	var plannerLats=[];
+    	var plannerLngs=[];
+    	var flightPath;
     	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
     	var icon;
       
@@ -217,46 +225,64 @@
           $('#map').css("left", leftDiv + "px");
           $('#dayEditModal-list').css("height", $(window).height()-84 + "px");
           $('#tourListMenu').css("height", $(window).height()-144+"px");
+          $('#sm_plannerList').css("height", $(window).height()-144+"px");
           
-          $.ajax({
-           	  url:"<%=request.getContextPath()%>/makePlan2",
-           	  type:"post",
-           	  data:{"plannerId":plannerId},
-           	  dataType:"json",
-           	  success:function(data){
-           		  	planner=data['plannerName'];
-             			dayList = data['dayList'];
-           		  	
-     				  	$('#pltitle').text(data['plannerName']);
-             			date = new Date(data['plannerDate']);
-						var dateString = data['plannerDate'] + " <i class='fas fa-calendar-alt'></i>";
-						$('#dayEditDate').html(dateString);
-             			var resultDate = calDate(date, dayList.length);
-             			$('#fullDate').text(date.getMonth()+1+"."+date.getDate()
+          
+          if(dayList[0]['tourList']!=null){
+          	console.log("tourList != null");
+           	var dayTourList = dayList[0]['tourList'].split(',');
+
+			for(var i=0;i<dayTourList.length;i++){
+           		var name;
+           		var category;
+           		var lat;
+           		var lng;
+           		
+           		$.each(tourList, function(index, item){
+           			if(item['tourId']==dayTourList[i]){
+           		  		name=item['tourName'];
+           		  		category=item['category'];
+           		  		lat=item['tourLat'];
+           		  		lng=item['tourLng'];
+           		  		console.log(name);
+           		  		console.log(category);
+           		  	}
+           		});
+           		
+           		fn_addPlanner(dayTourList[i], name, category, lat, lng);
+           		plannerLats.push(lat);
+           		plannerLngs.push(lng);
+           	}
+			polyMarker_draw(map);  			
+           }
+           console.log(dayTourList);
+           		  		
+           		  		
+     	   $('#pltitle').text(planner);
+ 
+			var dateString = date + " <i class='fas fa-calendar-alt'></i>";
+			$('#dayEditDate').html(dateString);
+            var resultDate = calDate(date, dayList.length);
+            $('#fullDate').text(date.getMonth()+1+"."+date.getDate()
              					+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
              			
-             			$.each(dayList, function(index, item){
-           	  				fn_addDay(item['plannerDayNo'], item['cityName'],date);
-             			});
-          				$('.mainMenu>li:first').addClass("clickColor");
-          				$('#sm_date').text($('.clickColor').find('#mm_date').text());
-          				$('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
-          				$('#sc_title').text($('.clickColor').find('#mm_city').text());
+            $.each(dayList, function(index, item){
+           		fn_addDay(item['plannerDayNo'], item['cityName'],date);
+            });
+          	$('.mainMenu>li:first').addClass("clickColor");
+          	$('#sm_date').text($('.clickColor').find('#mm_date').text());
+          	$('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
+          	$('#sc_title').text($('.clickColor').find('#mm_city').text());
           				
-          				console.log(data['attrList']);
-          				tourList = data['attrList'];
-          				$.each(tourList, function(index, item){
-       
-          					addTourList(item['city'], item['tourName'], item['category'], item['clipCount'], item['reviewScore']);
-          					lats.push(item['tourLat']);
-          					lngs.push(item['tourLng']);
-          				});
-          				icon = "atMarker";
-          				Marker_draw(map);
-           	  }
-           	  
-             });
-     
+          				
+          	$.each(tourList, function(index, item){
+          		addTourList(item);
+          		lats.push(item['tourLat']);
+          		lngs.push(item['tourLng']);
+          	});
+          		icon = "atMarker";
+          		Marker_draw(map);
+           	
         });
 
         $(window).resize(function () {
@@ -273,10 +299,17 @@
           $('#map').css("left", leftDiv + "px");
           $('#dayEditModal-list').css("height", $(window).height()-84 + "px");
           $('#tourListMenu').css("height", $(window).height()-144+"px");
+          $('#sm_plannerList').css("height", $(window).height()-144+"px");
           
           if($('#tourListMenu').css("height")>=$(window).height()-144+"px"){
         	  $('#tourListMenu').css("overflow-y", "scroll");
           }
+          
+          if($('#sm_plannerList').css("height")>=$(window).height()-144+"px"){
+        	  $('#sm_plannerList').css("overflow-y", "scroll");
+        }
+          
+          
         });
 
         
@@ -328,17 +361,30 @@
 			return dayK;
 		}
 
-    function addTourList(city, tourName, category, clipCount, reviewScore){
+    function addTourList(tourList){
     	console.log("들어감");
-		var add = "<li><div class='tourImg'>";
+    	var tourId = tourList['tourId'];
+    	var city = tourList['city'];
+    	var tourName = tourList['tourName'];
+    	var category = tourList['category'];
+    	var clipCount = tourList['clipCount'];
+    	var reviewScore = tourList['reviewScore'];
+    	var lat = tourList['tourLat'];
+    	var lng = tourList['tourLng'];
+    	
+		var add = "<li class='tourListMenu_li' data-tourId='"+tourId+"' data-lat='"+lat+"' data-lng='"+lng+"'><div class='tourImg'>";
 		add += "<img src='<%=request.getContextPath()%>/images/"+city+"/"+tourName+"/"+tourName+"1.jpg' width='90px' height='70px' />";
-		add += "</div><div class='rightContent'><div class='tourTitle'>" + tourName + "</div>";
+		add += "</div><div class='rightContent'><div class='tourTitle'";
+		if(tourName.length>9){
+			add += "style='font-size:11.5px'";
+		}
+		add += ">" + tourName + "</div>";
 		add += "<div class='tourCategory'>" + category + "</div>";
 		add += "<div class='tourClip'><i class='fas fa-paperclip'></i> " + clipCount + "</div>";
-        add += "<div class='tourScore'><i class='fas fa-star'></i> " + reviewScore + "</div></div></li>";
+        add += "<div class='tourScore'><i class='fas fa-star'></i> " + reviewScore + "</div>";
+        add += "<div class='plusTour'>+</div></div></li>";
   		
         $('#tourListMenu').append(add);
-        /* $('#tourListMenu').css("height", $('#tourListMenu').height()+76+"px"); */
         if($('#tourListMenu').css("height")>=$(window).height()-144+"px"){
       	  $('#tourListMenu').css("overflow-y", "scroll");
         }
@@ -358,21 +404,48 @@
           }
         });
 
+        
+        function fn_navTextChange(){
+        	$('#sm_dayCount>span').text($('.clickColor').find("#mm_dayCount").children().text());
+            $('#sm_date').text($('.clickColor').find('#mm_date').text());
+            $('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
+            console.log("도시 : " + $('.clickColor').find('#mm_city').text());
+            if($('.clickColor').find('#mm_city').text() != $('#sc_title')){
+          	fn_changeTourListCity($('.clickColor').find('#mm_city').text());
+            	$('#sc_title').text($('.clickColor').find('#mm_city').text());
+            }
+        }
         $(document).on("click", '.mainMenu>li', function () {
           $('#showFullPlan').removeClass("clickColor");
           $('.mainMenu>li').removeClass("clickColor");
           $(this).addClass("clickColor");
-          $('#sm_dayCount').text($(this).children().first().text());
-          $('#sm_date').text($(this).find('#mm_date').text());
-          $('#sm_weekday').text($(this).find('#mm_weekday').text());
-          console.log("도시 : " + $('.clickColor').find('#mm_city').text());
-          if($('.clickColor').find('#mm_city').text() != $('#sc_title')){
-        	fn_changeTourListCity($('.clickColor').find('#mm_city').text());
-          	$('#sc_title').text($('.clickColor').find('#mm_city').text());
-          }
+          
+          fn_navTextChange();
         	  
           console.log($(this).find('#mm_date').text());
-
+			
+		  $('#sm_plannerList>li').remove(); 
+          
+		  map_clear();
+      	
+          /* ajax로 받아와야함 */
+          $.ajax({
+        	url:"<%=request.getContextPath()%>/changeDayList",
+        	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
+    		dataType:"json",
+    		success:function(data){
+    			console.log(data);
+    			var list = data;
+    			$.each(list, function(index,item){
+    				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
+    				plannerLats.push(item['tourLat']);
+    				plannerLngs.push(item['tourLng']);
+    			});
+    			polyMarker_draw(map);
+    		}
+        	
+          })
+          
           if(!($('#subMenu').is(':visible'))){
             $('#subMenu').show();
             $('#searchCityMenu').show();
@@ -381,8 +454,6 @@
             $('#map').css('left',(leftDiv+2)+"px");
             $('#map').css('width', ($(window).width() - leftDiv+2) + 'px');
           }
-          
-          
           
         });
 
@@ -438,7 +509,7 @@
         		map.fitBounds(bounds);
         		map.panToBounds(bounds);
         		
-        		$(document).on("mouseover", '#tourListMenu>li', function(){
+        		$(document).on("mouseover", '#tourListMenu>li.tourListMenu_li', function(){
          			var ct = $(this).find('.tourTitle').text();
          			var list = tourList;
          			console.log($(this).find('.tourTitle').text());
@@ -453,16 +524,146 @@
             		});
             		
             	});
-            	$(document).on("mouseout", '#tourListMenu>li', function(){
+            	$(document).on("mouseout", '#tourListMenu>li.tourListMenu_li', function(){
             		markers[beforeIndex].setIcon(iconBase+icon+"-40.png");
             	})
         }
+        
+		function polyMarker_draw(map){	
+			var beforeIndex;
+			var Lats=[];
+			var Lngs=[];
+			
+			for(var i=0; i<plannerLats.length; i++){
+				lats.push(plannerLats[i]);
+				lngs.push(plannerLngs[i]);
+			}
+			var bounds=new google.maps.LatLngBounds();
+			//화살표 연결
+			var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
+				flightPath = new google.maps.Polyline({
+				geodesic: true,
+				icons: [{icon: lineSymbol, offset: '100%', repeat:"200px"}],
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 2
+				});
+        	flightPath.setMap(map);
+
+    
+			//마커
+			path=flightPath.getPath();
+			for(var i=0; i<plannerLats.length; i++){
+				var loc=new google.maps.LatLng(plannerLats[i],plannerLngs[i]);
+				path.push(loc);
+				var marker = new google.maps.Marker(
+						{ position: loc, 
+						  map: map,
+						  icon:"https://img.icons8.com/office/40/000000/marker.png"
+						});
+				bounds.extend(loc);
+				markers.push(marker);
+			}
+			map.fitBounds(bounds);
+			map.panToBounds(bounds);
+			
+			$(document).on("mouseover", '#sm_plannerList>li', function(){
+				console.log($(this).index());
+	 			beforeIndex = $(this).index();
+	    		markers[$(this).index()].setIcon("https://img.icons8.com/office/80/000000/marker.png");
+	    		});   			
+		
+	    	$(document).on("mouseout", '#sm_plannerList>li', function(){
+	    		markers[beforeIndex].setIcon("https://img.icons8.com/office/40/000000/marker.png");
+	    	})
+		}
+		
+		function map_clear(){
+			plannerLats=[];
+	          plannerLngs=[];
+	          for(var i=0;i<markers.length;i++){
+	      		markers[i].setMap(null);
+	      		}
+	      		markers=[];
+	      		flightPath.getPath().clear();
+	      	
+		}
 
         $('#sm_refresh').click(function(){
           alert("초기화");
+          $('#sm_plannerList>li').remove(); 
+          
+          	map_clear();
+      	
+      		polyMarker_draw(map);
+      		Marker_draw(map); 
+      		
+      		$.ajax({
+        		url:"<%=request.getContextPath()%>/refreshDay",
+        		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
+        		dataType:"text",
+        		success:function(data){
+        			console.log(data);
+        		}
+        	})
         });
         
         $('#sm_prevBT').click(function(){
+        	if($('.clickColor').prev().length!=0){
+        		var prev = $('.clickColor').prev();
+        		$('.mainMenu>li').removeClass("clickColor");
+        		prev.addClass('clickColor');
+        		fn_navTextChange();
+        		$('#sm_plannerList>li').remove(); 
+        		map_clear();
+        		
+        		$.ajax({
+                	url:"<%=request.getContextPath()%>/changeDayList",
+                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').prev().find('span').text()},
+            		dataType:"json",
+            		success:function(data){
+            			console.log(data);
+            			var list = data;
+            			$.each(list, function(index,item){
+            				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
+            				plannerLats.push(item['tourLat']);
+            				plannerLngs.push(item['tourLng']);
+            			});
+            			polyMarker_draw(map);
+            		}
+                	
+                  })
+        	}
+        	
+        })
+        
+        $('#sm_nextBT').click(function(){
+        	if($('.clickColor').next().length!=0){
+        		var next = $('.clickColor').next();
+        		$('.mainMenu>li').removeClass("clickColor");
+        		next.addClass('clickColor');
+        		fn_navTextChange();
+        		$('#sm_plannerList>li').remove(); 
+        		map_clear();
+        		
+        		$.ajax({
+                	url:"<%=request.getContextPath()%>/changeDayList",
+                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').prev().find('span').text()},
+            		dataType:"json",
+            		success:function(data){
+            			console.log(data);
+            			var list = data;
+            			$.each(list, function(index,item){
+            				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
+            				plannerLats.push(item['tourLat']);
+            				plannerLngs.push(item['tourLng']);
+            			});
+            			polyMarker_draw(map);
+            		}
+                	
+                  })
+        	}
+        	
         	
         })
 
@@ -551,8 +752,6 @@
     	var category = $($(this).children()).attr('id');
     	var table;
     	var select=0;
-    	console.log(date.getMonth()+1);
-    	
     	switch(category){
     		case "attractionIcon" : table = "tt_attraction"; break;
     		case "activityIcon" : table = "tt_activity"; break;
@@ -563,23 +762,25 @@
     	$.ajax({
     		url:"<%=request.getContextPath()%>/changeTourList",
     		type:"post",
-    		data:{"table":table,"cityName": dayList[0]['cityName'],"select":select},
+    		data:{"table":table,"cityName": $(this).parent().siblings().text(),"select":select},
     		dataType:"json",
     		success:function(data){
-    			tourList=data;
+    			tourList = data;
+    			console.log("투어리스트아이디");
+    			console.log(data['tourId']);
     			
-    			var category = data[0]['tourId'].substring(0,2);
-    			console.log(category);
+    			if(data.length>0){
+    				var category = tourList[0]['tourId'].substring(0,2);
     			
-    			switch(category){
-    				case "at": icon="atMarker"; break;
-    				case "ac": icon="acMarker"; break;
-    				case "fe": icon="feMarker"; break;
-    				case "cl": icon="clipMarker"; break;
+    				switch(category){
+    					case "at": icon="atMarker"; break;
+    					case "ac": icon="acMarker"; break;
+    					case "fe": icon="feMarker"; break;
+    					case "cl": icon="clipMarker"; break;
+    				}	
     			}
     			
-    			fn_resetTourList(tourList);
-    			
+    			fn_resetTourList(tourList);			
     		}
     	});
     });
@@ -606,15 +807,17 @@
     });
     
     $('#addDay').click(function(){
+    	var city = $('.mainMenu>li:last-child').find('#mm_city').text();
+    	var dayNo = $('.mainMenu>li:last-child').find('#mm_dayCount>span').text();
     	$.ajax({
     		url:"<%=request.getContextPath()%>/insertPlannerDay",
     		type:"post",
-    		data:{"cityName":$('.mainMenu>li:last-child').find('#mm_city').text(), "dayNo": $('.mainMenu>li:last-child').find('#mm_dayCount>span').text(),
+    		data:{"cityName":city, "dayNo": dayNo,
     				"plannerId":plannerId},
     		dataType:"text",
     		success:function(data){
     			if(data=="true"){
-	        		location.reload();
+	        		fn_addDay(((dayNo*1)+1), city, date);
 	        	}
     		}
     	});
@@ -625,7 +828,7 @@
 		lats=[];
 		lngs=[];
 		$.each(data, function(index, item){     
-			addTourList(item['city'], item['tourName'], item['category'], item['clipCount'], item['reviewScore']);
+			addTourList(item);
 			lats.push(item['tourLat']);
 			lngs.push(item['tourLng']);
 		});
@@ -634,25 +837,124 @@
     		markers[i].setMap(null);
     	}
     	markers=[];
+    	
 	  	if(data.length>0){
 	  		Marker_draw(map);  
 	  	}
 	  	else{
 		  map.setCenter(new google.maps.LatLng(32.982518, 155.563655));
 		  map.setZoom(2);
+		  var add = "<li style='border:none'><div id='dataNullalertIcon'><i class='fas fa-exclamation-triangle'></i></div>";
+		  add += "<div id='dataNullalertContent'>해당하는 데이터가<br>없습니다.</div></li>";
+		  $('#tourListMenu').append(add);
 	  	}
     }
     
     function fn_changeTourListCity(city){
+    	$('.sc_icon').removeClass("iconColor");
+    	$('#attractionIcon').parent().addClass("iconColor	");
     	$.ajax({
     		url:"<%=request.getContextPath()%>/changeTourListCity",
     		data:{"cityName":city},
     		dataType:"json",
     		success:function(data){
-    			
+    			console.log("changTourListCity : ");
+    			console.log(data);
+    			tourList = data;
+    			fn_resetTourList(tourList);
     		}
     	})
     }
+    
+    function fn_addPlanner(tourId, tourName, category, lat, lng){
+
+    	switch(tourId.substring(0,2)){
+    		case 'at':	img="<i class='fas fa-camera'></i>"; break;
+    		case 'ac':	img="<i class='fas fa-running'></i>"; break;
+    		case 'fe':	img="<i class='fas fa-drum'></i>"; break;	
+    	}
+    	
+    	var add = "<li data-tourid='"+tourId+"' data-lat='"+lat+"' data-lng='"+lng+"'><div class='sm_plannerListImg'>"+img+"</div>";
+    	add += "<div class='sm_plannerDelete'>X</div>";
+    	add += "<div class='sm_plannerListTitle'";
+    	if(tourName.length>10){
+			add += "style='font-size:13px;padding-top:3px;padding-bottom:3px'";
+		}
+    	add += ">"+tourName+"</div>";
+    	add += "<div class='sm_plannerListCategory'>"+category+"</div></li>";
+    	$('#sm_plannerList').append(add);
+    	
+    	if($('#sm_plannerList').css("height")>=$(window).height()-144+"px"){
+        	  $('#sm_plannerList').css("overflow-y", "scroll");
+        }
+    }
+    
+    
+    $(document).on('click', '.plusTour', function(){
+    	var img;
+    	var tourId=$(this).parent().parent().data('tourid');
+    	var tour = $(this).parent().parent().find('.tourTitle').text();
+    	var category = $(this).parent().parent().find('.tourCategory').text();
+    	var lat = $(this).parent().parent().data('lat');
+    	var lng = $(this).parent().parent().data('lng');
+    	fn_addPlanner(tourId, tour, category, lat, lng);
+    	
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/updateTourList",
+    		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text(),"tourId":tourId},
+    		dataType:"text",
+    		success:function(data){
+    			console.log(data);
+    		}
+    	});
+    	plannerLats.push(lat);
+    	plannerLngs.push(lng);
+    	flightPath.getPath().clear();
+    	polyMarker_draw(map);
+    		
+    })
+    
+    $(document).on('click', '.sm_plannerDelete', function(){
+    	plannerLats=[];
+    	plannerLngs=[];
+    	
+    	$(this).parent().remove();
+    	var tourList = "";
+    	console.log($('#sm_plannerList>li').length);
+    	for(var i=0 ; i<$('#sm_plannerList>li').length ;i++){
+    		tourList += $($('#sm_plannerList>li')[i]).data('tourid');
+    		if(i!=($('#sm_plannerList>li').length-1)){
+    			tourList+=",";
+    		}
+    		plannerLats.push($($('#sm_plannerList>li')[i]).data('lat'));
+    		plannerLngs.push($($('#sm_plannerList>li')[i]).data('lng'))
+    	} 
+    	
+    	$.ajax({
+    		url:"<%=request.getContextPath()%>/deleteTourOne",
+    		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text(),"tourList":tourList},
+    		dataType:"text",
+    		success:function(data){
+    			console.log(data);
+    		}
+    	})
+    	
+    	console.log(plannerLats);
+    	console.log(plannerLngs);
+    	
+    	for(var i=0;i<markers.length;i++){
+    		markers[i].setMap(null);
+    	}
+    	markers=[];
+    	flightPath.getPath().clear();
+    	
+    	
+    	polyMarker_draw(map);
+    
+
+    })
+   
+    
   
 
       </script>

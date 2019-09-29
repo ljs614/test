@@ -12,6 +12,7 @@
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
+	<link href="<%=request.getContextPath() %>/fontAwesome/css/all.css" rel="stylesheet">
 	<section id="header-container">
 		<div id="cover-container">
 			<div id="cover-content">
@@ -118,12 +119,11 @@
 				outline_html+="<td class='day-tourImg' rowspan='3'>";
 				outline_html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
 				outline_html+="<td class='day-tourName' colspan='3'>&nbsp;<span>"+planList[i][j]['tourName']+"</span></td>";
-				outline_html+="<td class='day-tour-zoom'>";
-				outline_html+="<img src='<%=request.getContextPath()%>/views/planner/img/map_zoom.png'/></td>"
+				outline_html+="<td class='day-tour-zoom'><i class='fas fa-map-marker-alt'></i></td>";
 				outline_html+="</tr>";
 				outline_html+="<tr>";
 				outline_html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;<span>"+planList[i][j]['category']+"</span></td>";
-				outline_html+="<td class='day-score'><span>"+planList[i][j]["reviewScore"]+"/10</span></td>";//수정하기
+				outline_html+="<td class='day-tourScore'><i class='fas fa-paperclip'></i> " + planList[i][j]['clipCount'] +" <i class='fas fa-star'></i><span> "+planList[i][j]["reviewScore"]+"</span></td>";//수정하기
 				outline_html+="<td></td>"
 				outline_html+="</tr>";
 				outline_html+="<tr>";
@@ -514,7 +514,7 @@
 	//좋아요버튼 클릭이벤트
 	function like_click(){
 		if(userId=='null'){
-			alert("로그인하시오");
+			fn_login();
 		}else{
 			$.ajax({
 				url:"<%=request.getContextPath()%>/user/likePlanner",
@@ -543,6 +543,8 @@
 			$('#planTitle>i').show();
 			$("#cover-change").css("opacity",1);
 		});
+	}else{
+		$("#modify_btn").hide();
 	}
 	$('#cover-container').mouseleave(function(){
 		// $(this).css("background-color", "white");

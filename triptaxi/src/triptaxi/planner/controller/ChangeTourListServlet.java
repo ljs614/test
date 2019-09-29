@@ -51,6 +51,7 @@ public class ChangeTourListServlet extends HttpServlet {
 		
 		response.setContentType("application/json;charset=UTF-8");
 	    new Gson().toJson(tourList, response.getWriter());
+	    System.out.println(tourList);
 	}
 
 	/**
