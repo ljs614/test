@@ -1,7 +1,6 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import triptaxi.planner.model.service.PlannerService;
-import triptaxi.planner.model.vo.Tour;
 
 /**
- * Servlet implementation class ChangeTourListCity
+ * Servlet implementation class UpdateTourList
  */
-@WebServlet("/changeTourListCity")
-public class ChangeTourListCity extends HttpServlet {
+@WebServlet(name = "UpdateTourListServlet", urlPatterns = { "/updateTourList" })
+public class UpdateTourListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeTourListCity() {
+    public UpdateTourListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +29,23 @@ public class ChangeTourListCity extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Tour> list = new PlannerService().selectTourList("tt_attraction", "city", request.getParameter("cityName"));
+		PlannerService service = new PlannerService();
 		
-		response.setContentType("application/json;charset=UTF-8");
-	    new Gson().toJson(list, response.getWriter());
+		String plannerId = request.getParameter("plannerId");
+		int dayNo = Integer.parseInt(request.getParameter("dayNo"));
+		String tourId = request.getParameter("tourId");
+		String tourList = service.selectPlannerTourList(plannerId, dayNo);
+	
+		if(tourList!=null) {
+			tourList += ","+tourId;
+		}else {
+			tourList = tourId;
+		}
+		int result = service.updateDayTourList(tourList, plannerId, dayNo);
+		if(result>0) {
+			response.setContentType("text/csv;charset=UTF-8");
+			response.getWriter().append("true");
+		}
 	}
 
 	/**

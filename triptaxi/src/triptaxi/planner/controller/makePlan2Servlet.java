@@ -40,7 +40,7 @@ public class makePlan2Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("plannerId"));
+		System.out.println("plannerId : " + request.getParameter("plannerId"));
 		String plannerId = request.getParameter("plannerId");
 		PlannerService service = new PlannerService();
 		
@@ -48,13 +48,12 @@ public class makePlan2Servlet extends HttpServlet {
 		
 		List<PlannerDay> dayList = new ArrayList<PlannerDay>();
 		dayList = service.selectPlannerDayList(plannerId);
-		
+		System.out.println(dayList);
 		List<Tour> attrList = new ArrayList<Tour>();
 		attrList = service.selectTourList("tt_attraction", "city", dayList.get(0).getCityName());
 
-		
 		Gson gson = new Gson();
-
+		System.out.println(dayList);
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(planner.getPlannerDate());
 	
 		JSONObject list = new JSONObject();
@@ -66,7 +65,9 @@ public class makePlan2Servlet extends HttpServlet {
 		list.put("attrList", attrList);
 
 		response.setContentType("application/json;charset=UTF-8");
-	    new Gson().toJson(list, response.getWriter());
+	
+	    request.setAttribute("list", new Gson().toJson(list));
+	    request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request,response);
 		
 	}
 

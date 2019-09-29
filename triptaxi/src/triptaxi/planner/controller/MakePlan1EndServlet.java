@@ -1,10 +1,7 @@
 package triptaxi.planner.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,15 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.JsonCityCount;
-import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
-import triptaxi.planner.model.vo.Tour;
+import triptaxi.user.model.vo.User;
 
 /**
  * Servlet implementation class MakePlan1EndServlet
@@ -44,7 +41,7 @@ public class MakePlan1EndServlet extends HttpServlet {
 	
 		String plannerName = request.getParameter("planTitle");
 		String plannerDate = request.getParameter("startDay");
-	
+		String plannerWriter = request.getParameter("userId");
 	
 		PlannerService service = new PlannerService(); 
 		Gson gson = new Gson();
@@ -54,7 +51,7 @@ public class MakePlan1EndServlet extends HttpServlet {
 		
 		
 		String imageUrl = service.selectCityImg(list.get(0).getCity());
-		String plannerId = service.insertPlanner(plannerName, plannerDate, imageUrl);
+		String plannerId = service.insertPlanner(plannerName, plannerDate, plannerWriter, imageUrl);
 		
 		int dayNo = 1;
 		int result = 0;
@@ -73,9 +70,11 @@ public class MakePlan1EndServlet extends HttpServlet {
 			result = service.insertPlannerDay(dayList);
 		}
 		
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
 		
 		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/views/planner/makePlan2.jsp?plannerId="+plannerId);
+			response.sendRedirect("/makePlan2?plannerId="+plannerId);
 		}
 		
 	}

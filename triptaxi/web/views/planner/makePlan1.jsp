@@ -2,7 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ page
 	import="java.util.*, triptaxi.planner.model.vo.CityList, com.google.gson.*,org.json.simple.*"%>
+<%@ page import="triptaxi.user.model.vo.User" %>
 
+<%
+	User loginUser=(User)session.getAttribute("loginUser");
+	System.out.println(loginUser.getUserId());
+%>
 <!DOCTYPE html>
 <html>
 
@@ -85,6 +90,7 @@
 			</div>
 			<form name="plan1Frm" method="post" >
 				<input type="hidden" id="jsonData" name="jsonData" >
+				<input type="hidden" id="userId" name="userId" value="<%= loginUser.getUserId()%>">
 				<div id="MoContent">
 					<table>
 						<tr>
@@ -134,15 +140,6 @@
 	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
 	makeCityList(${asiaList});
 
-	
-	/* selectPopup 도시 저장용 */
-	var choiceCity = [];
-	
-	
-	console.log(${asiaList});
-	
-    
-	
 	var markers=[];
 
 	$(document).ready(function () {
