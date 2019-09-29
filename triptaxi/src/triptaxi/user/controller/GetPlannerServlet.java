@@ -42,9 +42,12 @@ public class GetPlannerServlet extends HttpServlet {
 		String plannerType=request.getParameter("plannerType");
 		PlannerService pService=new PlannerService();
 		List<Planner> pList=new ArrayList<Planner>();
-		System.out.println(plannerType);
-		if(plannerType.equals("완성된 일정")) {
+		if(plannerType.equals("ed_plan")) {
 			pList=new UserService().selectPlanner(userId);
+		}else if(plannerType.equals("ing_plan")) {
+			pList=new UserService().selectPlannerIng(userId);
+		}else {
+			pList=new UserService().selectPlannerLike(userId);
 		}
 		List<String[]> pwList=new ArrayList<String[]>();
 		String[] cities=new String[pList.size()];

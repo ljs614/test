@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		
 		String saveId=request.getParameter("saveId");
 		String location=request.getParameter("location");
-	
+		String parameter=request.getParameter("parameter");
 		UserService service=new UserService();
 		User u=service.selectId(id,pw);
 		
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 		String msg="";
 		String view="";
 		String loc="/";
-		loc=location.replaceAll("/triptaxi", "");
+		loc=location+"?"+parameter;
 		if(u!=null) {
 			HttpSession session=request.getSession();
 			session.setAttribute("loginUser", u);
@@ -68,10 +68,11 @@ public class LoginServlet extends HttpServlet {
 			
 			view="/";
 			
-			response.sendRedirect(location);
+			response.sendRedirect(loc);
 			
 		}else {
 			//로그인이 안됨!
+			loc=loc.replace("/triptaxi", "");
 			msg="아이디나 패스워드가 일치하지 않습니다.!";
 			view="/views/common/msg.jsp";
 			request.setAttribute("msg",msg);

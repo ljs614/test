@@ -53,6 +53,20 @@ public class UserService {
 		return list;
 	}
 	
+	public List<Planner> selectPlannerIng(String userId){
+		Connection conn=getConnection();
+		List<Planner> list=dao.selectPlannerIng(conn, userId);
+		close(conn);
+		return list;
+	}
+	
+	public List<Planner> selectPlannerLike(String userId){
+		Connection conn=getConnection();
+		List<Planner> list=dao.selectPlannerLike(conn, userId);
+		close(conn);
+		return list;
+	}
+	
 	public void insertLike(String userId, String plannerId) {
 		Connection conn=getConnection();
 		int result=dao.insertLike(conn, userId, plannerId);

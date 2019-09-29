@@ -295,6 +295,7 @@
                     </div>
                 </div>
                 <input type="hidden" id="location" name="location"/>
+                <input type="hidden" id="parameter" name="parameter"/>
                 </form>
                 <button id="login_exit" onclick="fn_login_exit();">X</button>
             </div>
@@ -302,4 +303,5 @@
         </div>
         <script>
             $("#location").val(window.location.pathname);
+            $("#parameter").val(window.location.href.split('?')[1]);
         </script>

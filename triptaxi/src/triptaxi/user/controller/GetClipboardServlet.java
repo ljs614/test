@@ -3,6 +3,7 @@ package triptaxi.user.controller;
 import java.io.IOException;
 import java.util.List;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,8 +37,7 @@ public class GetClipboardServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
 		List<Tour> list=new UserService().selectClipboard(userId);
-		Gson gson=new Gson();
-		response.getWriter().append(gson.toJson(list));
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**
