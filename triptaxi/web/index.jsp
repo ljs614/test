@@ -207,27 +207,79 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+				<span class="close">&times;</span>
+				<h3>대륙 선택</h3>
+				<div class="modal-con">
+					<label class="list_label">
+						<input type="checkbox" class="option-input checkbox" value="Asia" /> 아시아
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="Oceania" /> 오세아니아
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="Europe" /> 유럽
+					</label>
+				</div>
+				<div class="modal-con">
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="NorthAmerica" /> 남아메리카
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="SouthAmerica" /> 북아메리카
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="Africa" /> 아프리카
+					</label>
+				</div>
+		</div>
+	</div>
+
+
+
+
+
+	<script>
+ 
+		$(function(){
+			$(".top_con1_2_1").on("click",function(){
+				$("#myModal").css("display","block");
+			});			
+		});
 		
-	
-	
+		$(function(){
+			$(".close").on("click",function(){
+				$("#myModal").css("display","none");
+			});			
+		});
+		
+		$(function(){
+			$("window").on("click",function(){
+				if (event.target == modal) {
+					$("#myModal").css("display","none");
+				}
+			});			
+		});
 
 
-<script>
-	AOS.init({
-		easing : 'ease-in-out-sine'
-	});
-	
-	$(function(){
-		$(document).ready(function(){
-			$.ajax({
-				url:"<%=request.getContextPath() %>/dayCity",
+		AOS.init({
+			easing : 'ease-in-out-sine'
+		});
+
+		<%-- $(function() {
+			$(document).ready(function() {
+				$.ajax({
+					url : "
+	<%=request.getContextPath() %>/dayCity",
 				type:"get",
 				success:function(data){
 					console.log(data);
 				}
 			});	
 		});
-	});
+	}); --%>
 	
 
 	$(function(){

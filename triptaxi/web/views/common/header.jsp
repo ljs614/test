@@ -98,8 +98,8 @@
       
        $(function(){
 	        $(".con1_hover1").on("mouseenter",function(){
-	        	$(".top_con_span").first().css("color","black").css("fontSize","25px");
-	 			$(".top_con_p").first().css("color","black"); 
+	        	$(".top_con_span").first().css("color","#49506a").css("fontSize","25px");
+	 			$(".top_con_p").first().css("color","#49506a"); 
 	 			$(".top_con_i1").first().css("color","#a2c5f7");
         		$(".top_img0").css("display","none");
         		$(".top_img1").css("display","block");
@@ -115,8 +115,8 @@
        
        $(function(){
 	        $(".con1_hover2").on("mouseenter",function(){
-	        	$(".top_con_span").eq(1).css("color","black").css("fontSize","25px");
-	 			$(".top_con_p").eq(1).css("color","black"); 
+	        	$(".top_con_span").eq(1).css("color","#49506a").css("fontSize","25px");
+	 			$(".top_con_p").eq(1).css("color","#49506a"); 
 	 			$(".top_con_i1").eq(1).css("color","#a2c5f7");
        		$(".top_img0").css("display","none");
        		$(".top_img2").css("display","block");
@@ -132,8 +132,8 @@
        
        $(function(){
 	        $(".con1_hover3").on("mouseenter",function(){
-	        	$(".top_con_span").last().css("color","black").css("fontSize","25px");
-	 			$(".top_con_p").last().css("color","black"); 
+	        	$(".top_con_span").last().css("color","#49506a").css("fontSize","25px");
+	 			$(".top_con_p").last().css("color","#49506a"); 
 	 			$(".top_con_i1").last().css("color","#a2c5f7");
        		$(".top_img0").css("display","none");
        		$(".top_img3").css("display","block");
@@ -240,7 +240,7 @@
                         <li class="hvr-float-shadow"><a href="">다른사람 일정보기</a></li>
                     </ul>
                     <ul class="sub_menu1_3">
-                        <li class="hvr-float-shadow"><a href="">Q&A 게시판</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>//board/boardform">Q&A 게시판</a></li>
                         <li class="hvr-float-shadow"><a href="">후기 게시판</a></li>
                         <li class="hvr-float-shadow"><a href="">동행 게시판</a></li>
                     </ul>

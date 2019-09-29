@@ -161,7 +161,20 @@ public class CityDao {
 	public List<Attraction> attractionList(Connection conn, String cityName) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql=prop.getProperty("attractionList");
+		String sqlField=prop.getProperty("attractionListField");
+		String sqlFrom=prop.getProperty("attractionListFrom");
+		String sqlWhere=prop.getProperty("attractionListWhere");
+//		
+//		if(!cityName.equals("")) {
+//			sqlWhere += "and city_name = " + cityName;
+//		}
+//		
+		
+		
+		String sql = sqlField + sqlFrom + sqlWhere;
+		
+		
+		
 		List<Attraction> list=new ArrayList();
 		try {
 			pstmt=conn.prepareStatement(sql);
