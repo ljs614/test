@@ -19,6 +19,7 @@ public class AttractionService {
 	private String city;
 	private String attId;
 	private String table;
+	private int score;
 	
 	public Attraction selectAttraction(String attId) {
 		Connection conn=getConnection();
@@ -27,12 +28,14 @@ public class AttractionService {
 		city=a.getCity();
 		this.attId=a.getAttractionId();
 		
-		switch(attId.substring(0,1)) {
-		case "at": table="tt_attraction";break;
-		case "ac": table="tt_activity";break;
-		case "fe": table="tt_festival";break;
+		if(attId.substring(0,2).equals("at")) {
+		table="tt_attraction";}
+		else if(attId.substring(0,2).equals("ac")){
+			table="tt_activity";
+		}else {
+		table="tt_festival";
 			}
-		
+		System.out.println(table);
 		return a;
 
 	}
@@ -66,12 +69,12 @@ public class AttractionService {
 		close(conn);
 		return result;
 		
+		
 	}
 	
 	public List<TourReview> reviewList(String attId,int reviewmore){
 		Connection conn=getConnection();
 		List<TourReview> list=dao.reviewList(conn,attId,reviewmore);
-
 		close(conn);
 		return list;
 		
@@ -84,5 +87,14 @@ public class AttractionService {
 		close(conn);
 		return list;
 	}
+	
+	public int scoreAvg(String attId) {
+		Connection conn=getConnection();
+		int result=dao.scoreAvg(conn,attId,table);
+		close(conn);
+		System.out.println(table);
+		return result;
+	}
+	
 	
 }

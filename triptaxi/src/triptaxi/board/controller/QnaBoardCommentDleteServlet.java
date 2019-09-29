@@ -1,4 +1,4 @@
-package triptaxi.attraction.controller;
+package triptaxi.board.controller;
 
 import java.io.IOException;
 
@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.triptaxi.attraction.model.vo.TourReview;
-
-import triptaxi.attraction.service.AttractionService;
+import triptaxi.board.service.BoardService;
 
 /**
- * Servlet implementation class AttractionReaviewWrite
+ * Servlet implementation class QnaBoardCommentDleteServlet
  */
-@WebServlet("/attraction/reviewWrite")
-public class AttractionReaviewWriteServlet extends HttpServlet {
+@WebServlet("/board/boardCommentDelete")
+public class QnaBoardCommentDleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AttractionReaviewWriteServlet() {
+    public QnaBoardCommentDleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +30,22 @@ public class AttractionReaviewWriteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int star=Integer.parseInt(request.getParameter("star-input"));
-		String reviewComment=request.getParameter("review-comment");
-		String userId=request.getParameter("user-id");
-		String tourId=request.getParameter("tour-id");
-		
-		TourReview tr=new TourReview();
-		tr.setTourId(tourId);
-		tr.setTourReviewContent(reviewComment);
-		tr.setTourReviewScore(star);
-		tr.setTourReviewWriter(userId);
-		int result =new AttractionService().writeReview(tr);
 
+		int boardCommentRef=Integer.parseInt(request.getParameter("boardCommentRef"));
+		System.out.println("pp"+boardCommentRef);
+		
+		int result=new BoardService().deleteComment(boardCommentRef);
+		String msg="";
+		String loc="/board/boardView?no="+boardCommentRef;
+		if(result>0) {
+			msg="댓글 삭제 완료";
+		}else {
+			msg="댓글 삭제 실패";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		
 		
 	}
 
