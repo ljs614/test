@@ -378,7 +378,7 @@
 				 	for(var i=0; i<=5; i++){
 				 		var imgurl=data[i]["imageUrl"].split(",");
 				 		cityArr+="<div class='aos-item' data-aos='zoom-out-down'>";
-				 		cityArr+="<a href='#'>";
+				 		cityArr+="<a href='<%=request.getContextPath()%>/citychoice?cityName="+data[i]['cityEng']+"'>";
 				 		cityArr+="<div class='aos-item__inner'>";
 				 		cityArr+="<img src='<%=request.getContextPath() %>"+imgurl[0]+"' width='100%' height='100%'/>";
 				 		cityArr+="<h3>"+data[i]["cityName"]+"</h3>";

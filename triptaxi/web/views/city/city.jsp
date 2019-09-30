@@ -334,7 +334,7 @@
 						for(var i=0;i<data.length;i++){
 							  var attImg=data[i]["imageUrl"].split(",");
 							  attDiv += "<div class='card card-1'>";
-							  attDiv += "<a href='#'>";
+							  attDiv += "<a href='<%=request.getContextPath()%>/attraction/select?attId="+data[i]['attractionId']+"'>";
 							  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
 							  attDiv += "<div class='card-att'>";
 							  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
@@ -372,7 +372,7 @@
 					for(var i=0;i<data.length;i++){
 						  var attImg=data[i]["imageUrl"].split(",");
 						  attDiv += "<div class='card card-1'>";
-						  attDiv += "<a href='#'>";
+						  attDiv += "<a href='<%=request.getContextPath()%>/attraction/select?attId="+data[i]['attractionId']+"'>";
 						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
 						  attDiv += "<div class='card-att'>";
 						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
@@ -407,7 +407,7 @@
 					for(var i=0;i<data.length;i++){
 						  var attImg=data[i]["imageUrl"].split(",");
 						  attDiv += "<div class='card card-1'>";
-						  attDiv += "<a href='#'>";
+						  attDiv += "<a href='<%=request.getContextPath()%>/attraction/select?attId="+data[i]['attractionId']+"'>";
 						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
 						  attDiv += "<div class='card-att'>";
 						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";

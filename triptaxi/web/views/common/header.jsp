@@ -245,7 +245,7 @@
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/user/mypage">내 일정 보기</a></li>
                         
                         <%}else{ %>
-                         <li class="hvr-float-shadow" id="mypagenull"><a class="mypagea">내 일정 보기</a></li>
+                         <li class="hvr-float-shadow mypagea" id="mypagenull"><a class="mypagea">내 일정 보기</a></li>
                         <%} %>
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/planMain">다른사람 일정보기</a></li>
                     </ul>
