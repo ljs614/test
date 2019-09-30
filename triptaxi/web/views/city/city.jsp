@@ -2,13 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <%@ page import="triptaxi.city.model.vo.City,com.triptaxi.attraction.model.vo.Attraction,java.util.List" %>
+<%
+	City c=(City)request.getAttribute("City");
+%>
 <link href="<%=request.getContextPath() %>/css/city.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/swiper.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/js/swiper.min.js"></script>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
-<%
-	City c=(City)request.getAttribute("City");
-%>
+
 
 	<script>
 		
@@ -206,11 +207,16 @@
 		</div>
 	</div>
 	
+
+	
+	
 		
 
 </section>
 
 	<script>   
+	
+	
 	
 	$(function(){
 		$(document).ready(function(){
@@ -242,7 +248,7 @@
 				var hour = time.getHours()<%=c.getTimeDiffence()%>;
 			    var minute = time.getMinutes();
 			    var second = time.getSeconds();
-				$("#time").html("<i class='material-icons'>alarm</i>&nbsp;"+year+"년 "+hour+"시 "+minute+"분 "+second+"초 (시차 "+<%=c.getTimeDiffence()%>+"시간)");
+				$("#time").html("<i class='material-icons'>alarm</i>&nbsp;현재시간 : "+hour+"시 "+minute+"분 "+second+"초 (시차 "+<%=c.getTimeDiffence()%>+"시간)");
 			},1000);
 		});
 	});
@@ -324,22 +330,29 @@
 				success:function(data){
 					console.log(data);
 					var attDiv="";
-					for(var i=0;i<data.length;i++){
-						  var attImg=data[i]["imageUrl"].split(",");
-						  attDiv += "<div class='card card-1'>";
-						  attDiv += "<a href='#'>";
-						  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
-						  attDiv += "<div class='card-att'>";
-						  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
-						  attDiv += "<p>"+data[i]["attractionComment"]+"</p></div></a></div>";
+					if(data.length!=0){
+						for(var i=0;i<data.length;i++){
+							  var attImg=data[i]["imageUrl"].split(",");
+							  attDiv += "<div class='card card-1'>";
+							  attDiv += "<a href='#'>";
+							  attDiv += "<img src='<%=request.getContextPath() %>/images/<%=c.getCityName()%>/"+data[i]['attractionName']+"/"+attImg[0]+"'/>";
+							  attDiv += "<div class='card-att'>";
+							  attDiv += "<h3><%=c.getCityName() %> / "+data[i]["attractionName"]+"</h3>";
+							  attDiv += "<p>"+data[i]["attractionComment"]+"</p></div></a></div>";
+						}
+						var atth2="";
+						atth2+="<div class='right-att'>";
+						atth2+="<h2><%=c.getCityName() %> / Festival</h2>";
+						atth2+="</div>";
+						$(".city_right").html(atth2);
+						$(".city_right").append(attDiv);
+						$("#section").css("height",$(".card").height()*7.5);
+					}else{
+						var nullfestival="";
+						nullfestival+="<img src='<%=request.getContextPath()%>/images/commingsoon.png' />";
+						$("section").css("height","770px");
+						$(".city_right").html(nullfestival);
 					}
-					var atth2="";
-					atth2+="<div class='right-att'>";
-					atth2+="<h2><%=c.getCityName() %> / Festival</h2>";
-					atth2+="</div>";
-					$(".city_right").html(atth2);
-					$(".city_right").append(attDiv);
-					$("#section").css("height",$(".card").height()*4.8);
 				}
 			});
 		});
@@ -355,6 +368,7 @@
 				success:function(data){
 					console.log(data);
 					var attDiv="";
+					if(data.length!=0){
 					for(var i=0;i<data.length;i++){
 						  var attImg=data[i]["imageUrl"].split(",");
 						  attDiv += "<div class='card card-1'>";
@@ -371,6 +385,12 @@
 					$(".city_right").html(atth2);
 					$(".city_right").append(attDiv);
 					$("#section").css("height",$(".card").height()*4.8);
+					}else{
+						var nullactivity="";
+						nullactivity+="<img src='<%=request.getContextPath()%>/images/commingsoon.png' />";
+						$(".city_right").html(nullactivity);
+						$("section").css("height","770px");
+					}
 				}
 			});
 		});
@@ -418,7 +438,7 @@
 		            			var exchange=data[i]["deal_bas_r"]
 		            		} 
 		            	}
-		            	$("#exchange_span").append(exchange+"원");
+		            	$("#exchange_span").append(exchange+"원 (평일 기준)");
 		            }
 		        });  
 		  });

@@ -19,7 +19,7 @@
 	int clipCount1=0;
 	int clip=0;
 	int reviewmore=5;
-	String userId="pkw2813";
+	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
 	userId=loginUser.getUserId();
@@ -30,18 +30,18 @@
 <style>
 
 div{
-     /* border: 1px solid hotpink;
-  border-radius: 1px;   */   
+     border: 1px solid hotpink;
+  border-radius: 1px;    
 }
 
 table{
 margin:0 auto;
 width:1024px;
-
+border: 1px solid #444444;
 }
 
 tr{
-
+border: 1px solid #444444;
 }
 
 td{
@@ -119,11 +119,6 @@ td{
 	color: gray;
 	text-align:center;
 }
-#topButtonAdd{
-	font-size: 52px;
-	color: gray;
-	text-align:center;
-}
 
 .topButton{
 	width:500px;
@@ -146,12 +141,6 @@ td{
 #topButtonReview:hover{
 	font-size: 52px;
 	color: green;
-		-webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-}
-#topButtonAdd:hover{
-	font-size: 52px;
-	color: hotpink;
 		-webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
 }
@@ -671,7 +660,7 @@ opacity:0.5;
 
 	var clipcount=0;
 	$(function(){
-		$("#clipClick").click(function(){
+		$("#top-button-clip").click(function(){
 			clipcount++;
 
 			if(clipcount%2!=0){
@@ -732,8 +721,7 @@ opacity:0.5;
 	<div class=topButton>
 	<a id="top-button-clip" <%-- href="<%=request.getContextPath()%>/attraction/clipCount?clip=<%=clip%>" --%>><i class="fas fa-paperclip" id="topButtonClip"><h4 id="imageText">클립보드 </h4></i></a>&nbsp
 	<a id="top-button-map"><i class="fas fa-map-marked-alt" id="topButtonMap"><h4 id="imageText">지도보기</h4></i></a>&nbsp
-	<a id="top-button-review"><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰보기</h4></i></a>&nbsp
-	<a id="top-button-add"><i class="far fa-calendar-plus" id="topButtonAdd"><h4 id="imageText">일정추가</h4></i></a>
+	<a id="top-button-review"><i class="fas fa-edit" id="topButtonReview"><h4 id="imageText">리뷰보기</h4></i></a>
 	</div>
 	</td>
 	
@@ -921,7 +909,7 @@ opacity:0.5;
 						
 					if(data.length==0){
 						$("#json-container").css("text-align","center");
-						$("#json-container").html('<i class="far fa-frown" id="no-review"></i><br><span id="no-review-ment">리뷰가 없어요</span>')
+						$("#json-container").html('<br><br><i class="far fa-frown" id="no-review"></i><br><span id="no-review-ment">리뷰가 없어요</span><br><br>')
 						$(".review-more").hide();
 						$(".review-remove").hide();
 						console.log("nodata")
@@ -1041,7 +1029,7 @@ opacity:0.5;
 		</td>
 		</tr>
 	</table>
-	
+	<a href="<%=request.getContextPath()%>/board/boardList">게시판</a>
 	</section>
 		<script>
 		$(".review-more").mouseover(function (){

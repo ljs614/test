@@ -65,6 +65,13 @@ public class CityService {
 		return a;
 	}
 	
+	public List<City> matchingCity(String ct,String wt){
+		Connection conn=getConnection();
+		List<City> list=dao.matchingCity(conn,ct,wt);
+		close(conn);
+		return list;
+	}
+	
 
 }
 

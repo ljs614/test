@@ -161,7 +161,16 @@ public class CityDao {
 	public List<Attraction> attractionList(Connection conn, String cityName) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql=prop.getProperty("attractionList");
+		String sqlField=prop.getProperty("attractionListField");
+		String sqlFrom=prop.getProperty("attractionListFrom");
+		String sqlWhere=prop.getProperty("attractionListWhere");
+//		
+//		if(!cityName.equals("")) {
+//			sqlWhere += "and city_name = " + cityName;
+//		}
+//		
+		String sql = sqlField + sqlFrom + sqlWhere;
+
 		List<Attraction> list=new ArrayList();
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -259,6 +268,28 @@ public class CityDao {
 		}
 		return list;
 	}
+	
+	public List<City> matchingCity(Connection conn,String ct,String wt){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<City> list=new ArrayList();
+		String sql=prop.getProperty("matchingCity");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				City c=new City();
+				c.setCityName(rs.getString("city_name"));
+
+				list.add(c);				
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}		
 	
 	
 }
