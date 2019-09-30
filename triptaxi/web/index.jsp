@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>	
 <%@ include file="/views/common/header.jsp"%>
 <%@ page import="triptaxi.user.model.vo.User" %>
+<%@ page import="triptaxi.city.model.vo.City,com.triptaxi.attraction.model.vo.Attraction,java.util.List" %>
+<%
+	City c=(City)request.getAttribute("City");
+%>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
@@ -211,29 +215,60 @@
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 				<span class="close">&times;</span>
-				<h3>대륙 선택</h3>
+				<!-- <form> -->
+			<div class="modal-content1">
+				<h3>여행하고싶은 대륙을 선택해주세요.</h3>
 				<div class="modal-con">
 					<label class="list_label">
-						<input type="checkbox" class="option-input checkbox" value="Asia" /> 아시아
+						<input type="checkbox" class="option-input checkbox" value="Asia" name="continent"/> 아시아
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="Oceania" /> 오세아니아
+						<input type="checkbox" class="option-input checkbox" value="Oceania" name="continent"/> 오세아니아
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="Europe" /> 유럽
+						<input type="checkbox" class="option-input checkbox" value="Europe" name="continent"/> 유럽
 					</label>
 				</div>
 				<div class="modal-con">
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="NorthAmerica" /> 남아메리카
+						<input type="checkbox" class="option-input checkbox" value="NorthAmerica" name="continent"/> 남아메리카
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="SouthAmerica" /> 북아메리카
+						<input type="checkbox" class="option-input checkbox" value="SouthAmerica" name="continent"/> 북아메리카
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="Africa" /> 아프리카
+						<input type="checkbox" class="option-input checkbox" value="Africa" name="continent"/> 아프리카
 					</label>
 				</div>
+				<button value="다음" id="first_btn">다음</button>
+			</div>
+			
+			<div class="modal-content2">
+				<h3>누구랑 여행을 계획중이신가요?</h3>
+				
+				<div class="modal-con">
+					<label class="list_label">
+						<input type="checkbox" class="option-input checkbox" value="family" name="withTravel"/> 가족여행
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="alone" name="withTravel"/> 나홀로여행
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="couple" name="withTravel"/> 커플여행
+					</label>
+				</div>
+				<div class="modal-con">
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="friend" name="withTravel"/> 친구와함께
+					</label> 
+					<label class="list_label"> 
+						<input type="checkbox" class="option-input checkbox" value="business" name="withTravel"/> 비즈니스여행
+					</label> 
+				</div>
+				<!-- <input type="submit" value="전송" id="last_btn">
+				</form> -->
+				<button value="매칭" id="last_btn">매칭</button>
+			</div>
 		</div>
 	</div>
 
@@ -242,18 +277,69 @@
 
 
 	<script>
+	
+		$(function(){
+			$(".modal-content2").hide();
+		});
+		$("#first_btn").on("click",function(){
+			$(".modal-content1").hide();
+			$(".modal-content2").show();
+		});
+		
+ 
+			 				var continent=[];
+				 			var withTravel=[];
+				 $("#last_btn").on("click",function(){
+			        	 $("input[name=continent]:checked").each(function() {
+			        		 continent.push($(this).val());
+			 				/* continent+=$(this).val(); */
+			 			});
+			 				console.log(continent); 
+			        	 $("input[name=withTravel]:checked").each(function() {
+			        		 withTravel.push($(this).val());
+				 				/* withTravel+=$(this).val(); */
+				 		});
+				 				console.log(withTravel);
+			        	/*  var allData = {"continent":continent,"withTravel":withTravel}; */
+			        	 $('#myModal').hide();
+			        	<%-- location.href="<%=request.getContextPath()%>/city/matching"; --%>
+			        	
+			        	$.ajax({
+							url:"<%=request.getContextPath()%>/city/matching",
+							type:"get",
+							data:{"continent":continent,"withTravel":withTravel},
+							success:function(data){
+								/* var cityArr="";
+							 	for(var i=0; i<=5; i++){
+							 		cityArr+="<a href=''>도시명</a>"
+								} 
+							 	$(".con3_1").html(cityArr); */
+							 	
+							}
+						});
+			        	console.log(continent+"asd"+withTravel)
+			        	 
+			});
+			     /*  var withTravel;
+			      $('input:checkbox[name=withTravel]').each(function() {
+			         if($(this).is(':checked')){
+			        	 withTravel += "|"+($(this).val());
+			         }
+			      }); */
+		
  
 		$(function(){
-			$(".top_con1_2_1").on("click",function(){
+			$(".con1_hover2").on("click",function(){
 				$("#myModal").css("display","block");
 			});			
 		});
 		
-		$(function(){
+
 			$(".close").on("click",function(){
-				$("#myModal").css("display","none");
+				/* $("#myModal").css("display","none"); */
+				location.reload();
 			});			
-		});
+
 		
 		$(function(){
 			$("window").on("click",function(){

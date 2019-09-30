@@ -2,13 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <%@ page import="triptaxi.city.model.vo.City,com.triptaxi.attraction.model.vo.Attraction,java.util.List" %>
+<%
+	City c=(City)request.getAttribute("City");
+%>
 <link href="<%=request.getContextPath() %>/css/city.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/swiper.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/js/swiper.min.js"></script>
 <link href="<%=request.getContextPath() %>/css/styles.css" rel="stylesheet">
-<%
-	City c=(City)request.getAttribute("City");
-%>
+
 
 	<script>
 		
@@ -437,7 +438,7 @@
 		            			var exchange=data[i]["deal_bas_r"]
 		            		} 
 		            	}
-		            	$("#exchange_span").append(exchange+"원");
+		            	$("#exchange_span").append(exchange+"원 (평일 기준)");
 		            }
 		        });  
 		  });
