@@ -47,27 +47,22 @@ public class PlannerViewServlet extends HttpServlet {
 		service.plannerCountUp(plannerId);
 		Planner planner=service.selectPlanner(plannerId);
 		String view;
+		Tour[] tourList=null;
 		if(planner!=null) {
 			List<PlannerDay> pdList=service.selectPlannerDayList(plannerId);
-			List<Tour[]> list=new ArrayList<Tour[]>();
+			List list=new ArrayList();
 			for(int i=0; i<pdList.size(); i++) {
-				String[] tours=pdList.get(i).getTourList().split(",");
-				Tour[] tourList=new Tour[tours.length];
-				for(int j=0; j<tours.length; j++) {
+				if(pdList.get(i).getTourList()!=null) {					
+					String[] tours=pdList.get(i).getTourList().split(",");
+					tourList=new Tour[tours.length];
+					for(int j=0; j<tours.length; j++) {
 						tourList[j]=service.selectTour(tours[j]);
+					}
+					list.add(tourList);
+				}else {
+					list.add(pdList.get(i).getCityName());
 				}
-				list.add(tourList);
 			}
-//			String[] days=planner.getPlannerPlan().split("/");
-//			for(int i=0; i<days.length; i++) {
-//				String[] tours=days[i].split(",");
-//				Attraction[] atts=new Attraction[tours.length];
-//				for(int j=0; j<tours.length; j++) {
-//					atts[j]=service.selectAttraction(tours[j]);
-//				}
-//				list.add(atts);
-//			}
-//			request.setAttribute("atts", list);
 			request.setAttribute("planner", planner);
 			request.setAttribute("jlist", gson.toJson(list));
 			view="/views/planner/planView.jsp";

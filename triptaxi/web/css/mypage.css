@@ -84,7 +84,7 @@ div#planList_nav, div#clipList_nav{
 div#planList_nav>li, div#clipList_nav>li{
     position: relative;
     display: inline-block;
-    margin:5px 10px;
+    padding:5px 10px;
     cursor: pointer;
     font-size: 13px;
 }
@@ -132,10 +132,14 @@ div.planList_content>div.plan_date, div.plan_totalDay {
 	font-weight: 900;
 	display: inline-block;
 	padding-top: 10px;
-	color: #66a1f4;
+    color: #66a1f4;
+    
 }
-
+div.planList_content>div.plan_date{
+    margin-left:65px;
+}
 div.planList_content>div.plan_totalDay {
+    margin-left:10px;
 	color: gray;
 }
 
@@ -152,9 +156,20 @@ div.plan_city {
 }
 
 div.plan_theme {
-	padding-top: 10px;
+	padding-top: 5px;
 	padding-left: 20px;
-	text-align: left;
+    text-align: left;
+    
+}
+div.plan_theme>span{
+    position: relative;
+    display: inline-block;
+    padding:1px 2px;
+    background-color:rgb(240, 238, 238);
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+    top:1px;
 }
 
 div.plan_users {
@@ -162,7 +177,9 @@ div.plan_users {
 	padding-top: 10px;
 	text-align: left;
 	position: relative;
-	left: -15px;
+    left: 15px;
+    width:130px;
+    height:20px;
 }
 
 div.plan_popularity {
@@ -171,11 +188,24 @@ div.plan_popularity {
 	border-radius: 5px;
 	display: inline-block;
 	position: relative;
-	padding: 2px;
-	left: 40px;
+	padding: 2px 2px;
+    left: 40px;
+    padding-right:3px;
 }
+div.plan_popularity>*{
+    margin:2px 2px;
+}
+div.plan_popularity>i{
+    margin-left:3px;
+}
+
 
 div.planList_div:hover .plan_popularity {
 	transform: translateX(-25%);
 	transition: 1.8s;
+}
+
+div#clipList_nav, #planList_nav{
+    border-bottom:1px solid #49506a;
+    width:100%;
 }

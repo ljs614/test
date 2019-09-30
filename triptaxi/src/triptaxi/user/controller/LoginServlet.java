@@ -64,10 +64,6 @@ public class LoginServlet extends HttpServlet {
 				c.setMaxAge(0);
 				response.addCookie(c);
 			}
-			
-			
-			view="/";
-			
 			response.sendRedirect(loc);
 			
 		}else {

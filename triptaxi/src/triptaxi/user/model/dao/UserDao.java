@@ -109,35 +109,6 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		}return u;
 	}
 	
-	public List<Tour> selectClipboard(Connection conn, String userId){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<Tour> list=new ArrayList<Tour>();
-		String sql=prop.getProperty("selectClipboard");
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
-				Tour tour=new Tour();
-				tour.setTourId(rs.getString(1));
-				tour.setTourName(rs.getString(2));
-				tour.setTourEng(rs.getString(3));
-				tour.setCity(rs.getString(4));
-				tour.setImageUrl(rs.getString(7));
-				tour.setClipCount(rs.getInt(9));
-				tour.setCategory(rs.getString(11));
-				list.add(tour);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		return list;
-	}
-	
 	public List<Planner> selectPlanner(Connection conn, String userId){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -279,6 +250,94 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, plannerId);
+			pstmt.setString(2, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result="true";
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	
+	public List<Tour> selectClipboard(Connection conn, String userId){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Tour> list=new ArrayList<Tour>();
+		String sql=prop.getProperty("selectClipboard");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Tour tour=new Tour();
+				tour.setTourId(rs.getString(1));
+				tour.setTourName(rs.getString(2));
+				tour.setTourEng(rs.getString(3));
+				tour.setCity(rs.getString(4));
+				tour.setImageUrl(rs.getString(7));
+				tour.setClipCount(rs.getInt(9));
+				tour.setReviewScore(rs.getInt(10));
+				tour.setCategory(rs.getString(11));
+				list.add(tour);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int insertClip(Connection conn, String userId, String clipId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertClip");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, clipId);
+			pstmt.setString(2,  userId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteClip(Connection conn, String userId, String clipId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteClip");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, clipId);
+			pstmt.setString(2,  userId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectClip(Connection conn, String userId, String clipId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String result="false";
+		String sql=prop.getProperty("selectClip");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, clipId);
 			pstmt.setString(2, userId);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {

@@ -190,7 +190,7 @@ div#planner-name{
 }
 div#planner-etc{
     position: relative;
-    width:300px;
+    width:350px;
     height:30px;
     /* border:1px solid green; */
     left:10px;
@@ -206,11 +206,24 @@ div#planner-etc-date{
 div#planner-etc-theme{
     position: relative;
     display: inline-block;
-    width:80px;
+    padding:1px 2px;
     background-color:silver;
     text-align: center;
     border-radius: 5px;
+    font-size: 14px;
     top:1px;
+}
+div#planner_popularity{
+    position: relative;
+    width:180px;
+    height:30px;
+    color:white;
+    left:10px;
+    margin-top:-5px;
+}
+div#planner_popularity>i{
+    position: relative;
+    margin:0 5px;
 }
 div#planView-nav{
     width:100%;
@@ -393,7 +406,7 @@ td.day-tourName span{
     top:10px;
 }
 td.day-tourType{
-    width:30px;
+    width:90px;
     /* text-align: center; */
     font-size: 12px;
 }
@@ -409,10 +422,19 @@ td.day-tourType span{
     
 }
 td.day-tour-zoom{
-    position: relative;
-    top:20px;
+    width:100px;
 }
-td.day-score span{
+td.day-tour-zoom>i{
+    position: relative;
+    display: inline-block;
+    top:40px;
+    cursor: pointer;
+    font-size:30px;
+    color:#a5c6f4;
+    margin-right:10px;
+    right:-30px;
+}
+td.day-tourScore span{
     position: relative;
     /* border:1px solid black; */
     top:-10px;
@@ -420,6 +442,18 @@ td.day-score span{
     font-size: 15px;
     /* left:-100px; */
 }
+td.day-tourScore .fa-paperclip{
+    position: relative;
+    color:gray;
+    top:-10px;
+
+}
+td.day-tourScore .fa-star{
+    position: relative;
+    color:#fde396;
+    top:-10px;
+}
+
 table.day-table{
     border-spacing: 0;
     width:500px;

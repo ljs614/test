@@ -39,13 +39,6 @@ public class UserService {
 		return result;
 	}
 	
-	public List<Tour> selectClipboard(String userId){
-		Connection conn=getConnection();
-		List<Tour> list=dao.selectClipboard(conn, userId);
-		close(conn);
-		return list;
-	}
-	
 	public List<Planner> selectPlanner(String userId){
 		Connection conn=getConnection();
 		List<Planner> list=dao.selectPlanner(conn, userId);
@@ -92,6 +85,42 @@ public class UserService {
 	public String selectLike(String userId, String plannerId) {
 		Connection conn=getConnection();
 		String result=dao.selectLike(conn, userId, plannerId);
+		close(conn);
+		return result;
+	}
+	
+	public List<Tour> selectClipboard(String userId){
+		Connection conn=getConnection();
+		List<Tour> list=dao.selectClipboard(conn, userId);
+		close(conn);
+		return list;
+	}
+	
+	public void insertClip(String userId, String tourId) {
+		Connection conn=getConnection();
+		int result=dao.insertClip(conn, userId, tourId);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	}
+	
+	public void deleteClip(String userId, String tourId) {
+		Connection conn=getConnection();
+		int result=dao.deleteClip(conn, userId, tourId);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	}
+	
+	public String selectClip(String userId, String tourId) {
+		Connection conn=getConnection();
+		String result=dao.selectClip(conn, userId, tourId);
 		close(conn);
 		return result;
 	}

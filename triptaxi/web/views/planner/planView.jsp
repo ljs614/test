@@ -58,6 +58,7 @@
 							<%=planner.getPlannerTheme()%>
 						</div>
 					</div>
+					<div id='planner_popularity'><i class='fas fa-eye'></i> <%=planner.getPlannerCount()%><i class='fas fa-heart'></i><%=planner.getPlannerLike()%></div>
 				</div>
 			</div>
 		</div>
@@ -111,29 +112,34 @@
 			outline_html+="&nbsp;&nbsp;"+date_.getFullYear()+"년 "+(date_.getMonth()+1)+"월 "+date_.getDate()+"일 ("+returnDay(date_.getDay())+")</td>";
 			outline_html+="</tr>";
 			outline_html+="<tr>";
-			outline_html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i][0]["city"]+"</td>";
-			outline_html+="</tr>";
-			for(var j=0; j<planList[i].length; j++){
-				outline_html+="<tr>";
-				outline_html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
-				outline_html+="<td class='day-tourImg' rowspan='3'>";
-				outline_html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
-				outline_html+="<td class='day-tourName' colspan='3'>&nbsp;<span>"+planList[i][j]['tourName']+"</span></td>";
-				outline_html+="<td class='day-tour-zoom'><i class='fas fa-map-marker-alt'></i></td>";
+			if(typeof(planList[i])=="string"){
+				outline_html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i]+"</td>";
 				outline_html+="</tr>";
-				outline_html+="<tr>";
-				outline_html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;<span>"+planList[i][j]['category']+"</span></td>";
-				outline_html+="<td class='day-tourScore'><i class='fas fa-paperclip'></i> " + planList[i][j]['clipCount'] +" <i class='fas fa-star'></i><span> "+planList[i][j]["reviewScore"]+"</span></td>";//수정하기
-				outline_html+="<td></td>"
+			}else{
+				outline_html+="<td class='day-city' colspan='5'>&nbsp;"+planList[i][0]["city"]+"</td>";
 				outline_html+="</tr>";
-				outline_html+="<tr>";
-				outline_html+="<td colspan='3'></td>";
-				outline_html+="</tr>";
-				if(j!=planList[i].length-1){
+				for(var j=0; j<planList[i].length; j++){
 					outline_html+="<tr>";
-					outline_html+="<td class='day-tourDistance1'></td>";
-					outline_html+="<td class='day-tourDistance2'>&nbsp;"+returnDistance(i, j)+"km</td>";
+					outline_html+="<td class='day-num' rowspan='3' colspan='2'>"+(j+1)+"</td>";
+					outline_html+="<td class='day-tourImg' rowspan='3'>";
+					outline_html+="<img src='<%=request.getContextPath()%>/images/"+planList[i][j]["city"]+"/"+planList[i][j]["tourName"]+"/"+planList[i][j]["tourName"]+"1.jpg' width='100px' height='100px' /></td>";
+					outline_html+="<td class='day-tourName' colspan='3'>&nbsp;<span>"+planList[i][j]['tourName']+"</span></td>";
+					outline_html+="<td class='day-tour-zoom'><i class='fas fa-info-circle'></i><i class='fas fa-map-marker-alt'></i></td>";
 					outline_html+="</tr>";
+					outline_html+="<tr>";
+					outline_html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;<span>"+planList[i][j]['category']+"</span></td>";
+					outline_html+="<td class='day-tourScore'><i class='fas fa-paperclip'></i><span> " + planList[i][j]['clipCount'] +" </span><i class='fas fa-star'></i><span> "+planList[i][j]["reviewScore"]+"</span></td>";//수정하기
+					outline_html+="<td></td>"
+					outline_html+="</tr>";
+					outline_html+="<tr>";
+					outline_html+="<td colspan='3'></td>";
+					outline_html+="</tr>";
+					if(j!=planList[i].length-1){
+						outline_html+="<tr>";
+						outline_html+="<td class='day-tourDistance1'></td>";
+						outline_html+="<td class='day-tourDistance2'>&nbsp;"+returnDistance(i, j)+"km</td>";
+						outline_html+="</tr>";
+					}
 				}
 			}
 			outline_html+="</table>";
@@ -221,6 +227,8 @@
 			$("#main-map-map").css("width",$(document).width()-150+"px");
 			$('#planTitle>i').hide();
 			$("#cover-change").css("opacity",0);
+			
+			
 		});
 
 		$(window).resize(function(){
@@ -284,6 +292,7 @@
 			streetViewControl:false
 			});
 			polyMarker_draw(map);
+			
 		}
 	
 		function polyMarker_draw(map){	
@@ -324,6 +333,9 @@
 			}
 			map.fitBounds(bounds);
 			map.panToBounds(bounds);
+			if(lats.length==1){
+				map.setZoom(18);
+			}
 		}
 
 		
@@ -634,9 +646,9 @@
 		});
 
 		//관광지 줌 클릭이벤트
-		$(".day-tour-zoom").click(function(){
-			var day_num=$(this).parents(".day-planner").index();
-			var city_num=$(this).siblings(".day-num").html()-1;
+		$(".day-tour-zoom>.fa-map-marker-alt").click(function(){
+			var day_num=$(this).parents().parents(".day-planner").index();
+			var city_num=$(this).parents().siblings(".day-num").html()-1;
 			if(cDay!=day_num+1){
 				cDay=day_num+1;
 				fn_marker(map);
@@ -652,6 +664,14 @@
 			var cityLatLng=new google.maps.LatLng(cityLat,cityLng);
 			map.setCenter(cityLatLng);
 			map.setZoom(14);
+		});
+
+		//관광지 정보 클릭 이벤트
+		$(".day-tour-zoom>.fa-info-circle").click(function(){
+			var day_num=$(this).parents().parents(".day-planner").index();
+			var city_num=$(this).parents().siblings(".day-num").html()-1;
+			open("<%=request.getContextPath()%>/attraction/select?attId="+planList[day_num][city_num]['tourId']);
+			
 		});
 
 		//메인맵 내비 클릭이벤트

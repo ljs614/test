@@ -30,9 +30,10 @@
 	</section>
 
     <script>
-         var userId="<%=userId%>";
+        var userId="<%=userId%>";
         var planner_html;
-        var h;
+        var ph;
+        var ch;
         var plannerType='<%=type%>';
         $(window).ready(function(){
             $(".my-content").css("opacity",0);
@@ -63,9 +64,10 @@
                 data:{"userId":userId, "plannerType":plannerType},
                 success:function(data){
                     var plannerList=JSON.parse(data);
+                    console.log(plannerList);
                     fn_plannerChange(plannerList)
                     $("#mypage-content").html(planner_html);
-                    $("#mypage").css("height",h*220+700+"px");
+                    $("#mypage").css("height",ph*220+700+"px");
                     $("#"+plannerType   ).addClass("pn_clicked");
                      //일정 내비 클릭이벤트
                     $(function(){
@@ -99,10 +101,14 @@
                 planner_html+="<div class='plan_totalDay'> "+plannerList['plannerList'].length+" DAY</div>";
                 planner_html+="<div class='plan_city'>"+plannerList['cities'][i]+"</div>";
                 var plan_theme=planner['plannerTheme']==null?"계획중":planner['plannerTheme'];
-                planner_html+="<div class='plan_theme'>"+plan_theme+"</div>";
+                planner_html+="<div class='plan_theme'><span>"+plan_theme+"</span></div>";
                 planner_html+="<div class='plan_users'><i class='fas fa-user'></i>"+planner['plannerWriter'];
                 var userList=plannerList['userList'][i];
                 for(var j=0; j<userList.length; j++){
+                    if(userList.length>1){
+                        planner_html+=" 외 "+userList.length+"명";
+                        break;
+                    }
                     planner_html+=", ";
                     planner_html+=userList[j];   
                 }
@@ -111,7 +117,7 @@
                 planner_html+="</div></div>";
             }
             planner_html+="</div>";
-            h=Math.ceil(plannerList['plannerList'].length/3);
+            ph=Math.ceil(plannerList['plannerList'].length/3);
         }
 
 
@@ -134,15 +140,16 @@
                     clipboard_html+="<div id='clipList_nav'>";
                     var j=0; 
                     var city;
-                    console.log(clip_list);
+                    var clip_content_html="<div class='clipList'>";
                     for(var i=0; i<cityList.size; i++){
                         city=it.next().value;
                         clipboard_html+="<li>"+city+"</li>";
+                        clip_content_html+="<div class='clipList-container'>"
                         for(;j<clip_list.length;j++){
                             if(clip_list[j]['city']!=city){
+                                clip_content_html+="</div>";
                                 break;
                             }
-                            var clip_content_html="<div class='clipList'>"
                             clip_content_html+="<div class='clipList_div'><div class='clipList_thumbnail'>";
                             clip_content_html+="<img src='<%=request.getContextPath()%>/images/"+clip_list[j]['city']+"/"+clip_list[j]['tourName']+"/"+clip_list[j]['imageUrl'].split(",")[0]+"'width='268px' height='180px'/></div>";
                             clip_content_html+="<div class='clipList_content'>";
@@ -150,11 +157,25 @@
                             clip_content_html+="<div class='clip_clipcount'>"+clip_list[j]['clipCount']+"</div>";
                             clip_content_html+="<div class='clip_reviewscore'>"+clip_list[j]['reviewScore']+"</div>";
                             clip_content_html+="</div></div>";
-                            clipboard_html+=clip_content_html;
                         }
-                        clipboard_html+="</div>";
                     }
-                $("#mypage-content").html(clipboard_html);
+                    clip_content_html+="</div>";
+                    clipboard_html+="</div>";
+                    clipboard_html+=clip_content_html;
+                    clipboard_html+="</div>";
+                    $("#mypage-content").html(clipboard_html);
+                    $("#mypage").css("height",$(".clipList-container").height()+700+"px");
+                    $($(".clipList-container")[0]).siblings().hide();
+                    $($("#clipList_nav>li")[0]).addClass('pn_clicked');
+                    $(function(){
+                        $("#clipList_nav>li").click(function(){
+                            $($(".clipList-container")[$(this).index()]).siblings().hide();
+                            $($(".clipList-container")[$(this).index()]).show();
+                            $(this).addClass("pn_clicked");
+                            $($(this).siblings()).removeClass("pn_clicked");
+                        });
+                    });
+                    
                 }
             });
         }
