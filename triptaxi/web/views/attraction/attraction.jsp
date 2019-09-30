@@ -13,7 +13,8 @@
 	String[] imageUrl=a.getImageUrl().split(",");
 	String attComment=a.getAttractionComment();
 	int clipCount=a.getClipCount();
-	double reviewScore=a.getReviewScore();
+	double reviewScore=(Math.round(a.getReviewScore()*100)/100.0);
+
 	String category=a.getCategory();
 	int count=0;
 	int clipCount1=0;
@@ -30,22 +31,22 @@
 <style>
 
 div{
-  /*    border: 1px solid hotpink;
-  border-radius: 1px;     */
+     /*  border: 1px solid hotpink;
+  border-radius: 1px;   */   
 }
 
 table{
 margin:0 auto;
 width:1024px;
-/* border: 1px solid #444444; */
+
 }
 
 tr{
-/* border: 1px solid #444444; */
+
 }
 
 td{
-   /*  border: 1px solid #444444;  */
+
 }
 
 	#root{
@@ -313,32 +314,45 @@ img {
   text-align: center;
   color: black;
  overflow:hidden;
- margin-top:20px;
+ margin-top:10px;
+
 }
+/* #recommendTD{
+	vertical-align: middle;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    align: center;
+} */
 #recommendDiv1{
+
 	font-size:17px;
 	color:gray;
 	font-family:arial;
-		 font-weight:bold;
+	font-weight:bold;
+
 	
 }
-
+ 
   #recomend-clip-div{
-  inline:block;
-  color:orange;
-  float:left;
-  padding:2px;
-  margin-left:8px;
+	float:left;
+    color:orange;
+    padding:2px;
+	
+
   }
   #recomend-star-div{
+	float:left;
   color:#CCB205;
- padding:2px;
-    float:left;
+  padding:2px;
+  
   }
-  #recommend-name-div{
+  
+  #recommend-name-div{.
+  float:left;
   font-size:14px;
    padding:2px;
-  float:left;
+   
   }
 
 #recommendPic1{
@@ -532,7 +546,7 @@ float: left;
 #review-button-div{
 float: left;
 margin-top:25px;
-margin-left:20px;
+margin-left:-50px;
 }
 #review-td{
 	height:50px;
@@ -963,7 +977,6 @@ opacity:0.5;
 			if(!$("#star-value").val()){
 				$("#review-content").attr("placeholder","별점을 선택하고 리뷰를 작성해주세요");
 				$("#review-content").attr("readonly","readonly");
-				
 		}
 		
 	});
@@ -1029,7 +1042,6 @@ opacity:0.5;
 		</td>
 		</tr>
 	</table>
-	<a href="<%=request.getContextPath()%>/board/boardList">게시판</a>
 	</section>
 		<script>
 		$(".review-more").mouseover(function (){
@@ -1073,22 +1085,19 @@ opacity:0.5;
 					  "star-input":$("#star-value").val(),
 					  "review-comment":$("#review-content").val()
 				}, 
-				/* var userId = $("user-id").val();
-				var tourId = $("tour-id").val();
-				var starInput = $("star-input").val();
-				var reviewComment = $("review-content").val(); */
+				
 				dataType:"text",
 				success:function(){//data
 					$("#review-content").val("");
 					$("#star-input").val("0");
 					
 					fn_review();
-					//data객체에서 뽑아온 변수를 
-					//var 변수로 지정한다음에 
-					/* location.href=url+"?userId="+userId+"&tourId="+tourId+"&starInput="+starInput+"&reviewComment="+reviewComment; */
+					
 				}
 			});
 			$("#review-button").hide();
+			$("#review-content").attr("placeholder","별점을 선택 해주세요~")
+			$("#review-content").attr("readonly","readonly");
 			}
 			});
 		
