@@ -13,14 +13,18 @@
 	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
 	rel="stylesheet">
 
-<link href="<%=request.getContextPath() %>/fontAwesome/css/all.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/fontAwesome/css/all.css"
+	rel="stylesheet">
 
 <!-- // jQuery UI CSS파일  -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+	type="text/css" />
 <!-- // jQuery 기본 js파일 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <!-- // jQuery UI 라이브러리 js파일 -->
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 <link href="<%=request.getContextPath() %>/css/makePlan2.css"
 	rel="stylesheet">
@@ -38,10 +42,11 @@
 		<div id="editTitle">
 			<form name='titleChangeFrm'>
 				<input type="text" id='title' name="title" maxlength="15"
-					onkeyup="fn_lengthCheck(this);"> 
+					onkeyup="fn_lengthCheck(this);">
 			</form>
-				<input type="button" id='editBT' value="수정" onclick="fn_titleChange();">
-			<div id='titleCnt'>0/15</div>
+			<input type="button" id='editBT' value="수정"
+				onclick="fn_titleChange();">
+			<div class='titleCnt'>0/15</div>
 		</div>
 		<button id="close">저장 & 닫기</button>
 	</header>
@@ -55,7 +60,7 @@
 					<i class="fas fa-cog"></i> EDIT
 				</div>
 			</li>
-			<li id="showFullPlan" >서브메뉴 접기</li>
+			<li id="showFullPlan">서브메뉴 접기</li>
 		</ul>
 		<ul class="mainMenu">
 
@@ -75,7 +80,9 @@
 	<div id="subMenu">
 		<ul>
 			<li>
-				<div id='sm_dayCount'>DAY <span>1</span></div>
+				<div id='sm_dayCount'>
+					DAY <span>1</span>
+				</div>
 				<div id="sm_prevBT"><</div>
 				<div id="sm_nextBT">></div>
 				<div id="sm_date"></div>
@@ -86,7 +93,7 @@
 			</li>
 		</ul>
 		<ul id="sm_plannerList">
-		
+
 		</ul>
 	</div>
 	</div>
@@ -119,45 +126,106 @@
 				</div>
 			</li>
 		</ul>
-		
-		<ul id='tourListMenu'  style="overflow-x:'hidden'">
-      		<!-- 관광지, 액티비티, 축제 리스트 들어가는 부분 -->
+
+		<ul id='tourListMenu' style="overflow-x: 'hidden'">
+			<!-- 관광지, 액티비티, 축제 리스트 들어가는 부분 -->
 		</ul>
 	</div>
-  <div id="searchCityMenuClose"><</div>
+	<div id="searchCityMenuClose"></div>
 
-  <div id="map"></div>
-  
-  <div id="dayEditModal">
-      <div id="dayEditModal-content">
-        <ul id="dayEditModal-main">
-          <li>
-            <div id='dayEditClose'>완료</div>         
-          </li>
-          <li>
-            <div id="dayEditDate">
-            </div>
-            <div id="datepicker"></div>
-          </li>
-        </ul>
-        
-        <ul id="dayEditModal-list">
-        	
-        </ul>
-      </div>
+	<div id="map"></div>
 
-  </div>
+	<div id="dayEditModal">
+		<div id="dayEditModal-content">
+			<ul id="dayEditModal-main">
+				<li>
+					<div id='dayEditClose'>완료</div>
+				</li>
+				<li>
+					<div id="dayEditDate"></div>
+					<div id="datepicker"></div>
+				</li>
+			</ul>
+
+			<ul id="dayEditModal-list">
+
+			</ul>
+		</div>
+	</div>
+	
+	<div id='closeModal'>
+		<div id='closeModal-content'>
+			<div id='cmTitle'>
+			일정만들기 완료<img id="closeModalBT"
+					src="<%=request.getContextPath()%>/views/planner/img/closeModal.png"
+					alt="" width="20px" height="20px">
+			</div>
+			<form name='makePlanEndFrm' method='post' onsubmit="makePlanEnd_validate();" action="<%=request.getContextPath() %>/makePlan2End">
+				<input type="hidden" id="endPlannerId" name="endPlannerId">
+				<div id='cmContent'>
+					<table>
+						<tr>
+							<th>일정 제목</th>
+							<td><input type="text" id="endPlanTitle" name="endPlanTitle"
+								placeholder="일정 제목을 입력하세요" maxlength="15"
+								onkeyup="fn_lengthCheck(this);">
+								<div class='titleCnt'>0/15</div></td>
+						</tr>
+						<tr>
+							<th>출발일</th>
+							<td><input type="text" id="endStartDay" name="endStartDay" readonly>
+								<span> <i class="fas fa-calendar-alt"></i>
+							</span></td>
+						</tr>
+						<tr>
+							<th>여행 테마</th>
+							<td>
+								<div class="selectTheme">
+									<input type="radio" name="endTheme" value="familyTrip" checked><br>
+									<label for="familtTrip"><img src="https://img.icons8.com/ios-filled/64/000000/family--v2.png" width="40px" height="40px"><br>가족여행</label>
+								</div>
+								<div class="selectTheme">
+									<input type="radio" name="endTheme" value="soloTrip"><br>
+									<label for="familtTrip"><img src="https://img.icons8.com/ios-filled/50/000000/passenger-with-baggage.png" width="40px" height="40px"><br>나홀로여행</label>
+								</div>
+								<div class="selectTheme">
+									<input type="radio" name="endTheme" value="coupleTrip"><br>
+									<label for="familtTrip"><img src="https://img.icons8.com/ios-filled/100/000000/date.png" width="40px" height="40px"><br>커플여행</label>
+								</div><br>
+								<div class="selectTheme">
+									<input type="radio" name="endTheme" value="friendTrip"><br>
+									<label for="familtTrip"><img src="https://img.icons8.com/ios/100/000000/friends.png" width="40px" height="40px"><br>친구여행</label>
+								</div>
+								<div class="selectTheme">
+									<input type="radio" name="endTheme" value="businessTrip"><br>
+									<label for="familtTrip"><img src="https://img.icons8.com/ios-filled/50/000000/business.png" width="40px" height="40px"><br>비즈니스여행</label>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id='cmBottom'>
+					<input type="checkBox" id='endPublic' name='endPublic' value='N'>
+					<label for="endPublic">비공개</label>
+					<input type="submit" value="완료">
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	
 	<script>
     	const url = new URL(window.location.href);
 		var plannerId = url.searchParams.get('plannerId');
 		var receiveList = ${list};
 		
      	var planner = receiveList['plannerName']; 
-      	console.log(receiveList['plannerName']);
       	var dayList = receiveList['dayList'];
       	var tourList = receiveList['attrList'];
-      	var date = new Date(receiveList['plannerDate']);;
+      	var date = new Date(receiveList['plannerDate']);
+      	var theme = receiveList['plannerTheme'];
       	
+      	console.log(theme);
       	var lats=[];
     	var lngs=[];
     	var plannerLats=[];
@@ -167,7 +235,6 @@
     	var icon;
       
       	var leftDiv = $('.mainMenu').width()+$('#subMenu').width()+$('#searchCityMenu').width();
-       	console.log("leftDiv : " + leftDiv );
       	$('#planTitle').mouseover(function(){
            $(this).css("background-color","#F2F2F2");
            $('#planTitle>i').css("color","black");
@@ -178,11 +245,12 @@
            $('#planTitle>i').css("color","white");
        	});
 
+      	//일정제목 변경
        $('#planTitle').on('click',function(){
          $(this).hide();
          $('#editTitle').show();
          $("#title").val($('#pltitle').text().trim());
-         $('#titleCnt').text($('#title').val().length+"/15");
+         $('.titleCnt').text($('#title').val().length+"/15");
        });
        $('#editBT').on('click',function(){
          $('#editTitle').hide();
@@ -191,6 +259,7 @@
          $('#pltitle').text($('#title').val());
        });
 
+       //일정제목 길이 체크함수
        function fn_lengthCheck(input) {
           var text = $(input).val();
           var maxlength = $(input).prop("maxlength");
@@ -208,7 +277,7 @@
           }
 
           var totalLength = $(input).val().length;
-          $('#titleCnt').text(totalLength+"/15");
+          $('.titleCnt').text(totalLength+"/15");
         };
 
       
@@ -227,9 +296,8 @@
           $('#tourListMenu').css("height", $(window).height()-144+"px");
           $('#sm_plannerList').css("height", $(window).height()-144+"px");
           
-          
+          //일정리스트 초기설정
           if(dayList[0]['tourList']!=null){
-          	console.log("tourList != null");
            	var dayTourList = dayList[0]['tourList'].split(',');
 
 			for(var i=0;i<dayTourList.length;i++){
@@ -244,8 +312,6 @@
            		  		category=item['category'];
            		  		lat=item['tourLat'];
            		  		lng=item['tourLng'];
-           		  		console.log(name);
-           		  		console.log(category);
            		  	}
            		});
            		
@@ -255,17 +321,20 @@
            	}
 			polyMarker_draw(map);  			
            }
-           console.log(dayTourList);
            		  		
            		  		
      	   $('#pltitle').text(planner);
  
-			var dateString = date + " <i class='fas fa-calendar-alt'></i>";
-			$('#dayEditDate').html(dateString);
+     	   //여행기간 설정
+     	   console.log(date);
+			var dateString = date.getFullYear()+"-"+(date.getMonth()+1) + "-"+date.getDate();
+			$('#dayEditDate').html(dateString + " <i class='fas fa-calendar-alt'></i>");
+			$('#endStartDay').val(dateString);
             var resultDate = calDate(date, dayList.length);
             $('#fullDate').text(date.getMonth()+1+"."+date.getDate()
              					+" ~ "+(resultDate.getMonth()+1)+"."+resultDate.getDate());
-             			
+            
+            //메인메뉴 설정
             $.each(dayList, function(index, item){
            		fn_addDay(item['plannerDayNo'], item['cityName'],date);
             });
@@ -290,8 +359,7 @@
           var mainMenu = $(document).height() - 250;
           $('.mainMenu').css("max-height", mainMenu + "px");
           $('#addDayBox').css("height", h + "px");
-          console.log($('#leftDiv').width());
-          // console.log(mainMenu);
+
           var map_width = $(window).width() - leftDiv;
           var map_height = $(window).height() - 60;
           $('#map').css('width', map_width + 'px');
@@ -312,7 +380,7 @@
           
         });
 
-        
+        //메인메뉴 day추가
         function fn_addDay(dayNo, cityName, startDate) {
           var currDate = calDate(startDate, (dayNo-1));
           var add = "<li><div id='mm_dayCount'>DAY <span>" + dayNo;
@@ -330,6 +398,7 @@
 
         };
         
+        //dayedit모달 - day추가 
         function fn_addEditDay(dayNo, cityName, startDate) {
             var currDate = calDate(startDate, (dayNo-1));
             var add = "<li><div class='md_dayCount'>DAY <span>" + dayNo;
@@ -361,8 +430,8 @@
 			return dayK;
 		}
 
+    //투어리스트 추가
     function addTourList(tourList){
-    	console.log("들어감");
     	var tourId = tourList['tourId'];
     	var city = tourList['city'];
     	var tourName = tourList['tourName'];
@@ -390,7 +459,8 @@
         }
         
     }
-
+		
+    	//서브메뉴 접기
         $('#showFullPlan').click(function () {
           $(this).addClass("clickColor");
           $('.mainMenu>li').removeClass("clickColor");
@@ -404,7 +474,7 @@
           }
         });
 
-        
+        //서브메뉴 내용 메인메뉴 클릭에 따라 변경하는 함수
         function fn_navTextChange(){
         	$('#sm_dayCount>span').text($('.clickColor').find("#mm_dayCount").children().text());
             $('#sm_date').text($('.clickColor').find('#mm_date').text());
@@ -415,26 +485,24 @@
             	$('#sc_title').text($('.clickColor').find('#mm_city').text());
             }
         }
+        
+        //메인메뉴 클릭
         $(document).on("click", '.mainMenu>li', function () {
           $('#showFullPlan').removeClass("clickColor");
           $('.mainMenu>li').removeClass("clickColor");
           $(this).addClass("clickColor");
           
           fn_navTextChange();
-        	  
-          console.log($(this).find('#mm_date').text());
 			
 		  $('#sm_plannerList>li').remove(); 
           
 		  map_clear();
       	
-          /* ajax로 받아와야함 */
           $.ajax({
         	url:"<%=request.getContextPath()%>/changeDayList",
         	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
     		dataType:"json",
     		success:function(data){
-    			console.log(data);
     			var list = data;
     			$.each(list, function(index,item){
     				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
@@ -457,6 +525,7 @@
           
         });
 
+        //투어리스트 목록 접기
         $('#searchCityMenuClose').click(function(){
           $(this).show();
           var menuWidth = $('#searchCityMenu').width();
@@ -480,6 +549,7 @@
 
         var map;
      
+        //지도 초기화
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
               gestureHandling: 'cooperative',
@@ -492,31 +562,28 @@
           }
         
         var markers=[];
+        //투어리스트 마커 찍는 함수
         function Marker_draw(map){
 
         	var beforeIndex;
         	var bounds = new google.maps.LatLngBounds();
         	
-        	console.log("lats : " + lats);
         	for(var i=0;i<lats.length;i++){
         		var loc = new google.maps.LatLng(lats[i], lngs[i]);
         		var marker = new google.maps.Marker({position:loc, map:map , icon:iconBase+icon+"-40.png" });
         			bounds.extend(loc);
         			markers.push(marker);
         	}
-    	    	console.log(lats);
-    	    	console.log(lngs);
+
         		map.fitBounds(bounds);
         		map.panToBounds(bounds);
         		
         		$(document).on("mouseover", '#tourListMenu>li.tourListMenu_li', function(){
          			var ct = $(this).find('.tourTitle').text();
          			var list = tourList;
-         			console.log($(this).find('.tourTitle').text());
+  
             		$.each(list, function(index, item){
             			if(item['tourName']==ct){
-            				var latitude = item['latitude'];
-            				var longitude = item['longitude'];
             				
             				beforeIndex = index;
             				markers[beforeIndex].setIcon(iconBase+icon+"-80.png");
@@ -529,8 +596,10 @@
             	})
         }
         
+        var markers2=[];
+        //일정리스트 마커, 폴리라인 함수
 		function polyMarker_draw(map){	
-			var beforeIndex;
+			var beforeIndex2;
 			var Lats=[];
 			var Lngs=[];
 			
@@ -562,33 +631,33 @@
 						  icon:"https://img.icons8.com/office/40/000000/marker.png"
 						});
 				bounds.extend(loc);
-				markers.push(marker);
+				markers2.push(marker);
 			}
 			map.fitBounds(bounds);
 			map.panToBounds(bounds);
 			
 			$(document).on("mouseover", '#sm_plannerList>li', function(){
-				console.log($(this).index());
-	 			beforeIndex = $(this).index();
-	    		markers[$(this).index()].setIcon("https://img.icons8.com/office/80/000000/marker.png");
+	 			beforeIndex2 = $(this).index();
+	    		markers2[beforeIndex2].setIcon("https://img.icons8.com/office/80/000000/marker.png");
 	    		});   			
 		
 	    	$(document).on("mouseout", '#sm_plannerList>li', function(){
-	    		markers[beforeIndex].setIcon("https://img.icons8.com/office/40/000000/marker.png");
+	    		markers2[beforeIndex2].setIcon("https://img.icons8.com/office/40/000000/marker.png");
 	    	})
 		}
 		
+        //일정리스트 맵 초기화
 		function map_clear(){
 			plannerLats=[];
-	          plannerLngs=[];
-	          for(var i=0;i<markers.length;i++){
-	      		markers[i].setMap(null);
+	    	plannerLngs=[];
+	   		for(var i=0;i<markers2.length;i++){
+	      		markers2[i].setMap(null);
 	      		}
-	      		markers=[];
-	      		flightPath.getPath().clear();
-	      	
+	      		markers2=[];
+	      		flightPath.getPath().clear(); 	
 		}
 
+        //일정 초기화
         $('#sm_refresh').click(function(){
           alert("초기화");
           $('#sm_plannerList>li').remove(); 
@@ -608,6 +677,7 @@
         	})
         });
         
+        //서브메뉴 prev 버튼
         $('#sm_prevBT').click(function(){
         	if($('.clickColor').prev().length!=0){
         		var prev = $('.clickColor').prev();
@@ -619,10 +689,9 @@
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
-                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').prev().find('span').text()},
+                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
             		dataType:"json",
             		success:function(data){
-            			console.log(data);
             			var list = data;
             			$.each(list, function(index,item){
             				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
@@ -637,6 +706,7 @@
         	
         })
         
+        //서브메뉴  next 버튼
         $('#sm_nextBT').click(function(){
         	if($('.clickColor').next().length!=0){
         		var next = $('.clickColor').next();
@@ -648,10 +718,9 @@
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
-                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').prev().find('span').text()},
+                	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
             		dataType:"json",
             		success:function(data){
-            			console.log(data);
             			var list = data;
             			$.each(list, function(index,item){
             				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
@@ -679,6 +748,7 @@
             return addResult;            
         }
         
+        //일정제목 변경 함수
         function fn_titleChange(){
         	if(titleChangeFrm_validate()==true){
         		$.ajax({
@@ -690,6 +760,7 @@
         	}
         }
         
+        //일정제목 길이 검사 함수
         function titleChangeFrm_validate(){
         	if($('#title').val().trim().length!=0){
        		  return true;
@@ -700,6 +771,7 @@
         		
         }
 
+        //달력
         $(function () {
       $("#datepicker").datepicker({
         dayNamesMin: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
@@ -716,6 +788,7 @@
       });
     });
 
+        
     $('div#dayEditDate').toggle(function () {
       $('div#datepicker').css("display", "block");
     }, function () {
@@ -748,6 +821,7 @@
     	}
     });
     
+  	//투어리스트 카테고리 변경
     $('.sc_icon').click(function(){
     	var category = $($(this).children()).attr('id');
     	var table;
@@ -785,6 +859,7 @@
     	});
     });
     
+  	//day 삭제
     $(document).on('click', '.delete_md_day',function(){
     	console.log($(this).siblings('.md_dayCount').find('span').text()); // dayNo
     	console.log(plannerId);
@@ -806,6 +881,7 @@
     	
     });
     
+  	//day 추가
     $('#addDay').click(function(){
     	var city = $('.mainMenu>li:last-child').find('#mm_city').text();
     	var dayNo = $('.mainMenu>li:last-child').find('#mm_dayCount>span').text();
@@ -823,6 +899,7 @@
     	});
     })
     
+    //투어리스트 재설정
     function fn_resetTourList(data){
     	$('#tourListMenu>li').remove(); 
 		lats=[];
@@ -850,9 +927,10 @@
 	  	}
     }
     
+  	//투어리스트 도시 변경
     function fn_changeTourListCity(city){
     	$('.sc_icon').removeClass("iconColor");
-    	$('#attractionIcon').parent().addClass("iconColor	");
+    	$('#attractionIcon').parent().addClass("iconColor");
     	$.ajax({
     		url:"<%=request.getContextPath()%>/changeTourListCity",
     		data:{"cityName":city},
@@ -866,6 +944,7 @@
     	})
     }
     
+  	//일정리스트 추가
     function fn_addPlanner(tourId, tourName, category, lat, lng){
 
     	switch(tourId.substring(0,2)){
@@ -889,7 +968,7 @@
         }
     }
     
-    
+    //일정 추가
     $(document).on('click', '.plusTour', function(){
     	var img;
     	var tourId=$(this).parent().parent().data('tourid');
@@ -909,15 +988,14 @@
     	});
     	plannerLats.push(lat);
     	plannerLngs.push(lng);
-    	flightPath.getPath().clear();
+
     	polyMarker_draw(map);
     		
     })
     
+    //일정 삭제
     $(document).on('click', '.sm_plannerDelete', function(){
-    	plannerLats=[];
-    	plannerLngs=[];
-    	
+    	map_clear();
     	$(this).parent().remove();
     	var tourList = "";
     	console.log($('#sm_plannerList>li').length);
@@ -939,22 +1017,59 @@
     		}
     	})
     	
-    	console.log(plannerLats);
-    	console.log(plannerLngs);
-    	
-    	for(var i=0;i<markers.length;i++){
-    		markers[i].setMap(null);
-    	}
-    	markers=[];
-    	flightPath.getPath().clear();
-    	
-    	
     	polyMarker_draw(map);
     
-
+    });
+    
+    $('#close').click(function(){
+    	if(theme==null){
+    		$('#closeModal').css("display","block");
+    		$('#endPlanTitle').val($('#pltitle').text());
+    		$('#endPlannerId').val(plannerId);
+    		
+    	}else{
+    		location.href="<%=request.getContextPath()%>/planner/plannerView?plannerId"+plannerId;
+    	}
+    	
+    	
+    });
+    $('#closeModalBT').click(function(){
+    	$('#closeModal').css("display", "none");
     })
    
+    $(function(){
+      $('#endStartDay').datepicker({
+        dayNamesMin: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+        minDate: "0D",
+        maxDate: "1Y",
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (dateText) {
+          $('#datepicker').fadeOut(800);
+          $('#startDay').val(dateText);
+        }
+      });
+    });
+
+     $('#endStartDay').toggle(function () {
+      $('div#ui-datepicker-div').css("display", "block");
+    }, function () {
+      $('div#ui-datepicker-div').css("display", "none");
+    })
     
+    function makePlanEnd_validate(){
+    	  if($('#endPlanTitle').val().trim().length!=0 && $('#endStartDay').val().length!=0){
+    		  return true;
+    	  }
+    	  else if($('#endPlanTitle').val().trim().length==0){
+    		  $('#endPlanTitle').focus();
+    		  return false;
+    	  }
+    	  else if($('#endStartDay').val().length==0){
+    		  $('#endStartDay').focus();
+    		  return false;
+    	  }
+      } 
+
   
 
       </script>

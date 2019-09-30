@@ -248,6 +248,13 @@ public class PlannerService {
 		return result;
 	}
 	
+	public int plannerEnd(String plannerId, String plannerName, String plannerDate, String plannerTheme, char plannerPublic) {
+		Connection conn = getConnection();
+		int result = dao.plannerEnd(conn, plannerId, plannerName, plannerDate, plannerTheme, plannerPublic);
+		close(conn);
+		return result;
+	}
+	
 	
 
 

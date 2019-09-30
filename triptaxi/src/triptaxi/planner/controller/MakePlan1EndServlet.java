@@ -74,7 +74,7 @@ public class MakePlan1EndServlet extends HttpServlet {
 		User loginUser = (User)session.getAttribute("loginUser");
 		
 		if(result>0) {
-			response.sendRedirect("/makePlan2?plannerId="+plannerId);
+			response.sendRedirect("/triptaxi/makePlan2?plannerId="+plannerId);
 		}
 		
 	}

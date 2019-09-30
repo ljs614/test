@@ -11,15 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 
 import triptaxi.planner.model.service.PlannerService;
+import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
 import triptaxi.planner.model.vo.Tour;
+import triptaxi.user.model.vo.User;
 
 /**
  * Servlet implementation class makePlan2Servlet
@@ -40,7 +43,7 @@ public class makePlan2Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("plannerId : " + request.getParameter("plannerId"));
+		System.out.println("makePlan2Servlet");
 		String plannerId = request.getParameter("plannerId");
 		PlannerService service = new PlannerService();
 		
@@ -48,26 +51,32 @@ public class makePlan2Servlet extends HttpServlet {
 		
 		List<PlannerDay> dayList = new ArrayList<PlannerDay>();
 		dayList = service.selectPlannerDayList(plannerId);
-		System.out.println(dayList);
 		List<Tour> attrList = new ArrayList<Tour>();
 		attrList = service.selectTourList("tt_attraction", "city", dayList.get(0).getCityName());
 
 		Gson gson = new Gson();
-		System.out.println(dayList);
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(planner.getPlannerDate());
-	
+		System.out.println(planner.getPlannerDate());
+		System.out.println(date);
 		JSONObject list = new JSONObject();
 		list.put("plannerId", planner.getPlannerId());
 		list.put("plannerName", planner.getPlannerName());
 		list.put("plannerDate", date);
 		list.put("plannerId", planner.getPlannerId());
+		list.put("plannerTheme", planner.getPlannerTheme());
 		list.put("dayList", dayList);
 		list.put("attrList", attrList);
 
-		response.setContentType("application/json;charset=UTF-8");
-	
-	    request.setAttribute("list", new Gson().toJson(list));
-	    request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request,response);
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+	    
+	    if(loginUser!=null || loginUser.equals("planner")) {
+	    	response.setContentType("application/json;charset=UTF-8");
+	    	request.setAttribute("list", new Gson().toJson(list));
+	    	request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request,response);  
+		  }else {
+			  System.out.println("에러페이지 연결");
+		  }
 		
 	}
 

@@ -11,7 +11,7 @@ public class Planner {
 	private String plannerTheme;
 	private int plannerLike;
 	private int plannerCount;
-	private int plannerPublic;
+	private char plannerPublic;
 	private Date plannerWritedate;
 	private String plannerCoverimg;
 	
@@ -22,7 +22,7 @@ public class Planner {
 
 
 	public Planner(String plannerId, String plannerName, Date plannerDate, String plannerWriter, String plannerTheme,
-			int plannerLike, int plannerCount, int plannerPublic, Date plannerWritedate, String plannerCoverimg) {
+			int plannerLike, int plannerCount, char plannerPublic, Date plannerWritedate, String plannerCoverimg) {
 		super();
 		this.plannerId = plannerId;
 		this.plannerName = plannerName;
@@ -107,12 +107,12 @@ public class Planner {
 	}
 
 
-	public int getPlannerPublic() {
+	public char getPlannerPublic() {
 		return plannerPublic;
 	}
 
 
-	public void setPlannerPublic(int plannerPublic) {
+	public void setPlannerPublic(char plannerPublic) {
 		this.plannerPublic = plannerPublic;
 	}
 

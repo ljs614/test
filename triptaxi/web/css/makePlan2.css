@@ -65,7 +65,7 @@
     #editTitle #editBT:focus{
   	  outline:none;
     }
-    #editTitle #titleCnt{
+    #editTitle .titleCnt{
       display:inline-block;
       position:relative;
       top:-17px;
@@ -548,16 +548,17 @@
     	line-height: 34px;
     }
 
-    #dayEditModal{
+    #dayEditModal,#closeModal{
       background-color: rgba(0,0,0,0.4);
       width:100%;
       height:100%;
       z-index:999;
-      /* display:none; */
+      display:none;
       position:absolute;
       top:0;
       vertical-align: middle;
     }
+    
     #dayEditModal-content{
       height:100%;
       width:200px;
@@ -815,8 +816,106 @@
       background-color:rgba(166,171,190,0.1) !important;
       pointer:cursor;
     }
-    
-    
-    
  
+    #closeModal-content{
+    	background-color:white;
+    	width:370px;
+    	height:400px;
+    	margin:0 auto;
+    	margin-top:10%;
+    }
+    #cmTitle{
+    	border-bottom:1px solid rgb(194, 192, 192);
+    	height: 40px;
+    	padding-top: 10px;
+    	padding-left: 15px;
+    	font-weight: bolder;
+    	font-size: 17px;
+    }
+    #cmTitle>img{
+    	position:relative;
+    	top:4px;
+    	left:200px;
+    }
+
+    #cmContent{
+    	border-bottom:1px solid rgb(194, 192, 192);
+    	height:300px;
+    }
+    #cmContent>table{
+
+    	position:relative;
+    	top:0px;
+    	width:355px;
+    	height:250px;
+    	margin:0 auto;
+    	border-collapse:collapse;
+    }
+    #cmContent>table th{
+
+    	width:60px;
+    	text-align:left;
+    	font-size:14px;
+    }
+    #cmContent>table tr:first-child, #cmContent table tr:nth-child(2){height:60px;}
+    #cmContent>table tr:nth-child(3){height:178px;}
+    #cmContent>table td{padding-left:5px;}
+    #cmContent>table input[type="text"]{height:20px; }
+    #cmContent>table #endPlanTitle{
+    	width:250px;
+    	position:relative;
+    	top:10px;
+    }
+    #cmContent .titleCnt{
+    	display:inline-block;
+    	position:relative;
+    	width:45px;
+    	text-align:right;
+    	top: -14px;
+    	left: 203px;
+    	color:gray;
+    	font-size:13px;
+    }
+    #cmContent span{
+    color:gray;
+    position:relative;
+    left:-25px;
+    top:1px;
+  	}
+  	.selectTheme{
+  	display:inline-block;
+  	text-align:center;
+  	padding-left:3px;
+  	padding-right:3px;}
+  	#cmContent>table input[type="radio"]{width:40px;}
+  	#cmContent>table label{text-align:center; font-size:15px;}
+    #cmContent label>img{
+    opacity:0.7;
+    }
+    #cmBottom input[type="checkBox"], #cmBottom label{
+    	position:relative;
+    	top:7px;
+    }
+    #cmBottom input[type="submit"]{
+    	background-color: rgb(165, 198, 244);
+   		border: none;
+    	width: 105px;
+    	height: 33px;
+    	position: relative;
+    	top: 7px;
+    	left: 180px;
+    	font-weight:600;
+    	color:white;
+    	font-size:17px;
+    	font-family: 'Nanum Gothic';
+    }
+ 	#cmBottom input[type="submit"]:hover{
+    background-color:rgb(165, 198, 244,0.5);
+  	}
+  	#cmBottom input[type="submit"]:active{
+    	background-color:rgb(165, 198, 244);
+  	}
+  	#cmBottom input[type="submit"]:focus{
+  		outline:none;
+  	}
     

@@ -523,5 +523,27 @@ public class PlannerDao {
 		}
 		return result;
 	}
+	
+	public int plannerEnd(Connection conn, String plannerId, String plannerName, String plannerDate, String plannerTheme, char plannerPublic) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("plannerEnd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, plannerName);
+			pstmt.setString(2, plannerDate);
+			pstmt.setString(3, plannerTheme);
+			pstmt.setString(4, plannerPublic+"");
+			pstmt.setString(5, plannerId);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }

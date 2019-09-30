@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ page import="java.util.*, triptaxi.planner.model.vo.CityList"%>
 <%@ include file="/views/common/header.jsp"%>
 <%
-	String userId="null";
-	if(loginUser!=null){
-		userId=loginUser.getUserId();
+	String userId = "null";
+	if (loginUser != null) {
+		userId = loginUser.getUserId();
+	}
+
+	List<CityList> list = (List<CityList>) request.getAttribute("cityList");
+	for (CityList c : list) {
+		System.out.println(c.getCityName());
 	}
 %>
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
+	rel="stylesheet">
 
-<link href="<%=request.getContextPath()%>/css/planMain.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/planMain.css"
+	rel="stylesheet">
 
 <section>
 
@@ -42,59 +50,117 @@
 					<td class="tbl_Continent">남아메리카</td>
 					<td class="tbl_Continent">아프리카</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Asia' style="display:none">
+				<tr class='showCityList' id='showCityList_Asia'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>아시아</div>
 						<div id='sac_content'>
 							<ul>
-								<li>도시</li>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("Asia")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
 							</ul>
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Europe' style="display:none">
+				<tr class='showCityList' id='showCityList_Europe'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>유럽</div>
 						<div id='sac_content'>
 							<ul>
-								<li>도시</li>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("Europe")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
 							</ul>
 						</div>
 					</td>
 				</tr>
-				<tr  class='showCityList' id='showCityList_NorthAmerica' style="display:none">
+				<tr class='showCityList' id='showCityList_NorthAmerica'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>북아메리카</div>
 						<div id='sac_content'>
 							<ul>
-								<li>도시</li>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("NorthAmerica")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
 							</ul>
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Austrailia' style="display:none">
+				<tr class='showCityList' id='showCityList_Austrailia'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>오스트레일리아</div>
 						<div id='sac_content'>
 							<ul>
-								<li>도시</li>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("Austrailia")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
 							</ul>
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_SouthAmerica' style="display:none">
+				<tr class='showCityList' id='showCityList_SouthAmerica'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>남아메리카</div>
 						<div id='sac_content'>
-							준비중
+							<ul>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("SouthAmerica")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
+							</ul>
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Africa' style="display:none">
+				<tr class='showCityList' id='showCityList_Africa'
+					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>아프리카</div>
 						<div id='sac_content'>
-							준비중
+							<ul>
+								<%
+									for (int i = 0; i < list.size(); i++) {
+										if (list.get(i).getContinentName().equals("Africa")) {
+								%>
+								<li><%=list.get(i).getCityName()%></li>
+								<%
+									}
+									}
+								%>
+							</ul>
 						</div>
 					</td>
 				</tr>
@@ -107,7 +173,7 @@
 					<td colspan='2' style='text-align: left; padding-left: 40px'>15일이상</td>
 
 				</tr>
-				<tr>	
+				<tr>
 					<th>여행테마</th>
 					<td>가족여행</td>
 					<td>나홀로여행</td>
@@ -131,7 +197,8 @@
 
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img
+							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -151,7 +218,8 @@
 				</div>
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img
+							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -171,7 +239,8 @@
 				</div>
 				<div class='planView_Div'>
 					<div class='planView_Thumbnail'>
-						<img src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+						<img
+							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
@@ -267,7 +336,11 @@
 		}
 	}
 	
-
+	$('.tbl_Continent').click(function(){
+		console.log($(this));
+		
+	})
+	
 </script>
 
 
