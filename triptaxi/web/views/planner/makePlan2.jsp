@@ -131,7 +131,7 @@
 			<!-- 관광지, 액티비티, 축제 리스트 들어가는 부분 -->
 		</ul>
 	</div>
-	<div id="searchCityMenuClose"></div>
+	<div id="searchCityMenuClose"><</div>
 
 	<div id="map"></div>
 
@@ -498,18 +498,25 @@
           
 		  map_clear();
       	
+		  console.log(markers2);
           $.ajax({
         	url:"<%=request.getContextPath()%>/changeDayList",
         	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
     		dataType:"json",
     		success:function(data){
     			var list = data;
+    			if(list.length>0){
+    				
     			$.each(list, function(index,item){
     				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
     				plannerLats.push(item['tourLat']);
     				plannerLngs.push(item['tourLng']);
     			});
-    			polyMarker_draw(map);
+    				
+    				polyMarker_draw(map);
+    			}else{
+    				Marker_draw(map);
+    			}
     		}
         	
           })
@@ -637,7 +644,9 @@
 			map.panToBounds(bounds);
 			
 			$(document).on("mouseover", '#sm_plannerList>li', function(){
+				console.log($(this).index());
 	 			beforeIndex2 = $(this).index();
+				console.log(markers2[beforeIndex2]);
 	    		markers2[beforeIndex2].setIcon("https://img.icons8.com/office/80/000000/marker.png");
 	    		});   			
 		
@@ -648,13 +657,14 @@
 		
         //일정리스트 맵 초기화
 		function map_clear(){
+	      	flightPath.getPath().clear(); 	
+	      	
 			plannerLats=[];
 	    	plannerLngs=[];
 	   		for(var i=0;i<markers2.length;i++){
 	      		markers2[i].setMap(null);
-	      		}
-	      		markers2=[];
-	      		flightPath.getPath().clear(); 	
+	      	}
+	   		markers2=[];
 		}
 
         //일정 초기화
@@ -664,7 +674,7 @@
           
           	map_clear();
       	
-      		polyMarker_draw(map);
+      		/* polyMarker_draw(map); */
       		Marker_draw(map); 
       		
       		$.ajax({
@@ -693,11 +703,13 @@
             		dataType:"json",
             		success:function(data){
             			var list = data;
-            			$.each(list, function(index,item){
-            				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
-            				plannerLats.push(item['tourLat']);
-            				plannerLngs.push(item['tourLng']);
-            			});
+            			if(list.length>0){
+            				$.each(list, function(index,item){
+            					fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
+            					plannerLats.push(item['tourLat']);
+            					plannerLngs.push(item['tourLng']);
+            				});	
+            			}
             			polyMarker_draw(map);
             		}
                 	
@@ -722,12 +734,18 @@
             		dataType:"json",
             		success:function(data){
             			var list = data;
+            			if(list.length>0){
             			$.each(list, function(index,item){
             				fn_addPlanner(item['tourId'],item['tourName'],item['category'],item['tourLat'],item['tourLng']);
             				plannerLats.push(item['tourLat']);
             				plannerLngs.push(item['tourLng']);
             			});
             			polyMarker_draw(map);
+            				
+            				
+            			}
+            			
+            			
             		}
                 	
                   })
@@ -946,7 +964,7 @@
     
   	//일정리스트 추가
     function fn_addPlanner(tourId, tourName, category, lat, lng){
-
+		console.log("fn_addPlanner");
     	switch(tourId.substring(0,2)){
     		case 'at':	img="<i class='fas fa-camera'></i>"; break;
     		case 'ac':	img="<i class='fas fa-running'></i>"; break;
@@ -970,6 +988,7 @@
     
     //일정 추가
     $(document).on('click', '.plusTour', function(){
+    	console.log("plusTour");
     	var img;
     	var tourId=$(this).parent().parent().data('tourid');
     	var tour = $(this).parent().parent().find('.tourTitle').text();
@@ -986,9 +1005,12 @@
     			console.log(data);
     		}
     	});
+    	
+    	flightPath.getPath().clear();
     	plannerLats.push(lat);
     	plannerLngs.push(lng);
 
+    	
     	polyMarker_draw(map);
     		
     })
