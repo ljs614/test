@@ -30,18 +30,18 @@
 <style>
 
 div{
-     border: 1px solid hotpink;
-  border-radius: 1px;    
+  /*    border: 1px solid hotpink;
+  border-radius: 1px;     */
 }
 
 table{
 margin:0 auto;
 width:1024px;
-border: 1px solid #444444;
+/* border: 1px solid #444444; */
 }
 
 tr{
-border: 1px solid #444444;
+/* border: 1px solid #444444; */
 }
 
 td{

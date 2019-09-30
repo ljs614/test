@@ -89,7 +89,6 @@
 	<%if(!list.isEmpty()) {
 			for(BoardComment bc: list){
 				if(bc.getBoardCommentLevel()==1){
-
 	%>
 		<tr class='level1'>
 			<td>
@@ -102,7 +101,6 @@
 			<td>
 				<button class="btn-reply" value="<%=bc.getBoardCommentNo()%>">답글</button>
 				<button class="btn-delete" value="<%=bc.getBoardCommentNo()%>" onclick="fn_deleteBoardComment();">삭제</button>
-
 			</td>
 		</tr>
 		<%}else{%>
