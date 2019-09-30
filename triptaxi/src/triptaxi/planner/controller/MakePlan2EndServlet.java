@@ -33,7 +33,7 @@ public class MakePlan2EndServlet extends HttpServlet {
 		String plannerName = request.getParameter("endPlanTitle");
 		String plannerDate = request.getParameter("endStartDay");
 		String plannerTheme="";
-		char plannerPublic;
+		char plannerPublic=request.getParameter("endPublic")==null?'Y':'N';
 		
 		switch(request.getParameter("endTheme")) {
 		case "familyTrip":plannerTheme="가족여행"; break;
@@ -42,13 +42,6 @@ public class MakePlan2EndServlet extends HttpServlet {
 		case "friendTrip": plannerTheme="친구여행"; break;
 		case "businessTrip": plannerTheme="비즈니스여행"; break;
 		}
-		
-		if(request.getParameter("endPublic").equals("N")) {
-			plannerPublic='N';
-		}else {
-			plannerPublic='Y';
-		}
-		
 		int result = new PlannerService().plannerEnd(plannerId, plannerName, plannerDate, plannerTheme, plannerPublic);
 		
 		response.sendRedirect("/triptaxi/planner/plannerView?plannerId="+plannerId);
