@@ -321,7 +321,7 @@
 	})
 	
 
-	function fn_paging(option1, option2, cPage){
+	function fn_paging1(option1, option2, cPage){
 		$.ajax({
 			url:"<%=request.getContextPath()%>/optionChange",
 			data:{"option1":option1, "option2":option2, "cPage":cPage},
@@ -331,6 +331,14 @@
 		})
 		
 	}
+	
+	function fn_paging2(option1, option2, cPage){
+		$.ajax({
+			
+		})
+	}
+	
+	
 	
 	$('#newestPlan').click(function(){
 		var option="null";

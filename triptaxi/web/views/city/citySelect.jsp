@@ -25,29 +25,24 @@
 	<div id="continentSelect">
 		<div id="innerContinentSelect">
 				<ul id="continents">
-					<li id="northAmerica"><a href='#continentSelectContent'>NorthAmerica</a>
+					<li id="northAmerica"><a href='#hidden'>NorthAmerica</a>
 					<div id='continentTooltip'>NORTHAMERICA</div></li>
-					<li id="southAmerica"><a href='#continentSelectContent'>SouthAmerica</a>
+					<li id="southAmerica"><a href='#hidden'>SouthAmerica</a>
 					<div id='continentTooltip'>SOUTHAMERICA</div></li>
-					<li id="asia"><a href='#continentSelectContent'>Asia</a>
+					<li id="asia"><a href='#hidden'>Asia</a>
 					<div id='continentTooltip'>ASIA</div></li>
-					<li id="australia"><a href='#continentSelectContent'>Australia</a>
+					<li id="australia"><a href='#hidden'>Australia</a>
 					<div id='continentTooltip'>AUSTRALIA</div></li>
-					<li id="africa"><a href='#continentSelectContent'>Africa</a>
+					<li id="africa"><a href='#hidden'>Africa</a>
 					<div id='continentTooltip'>AFRICA</div></li>
-					<li id="europe"><a href='#continentSelectContent'>Europe</a>
+					<li id="europe"><a href='#hidden'>Europe</a>
 					<div id='continentTooltip'>EUROPE</div></li>
 				</ul>
 		</div>
+		<div id="hidden" height="52px" style="position:relative;top:202px"></div>
 	</div>
 
-	<div id="continentSelectContent">
-		<div id="innerContent">
-			<div id="contentTitle"></div>
-			
-		</div>
 
-	</div>
 
 	<% int count=0; %>
 	<div id='totalList'>
@@ -150,22 +145,23 @@
 </section>
 
 <script>
-
+	var windowHeight = $(window).height();
+	console.log($(window).height());
 	$(document).ready(function() {
-		$('#continentSelect').css("height", $(window).height() - 52 + "px");
-		$('#continentSelectContent').css("height",$(window).height() + "px");
+		$('#continentSelect').css("height", windowHeight - 52 + "px");
+		$('#continentSelectContent').css("height",windowHeight + "px");
 		$('#totalList').css("height", $('#innertotalList').height() + 50 + "px");
 		$('section').css("height", $('#totalList').height() + $('#continentSelect').height() + "px");
 	});
 
-	$('#continents>li>a').click(function() {
+/* 	$('#continents>li>a').click(function() {
 		var str = $(this).text();
 		console.log($(this).text());
 		$('#continentSelectContent').css("display","block");
 		$('#contentTitle').text("- " + str.toUpperCase());
 		$('section').css("height", $('#totalList').height() + $('#continentSelect').height() 
 				+$('#continentSelectContent').height()+ "px");
-	});
+	}); */
 	
 	
 </script>

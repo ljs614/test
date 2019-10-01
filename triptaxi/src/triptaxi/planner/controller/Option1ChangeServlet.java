@@ -19,14 +19,14 @@ import triptaxi.planner.model.vo.PlannerFullInfo;
 /**
  * Servlet implementation class OptionChangeServlet
  */
-@WebServlet("/optionChange")
-public class OptionChangeServlet extends HttpServlet {
+@WebServlet("/option1Change")
+public class Option1ChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OptionChangeServlet() {
+    public Option1ChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,7 +44,7 @@ public class OptionChangeServlet extends HttpServlet {
 		
 		String option1 = request.getParameter("option1");
 		String receiveOption2 = request.getParameter("option2");
-		String option2 = (request.getParameter("option2").equals("null"))?"":"AND city like '%"+request.getParameter("option2")+"%'";
+		String option2 = (request.getParameter("option2").equals("null"))?"":"AND city_name like '%"+request.getParameter("option2")+"%'";
 		
 		String totalOption = "PLANNER_THEME IS NOT NULL AND PLANNER_PUBLIC = 'Y' "+option2+" " + option1;
 
@@ -59,16 +59,21 @@ public class OptionChangeServlet extends HttpServlet {
 		plannerList = service.selectPlannerFullInfo(cPage, numPerPage, totalOption);
 	
 		String idList = "";
-		for(int i=0; i<plannerList.size();i++) {
-			if(i==0) {
-				idList += plannerList.get(i).getPlannerId() + "',";
-			}else if(i==(plannerList.size()-1)) {
-				idList += "'" + plannerList.get(i).getPlannerId();
-			}else {
-				idList += "'" + plannerList.get(i).getPlannerId() + "',";
-			}
+		if(plannerList.size()==1) {
+			idList=plannerList.get(0).getPlannerId();
+		}else {
+			for(int i=0; i<plannerList.size();i++) {
+				if(i==0) {
+					idList += plannerList.get(i).getPlannerId() + "',";
+				}else if(i==(plannerList.size()-1)) {
+					idList += "'" + plannerList.get(i).getPlannerId();
+				}else {
+					idList += "'" + plannerList.get(i).getPlannerId() + "',";
+				}
+			}	
 		}
 		
+		System.out.println(idList);
 		plannerCity = service.selectPlannerCity(idList);
 
 		for(int i=0;i<plannerList.size();i++) {
