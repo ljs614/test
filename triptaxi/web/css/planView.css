@@ -76,7 +76,7 @@ div#planner-info{
     
 }
 div#planner-info>div{
-    top:50px;
+    top:40px;
     left:60px;
 }
 #planner-name>div {
@@ -157,8 +157,10 @@ div#planner-writer-profile{
     /* border:1px solid yellow; */ 
 }
 div#planner-writer-profile>i{
-    font-size: 40px;
+    position: relative;
+    font-size: 35px;
     color:white;
+    top:-3px;
 }
 div#planner-writer-name{
     position: relative;
@@ -189,6 +191,13 @@ div#planner-member>#planner-member-invite{
     top:-5px;
     cursor: pointer;
     
+}
+
+i#users{
+    position: relative;
+    color:white;
+    font-size: 20px;
+    top:-5px;
 }
 div#planner-name{
     position: relative;
@@ -343,7 +352,7 @@ div#planner-container, #right-side, #side-navi{
 div#side-navi{
     position: fixed;
     width:90px;
-    border:1px dotted red;
+    /* border:1px dotted red; */
     text-align: center;
 }
 .side-navi-btn{
@@ -661,9 +670,4 @@ div#sending_mail{
 div#sending_mail>p{
     position: relative;
     top:-30px;
-}
-
-div#pageBar{
-    position: relative;
-    margin:0 auto;
 }

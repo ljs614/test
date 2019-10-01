@@ -69,16 +69,24 @@
                     fn_plannerChange(plannerList)
                     $("#mypage-content").html(planner_html);
                     $("#mypage").css("height",ph*220+700+"px");
+                    $("#mypage-content-planner").css("height",ph*220+150+"px")
                     $("#"+plannerType).addClass("pn_clicked");
                      //일정 내비 클릭이벤트
                     $(function(){
                         $("#planList_nav>li").click(function(){
                             $(this).addClass("pn_clicked");
                             $($(this).siblings()).removeClass("pn_clicked");
-                            fn_planner($(this).attr("id"), cPage);
+                            fn_planner($(this).attr("id"), 1);
                         });
                         $(".planList_div").click(function(){
                             location.href="<%=request.getContextPath()%>/planner/plannerView?plannerId="+plannerList['plannerList'][$(this).index()-1]['plannerId'];
+                        });
+                        $("#pageBar>li").hover(function(){
+                            $(this).addClass("hoverLi");
+                            $(this).children('a').addClass("hoverA");
+                        },function(){
+                            $(this).removeClass("hoverLi");
+                            $(this).children('a').removeClass("hoverA");
                         });
                     });
                 }

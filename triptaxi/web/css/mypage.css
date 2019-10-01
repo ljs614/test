@@ -210,3 +210,38 @@ div#clipList_nav, #planList_nav{
     border-bottom:1px solid #49506a;
     width:100%;
 }
+
+div#pageBar{
+    text-align: center;
+    width:100%;
+}
+
+div#pageBar>*{
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    width:20px;
+    height:20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+div#pageBar>*>a{
+    color:#49506a;
+}
+.cPage{
+    color:white;
+    background-color: #49506a;
+    border-radius: 3px;
+}
+.hoverLi{
+    color:white;
+    background-color: #49506a;
+    border-radius: 3px;
+}
+.hoverA{
+    color:white !important;
+}
+
+
+

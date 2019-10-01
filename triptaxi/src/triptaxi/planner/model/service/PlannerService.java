@@ -288,6 +288,30 @@ public class PlannerService {
 		
 	}
 	
+	public void updateThemeUp(String tourId, String plannerTheme) {
+		Connection conn=getConnection();
+		int result=dao.updateThemeUp(conn, tourId, plannerTheme);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+	}
+	
+	public void insertPlannerList(String plannerId, String userId, String email) {
+		Connection conn=getConnection();
+		int result=dao.insertPlannerList(conn, plannerId, userId, email);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+	}
+	
 
 
 }

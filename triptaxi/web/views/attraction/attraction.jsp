@@ -19,7 +19,7 @@
 	int clipCount1=0;
 	int clip=0;
 	int reviewmore=5;
-	String userId="";
+	String userId="null";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
 		userId=loginUser.getUserId();

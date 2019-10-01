@@ -11,6 +11,7 @@
 	}
 	List userList=(List)request.getAttribute("userList");
 	String userName=(String)request.getAttribute("userName");
+	String users="";
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -42,10 +43,14 @@
 								
 						</div>
 						<div id="planner-member-list">
-							<%if(userList!=null){
-								for(int i=0; i<userList.size(); i++){%>
-									<span><%=userList.get(i)%></span>
-								<%}
+							<%if(userList.size()>0){%>
+								<i class="fas fa-users" id="users"></i>
+								<%for(int i=0; i<userList.size(); i++){
+									users+=userList.get(i);
+									if(i<userList.size()-1){
+										users+=",";
+									}
+								}
 							}%>
 						</div>
 					</div>
@@ -96,7 +101,7 @@
 
 	<section id="planView-main">
 	</section>
-	<div id="bot-container" style="width:100%; height:300px; border:1px solid navy;">
+	<div id="bot-container" style="width:100%; height:3000px; border:1px solid navy;">
 			
 	</div>
 	<div id="invite-modal">
@@ -258,7 +263,7 @@
 			$("#main-map-map").css("width",$(document).width()-150+"px");
 			$('#planTitle>i').hide();
 			$("#cover-change").css("opacity",0);
-			
+			$("#users").attr("title","<%=users%>");
 			
 		});
 
@@ -267,7 +272,7 @@
 				$("#main-map-map").css("width",$("#planView-main").width()-170+"px");
 				fn_markerM(mainM);
 			}
-		})
+		});
 
 		//요일 리턴 함수
 		function returnDay(day){
@@ -380,7 +385,7 @@
 				var top_planner=$("#planView-main").offset().top;
 				var bot_con=$("#bot-container").offset().top;
 				if(window.scrollY+500>bot_con){
-					$("#right-side").css({"position":"absolute","top":$("#bot-container").offset().top-$(window).scrollTop()+300});
+					$("#right-side").css({"position":"absolute","top":$("#planView-main").height()-350+"px"});
 					$("#side-navi").css("position","absolute");
 				}else if(window.scrollY>top_planner){
 					$("#right-side").css({"position":"fixed", "top":"60px"});

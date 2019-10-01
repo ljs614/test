@@ -86,24 +86,24 @@ public class GetPlannerServlet extends HttpServlet {
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
 		if(pageNo==1) {
-			pageBar+="<span>[이전]</span>";
+			pageBar+="<li><span><</span></li>";
 		}else {
-			pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>[이전]</a>";
+			pageBar+="<li><a href='javascript:fn_planner('"+plannerType+"',"+pageNo+")'><</a></li>";
 		}
 		//중간 클릭한 페이지(숫자) 만들기
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
-				pageBar+="<span>"+pageNo+"</span>";
+				pageBar+="<li class='cPage'><span>"+pageNo+"</span></li>";
 			}else {
-				pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>"+pageNo+"</a>";
+				pageBar+="<li><a href='javascript:fn_planner('"+plannerType+"',"+pageNo+")'>"+pageNo+"</a></li>";
 			}
 			pageNo++;
 		}
 		//다음 만들기
 		if(pageNo>totalPage) {
-			pageBar+="<span>[다음]</span>";
+			pageBar+="<li><span>></span></li>";
 		}else {
-			pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>[다음]</a>";
+			pageBar+="<li><a href='javascript:fn_planner('"+plannerType+"',"+pageNo+")'>></a><li>";
 		}
 		pageBar+="</div>";
 		Gson gson=new Gson();
