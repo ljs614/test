@@ -356,8 +356,8 @@
             margin: 15% auto;
             padding: 20px 50px;
             border: 1px solid #888;
-            width: 500px;
-            height:260px;
+            width: 550px;
+            height:330px;
             border:none;
             color:white;  
                    
@@ -370,7 +370,7 @@
         	height:30px;
         	position:relative;
         	top:5px;
-        	left:10px;
+        	left:50px;
         }
         /* The Close Button */
         .close {
@@ -390,7 +390,38 @@
 	        width:150px;
 	        height:50px; 
         }
+        .modal-content h4{
+        	margin-top:20px;
+        }
         
+.hvr-underline-from-left {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+}
+.hvr-underline-from-left:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: #2098D1;
+  height: 4px;
+  -webkit-transition-property: right;
+  transition-property: right;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-underline-from-left:hover:before, .hvr-underline-from-left:focus:before, .hvr-underline-from-left:active:before {
+  right: 0;
+}
 
 @keyframes click-wave {
   0% {
@@ -468,11 +499,18 @@
 
 body label {
   display: block;
-  line-height: 40px;
+  line-height: 80px;
 }
 
 .modal-con{
 	display:inline-block;
+}
+.modal_citylist>a{
+	color:white;
+	font-size:18px;
+	margin-bottom:10px;
+	display:inline-block;
+	width:200px;
 }
 
 

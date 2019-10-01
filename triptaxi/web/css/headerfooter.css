@@ -15,7 +15,10 @@
     body{
         width: 100%;
     }
-	
+	.main_menu>a>img{
+    	margin-top:-11px;
+    	margin-right:-50px;
+    }
 	nav{
         font-family: 'Nanum Gothic', sans-serif;
         position: fixed;
@@ -29,7 +32,7 @@
         box-shadow: 0 1px 3px 1px rgba(0,0,0,0.3);
         display: block;
         box-sizing: border-box;
-        font-size: 14px;
+        font-size: 15px;
     }
     .main_menu>a{
         color: black;
@@ -38,7 +41,7 @@
         width: 1024px;
         height: 52px;
         margin: 0 auto;
-        margin-top: 3px;
+        margin-top: 4px;
     }
     .top_menu{
         width: 700px;
@@ -54,7 +57,7 @@
     	cursor: pointer;
     }
     .top_btn{
-        margin-left: 120px;
+        margin-left: 110px;
         height: 50px;
     }
       .top_btn>button{
@@ -92,10 +95,11 @@
     	color:#a6abbe;
     	margin:0 6px;
     }
+    
     .sub_menu{
-        margin-top: -3px;
+        margin-top: -4px;
         width: 100%;
-        background-color: #49506a;
+        background-color: white;
         height: 150px;
         display: none;
     }
@@ -118,13 +122,13 @@
         color:white;
     }
     .sub_menu1_1{
-        margin-left:5px;
+        margin-left:137px;
     }
     .sub_menu1_2{
-        margin-left:-11px;
+        margin-left:-5px;
     }
     .sub_menu1_3{
-        margin-left:1px;
+        margin-left:3px;
     }
 
     .menu_css>div{

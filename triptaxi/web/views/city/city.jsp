@@ -265,7 +265,7 @@
 						 for(var i=0; i<data.length; i++){
 							planArr+="<figure class='snip1382'>";
 							planArr+="<a href='#'>";
-							planArr+="<img src=<%=request.getContextPath()%>"+data[i]["plannerCoverimg"]+">";
+							planArr+="<img src='<%=request.getContextPath()%>"+data[i]["plannerCoverimg"]+"'>";
 							planArr+="<figcaption>";
 							planArr+="<h2>"+data[i]["plannerName"]+"</h2>";
 							planArr+="<p>"+data[i]["plannerTheme"]+"</p>";
