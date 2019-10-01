@@ -69,8 +69,10 @@ public class makePlan2Servlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
+	    System.out.println(loginUser.getUserId());
+	    System.out.println(planner.getPlannerWriter());
 	    
-	    if(loginUser!=null || loginUser.equals("planner")) {
+	    if(loginUser!=null && loginUser.getUserName().equals(planner.getPlannerWriter())) {
 	    	response.setContentType("application/json;charset=UTF-8");
 	    	request.setAttribute("list", new Gson().toJson(list));
 	    	request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request,response);  

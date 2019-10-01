@@ -14,7 +14,6 @@
 	String attComment=a.getAttractionComment();
 	int clipCount=a.getClipCount();
 	double reviewScore=(Math.round(a.getReviewScore()*100)/100.0);
-
 	String category=a.getCategory();
 	int count=0;
 	int clipCount1=0;
@@ -31,8 +30,8 @@
 <style>
 
 div{
-     /*  border: 1px solid hotpink;
-  border-radius: 1px;   */   
+       /* border: 1px solid hotpink;
+  border-radius: 1px;    */
 }
 
 table{
@@ -46,7 +45,7 @@ tr{
 }
 
 td{
-
+/* border: 1px solid black;border-radius: 1px; */
 }
 
 	#root{
@@ -250,8 +249,6 @@ img {
   background-color: #222;
   padding: 2px 16px;
   color: white;
-    	 
-
 }
 
 .row:after {
@@ -316,25 +313,24 @@ img {
  overflow:hidden;
  margin-top:10px;
 
+
 }
-/* #recommendTD{
-	vertical-align: middle;
+ #recommendTD{
+
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    align: center;
-} */
+}
 #recommendDiv1{
 
 	font-size:17px;
 	color:gray;
 	font-family:arial;
 	font-weight:bold;
-
-	
+	display:inline-block;
+	 margin-left:20px;
 }
  
   #recomend-clip-div{
+  
 	float:left;
     color:orange;
     padding:2px;
@@ -351,8 +347,9 @@ img {
   #recommend-name-div{.
   float:left;
   font-size:14px;
-   padding:2px;
-   
+	text-align:left;
+	margin-left:20px;
+   width:250px;
   }
 
 #recommendPic1{

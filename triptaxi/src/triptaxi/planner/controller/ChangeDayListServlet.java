@@ -41,16 +41,19 @@ public class ChangeDayListServlet extends HttpServlet {
 		String tourList = service.selectPlannerTourList(plannerId, dayNo);
 		System.out.println(tourList);
 		
-		String[] tour= tourList.split(",");
 		List<Tour> list = new ArrayList();
-		
-		for(String a:tour) {
-			Tour t = service.selectTour(a);
-			list.add(t);
+		if(tourList!=null) {
+			String[] tour= tourList.split(",");
+			for(String a:tour) {
+				Tour t = service.selectTour(a);
+				list.add(t);
+			}
+			
 		}
 		
 		response.setContentType("application/json;charset=UTF-8");
-	    new Gson().toJson(list, response.getWriter());
+		new Gson().toJson(list, response.getWriter());
+		
 	}
 
 	/**

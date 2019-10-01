@@ -337,7 +337,8 @@
 	}
 	
 	$('.tbl_Continent').click(function(){
-		console.log($(this));
+		console.log($(this).text());
+		$('#sac_title').text($(this).text());
 		
 	})
 	
