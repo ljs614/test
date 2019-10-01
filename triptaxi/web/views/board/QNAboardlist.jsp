@@ -29,18 +29,18 @@
 			location.href='<%=request.getContextPath()%>/board/boardForm';
 		}	
 		
-		
-		
 		</script>
 		
 		<%} %>
 		<table id="tbl-board">
 			<tr>
 				<th>번호</th>
+				<th>카테고리</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
+				<th>첨부파일</th>
 			</tr>
 		<!--내용작성-->
 		<!--pageBar도 있어야함-->
@@ -54,6 +54,7 @@
 				for(Board b : list){ %>
 				<tr>
 					<td><%=b.getQnaNo() %></td>
+					<td><%=b.getQnaCategory() %></td>
 					<td>
 						<a href='<%=request.getContextPath()%>/board/boardView?no=<%=b.getQnaNo()%>&cPage=<%=cPage%>'>
 							<%=b.getQnaTitle()%>
@@ -62,7 +63,14 @@
 					<td><%=b.getQnaWriter() %></td>
 					<td><%=b.getQnaDate() %></td>
 					<td><%=b.getQnaReadCount() %></td>
-				</tr>
+					<td>
+					<%if(b.getOriFileName()!=null){%>
+						O
+					<%}else{%>
+						X
+						<%} %>
+						</td>
+					</tr>
 			<%}
 				}%>
 			

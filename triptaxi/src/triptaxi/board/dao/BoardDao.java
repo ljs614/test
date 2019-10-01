@@ -61,9 +61,12 @@ public class BoardDao {
 			while(rs.next()) {
 				Board b=new Board();
 				b.setQnaNo(rs.getInt("qna_no"));
+				b.setQnaCategory(rs.getString("qna_category"));
 				b.setQnaTitle(rs.getString("qna_title"));
 				b.setQnaWriter(rs.getString("qna_writer"));
 				b.setQnaContent(rs.getString("qna_content"));
+				b.setOriFileName(rs.getString("orifilename"));
+				b.setReNameFileName(rs.getString("renamefilename"));
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
 				list.add(b);
@@ -89,12 +92,14 @@ public class BoardDao {
 			if(rs.next()) {
 				b=new Board();
 				b.setQnaNo(rs.getInt("qna_no"));
+				b.setQnaCategory(rs.getString("qna_category"));
 				b.setQnaTitle(rs.getString("qna_title"));
 				b.setQnaWriter(rs.getString("qna_writer"));
 				b.setQnaContent(rs.getString("qna_content"));
+				b.setOriFileName(rs.getString("orifilename"));
+				b.setReNameFileName(rs.getString("renamefilename"));
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
-				b.setReNameFileName("renamefilename");
 			}
 			
 		}catch(SQLException e) {

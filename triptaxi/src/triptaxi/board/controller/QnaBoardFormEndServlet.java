@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
-
-import triptaxi.board.model.vo.Board;
 import triptaxi.board.service.BoardService;
+import triptaxi.board.model.vo.Board;
+
 import triptaxi.common.policy.MyFileRenamePolicy;
 
 /**
@@ -27,7 +27,7 @@ public class QnaBoardFormEndServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public QnaBoardFormEndServlet() {
-        super();
+    
         // TODO Auto-generated constructor stub
     }
 
@@ -41,15 +41,15 @@ public class QnaBoardFormEndServlet extends HttpServlet {
 			request.setAttribute("loc", "/board/boardForm");
 			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
-		String saveDir=getServletContext().getRealPath("/");
-		saveDir+="/upload/board";
+		String saveDir="C:\\Users\\msi\\git\\test\\triptaxi\\web\\upload\\board";
+//		C:\Users\msi\Desktop\home_work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\06_HelloMVC\/upload/board
+//		C:\Users\msi\git\triptaxi\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\triptaxi\/upload/board
 		
-		int maxSize=1024*1024*1024;//1gb
+
+
+		int maxSize=1024*1024;//1gb
 		
 		MultipartRequest mr=new MultipartRequest(request,saveDir,maxSize,"UTF-8",new MyFileRenamePolicy());
-		
-		
-		System.out.println(saveDir);
 
 		String title=mr.getParameter("title");
 		String category=mr.getParameter("category");
