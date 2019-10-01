@@ -244,7 +244,7 @@
                     </ul>
                     <ul class="sub_menu1_2">
                     	<%if(loginUser!=null){ %>
-                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/user/mypage">내 일정 만들기</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/makePlan1">내 일정 만들기</a></li>
                         <%} else{%>
                          <li class="hvr-float-shadow mypagea mypagenull"><a class="mypagea">내 일정 만들기</a></li>
                         <%} %>
