@@ -5,10 +5,12 @@
 <%@ include file="/views/common/header.jsp"%>
 
 <%
-	loginUser.getUserId();
+
 	Board b=(Board)request.getAttribute("board");
-	
 	List<BoardComment> list=(List)request.getAttribute("comments");
+	String image=b.getReNameFileName();
+	int idx=image.indexOf(".");
+	String extension=image.substring(idx+1);
 %>
 <style>
 	div{
@@ -65,6 +67,14 @@
    	vertical-align:top;
    	
    }
+    #file-icon{
+    	width: 20px;
+    	height:25px
+    }
+    #img-file{
+    	width:300px;
+    	height:200px;
+    }
     
     </style>
   
@@ -75,6 +85,10 @@
 			<tr>
 				<th>글번호</th>
 				<td><%=b.getQnaNo()%></td>
+			</tr>
+			<tr>
+				<th>카테고리</th>
+				<td><%=b.getQnaCategory()%></td>
 			</tr>
 			<tr>
 				<th>제 목</th>
@@ -91,10 +105,12 @@
 			<tr>
 				<th>첨부파일</th>
 				<td>
-				 <%if(b.getOriFileName()!=null){ %>
-				 	<img src="<%=request.getContextPath()%>/images/file.png"
-				 	width="6px"/><%=b.getOriFileName()%>
-				 <%} %>
+				 	<%if(b.getReNameFileName()!=null){ %>
+				 	<%if(extension.equals("jpg")||extension.equals("png")||extension.equals("JPG")||extension.equals("PNG")){%>
+				 	<img id="img-file" src="<%=request.getContextPath()%>/upload/board/<%=b.getReNameFileName()%>"/><%=b.getOriFileName()%>
+				 	<%}else{ %>
+				 	<img src="<%=request.getContextPath()%>/images/file.png" width="6px"/><%=b.getOriFileName()%>
+				 <%}} %>
 				</td>
 			</tr>
 			
@@ -177,17 +193,13 @@
 	</table>	
 
     <script>
+
     $(document).ready(function(){
 		$("#comment-container").hide();
 		fn_review();
 		}); 
 	
 
-
-    
-    
-    
-    
     $(function(){
     	$("[name=content]").focus(function(){
     		if(<%=loginUser==null%>){

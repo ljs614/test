@@ -12,7 +12,8 @@
     table#tbl-board td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
     </style>
 		<section id="board-container">
-		<h2>게시판</h2>
+		<br><br><br>
+		<h2>동행모집 게시판</h2>
    	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post" enctype="multipart/form-data">
 		<table id="tbl-board">
 			<tr>
@@ -24,9 +25,12 @@
 			<tr>
 				<th>카테고리</th>
 				<td>
-					<input type="radio" name="category" id="category" value="남자">남자</input>
-					<input type="radio" name="category" id="category" value="여자">여자</input>
-					<input type="radio" name="category" id="category" value="혼성">혼성</input>
+					 <select required name = "category" id="category-select" >
+					 		<option>--카테고리선택--</option>
+                            <option value = "남성">남성</option>
+                            <option value = "여성">여성</option>
+                            <option value = "혼성">혼성</option>
+                    </select>
 				</td>
 			</tr>
 			<tr>
@@ -45,30 +49,26 @@
 			<tr>
 				<th>내 용</th>
 				<td>
-					<textarea rows="5" cols="50" name="content" id="content"></textarea>
+					<textarea rows="5" cols="50" name="content" id="content" required></textarea>
 				</td>
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input type="submit" value="등록하기" onclick="fn_listBoard();"/>
-			
+					<button id="submit" >완료</button>
+					
 				</th>
 			</tr>
-			
-
 		</table>
 	</form>
     <script>
+    
+   
+    
     function fn_listBoard(){
     	location.href='<%=request.getContextPath()%>/board/boardList?cPage=<%=request.getAttribute("cPage")%>';
     	
     }
-    function fn_updateBoard(){
-        
-    }
-    function fn_deleteBoard(){
-       
-    }
+
     </script>
 
     </section>
