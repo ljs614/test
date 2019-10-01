@@ -436,7 +436,7 @@ public class PlannerDao {
 			pstmt.setString(1, plannerId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				userList.add(rs.getString(1));
+				userList.add(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -663,6 +663,24 @@ public class PlannerDao {
 			e.printStackTrace();
 		}finally {
 			close(stmt);
+		}
+		return result;
+	}
+	
+	public int insertPlannerList(Connection conn, String plannerId, String userId, String email) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertPlannerList");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, email);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 		return result;
 	}

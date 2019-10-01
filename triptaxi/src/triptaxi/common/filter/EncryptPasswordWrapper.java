@@ -47,7 +47,6 @@ public class EncryptPasswordWrapper extends HttpServletRequestWrapper {
 			e.printStackTrace();
 		}
 		String encPw=Base64.getEncoder().encodeToString(md.digest());
-		System.out.println(encPw);
 		
 		return encPw;		
 		
