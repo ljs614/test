@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, triptaxi.planner.model.vo.CityList, triptaxi.planner.model.vo.PlannerFullInfo"%>
+<%@ page import="java.util.*, triptaxi.planner.model.vo.CityList, triptaxi.planner.model.vo.PlannerFullInfo, java.text.SimpleDateFormat"%>
 <%@ include file="/views/common/header.jsp"%>
 <%
 	String userId = "null";
@@ -180,15 +180,16 @@
 
 				<% for(int i=0;i<plannerList.size();i++){ %>
 				
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail' onclick="location.href='<%=request.getContextPath()%>/planner/plannerView?plannerId=<%=plannerList.get(i).getPlannerId()%>'">
+				<div class='planView_Div' data-id='<%=plannerList.get(i).getPlannerId() %>'>
+					<div class='planView_Thumbnail'>
 						<img
 							src="<%=request.getContextPath() %><%= plannerList.get(i).getPlannerCoverimg()%>"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
 						<div class='pvc_title'><%=plannerList.get(i).getPlannerName() %></div>
-						<div class='pvc_date'><%=plannerList.get(i).getPlannerDate() %></div>
+						<% String d = plannerList.get(i).getPlannerDate().substring(0,10);%>
+						<div class='pvc_date'><%=d %></div>
 						<div class='pvc_totalDay'><%=plannerList.get(i).getDayCount() %> DAY</div>
 						<div class="pvc_city"><%=plannerList.get(i).getCityList() %></div>
 						<div class='pvc_theme'><%=plannerList.get(i).getPlannerTheme() %></div>
@@ -305,7 +306,7 @@
 		}else{
 			option1 = "order by planner_writedate desc";
 		}
-		fn_paging2(option1, $(this).data("cityeng"), cPage);
+		fn_paging2(option1, $(this).text(), cPage);
 	})
 	$('.tbl_Continent').click(function(){
 		$('#sac_content>ul>li').removeClass('clickCategory');
@@ -320,13 +321,40 @@
 		
 	})
 	
+	function makePlanView(list){
+		console.log(1);
+		$('.planView_Div').remove();
+		
+		$.each(list, function(index, item){
+			var date= new Date(item['plannerDate']);
+			
+			var add = "<div class='planView_Div' data-id='"+item['plannerId']+"'><div class='planView_Thumbnail'>";
+			add += "<img src='<%=request.getContextPath()%>" + item['plannerCoverimg'] + "' width='268px' height='180px'>";
+			add += "</div><div class='planView_Content'><div class='pvc_title'>"+item['plannerName']+"</div>";
+			add += "<div class='pvc_date'>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" </div>";
+			add += " <div class='pvc_totalDay'> "+item['dayCount']+" DAY</div>";
+			add += "<div class='pvc_city'>"+item['cityList']+"</div>";
+			add += "<div class='pvc_theme'>"+item['plannerTheme']+"</div>";
+			add += "<div class='pvc_users'><i class='fas fa-user'></i> " + item['plannerWriter'] +"</div>";
+			add += "<div class='pvc_Popularity'><i class='fas fa-eye'></i> "+item['plannerCount'];
+			add += " <i class='fas fa-heart'></i> "+item['plannerLike']+"</div>";
+			
+			$('#planViewWrap').append(add);
+		});
+	}
 
 	function fn_paging1(option1, cPage){
 		$.ajax({
 			url:"<%=request.getContextPath()%>/option1Change",
 			data:{"option1":option1, "cPage":cPage},
 			success:function(data){
+				var list = data;
+				console.log(list['plannerList']);
+				cPage=list['cPage'];
+				$('#pageBar').html(list['pageBar']);
+				$('#totalCnt').text(list['totalData']);
 				
+				makePlanView(list['plannerList']);
 			}
 		})
 		
@@ -337,6 +365,18 @@
 			url:"<%=request.getContextPath()%>/option2Change",
 			data:{"option1":option1, "option2":option2, "cPage":cPage},
 			success:function(data){
+				var list = data;
+				console.log(list['plannerList']);
+				cPage=list['cPage'];
+				$('#pageBar').html(list['pageBar']);
+				$('#totalCnt').text(list['totalData']);
+				
+				makePlanView(list['plannerList']);
+				
+				if($('.planView_Div').length==0){
+					
+					
+				}
 				
 			}
 		})
@@ -344,11 +384,12 @@
 	
 	
 	
+	
 	$('#newestPlan').click(function(){
 		var option="null";
 	
 		if($('.clickCategory').length>0){
-			option=$('.clickCategory').data("cityeng");
+			option=$('.clickCategory').text();
 			fn_paging2("order by planner_writedate desc", option, cPage);
 		}else{
 			fn_paging1("order by planner_writedate desc", cPage);
@@ -361,12 +402,16 @@
 		var option="null";
 		
 		if($('.clickCategory').length>0){
-			option=$('.clickCategory').data("cityeng");
+			option=$('.clickCategory').text();
 			fn_paging2("order by planner_like desc", option, cPage);
 		}else{
 			fn_paging1("order by planner_like desc", cPage);
 		}
 		
+	})
+	
+	$(document).on('click', '.planView_Div', function(){
+		location.href = "<%=request.getContextPath()%>/planner/plannerView?plannerId=" + $(this).data('id');
 	})
 	
 	

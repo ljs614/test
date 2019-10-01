@@ -34,7 +34,7 @@
 <body>
 
 	<header>
-		<img logo src="" width="60px" height="60px">
+		<img logo src="<%=request.getContextPath() %>/images/logo_mini.png" width="55px" height="50px" style="padding-top:5px;padding-left:5px">
 		<div id="planTitle">
 			<div id="pltitle"></div>
 			<i class="far fa-edit"></i>
@@ -440,7 +440,7 @@
     	
 		var add = "<li class='tourListMenu_li' data-tourId='"+tourId+"' data-lat='"+lat+"' data-lng='"+lng+"'><div class='tourImg'>";
 		add += "<img src='<%=request.getContextPath()%>/images/"+city+"/"+tourName+"/"+tourName+"1.jpg' width='90px' height='70px' />";
-		add += "</div><div class='rightContent'><div class='tourTitle'";
+		add += "</div><div class='rightContent'><div class='tourTitle' title='정보보기'";
 		if(tourName.length>9){
 			add += " style='font-size:11.5px'";
 		}
@@ -1107,6 +1107,12 @@
     		  return false;
     	  }
       } 
+     
+     $(document).on('click', '.tourTitle', function(){
+    	 var id = $($(this).parent().parent()).data("tourid");
+    	 open("<%=request.getContextPath()%>/attraction/select?attId="+id);
+    	 console.log($($(this).parent().parent()).data("tourid"));
+     })
 
   
 

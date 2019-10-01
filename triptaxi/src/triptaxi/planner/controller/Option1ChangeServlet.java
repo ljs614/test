@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
+
 import triptaxi.city.model.service.CityService;
 import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.CityList;
@@ -43,10 +47,8 @@ public class Option1ChangeServlet extends HttpServlet {
 		}
 		
 		String option1 = request.getParameter("option1");
-		String receiveOption2 = request.getParameter("option2");
-		String option2 = (request.getParameter("option2").equals("null"))?"":"AND city_name like '%"+request.getParameter("option2")+"%'";
 		
-		String totalOption = "PLANNER_THEME IS NOT NULL AND PLANNER_PUBLIC = 'Y' "+option2+" " + option1;
+		String totalOption = "PLANNER_THEME IS NOT NULL AND PLANNER_PUBLIC = 'Y' " + option1;
 
 		int numPerPage=9;
 		int totalData=0;
@@ -73,7 +75,6 @@ public class Option1ChangeServlet extends HttpServlet {
 			}	
 		}
 		
-		System.out.println(idList);
 		plannerCity = service.selectPlannerCity(idList);
 
 		for(int i=0;i<plannerList.size();i++) {
@@ -94,14 +95,14 @@ public class Option1ChangeServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar += "<span> [이전] </span>";
 		}else {
-			pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> [이전] </a>";
+			pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> [이전] </a>";
 		}
 
 		while(!(pageNo>pageEnd || pageNo>totalPage )) {
 			if(pageNo==cPage) {
 				pageBar += "<span> " + pageNo + " </span>";
 			}else {
-				pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> " + pageNo + " </a>";
+				pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> " + pageNo + " </a>";
 			}
 			pageNo++;
 		}
@@ -109,18 +110,19 @@ public class Option1ChangeServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar += "<span>[다음]</span>";
 		}else {
-			pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> [다음] </a>";
+			pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> [다음] </a>";
 		}
 		
-		request.setAttribute("cPage", cPage);
-		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("totalData", totalData);
-		request.setAttribute("plannerList", plannerList);
+		JSONObject list = new JSONObject();
+		list.put("cPage", cPage);
+		list.put("pageBar", pageBar);
+		list.put("totalData", totalData);
+		list.put("plannerList", plannerList);
 		
-		List<CityList> list = new CityService().selectAllCityList();
+		response.setContentType("application/json;charset=UTF-8");
+		new Gson().toJson(list, response.getWriter());
 		
-		request.setAttribute("cityList", list);
-		request.getRequestDispatcher("/views/planner/planMain.jsp").forward(request, response);
+		
 	}
 
 	/**

@@ -272,6 +272,7 @@ public class PlannerService {
 		return result;
 		
 	}
+
 	
 	public List<PlannerFullInfo> selectPlannerFullInfo(int cPage, int numPerPage, String option){
 		Connection conn = getConnection();
@@ -279,6 +280,7 @@ public class PlannerService {
 		close(conn);
 		return list;
 	}
+
 	
 	public List<PlannerCity> selectPlannerCity(String idList){
 		Connection conn = getConnection();
@@ -287,6 +289,14 @@ public class PlannerService {
 		return list;
 		
 	}
+
+	public List<PlannerCity> selectPlannerCity2(String option){
+		Connection conn = getConnection();
+		List<PlannerCity> list = dao.selectPlannerCity2(conn, option);
+		close(conn);
+		return list;
+	}
+
 	
 	public void updateThemeUp(String tourId, String plannerTheme) {
 		Connection conn=getConnection();

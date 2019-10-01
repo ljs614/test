@@ -39,7 +39,7 @@
 
 	<header>
 		<div width="500px">
-			<img logo src="" width="150px" height="60px">
+			<img logo src="<%=request.getContextPath() %>/images/logo.png" width="150px" height="48px" style="padding-top:5px">
 			<h3>도시선택 -> 상세일정만들기</h3>
 		</div>
 		<button id="close" onclick="openCloseModal();">닫기</button>

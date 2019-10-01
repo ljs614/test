@@ -591,6 +591,7 @@ public class PlannerDao {
 		}
 		return result;
 	}
+
 	
 	public List<PlannerFullInfo> selectPlannerFullInfo(Connection conn, int cPage, int numPerPage, String option){
 		Statement stmt = null;
@@ -605,7 +606,7 @@ public class PlannerDao {
 				PlannerFullInfo pfi = new PlannerFullInfo();
 				pfi.setPlannerId(rs.getString("planner_id"));
 				pfi.setPlannerName(rs.getString("planner_name"));
-				pfi.setPlannerDate(rs.getDate("planner_date"));
+				pfi.setPlannerDate(rs.getString("planner_date"));
 				pfi.setPlannerWriter(rs.getString("planner_writer"));
 				pfi.setPlannerTheme(rs.getString("planner_theme"));
 				pfi.setPlannerLike(rs.getInt("planner_like"));
@@ -626,6 +627,7 @@ public class PlannerDao {
 		}
 		return list;
 	}
+
 	
 	public List<PlannerCity> selectPlannerCity(Connection conn, String idList){
 		Statement stmt = null;
@@ -652,6 +654,31 @@ public class PlannerDao {
 		return list;
 	}
 	
+	public List<PlannerCity> selectPlannerCity2(Connection conn, String option){
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT PLANNER_ID, LISTAGG(CITY_NAME,',') WITHIN GROUP (ORDER BY ROWNUM DESC) FROM (SELECT PLANNER_ID,CITY_NAME FROM TT_PLANNER_DAY "+option+" GROUP BY PLANNER_ID, CITY_NAME ORDER BY PLANNER_ID) GROUP BY PLANNER_ID";
+		List<PlannerCity> list = new ArrayList();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				PlannerCity pc = new PlannerCity();
+				pc.setPlannerId(rs.getString(1));
+				pc.setCityList(rs.getString(2));
+				list.add(pc);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		return list;
+	}
+
+
 	public int updateThemeUp(Connection conn, String tourId, String plannerTheme) {
 		Statement stmt=null;
 		int result=0;

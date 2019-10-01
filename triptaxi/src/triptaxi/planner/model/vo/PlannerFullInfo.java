@@ -6,7 +6,7 @@ public class PlannerFullInfo {
 
 	private String plannerId;
 	private String plannerName;
-	private Date plannerDate;
+	private String plannerDate;
 	private String plannerWriter;
 	private String plannerTheme;
 	private int plannerLike;
@@ -22,7 +22,7 @@ public class PlannerFullInfo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlannerFullInfo(String plannerId, String plannerName, Date plannerDate, String plannerWriter,
+	public PlannerFullInfo(String plannerId, String plannerName, String plannerDate, String plannerWriter,
 			String plannerTheme, int plannerLike, int plannerCount, char plannerPublic, Date plannerWritedate,
 			String plannerCoverimg, String userName, int dayCount, String cityList) {
 		super();
@@ -57,11 +57,11 @@ public class PlannerFullInfo {
 		this.plannerName = plannerName;
 	}
 
-	public Date getPlannerDate() {
+	public String getPlannerDate() {
 		return plannerDate;
 	}
 
-	public void setPlannerDate(Date plannerDate) {
+	public void setPlannerDate(String plannerDate) {
 		this.plannerDate = plannerDate;
 	}
 
@@ -153,8 +153,7 @@ public class PlannerFullInfo {
 				+ ", plannerWritedate=" + plannerWritedate + ", plannerCoverimg=" + plannerCoverimg + ", userName="
 				+ userName + ", dayCount=" + dayCount + ", cityList=" + cityList + "]";
 	}
-	
-	
+
 	
 	
 }
