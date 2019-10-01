@@ -43,7 +43,7 @@
 								
 						</div>
 						<div id="planner-member-list">
-							<%if(userList!=null){%>
+							<%if(userList.size()>0){%>
 								<i class="fas fa-users" id="users"></i>
 								<%for(int i=0; i<userList.size(); i++){
 									users+=userList.get(i);
@@ -119,6 +119,7 @@
 		</div>
 	</div>
 	<script>
+		console.log("<%=userList%>");
 		var planList=${jlist};
 		//커버 이미지
 		var coverImg="<%=coverImg%>";

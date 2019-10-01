@@ -352,7 +352,7 @@ div#planner-container, #right-side, #side-navi{
 div#side-navi{
     position: fixed;
     width:90px;
-    border:1px dotted red;
+    /* border:1px dotted red; */
     text-align: center;
 }
 .side-navi-btn{
