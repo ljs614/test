@@ -13,12 +13,20 @@
     </style>
 		<section id="board-container">
 		<h2>게시판</h2>
-   	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post">
+   	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post" enctype="multipart/form-data">
 		<table id="tbl-board">
 			<tr>
 				<th>제 목</th>
 				<td>
 					<input type="text" name="title" id="title" required/>
+				</td>
+			</tr>
+			<tr>
+				<th>카테고리</th>
+				<td>
+					<input type="radio" name="category" id="category" value="남자">남자</input>
+					<input type="radio" name="category" id="category" value="여자">여자</input>
+					<input type="radio" name="category" id="category" value="혼성">혼성</input>
 				</td>
 			</tr>
 			<tr>

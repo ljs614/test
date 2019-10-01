@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.oreilly.servlet.MultipartRequest;
+
 import triptaxi.board.model.vo.Board;
 import triptaxi.board.service.BoardService;
+import triptaxi.common.policy.MyFileRenamePolicy;
 
 /**
  * Servlet implementation class QnaBoardFormEndServlet
@@ -31,20 +36,39 @@ public class QnaBoardFormEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(!ServletFileUpload.isMultipartContent(request)) {
+			request.setAttribute("msg", "잘못된 요청입니다.");
+			request.setAttribute("loc", "/board/boardForm");
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		}
+		String saveDir=getServletContext().getRealPath("/");
+		saveDir+="/upload/board";
 		
+		int maxSize=1024*1024*1024;//1gb
+		
+		MultipartRequest mr=new MultipartRequest(request,saveDir,maxSize,"UTF-8",new MyFileRenamePolicy());
+		
+		
+		System.out.println(saveDir);
 
-		String title=request.getParameter("title");
-		String writer=request.getParameter("writer");
-		String content=request.getParameter("content");
+		String title=mr.getParameter("title");
+		String category=mr.getParameter("category");
+		String writer=mr.getParameter("writer");
+		String content=mr.getParameter("content");
+		String reName=mr.getFilesystemName("up_file");
+		String oriName=mr.getOriginalFileName("up_file");
 
 		
 		Board b=new Board();
 		b.setQnaTitle(title);
+		b.setQnaCategory(category);
 		b.setQnaWriter(writer);
 		b.setQnaContent(content);
+		b.setReNameFileName(reName);
+		b.setOriFileName(oriName);
 
 		int result=new BoardService().insertBoard(b);
-		
+		System.out.println("service:"+result);
 		String msg="";
 		String loc="";
 		String view="/views/common/msg.jsp";
@@ -52,7 +76,7 @@ public class QnaBoardFormEndServlet extends HttpServlet {
 			loc="/board/boardView?no="+result;
 			msg="게시글 등록성공";
 		}else {
-			loc="/board/Qnaboardform";
+			loc="/board/boardForm";
 			msg="게시글 등록실패";
 		}
 		request.setAttribute("msg", msg);

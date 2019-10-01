@@ -36,7 +36,7 @@ public class CityAttraction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String cityName=request.getParameter("cityName");
-		System.out.println(cityName+"이건 시티네임");
+		
 		List<Attraction> list=new AttractionService().cityAttraction(cityName);
 		
 		response.setContentType("application/json;charset=UTF-8");

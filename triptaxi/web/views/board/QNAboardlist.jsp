@@ -23,8 +23,7 @@
 	<section id="board-container">
 		<h2>게시판 </h2>
 		<%if(loginUser!=null){ %>
-		<input type="button" value="글쓰기" id="btn-add"
-		onclick="fn_boardForm()"/>
+		<input type="button" value="글쓰기" id="btn-add"	onclick="fn_boardForm()"/>
 		<script>
 		function fn_boardForm(){
 			location.href='<%=request.getContextPath()%>/board/boardForm';

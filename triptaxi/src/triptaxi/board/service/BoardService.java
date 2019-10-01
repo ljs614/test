@@ -56,6 +56,7 @@ public class BoardService {
 	public int insertBoardComment(BoardComment bc) {
 		Connection conn=getConnection();
 		int result=dao.insertBoardComment(conn, bc);
+		System.out.println(bc);
 		if(result>0) {commit(conn);}
 		else {rollback(conn);}
 		close(conn);

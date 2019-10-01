@@ -230,10 +230,10 @@ public class AttractionDao {
 	
 	public int scoreAvg(Connection conn,String tourId, String table) {
 		Statement stmt=null;
-		System.out.println("id:"+tourId);
+		
 		int result=0;
 		String sql="update "+table+" set review_Score=(select avg(tour_review_score) from tt_tour_review where tour_id='"+tourId+"') where "+table.split("_")[1]+"_id='"+tourId+"'";
-		System.out.println(sql);
+		
 		try {
 			stmt=conn.createStatement();
 			result=stmt.executeUpdate(sql);

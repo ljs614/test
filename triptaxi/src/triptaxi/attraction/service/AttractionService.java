@@ -35,7 +35,7 @@ public class AttractionService {
 		}else {
 		table="tt_festival";
 			}
-		System.out.println(table);
+
 		return a;
 
 	}
@@ -92,7 +92,7 @@ public class AttractionService {
 		Connection conn=getConnection();
 		int result=dao.scoreAvg(conn,attId,table);
 		close(conn);
-		System.out.println(table);
+		
 		return result;
 	}
 	

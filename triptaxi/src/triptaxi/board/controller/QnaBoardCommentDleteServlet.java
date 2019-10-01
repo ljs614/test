@@ -32,7 +32,7 @@ public class QnaBoardCommentDleteServlet extends HttpServlet {
 		
 
 		int boardCommentRef=Integer.parseInt(request.getParameter("boardCommentRef"));
-		System.out.println("pp"+boardCommentRef);
+
 		
 		int result=new BoardService().deleteComment(boardCommentRef);
 		String msg="";

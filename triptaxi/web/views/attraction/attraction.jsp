@@ -918,15 +918,15 @@ opacity:0.5;
 		<script>
 		$("#top-button-map").click(function(){
 				var offset = $('#map').offset();
-				console.log(offset);
+		
 				$('html').animate({scrollTop : offset.top-150}, 1000);
-				console.log("map");
+	
 		});
 		$("#top-button-review").click(function(){
 			var offset = $('#reviewTitleR').offset();
-			console.log(offset);
+			
 			$('html').animate({scrollTop : offset.top-150}, 1000);
-			console.log("map");
+			
 	});
 	
 		
@@ -943,7 +943,7 @@ opacity:0.5;
 		});
 	
 		function fn_review(){
-			console.log(reviewmore)
+		
 			$.ajax({
 				url:"<%=request.getContextPath()%>/attraction/reviewlist?attId=<%=attId%>",
 				type:"get",
@@ -957,7 +957,7 @@ opacity:0.5;
 						$("#json-container").html('<br><br><i class="far fa-frown" id="no-review"></i><br><span id="no-review-ment">리뷰가 없어요</span><br><br>')
 						$(".review-more").hide();
 						$(".review-remove").hide();
-						console.log("nodata")
+					
 					}else{
 					$("#json-container").css("text-align","left");
 				
@@ -995,7 +995,7 @@ opacity:0.5;
 
 		function fn_reviewmore(){
 			reviewmore+=5;
-			console.log(reviewmore);
+			
 			fn_review();
 		}
 		function fn_reviewremove(){
@@ -1096,7 +1096,7 @@ opacity:0.5;
 			});
 		
 		$(".star-input").click(function(){
-			console.log("클릭");
+			
 			$("#review-content").removeAttr("readonly");
 			$("#review-content").attr("placeholder","리뷰를 입력하세요~");
 			$("#review-button").show();

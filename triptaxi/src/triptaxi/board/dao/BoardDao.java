@@ -94,6 +94,7 @@ public class BoardDao {
 				b.setQnaContent(rs.getString("qna_content"));
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
+				b.setReNameFileName("renamefilename");
 			}
 			
 		}catch(SQLException e) {
@@ -124,19 +125,24 @@ public class BoardDao {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("insertBoard");
-		System.out.println("dd"+sql);
+		System.out.println("dd"+b.getQnaCategory());
+	
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, b.getQnaTitle());
-			pstmt.setString(2, b.getQnaWriter());
+			pstmt.setString(1, b.getQnaCategory());
+			pstmt.setString(2, b.getQnaTitle());
 			pstmt.setString(3, b.getQnaContent());
-		
-			result=pstmt.executeUpdate();
+			pstmt.setString(4, b.getQnaWriter());
+			pstmt.setString(5, b.getOriFileName());
+			pstmt.setString(6, b.getReNameFileName());
 			
+			result=pstmt.executeUpdate();
+			System.out.println("dao:"+result);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
+			
 		}return result;
 		
 		
@@ -146,7 +152,7 @@ public class BoardDao {
 		Statement stmt=null;
 		ResultSet rs=null;
 		int result=0;
-		String sql="select seq_board_no.currval from dual";
+		String sql="select tt_board_qna_seq.currval from dual";
 		try {
 			stmt=conn.createStatement();
 			rs=stmt.executeQuery(sql);
@@ -174,8 +180,8 @@ public class BoardDao {
 			pstmt.setInt(4, bc.getBoardRef());
 			//int 자료형에 자료가 없어 null값을 넣을때는 
 			pstmt.setString(5, bc.getBoardCommentRef()==0?null:String.valueOf(bc.getBoardCommentRef()));
-			
 			result=pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
