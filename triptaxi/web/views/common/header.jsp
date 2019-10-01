@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="triptaxi.user.model.vo.User" %>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favi.jpg">
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
 	Cookie[] cookies=request.getCookies();
@@ -34,6 +33,7 @@
 	<script src="<%=request.getContextPath() %>/js/parallax.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="<%=request.getContextPath() %>/js/aos.js"></script>
+    <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favi.png">
     <title>Trip Taxi</title>
 
     <script>
@@ -195,7 +195,7 @@
                 <div class="top_menu">                
                     <ul>
                         <li class="main_menu">
-                        	<a href="<%=request.getContextPath() %>/"><img src="<%=request.getContextPath() %>/images/logo.png" height="40px" width="80px" /></a>
+                        	<a href="<%=request.getContextPath() %>/"><img src="<%=request.getContextPath() %>/images/logo.png" height="40px" width="130px" /></a>
                         </li>
                         <li class="main_menu">
                         	여행지  
