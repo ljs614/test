@@ -104,22 +104,22 @@
 				<div id="sc_title"></div>
 				<div id="iconWrap">
 					<div class='sc_icon iconColor'>
-						<div id='attractionIcon'>
+						<div id='attractionIcon' title="관광지">
 							<i class="fas fa-camera"></i>
 						</div>
 					</div>
 					<div class='sc_icon'>
-						<div id='activityIcon'>
+						<div id='activityIcon' title="액티비티">
 							<i class="fas fa-running"></i>
 						</div>
 					</div>
 					<div class='sc_icon'>
-						<div id='festivalIcon'>
+						<div id='festivalIcon' title="축제">
 							<i class="fas fa-drum"></i>
 						</div>
 					</div>
 					<div class='sc_icon'>
-						<div id='clipIcon'>
+						<div id='clipIcon' title="클립보드">
 							<i class="fas fa-paperclip"></i>
 						</div>
 					</div>
@@ -637,11 +637,18 @@
 						  map: map,
 						  icon:"https://img.icons8.com/office/40/000000/marker.png"
 						});
-				bounds.extend(loc);
+				if(plannerLats.length != 1){
+					bounds.extend(loc);	
+				}
 				markers2.push(marker);
 			}
-			map.fitBounds(bounds);
-			map.panToBounds(bounds);
+			if(plannerLats.length != 1){
+				map.fitBounds(bounds);
+				map.panToBounds(bounds);	
+			}else{
+				map.setZoom(13);
+				map.setCenter(new google.maps.LatLng(plannerLats[0],plannerLngs[0]));
+			}
 			
 			$(document).on("mouseover", '#sm_plannerList>li', function(){
 				console.log($(this).index());
@@ -987,6 +994,7 @@
     }
     
     //일정 추가
+    var firstPlus = 0;
     $(document).on('click', '.plusTour', function(){
     	console.log("plusTour");
     	var img;
@@ -1006,7 +1014,10 @@
     		}
     	});
     	
-    	flightPath.getPath().clear();
+    	if(firstPlus!=0){
+    		flightPath.getPath().clear();
+    		firstPlus=1;
+    	}
     	plannerLats.push(lat);
     	plannerLngs.push(lng);
 

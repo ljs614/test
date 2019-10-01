@@ -62,7 +62,6 @@ public class makePlan2Servlet extends HttpServlet {
 		list.put("plannerId", planner.getPlannerId());
 		list.put("plannerName", planner.getPlannerName());
 		list.put("plannerDate", date);
-		list.put("plannerId", planner.getPlannerId());
 		list.put("plannerTheme", planner.getPlannerTheme());
 		list.put("dayList", dayList);
 		list.put("attrList", attrList);
@@ -72,7 +71,7 @@ public class makePlan2Servlet extends HttpServlet {
 	    System.out.println(loginUser.getUserId());
 	    System.out.println(planner.getPlannerWriter());
 	    
-	    if(loginUser!=null && loginUser.getUserName().equals(planner.getPlannerWriter())) {
+	    if(loginUser!=null && loginUser.getUserId().equals(planner.getPlannerWriter())) {
 	    	response.setContentType("application/json;charset=UTF-8");
 	    	request.setAttribute("list", new Gson().toJson(list));
 	    	request.getRequestDispatcher("/views/planner/makePlan2.jsp").forward(request,response);  

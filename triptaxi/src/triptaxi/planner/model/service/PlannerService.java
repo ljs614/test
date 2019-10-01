@@ -12,7 +12,9 @@ import java.util.List;
 import triptaxi.planner.model.dao.PlannerDao;
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
+import triptaxi.planner.model.vo.PlannerCity;
 import triptaxi.planner.model.vo.PlannerDay;
+import triptaxi.planner.model.vo.PlannerFullInfo;
 import triptaxi.planner.model.vo.Tour;
 
 public class PlannerService {
@@ -261,6 +263,19 @@ public class PlannerService {
 		int result=dao.plannerDayCount(conn, plannerId);
 		close(conn);
 		return result;
+	}
+	
+	public List<PlannerFullInfo> selectPlannerFullInfo(String option){
+		Connection conn = getConnection();
+		List<PlannerFullInfo> list = dao.selectPlannerFullInfo(conn, option);
+		close(conn);
+		return list;
+	}
+	
+	public List<PlannerCity> selectPlannerCity(){
+		Connection conn = getConnection();
+		List<PlannerCity> list = dao.selectPlannerCity(conn);
+		
 	}
 	
 

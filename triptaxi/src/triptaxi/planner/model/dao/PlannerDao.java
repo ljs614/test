@@ -15,7 +15,9 @@ import java.util.Properties;
 
 import triptaxi.planner.model.vo.CityList;
 import triptaxi.planner.model.vo.Planner;
+import triptaxi.planner.model.vo.PlannerCity;
 import triptaxi.planner.model.vo.PlannerDay;
+import triptaxi.planner.model.vo.PlannerFullInfo;
 import triptaxi.planner.model.vo.Tour;
 
 public class PlannerDao {
@@ -45,7 +47,7 @@ public class PlannerDao {
 				p.setPlannerId(rs.getString("planner_id"));
 				p.setPlannerName(rs.getString("planner_name"));
 				p.setPlannerDate(rs.getDate("planner_date"));
-				p.setPlannerWriter(rs.getString("user_name"));
+				p.setPlannerWriter(rs.getString("planner_writer"));
 				p.setPlannerTheme(rs.getString("planner_theme"));
 				p.setPlannerLike(rs.getInt("planner_like"));
 				p.setPlannerCount(rs.getInt("planner_count"));
@@ -566,6 +568,50 @@ public class PlannerDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List<PlannerFullInfo> selectPlannerFullInfo(Connection conn, String option){
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<PlannerFullInfo> list = new ArrayList<PlannerFullInfo>();
+		String sql = prop.getProperty("selectPlannerFullInfo")+option;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				PlannerFullInfo pfi = new PlannerFullInfo();
+				pfi.setPlannerId(rs.getString("planner_id"));
+				pfi.setPlannerName(rs.getString("planner_name"));
+				pfi.setPlannerDate(rs.getDate("planner_date"));
+				pfi.setPlannerWriter(rs.getString("planner_writer"));
+				pfi.setPlannerLike(rs.getInt("planner_like"));
+				pfi.setPlannerCount(rs.getInt("planner_count"));
+				pfi.setPlannerPublic(rs.getString("planner_public").charAt(0));
+				pfi.setPlannerWritedate(rs.getDate("planner_writedate"));
+				pfi.setPlannerCoverimg(rs.getString("planner_coverimg"));
+				pfi.setUserName(rs.getString("user_name"));
+				pfi.setDayCount(rs.getInt("day_count"));
+				
+				list.add(pfi);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		return list;
+	}
+	
+	public List<PlannerCity> selectPlannerCity(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectPlannerCity");
+		
+		try {
+			pstmt = conn.
+		}
 	}
 
 }

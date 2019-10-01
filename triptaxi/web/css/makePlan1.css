@@ -500,3 +500,43 @@
   #cbmBT-Y:hover, #cbmBT-N:hover{
     background-color:rgb(165, 198, 244);
   }
+  
+  #close {
+	background: #49506a;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
+	font-family: 'Nanum Gothic';
+	font-weight: bolder;
+	font-size:15px;
+}
+
+#close:hover {
+	background: #fff;
+	color: #49506a;
+}
+
+#close:before, #close:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #49506a;
+	transition: 400ms ease all;
+}
+
+#close:after {
+	right: inherit;
+	top: 35px;
+	left: 0;
+	bottom: 50px;
+}
+
+#close:hover:before, #close:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
+}

@@ -1,921 +1,1058 @@
 @charset "UTF-8";
 
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      overflow-y: hidden;
-      font-family: 'Nanum Gothic', sans-serif;
-    }
- header {
-      z-index: 999;
-      height: 60px;
-      font-family: 'Nanum Gothic', sans-serif;
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-    }
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	font-family: 'Nanum Gothic', sans-serif;
+}
 
-    header>div {
-      width: 300px;
-      height:30px;
-      display: inline-block;
-      position:absolute;
-      top:9px;
-      left:70px;
-      padding-left:5px;
-    }
-    
-    header>div#planTitle{
-      border-radius:5px;
-      cursor:pointer;
-      padding-top:10px; 
-    }
-    #planTitle>#pltitle{
-      display:inline-block;
-      font-weight:bolder;
-    }
-    header>div#editTitle{
-      display:none;
-      height:40px;
-    }
-    #editTitle input#title{
-      position:relative;
-      top:7px;
-      height:20px;
-      width:240px;
-    }
-    #editTitle>form{
-    	display:inline-block;
-    }
-    #editTitle input#editBT{
-      position:relative;
-      top:7px;
-      left:4px;
-      height:26px;
-      border:none;
-      font-family:'Nanum Gothic', sans-serif;
-      font-weight:bold;
-      border-radius: 3px;
-      background-color:rgb(165, 198, 244);
-    }
-    #editTitle #editBT:hover{
-    	background-color:rgba(165, 198, 244, 0.5);
-    }
-    #editTitle #editBT:focus{
-  	  outline:none;
-    }
-    #editTitle .titleCnt{
-      display:inline-block;
-      position:relative;
-      top:-17px;
-      left:192px;
-      width:45px;
-      text-align:right;
-      color:gray;
-      font-size:11px;
-    }
+header {
+	z-index: 999;
+	height: 60px;
+	font-family: 'Nanum Gothic', sans-serif;
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+}
 
-    header>div>i{
-        position:absolute;
-        top:10px;
-        left:280px;
-        color:white;
-    }
+header>div {
+	width: 300px;
+	height: 30px;
+	display: inline-block;
+	position: absolute;
+	top: 9px;
+	left: 70px;
+	padding-left: 5px;
+}
 
-    header>img {
-      display: inline-block;
-    }
+header>div#planTitle {
+	border-radius: 5px;
+	cursor: pointer;
+	padding-top: 10px;
+}
 
-    header button#close {
-      position: absolute;
-      display: inline-block;
-      top: 12px;
-      right: 30px;
-      width: 90px;
-      height: 35px;
-    }	
+#planTitle>#pltitle {
+	display: inline-block;
+	font-weight: bolder;
+}
 
-    nav {
-      background-color:rgb(73,80,106);
-      color:white;
-      /* border:1px solid red; */
-      width: 120px;
-      height: 100%;
-      left: 0;
-      margin: 0;
-      position: fixed;
-      display: inline-block;
-      font-family: 'Nanum Gothic', sans-serif;
-      border-right:1px solid rgba(180, 177, 177, 0.664);
-    }
+header>div#editTitle {
+	display: none;
+	height: 40px;
+}
 
-    .clickColor{
-      background-color:rgb(165, 198, 244);
-    }
+#editTitle input#title {
+	position: relative;
+	top: 7px;
+	height: 20px;
+	width: 240px;
+}
 
-    nav ul.dateInfo{
-      list-style: none;
-      padding:0;
-      padding-top:6px;
-      margin:0;
-      text-align:center;
-      font-size:14px;
-    }
+#editTitle>form {
+	display: inline-block;
+}
 
-    nav ul.dateInfo>li{
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      height:40px;
-    }
-    div#fullDateEdit{
-      margin-top:5px;
-      margin-left:60px;
-      font-weight:bold;
-      /* border:1px solid black; */
-      width:55px;
-      font-size:12px;
-      cursor:pointer;
-    }
-    div#fullDateEdit:hover{
-      color:gray;
-    }
+#editTitle input#editBT {
+	position: relative;
+	top: 7px;
+	left: 4px;
+	height: 26px;
+	border: none;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+	border-radius: 3px;
+	background-color: rgb(165, 198, 244);
+}
 
-    nav ul.dateInfo>li#showFullPlan{
-      padding-top:9px;
-      height:25px;
-      font-weight:500;
-    }
-    nav ul.dateInfo>li#showFullPlan:hover{
-      background-color:rgb(165, 198, 244, 0.5);
-    }
-    
-    nav ul.mainMenu {
-      margin: 0;
-      list-style: none;
-      padding: 0;
-      min-height:61px;
-      max-height:370px;
-      overflow-x:hidden;
-      overflow-y:auto !important;
-    }
-    nav ul.mainMenu>li{
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      text-align: center;
-      cursor:pointer;
-    }
-    nav ul.mainMenu>li:hover{
-      background-color:rgb(165, 198, 244, 0.5);
-    }
-    nav ul.mainMenu>li>div{
-      display:inline-block;
-      font-size:12px;
-    }
+#editTitle #editBT:hover {
+	background-color: rgba(165, 198, 244, 0.5);
+}
 
-    .mainMenu::-webkit-scrollbar {
-    width: 6px;
-    background-color: #F5F5F5;
-  } 
-  .mainMenu::-webkit-scrollbar-thumb {
-    background-color: rgb(189, 189, 189);
-  }
-    #mm_dayCount{
-      display:block;
-      font-weight:bold;
-      font-size:20px;
-      position:relative;
-      left:1px;
-    }
-    #mm_city{
-      display:block;
-      font-size:14px;
-      padding-bottom:3px;
-      color:black;
-      font-weight:bolder;
-    }
-    #mm_date{
-      position:relative;
-      top:-2px;
-      left:2px;
-    }
-    #mm_weekday{
-    	position:relative;
-      	top:-2px;
-    	margin-left:15px;
-    }
+#editTitle #editBT:focus {
+	outline: none;
+}
 
-    ul#addDayBox{
-      /* border:1px solid red; */
-      list-style:none;
-      padding:0;
-      text-align:center;
-      min-height:36px;
-      margin:0;
-      padding-top:12px;
-      padding-bottom:12px;
-    }
-    ul#addDayBox #addDay{
-      border:2px solid rgb(151, 151, 151);
-      color:white;
-      margin-left:9px;
-      padding-top:6px;
-      padding-bottom:4px;
-      width:100px;
-      height:22px;
-      font-weight:600;
-      cursor:pointer;
-      border-radius:4px;
-    }
-    #addDay>span{
-      transition:0.5s;
-    }
-    #addDay>span:before{
-      content:"+";
-      position:absolute;
-      opacity:0;
-      left:30px;
-      transition:0.5s;
-    }
-    #addDay:hover span{
-      padding-left:15px;
-    }
-    #addDay:hover span:before{
-      opacity:1;
-      left:18px;
-    }
-  
-    ul#userGuide{
-      border-top:2px solid rgba(180, 177, 177, 0.664);
-      /* border:1px solid red; */
-      list-style:none;
-      padding:0;
-      margin:0;
-      height:40px;
-      min-height:40px;
-      text-align:center;
-      position:relative;
-      bottom:0;
-    }
+#editTitle .titleCnt {
+	display: inline-block;
+	position: relative;
+	top: -17px;
+	left: 192px;
+	width: 45px;
+	text-align: right;
+	color: gray;
+	font-size: 11px;
+}
 
-    ul#userGuide>li{
-      padding-top:12px;
-      padding-bottom:10px;
-      font-size:13px;
-      font-weight:600;
-      cursor:pointer;
-    }
+header>div>i {
+	position: absolute;
+	top: 10px;
+	left: 280px;
+	color: white;
+}
 
-    ul#userGuide>li:hover{
-      color:gray;
-      letter-spacing: 1px;
-    }
+header>img {
+	display: inline-block;
+}
 
-    div#subMenu{
-      border-right:1px solid rgba(180, 177, 177, 0.664);
-      width:170px;
-      height:100%;
-      position:fixed;
-      left:120px;
-    }
+header button#close {
+	position: absolute;
+	display: inline-block;
+	top: 12px;
+	right: 30px;
+	width: 110px;
+	height: 35px;
+}
 
-    div#subMenu>ul{
-      list-style:none;
-      padding:10px;
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      margin:0;
-      height:62px;
-    }
+nav {
+	background-color: rgb(73, 80, 106);
+	color: white;
+	/* border:1px solid red; */
+	width: 120px;
+	height: 100%;
+	left: 0;
+	margin: 0;
+	position: fixed;
+	display: inline-block;
+	font-family: 'Nanum Gothic', sans-serif;
+	border-right: 1px solid rgba(180, 177, 177, 0.664);
+}
 
-    div#subMenu>ul>li>div{
-      display:inline-block;
-    }
+.clickColor {
+	background-color: rgb(165, 198, 244);
+}
 
-    #subMenu div#sm_dayCount{
-      /* border:1px solid red; */
-      text-align:center;
-      font-weight:bold;
-      font-size:20px;
-      margin-top:5px;
-      margin-left:10px;
-      padding-right:5px;
-      width:70px;
-    }
+nav ul.dateInfo {
+	list-style: none;
+	padding: 0;
+	padding-top: 6px;
+	margin: 0;
+	text-align: center;
+	font-size: 14px;
+}
 
-    #subMenu div#sm_refresh{
-      border:2px solid rgba(166, 171, 190,0.5);
-      border-radius:80px;
-      font-size:13px;
-      padding:4px 5px 2px 4px;
-      position:relative;
-      top:1px;
-      left:30px;
-    }
-    #subMenu div#sm_prevBT,div#sm_nextBT{
-      border:1px solid rgba(180, 177, 177, 0.664);
-      width:20px;
-      height:20px;
-      text-align: center;
-      font-size:16px;
-      font-weight:bold;
-      position:relative;
-      top:-3px;
-      cursor:pointer;
-    }
-    div#sm_prevBT{
-      position:relative;
-      left:15px;
-    }
-    div#sm_nextBT{
-      border-left:none;
-      position:relative;
-      left:10px;
-    }
-    #subMenu div#sm_prevBT:hover,div#sm_nextBT:hover,div#sm_refresh:hover{
-      color:gray;
-    }
+nav ul.dateInfo>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	height: 40px;
+}
 
-    #sm_date,#sm_weekday{
-      /* border:1px solid red; */
-      font-size:14px;
-      margin-top:10px;
-      margin-left:5px;
-    }
+div#fullDateEdit {
+	margin-top: 5px;
+	margin-left: 60px;
+	font-weight: bold;
+	/* border:1px solid black; */
+	width: 55px;
+	font-size: 12px;
+	cursor: pointer;
+}
 
-    #sm_weekday{
-      margin-left:0px;
-    }
+div#fullDateEdit:hover {
+	color: gray;
+}
 
-    div#searchCityMenu{
-      border-right:1px solid rgba(180, 177, 177, 0.664);
-      width:250px;
-      height:100%;
-      position:fixed;
-      left:291px;
-    }
+nav ul.dateInfo>li#showFullPlan {
+	padding-top: 9px;
+	height: 25px;
+	font-weight: 500;
+}
 
-    div#searchCityMenu>ul{
-      list-style:none;
-      padding:0px;
-      margin:0;
-      height:82px;
-      width:250px;
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      font-weight:bold;
-      font-size:20px;
-    }
+nav ul.dateInfo>li#showFullPlan:hover {
+	background-color: rgb(165, 198, 244, 0.5);
+}
 
-    div#searchCityMenu div#sc_title{
-      position:relative;
-      left:10px;
-      top:10px;
-    }
+nav ul.mainMenu {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	min-height: 61px;
+	max-height: 370px;
+	overflow-x: hidden;
+	overflow-y: auto !important;
+}
 
-    div#searchCityMenuClose{
-      display:inline-block;
-      width:37px;
-      height:35px;
-      padding-top:5px;
-      padding-right:3px;
-      text-align:center;
-      font-size:25px;
-      background-color:#a6abbe;
-      position:absolute;
-      left:540px;
-      top:70px;
-      cursor:pointer;
-      z-index:10;
-    }
-    .sc_icon{
-    	width:30px;
-    	height:30px;
-      	border:2px solid rgba(166, 171, 190,0.5);
-      	border-radius:80px; 	
-      	margin-right:15px;
-      	display:inline-block;
-      	position:relative;
-      	top:2px;
-      	left:20px;
-    }
-    #attractionIcon, #activityIcon, #festivalIcon, #clipIcon{
-    	color:#49506a;
-    	font-size:22px;
-    	padding-left:3px;
-    }
-    #attractionIcon>i{
-    	position:relative;
-    	top:3px;
-    	left:1px;
-    }
-    #activityIcon>i{
-    	position:relative;
-    	top:3px;
-    	left:4px;
-    }
-    #festivalIcon>i{
-    	position:relative;
-    	top:3px;
+nav ul.mainMenu>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	text-align: center;
+	cursor: pointer;
+}
 
-    }
-    #clipIcon>i{
-    	position:relative;
-    	top:3px;
-    	left:2px;
-    }
+nav ul.mainMenu>li:hover {
+	background-color: rgb(165, 198, 244, 0.5);
+}
 
-    #searchCityMenu .sc_icon:hover{
-      background-color: rgb(165, 198, 244, 0.5);
-    }
-   
-    #iconWrap{
-      border-top:1px solid rgba(180, 177, 177, 0.664);
-      position:relative;
-      height:38px;
-      top:21px;
-    }
-    
-    .iconColor{
-    	border:2px solid #a6abbe;
-    	background-color: #a5c6f4;
-    }
+nav ul.mainMenu>li>div {
+	display: inline-block;
+	font-size: 12px;
+}
 
-    div#map{
-      position:relative;
-      left:522px;
-      z-index:1;
-    }
-    #tourListMenu{
-    	overflow-x: hidden;
-    	overflow-y:auto !important;
-    }
-    #tourListMenu::-webkit-scrollbar {
-   		width: 6px;
-    	background-color: #F5F5F5;
-  	}
-  	#tourListMenu::-webkit-scrollbar-thumb {
-    background-color: rgb(189, 189, 189);
-  } 
-  	
-    
-    #tourListMenu>li{
-    border-bottom:1px solid rgba(180, 177, 177, 0.664);
-    	height:80px;
-    }
+.mainMenu::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
 
-    #tourListMenu>li>div{
-      display:inline-block;
-    }
-    #tourListMenu>li>.tourImg {
-      border: 1px solid rgba(180, 177, 177, 0.664);
-      position: relative;
-      top: 4px;
-      left: 5px;
-      width: 90px;
-      height: 70px;
-    }
-    #tourListMenu>li>.rightContent{
-    	position: relative;
-    	float: right;
-    	width: 130px;
-    	height: 60;
-    	top: 11px;
-    	left: -13px;
-    }
-    
-    .rightContent div{
-    	display:block;
-    }
-    .tourTitle{
-    	font-size: 15px;
-    	width:130px;
-    	height:17px;
-    	overflow:hidden;
-    	text-overflow:ellipsis;
-    }
-    .rightContent>.tourCategory{
-    	font-weight: 300;
-    	font-size: 13px;
-    	position: relative;
-    	top: 2px;
-    }
-    .rightContent>.tourClip{
-    display:inline-block;
-    	font-size: 15px;
-    	font-weight: 500;
-    	    position: relative;
-    top: 2px;
-    }
-    .tourClip>i{
-    	color:gray;
-    }
-    .rightContent>.tourScore{
-    	display:inline-block;
-    	font-size: 15px;
-    	font-weight: 500;
-    	position: relative;
-    	left: 2px;
-    	top:2px;
-    }
-    .tourScore>i{
-    	color:#fde396;
-    }
-    .rightContent>.plusTour{
-    	display: inline-block;
-    	font-size: 20px;
-    	border: 1px solid rgba(180, 177, 177, 0.664);
-    	width: 22px;
-    	height: 22px;
-    	text-align: center;
-    	float: right;
-    	backgound-color:white;
-    }
-     .plusTour:hover{
-      background-color:rgba(166,171,190,0.1) !important;
-      cursor:pointer;
-    }
-    
-    #dataNullalertIcon{
-    	color:rgb(166,171,190);
-    	display: block !important;
-    	text-align: center;
-    	font-size: 39px;
-    	padding-top: 50px;
-    }
-    #dataNullalertContent{
-    	color:rgb(166,171,190);
-    	display: block !important;
-    	text-align: center;
-   		padding-top: 18px;
-    	letter-spacing: 3px;
-    	line-height: 34px;
-    }
+.mainMenu::-webkit-scrollbar-thumb {
+	background-color: rgb(189, 189, 189);
+}
 
-    #dayEditModal,#closeModal{
-      background-color: rgba(0,0,0,0.4);
-      width:100%;
-      height:100%;
-      z-index:999;
-      display:none;
-      position:absolute;
-      top:0;
-      vertical-align: middle;
-    }
-    
-    #dayEditModal-content{
-      height:100%;
-      width:200px;
-      background-color:rgb(73,80,106);
-      position:absolute;
-    }
-    #dayEditModal-content>ul#dayEditModal-main{
-      margin-top: 0;
-      list-style: none;
-      padding: 0;   
-      margin-bottom: 0;   
-    }
-    #dayEditModal-main>li{
-      border:1px solid rgba(180, 177, 177, 0.664);
-      height:50px;
-      width:200px;
-    }
+#mm_dayCount {
+	display: block;
+	font-weight: bold;
+	font-size: 20px;
+	position: relative;
+	left: 1px;
+}
 
-    #dayEditModal{
-      background-color: rgba(0,0,0,0.4);
-      width:100%;
-      height:100%;
-      z-index:999;
-      display:none;
-      position:absolute;
-      top:0;
-      vertical-align: middle;
-    }
-    #dayEditModal-content{
-      height:100%;
-      width:200px;
-      background-color:rgb(73,80,106);
-      position:absolute;
-    }
-    #dayEditModal-content>ul#dayEditModal-main,
-    #dayEditModal-content>ul#dayEditModal-list{
-      margin-top: 0;
-      list-style: none;
-      padding: 0;      
-    }
-    #dayEditModal-main>li{
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      height:40px;
-      text-align:center;
-    }
-    #dayEditModal-list>li{
-      border-bottom:1px solid rgba(180, 177, 177, 0.664);
-      width:200px;
-      padding-top:5px;
-      padding-left: 11px;
-    }
-    #dayEditModal-list{
-    	overflow-x:hidden;
-    	overflow-y:auto !important;
-    }
-    #dayEditModal-list::-webkit-scrollbar {
-    	width: 6px;
-    	background-color: #F5F5F5;
-  	}
-  	#dayEditModal-list::-webkit-scrollbar-thumb {
-    background-color: rgb(189, 189, 189);
-  }
-  	 
+#mm_city {
+	display: block;
+	font-size: 14px;
+	padding-bottom: 3px;
+	color: black;
+	font-weight: bolder;
+}
 
-    #dayEditModal-main #dayEditClose{
-      position:relative;
-      background-color:#a5c6f4;
-      top:8px;
-      left:25px;
-      width:150px;
-      height:20px;
-      padding-top:4px;
-      font-weight:bold;
-      color:rgb(73,80,106);
-    }
-    #dayEditClose:hover{
-      background-color:rgba(165, 198, 244,0.7) !important;
-      cursor:pointer;
-    }
+#mm_date {
+	position: relative;
+	top: -2px;
+	left: 2px;
+}
 
-    #dayEditDate{
-      width: 200px;
-      height: 40px;
-      display: block;
-      padding-top: 10px;
-      color: white;
-    }
+#mm_weekday {
+	position: relative;
+	top: -2px;
+	margin-left: 15px;
+}
 
-    div#datepicker {
-      position: absolute;
-      top: 41px;
-      left: 199px;
-      display: none;
-    }
+ul#addDayBox {
+	/* border:1px solid red; */
+	list-style: none;
+	padding: 0;
+	text-align: center;
+	min-height: 36px;
+	margin: 0;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
 
-    .ui-datepicker {
-      width: 310px;
-      font-family: 'Nanum Gothic', sans-serif; 
-    }
+ul#addDayBox #addDay {
+	border: 2px solid rgb(151, 151, 151);
+	color: white;
+	margin-left: 9px;
+	padding-top: 6px;
+	padding-bottom: 4px;
+	width: 100px;
+	height: 22px;
+	font-weight: 600;
+	cursor: pointer;
+	border-radius: 4px;
+}
 
-    .ui-datepicker-header {
-      text-align: center;
-      background: white;
-      padding-bottom: 15px;
-      font-weight: 300;
-      border: none;
-    }
+#addDay>span {
+	transition: 0.5s;
+}
 
-    .ui-datepicker-calendar thead {
-      text-align: center;
-      background: white;
-      padding-bottom: 15px;
-      font-size: 14px;
-      font-weight: 100;
-      border: none;
-      color: darkgray;
-    }
+#addDay>span:before {
+	content: "+";
+	position: absolute;
+	opacity: 0;
+	left: 30px;
+	transition: 0.5s;
+}
 
-    .ui-datepicker-calendar .ui-state-default {
-      background: none;
-      border: none;
-      text-align: center;
-      height: 30px;
-      width: 32px;
-      line-height: 36px;
-      margin-top: 3px;
-      padding-top: 2px;
-      padding-bottom: 5px;
-    }
+#addDay:hover span {
+	padding-left: 15px;
+}
 
-    .ui-datepicker-calendar .ui-state-active {
-      border-radius: 50%;
-      background-color: #a5c6f4;
-      color: white;
-      height: 30px;
-      width: 32px;
-    }
+#addDay:hover span:before {
+	opacity: 1;
+	left: 18px;
+}
 
-    .ui-datepicker-calendar .ui-state-hover {
-      border-radius: 50%;
-      background-color: rgba(165, 198, 244,0.7);
-      color: white;
-      height: 30px;
-      width: 32px;
-    }
+ul#userGuide {
+	border-top: 2px solid rgba(180, 177, 177, 0.664);
+	/* border:1px solid red; */
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	height: 40px;
+	min-height: 40px;
+	text-align: center;
+	position: relative;
+	bottom: 0;
+}
 
-    .md_dayCount{
-      display: inline-block;
-      font-weight: bold;
-      font-size: 25px;
-      position: relative;
-      left: -2px;
-      color: white;
-    }
-    .md_city{
-      display: inline-block;
-      font-size: 15px;
-      padding-bottom: 3px;
-      color: #a5c6f4;
-      font-weight: bolder;
-      position: relative;
-      left:  83px;
-      top: -8px;
-    }
-    .md_date{
-      position: relative;
-      top: 11px;
-      left: 13px;
-      color: white;
-      font-size: 14px;
-    }
-    .md_weekday{
-      position: relative;
-      display: inline-block;
-      top: -3px;
-      margin-left: 13px;
-      color: white;
-      font-size: 14px;
-    }
-    .delete_md_day{
-      display: inline-block;
-      border: 1px solid rgba(180, 177, 177, 0.664);
-      font-size: 17px;
-      width: 20px;
-      height: 20px;
-      position: relative;
-      top: -39px;
-      left: -27px;
-      float: right;
-      text-align: center;
-      font-weight: 500;
-      color: white;
-      cursor: pointer;
-    }
-    .delete_md_day:hover{
-      background-color:rgba(255, 255, 255,0.6);
-    }
-    
-    #sm_plannerList{
-    	overflow-x: hidden;
-    	overflow-y: auto !important;
-    	padding:0 !important;
-    }
-    #sm_plannerList::-webkit-scrollbar {
-   		width: 6px;
-    	background-color: #F5F5F5;
-  	}
-  	#sm_plannerList::-webkit-scrollbar-thumb {
-    background-color: rgb(189, 189, 189);
-  } 
-  	
-    
-    #sm_plannerList>li{
-    	border-bottom:1px solid rgba(180, 177, 177, 0.664);
-    	height:80px;
-    }
-    
-    #sm_plannerList>li>div{
-    	display:inline-block;
-    }
-    .sm_plannerListImg{
-    	position: relative;
-    	left: 20px;
-    	top: 4px;
-    	font-size: 30px;
-    	color: rgb(73,80,106);
-    }
-    .sm_plannerListTitle{
-    	font-size: 16px;
-    	display: block !important;
-    	font-weight: bolder;
-    	padding-top: 1px;
-    	padding-left: 8px;
-    }
-    .sm_plannerListCategory{
-    	font-size: 13px;
-    	position: relative;
-    	top: 2px;
-    	display: block !important;
-    	padding-left: 14px;
-    }
-    .sm_plannerDelete{
-    	width:22px;
-    	height:22px;
-    	text-align:center;
-    	border: 1px solid rgba(180, 177, 177, 0.664);
-      	font-size: 17px;
-      	font-weight:bolder;
-    	cursor: pointer;
-    	float:right;
-    	margin-right:10px;
-    	margin-top:7px;
-    }
-    .sm_plannerDelete:hover{
-      background-color:rgba(166,171,190,0.1) !important;
-      pointer:cursor;
-    }
- 
-    #closeModal-content{
-    	background-color:white;
-    	width:370px;
-    	height:400px;
-    	margin:0 auto;
-    	margin-top:10%;
-    }
-    #cmTitle{
-    	border-bottom:1px solid rgb(194, 192, 192);
-    	height: 40px;
-    	padding-top: 10px;
-    	padding-left: 15px;
-    	font-weight: bolder;
-    	font-size: 17px;
-    }
-    #cmTitle>img{
-    	position:relative;
-    	top:4px;
-    	left:200px;
-    }
+ul#userGuide>li {
+	padding-top: 12px;
+	padding-bottom: 10px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
 
-    #cmContent{
-    	border-bottom:1px solid rgb(194, 192, 192);
-    	height:300px;
-    }
-    #cmContent>table{
+ul#userGuide>li:hover {
+	color: gray;
+	letter-spacing: 1px;
+}
 
-    	position:relative;
-    	top:0px;
-    	width:355px;
-    	height:250px;
-    	margin:0 auto;
-    	border-collapse:collapse;
-    }
-    #cmContent>table th{
+div#subMenu {
+	border-right: 1px solid rgba(180, 177, 177, 0.664);
+	width: 170px;
+	height: 100%;
+	position: fixed;
+	left: 120px;
+}
 
-    	width:60px;
-    	text-align:left;
-    	font-size:14px;
-    }
-    #cmContent>table tr:first-child, #cmContent table tr:nth-child(2){height:60px;}
-    #cmContent>table tr:nth-child(3){height:178px;}
-    #cmContent>table td{padding-left:5px;}
-    #cmContent>table input[type="text"]{height:20px; }
-    #cmContent>table #endPlanTitle{
-    	width:250px;
-    	position:relative;
-    	top:10px;
-    }
-    #cmContent .titleCnt{
-    	display:inline-block;
-    	position:relative;
-    	width:45px;
-    	text-align:right;
-    	top: -14px;
-    	left: 203px;
-    	color:gray;
-    	font-size:13px;
-    }
-    #cmContent span{
-    color:gray;
-    position:relative;
-    left:-25px;
-    top:1px;
-  	}
-  	.selectTheme{
-  	display:inline-block;
-  	text-align:center;
-  	padding-left:3px;
-  	padding-right:3px;}
-  	#cmContent>table input[type="radio"]{width:40px;}
-  	#cmContent>table label{text-align:center; font-size:15px;}
-    #cmContent label>img{
-    opacity:0.7;
-    }
-    #cmBottom input[type="checkBox"], #cmBottom label{
-    	position:relative;
-    	top:7px;
-    }
-    #cmBottom input[type="submit"]{
-    	background-color: rgb(165, 198, 244);
-   		border: none;
-    	width: 105px;
-    	height: 33px;
-    	position: relative;
-    	top: 7px;
-    	left: 180px;
-    	font-weight:600;
-    	color:white;
-    	font-size:17px;
-    	font-family: 'Nanum Gothic';
-    }
- 	#cmBottom input[type="submit"]:hover{
-    background-color:rgb(165, 198, 244,0.5);
-  	}
-  	#cmBottom input[type="submit"]:active{
-    	background-color:rgb(165, 198, 244);
-  	}
-  	#cmBottom input[type="submit"]:focus{
-  		outline:none;
-  	}
-    
+div#subMenu>ul {
+	list-style: none;
+	padding: 10px;
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	margin: 0;
+	height: 62px;
+}
+
+div#subMenu>ul>li>div {
+	display: inline-block;
+}
+
+#subMenu div#sm_dayCount {
+	/* border:1px solid red; */
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	margin-top: 5px;
+	margin-left: 10px;
+	padding-right: 5px;
+	width: 70px;
+}
+
+#subMenu div#sm_refresh {
+	border: 2px solid rgba(166, 171, 190, 0.5);
+	border-radius: 80px;
+	font-size: 13px;
+	padding: 4px 5px 2px 4px;
+	position: relative;
+	top: 1px;
+	left: 30px;
+}
+
+#subMenu div#sm_prevBT, div#sm_nextBT {
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	position: relative;
+	top: -3px;
+	cursor: pointer;
+}
+
+div#sm_prevBT {
+	position: relative;
+	left: 15px;
+}
+
+div#sm_nextBT {
+	border-left: none;
+	position: relative;
+	left: 10px;
+}
+
+#subMenu div#sm_prevBT:hover, div#sm_nextBT:hover, div#sm_refresh:hover
+	{
+	color: gray;
+}
+
+#sm_date, #sm_weekday {
+	/* border:1px solid red; */
+	font-size: 14px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+#sm_weekday {
+	margin-left: 0px;
+}
+
+div#searchCityMenu {
+	border-right: 1px solid rgba(180, 177, 177, 0.664);
+	width: 250px;
+	height: 100%;
+	position: fixed;
+	left: 291px;
+}
+
+div#searchCityMenu>ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0;
+	height: 82px;
+	width: 250px;
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	font-weight: bold;
+	font-size: 20px;
+}
+
+div#searchCityMenu div#sc_title {
+	position: relative;
+	left: 10px;
+	top: 10px;
+}
+
+div#searchCityMenuClose {
+	display: inline-block;
+	width: 37px;
+	height: 35px;
+	padding-top: 5px;
+	padding-right: 3px;
+	text-align: center;
+	font-size: 25px;
+	background-color: #a6abbe;
+	position: absolute;
+	left: 540px;
+	top: 70px;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.sc_icon {
+	width: 30px;
+	height: 30px;
+	border: 2px solid rgba(166, 171, 190, 0.5);
+	border-radius: 80px;
+	margin-right: 15px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	left: 20px;
+}
+
+#attractionIcon, #activityIcon, #festivalIcon, #clipIcon {
+	color: #49506a;
+	font-size: 22px;
+	padding-left: 3px;
+}
+
+#attractionIcon>i {
+	position: relative;
+	top: 3px;
+	left: 1px;
+}
+
+#activityIcon>i {
+	position: relative;
+	top: 3px;
+	left: 4px;
+}
+
+#festivalIcon>i {
+	position: relative;
+	top: 3px;
+}
+
+#clipIcon>i {
+	position: relative;
+	top: 3px;
+	left: 2px;
+}
+
+#searchCityMenu .sc_icon:hover {
+	background-color: rgb(165, 198, 244, 0.5);
+}
+
+#iconWrap {
+	border-top: 1px solid rgba(180, 177, 177, 0.664);
+	position: relative;
+	height: 38px;
+	top: 21px;
+}
+
+.iconColor {
+	border: 2px solid #a6abbe;
+	background-color: #a5c6f4;
+}
+
+div#map {
+	position: relative;
+	left: 522px;
+	z-index: 1;
+}
+
+#tourListMenu {
+	overflow-x: hidden;
+	overflow-y: auto !important;
+}
+
+#tourListMenu::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#tourListMenu::-webkit-scrollbar-thumb {
+	background-color: rgb(189, 189, 189);
+}
+
+#tourListMenu>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	height: 80px;
+}
+
+#tourListMenu>li>div {
+	display: inline-block;
+}
+
+#tourListMenu>li>.tourImg {
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	position: relative;
+	top: 4px;
+	left: 5px;
+	width: 90px;
+	height: 70px;
+}
+
+#tourListMenu>li>.rightContent {
+	position: relative;
+	float: right;
+	width: 130px;
+	height: 60;
+	top: 11px;
+	left: -13px;
+}
+
+.rightContent div {
+	display: block;
+}
+
+.tourTitle {
+	font-size: 15px;
+	width: 130px;
+	height: 17px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.rightContent>.tourCategory {
+	font-weight: 300;
+	font-size: 13px;
+	position: relative;
+	top: 2px;
+}
+
+.rightContent>.tourClip {
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 500;
+	position: relative;
+	top: 2px;
+}
+
+.tourClip>i {
+	color: gray;
+}
+
+.rightContent>.tourScore {
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 500;
+	position: relative;
+	left: 2px;
+	top: 2px;
+}
+
+.tourScore>i {
+	color: #fde396;
+}
+
+.rightContent>.plusTour {
+	display: inline-block;
+	font-size: 20px;
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	float: right;
+	backgound-color: white;
+}
+
+.plusTour:hover {
+	background-color: rgba(166, 171, 190, 0.1) !important;
+	cursor: pointer;
+}
+
+#dataNullalertIcon {
+	color: rgb(166, 171, 190);
+	display: block !important;
+	text-align: center;
+	font-size: 39px;
+	padding-top: 50px;
+}
+
+#dataNullalertContent {
+	color: rgb(166, 171, 190);
+	display: block !important;
+	text-align: center;
+	padding-top: 18px;
+	letter-spacing: 3px;
+	line-height: 34px;
+}
+
+#dayEditModal, #closeModal {
+	background-color: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	display: none;
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+}
+
+#dayEditModal-content {
+	height: 100%;
+	width: 200px;
+	background-color: rgb(73, 80, 106);
+	position: absolute;
+}
+
+#dayEditModal-content>ul#dayEditModal-main {
+	margin-top: 0;
+	list-style: none;
+	padding: 0;
+	margin-bottom: 0;
+}
+
+#dayEditModal-main>li {
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	height: 50px;
+	width: 200px;
+}
+
+#dayEditModal {
+	background-color: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	display: none;
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+}
+
+#dayEditModal-content {
+	height: 100%;
+	width: 200px;
+	background-color: rgb(73, 80, 106);
+	position: absolute;
+}
+
+#dayEditModal-content>ul#dayEditModal-main, #dayEditModal-content>ul#dayEditModal-list
+	{
+	margin-top: 0;
+	list-style: none;
+	padding: 0;
+}
+
+#dayEditModal-main>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	height: 40px;
+	text-align: center;
+}
+
+#dayEditModal-list>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	width: 200px;
+	padding-top: 5px;
+	padding-left: 11px;
+}
+
+#dayEditModal-list {
+	overflow-x: hidden;
+	overflow-y: auto !important;
+}
+
+#dayEditModal-list::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#dayEditModal-list::-webkit-scrollbar-thumb {
+	background-color: rgb(189, 189, 189);
+}
+
+#dayEditModal-main #dayEditClose {
+	position: relative;
+	background-color: #a5c6f4;
+	top: 8px;
+	left: 25px;
+	width: 150px;
+	height: 20px;
+	padding-top: 4px;
+	font-weight: bold;
+	color: rgb(73, 80, 106);
+}
+
+#dayEditClose:hover {
+	background-color: rgba(165, 198, 244, 0.7) !important;
+	cursor: pointer;
+}
+
+#dayEditDate {
+	width: 200px;
+	height: 40px;
+	display: block;
+	padding-top: 10px;
+	color: white;
+}
+
+div#datepicker {
+	position: absolute;
+	top: 41px;
+	left: 199px;
+	display: none;
+}
+
+.ui-datepicker {
+	width: 310px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.ui-datepicker-header {
+	text-align: center;
+	background: white;
+	padding-bottom: 15px;
+	font-weight: 300;
+	border: none;
+}
+
+.ui-datepicker-calendar thead {
+	text-align: center;
+	background: white;
+	padding-bottom: 15px;
+	font-size: 14px;
+	font-weight: 100;
+	border: none;
+	color: darkgray;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+	background: none;
+	border: none;
+	text-align: center;
+	height: 30px;
+	width: 32px;
+	line-height: 36px;
+	margin-top: 3px;
+	padding-top: 2px;
+	padding-bottom: 5px;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+	border-radius: 50%;
+	background-color: #a5c6f4;
+	color: white;
+	height: 30px;
+	width: 32px;
+}
+
+.ui-datepicker-calendar .ui-state-hover {
+	border-radius: 50%;
+	background-color: rgba(165, 198, 244, 0.7);
+	color: white;
+	height: 30px;
+	width: 32px;
+}
+
+.md_dayCount {
+	display: inline-block;
+	font-weight: bold;
+	font-size: 25px;
+	position: relative;
+	left: -2px;
+	color: white;
+}
+
+.md_city {
+	display: inline-block;
+	font-size: 15px;
+	padding-bottom: 3px;
+	color: #a5c6f4;
+	font-weight: bolder;
+	position: relative;
+	left: 83px;
+	top: -8px;
+}
+
+.md_date {
+	position: relative;
+	top: 11px;
+	left: 13px;
+	color: white;
+	font-size: 14px;
+}
+
+.md_weekday {
+	position: relative;
+	display: inline-block;
+	top: -3px;
+	margin-left: 13px;
+	color: white;
+	font-size: 14px;
+}
+
+.delete_md_day {
+	display: inline-block;
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	font-size: 17px;
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: -39px;
+	left: -27px;
+	float: right;
+	text-align: center;
+	font-weight: 500;
+	color: white;
+	cursor: pointer;
+}
+
+.delete_md_day:hover {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+#sm_plannerList {
+	overflow-x: hidden;
+	overflow-y: auto !important;
+	padding: 0 !important;
+}
+
+#sm_plannerList::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#sm_plannerList::-webkit-scrollbar-thumb {
+	background-color: rgb(189, 189, 189);
+}
+
+#sm_plannerList>li {
+	border-bottom: 1px solid rgba(180, 177, 177, 0.664);
+	height: 80px;
+}
+
+#sm_plannerList>li>div {
+	display: inline-block;
+}
+
+.sm_plannerListImg {
+	position: relative;
+	left: 20px;
+	top: 4px;
+	font-size: 30px;
+	color: rgb(73, 80, 106);
+}
+
+.sm_plannerListTitle {
+	font-size: 16px;
+	display: block !important;
+	font-weight: bolder;
+	padding-top: 1px;
+	padding-left: 8px;
+}
+
+.sm_plannerListCategory {
+	font-size: 13px;
+	position: relative;
+	top: 2px;
+	display: block !important;
+	padding-left: 14px;
+}
+
+.sm_plannerDelete {
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	border: 1px solid rgba(180, 177, 177, 0.664);
+	font-size: 17px;
+	font-weight: bolder;
+	cursor: pointer;
+	float: right;
+	margin-right: 10px;
+	margin-top: 7px;
+}
+
+.sm_plannerDelete:hover {
+	background-color: rgba(166, 171, 190, 0.1) !important;
+	pointer: cursor;
+}
+
+#closeModal-content {
+	background-color: white;
+	width: 370px;
+	height: 400px;
+	margin: 0 auto;
+	margin-top: 10%;
+}
+
+#cmTitle {
+	border-bottom: 1px solid rgb(194, 192, 192);
+	height: 40px;
+	padding-top: 10px;
+	padding-left: 15px;
+	font-weight: bolder;
+	font-size: 17px;
+}
+
+#cmTitle>img {
+	position: relative;
+	top: 4px;
+	left: 200px;
+}
+
+#cmContent {
+	border-bottom: 1px solid rgb(194, 192, 192);
+	height: 300px;
+}
+
+#cmContent>table {
+	position: relative;
+	top: 0px;
+	width: 355px;
+	height: 250px;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+#cmContent>table th {
+	width: 60px;
+	text-align: left;
+	font-size: 14px;
+}
+
+#cmContent>table tr:first-child, #cmContent table tr:nth-child(2) {
+	height: 60px;
+}
+
+#cmContent>table tr:nth-child(3) {
+	height: 178px;
+}
+
+#cmContent>table td {
+	padding-left: 5px;
+}
+
+#cmContent>table input[type="text"] {
+	height: 20px;
+}
+
+#cmContent>table #endPlanTitle {
+	width: 250px;
+	position: relative;
+	top: 10px;
+}
+
+#cmContent .titleCnt {
+	display: inline-block;
+	position: relative;
+	width: 45px;
+	text-align: right;
+	top: -14px;
+	left: 203px;
+	color: gray;
+	font-size: 13px;
+}
+
+#cmContent span {
+	color: gray;
+	position: relative;
+	left: -25px;
+	top: 1px;
+}
+
+.selectTheme {
+	display: inline-block;
+	text-align: center;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+#cmContent>table input[type="radio"] {
+	width: 40px;
+}
+
+#cmContent>table label {
+	text-align: center;
+	font-size: 15px;
+}
+
+#cmContent label>img {
+	opacity: 0.7;
+}
+
+#cmBottom input[type="checkBox"], #cmBottom label {
+	position: relative;
+	top: 7px;
+}
+
+#cmBottom input[type="submit"] {
+	background-color: rgb(165, 198, 244);
+	border: none;
+	width: 105px;
+	height: 33px;
+	position: relative;
+	top: 7px;
+	left: 180px;
+	font-weight: 600;
+	color: white;
+	font-size: 17px;
+	font-family: 'Nanum Gothic';
+}
+
+#cmBottom input[type="submit"]:hover {
+	background-color: rgb(165, 198, 244, 0.5);
+}
+
+#cmBottom input[type="submit"]:active {
+	background-color: rgb(165, 198, 244);
+}
+
+#cmBottom input[type="submit"]:focus {
+	outline: none;
+}
+
+#close {
+	background: #49506a;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
+	font-family: 'Nanum Gothic';
+	font-weight: bolder;
+}
+
+#close:hover {
+	background: #fff;
+	color: #49506a;
+}
+
+#close:before, #close:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #49506a;
+	transition: 400ms ease all;
+}
+
+#close:after {
+	right: inherit;
+	top: 35px;
+	left: 0;
+	bottom: 50px;
+}
+
+#close:hover:before, #close:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
+}

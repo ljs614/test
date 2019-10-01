@@ -50,7 +50,7 @@
 					<td class="tbl_Continent">남아메리카</td>
 					<td class="tbl_Continent">아프리카</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Asia'
+				<tr class='showCityList' id='showCityList_Asia' data-continent="아시아"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>아시아</div>
@@ -69,7 +69,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Europe'
+				<tr class='showCityList' id='showCityList_Europe' data-continent="유럽"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>유럽</div>
@@ -88,7 +88,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_NorthAmerica'
+				<tr class='showCityList' id='showCityList_NorthAmerica' data-continent="북아메리카"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>북아메리카</div>
@@ -107,7 +107,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Austrailia'
+				<tr class='showCityList' id='showCityList_Austrailia' data-continent="오스트레일리아"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>오스트레일리아</div>
@@ -126,7 +126,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_SouthAmerica'
+				<tr class='showCityList' id='showCityList_SouthAmerica' data-continent="남아메리카"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>남아메리카</div>
@@ -145,7 +145,7 @@
 						</div>
 					</td>
 				</tr>
-				<tr class='showCityList' id='showCityList_Africa'
+				<tr class='showCityList' id='showCityList_Africa'  data-continent="아프리카"
 					style="display: none">
 					<td colspan='7'>
 						<div id='sac_title'>아프리카</div>
@@ -337,8 +337,21 @@
 	}
 	
 	$('.tbl_Continent').click(function(){
-		console.log($(this).text());
-		$('#sac_title').text($(this).text());
+
+		var continent = $(this).text();
+		
+		var arr = $(this).parent().siblings();
+		$.each(arr, function(index, item){
+			if(continent == $(item).data("continent")){
+				if($(item).find("li").length==0){
+					var ul = $(item).find("ul");
+					var add = "<li id='comingsoon' style='border:none'><div id='dataNullalertIcon'><i class='fas fa-exclamation-triangle'></i> </div>";
+					add += "<div id='dataNullalertContent'>해당하는 데이터가 없습니다.</div></li>";
+					ul.append(add);
+				}
+			}
+		}) 
+
 		
 	})
 	

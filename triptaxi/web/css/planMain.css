@@ -276,3 +276,23 @@ div.planView_Div:hover .pvc_Popularity {
 	transform: translateX(-25%);
 	transition: 1.8s;
 }
+
+#dataNullalertIcon {
+	color: rgb(166, 171, 190);
+	display: inline-block !important;
+	text-align: center;
+	font-size: 39px;
+}
+
+#dataNullalertContent {
+	color: rgb(166, 171, 190);
+    display: inline-block !important;
+    text-align: center;
+    padding-left: 17px;
+    line-height: 34px;
+    letter-spacing: 3px;
+    font-size: 25px;
+    font-weight: bolder;
+    position: relative;
+    top: -6px;
+}
