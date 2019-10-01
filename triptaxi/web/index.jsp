@@ -25,7 +25,8 @@
 			</div>
 			<div class="top_con1_1">
 				<div class="top_con1_2">
-					<div class="top_con1_2_1 top_border con1_hover1 hvr-shutter-out-vertical" onclick="">
+					<%if(loginUser!=null){ %>
+					<div class="top_con1_2_1 top_border con1_hover1 hvr-shutter-out-vertical" onclick="con1_div();">
 						<div class="top_con1_2_11">
 							<span class="top_con_span"> 여행일정 계획표 </span>
 							<p class="top_con_p">나만의 특별한 여행일정 만들기</p>
@@ -37,6 +38,21 @@
 								</i>
 						</div>
 					</div>
+					<%} else{%>
+					<div class="top_con1_2_1 top_border con1_hover1 hvr-shutter-out-vertical mypagenull">
+						<div class="top_con1_2_11">
+							<span class="top_con_span"> 여행일정 계획표 </span>
+							<p class="top_con_p">나만의 특별한 여행일정 만들기</p>
+						</div>
+						<div class="top_con1_2_12 hvr-icon-spin">
+							<!-- <i class="fas fa-map top_con_i"></i> -->
+								<i class="material-icons top_con_i1 top_i">
+									flight_takeoff
+								</i>
+						</div>
+					</div>
+					<%} %>
+
 
 					<div class="top_con1_2_1 con1_hover2 hvr-shutter-out-vertical hvr-icon-spin" onclick="">
 						<div class="top_con1_2_11">
@@ -173,9 +189,8 @@
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 				<span class="close">&times;</span>
-				<!-- <form> -->
 			<div class="modal-content1">
-				<h3>여행하고싶은 대륙을 선택해주세요.</h3>
+				<h2>여행하고싶은 대륙을 선택해주세요.</h2>
 				<div class="modal-con">
 					<label class="list_label">
 						<input type="checkbox" class="option-input checkbox" value="Asia" name="continent"/> 아시아
@@ -202,7 +217,7 @@
 			</div>
 			
 			<div class="modal-content2">
-				<h3>누구랑 여행을 계획중이신가요?</h3>
+				<h2>누구랑 여행을 계획중이신가요?</h2>
 				
 				<div class="modal-con">
 					<label class="list_label">
@@ -223,8 +238,6 @@
 						<input type="checkbox" class="option-input checkbox" value="business_trip" name="withTravel" onclick="doOpenCheck(this);"/> 비즈니스여행
 					</label> 
 				</div>
-				<!-- <input type="submit" value="전송" id="last_btn">
-				</form> -->
 				<button value="매칭" id="last_btn">매칭</button>
 			</div>
 		</div>
@@ -232,6 +245,10 @@
 
 
 	<script>
+	
+	function con1_div(){
+		location.href="<%=request.getContextPath()%>/user/mypage";
+	}
 	
 	function doOpenCheck(chk){
 	    var obj = document.getElementsByName("withTravel");
@@ -319,22 +336,31 @@
 							data:{"continent":continent,"withTravel":withTravel},
 							success:function(data){
 								var cityArr="";
+								var headCity="";
 								console.log(data);
 								console.log(data.length);
+								if(data.length!=0){
 								for(var i=0; i<data.length; i++){
 									console.log(data[i]["cityEng"]);
-									cityArr="<span class='close'>&times;</span>";
-									cityArr+="<a href='<%=request.getContextPath()%>/citychoice?cityName="+data[i]["cityEng"]+"'>"+data[i]["cityName"]+"</a>";
+									cityArr+="<a href='<%=request.getContextPath()%>/citychoice?cityName="+data[i]["cityEng"]+"'><li class='hvr-underline-from-left'>"+data[i]["cityName"]+"</li></a>";
 								}
-							 	$(".modal-content").html(cityArr);
+								headCity+="<span class='close'>&times;</span>";
+								headCity+="<h2>추천 도시</h2>";
+								headCity+="<ul class='modal_citylist'>";
+								$(".modal-content").html(headCity+cityArr);
+							 	$(".modal-content").append("</ul>");
+							 	$(".modal-content").append("<h4>도시를 클릭하시면 상세정보를 볼수 있습니다.</h4>");
+								}else{
+									$(".modal-content").html("<span class='close'>&times;</span>");
+									$(".modal-content").append("<br><br><br><br><h1>조건에 일치하는 도시가<br><br> 존재하지 않습니다.</h1>");
+								}
 							 	$(".close").on("click",function(){
 									/* $("#myModal").css("display","none"); */
 									location.reload();
-								});	
-							}
-						});   	 
+							});	
+						}
+					});   	 
 			});
-
 		
  
 		$(function(){

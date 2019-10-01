@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="triptaxi.user.model.vo.User" %>
-
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
 	Cookie[] cookies=request.getCookies();
@@ -34,6 +33,7 @@
 	<script src="<%=request.getContextPath() %>/js/parallax.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="<%=request.getContextPath() %>/js/aos.js"></script>
+    <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favi.png">
     <title>Trip Taxi</title>
 
     <script>
@@ -50,14 +50,14 @@
         $(function(){
             $("nav").hover(function(){
                 $("nav .sub_menu").stop().slideDown("fast");
-                $("nav").css("backgroundColor","#49506a");
-                $("nav").css("borderBottom","1px solid #404559");
-                $(".main_menu>a").css("color","white");
-                $(".sub_menu1>ul>li>a").css("color","white");
+                $("nav").css("backgroundColor","white");
+                $("nav").css("borderBottom","1px solid lightgray");
+                $(".main_menu>a").css("color","black");
+                $(".sub_menu1>ul>li>a").css("color","black");
             }, function(){
                 if($(window).scrollTop()){
                     $("nav .sub_menu").stop().slideUp("fast");
-                    $("nav").css("backgroundColor","#49506a");
+                    $("nav").css("backgroundColor","white");
                     $("nav").css("borderBottom","");
                     $(".main_menu>a").css("color","black");
                 }
@@ -74,19 +74,19 @@
             $(window).scroll(function(){ 
                 var scroll = $(window).scrollTop(); 
                 if(scroll>1){ 
-                    $("nav").css("backgroundColor","#49506a"); 
-                    $(".main_menu>a").css("color","white");
+                    $("nav").css("backgroundColor","white"); 
+                    $(".main_menu>a").css("color","black");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","white");
+                    	$(".main_menu>a").css("color","black");
                     }, function(){
-                    	$(".main_menu>a").css("color","white");
+                    	$(".main_menu>a").css("color","black");
                     });
                 } 
                 else{
                     $("nav").css("backgroundColor",""); 
                     $(".main_menu>a").css("color","black");
                     $("nav").hover(function(){
-                    	$(".main_menu>a").css("color","white");
+                    	$(".main_menu>a").css("color","black");
                     }, function(){
                     	$(".main_menu>a").css("color","black");
                     });
@@ -178,7 +178,7 @@
             $("#logi").hide();
         }
         $(function(){
-	        $("#mypagenull").on("click",function(){
+	        $(".mypagenull").on("click",function(){
 	        	fn_login();
 	        });
         });
@@ -194,15 +194,18 @@
             <div class="menu_css">
                 <div class="top_menu">                
                     <ul>
-                        <li class="main_menu"><a href="">여행지</a>
+                        <li class="main_menu">
+                        	<a href="<%=request.getContextPath() %>/"><img src="<%=request.getContextPath() %>/images/logo.png" height="40px" width="130px" /></a>
                         </li>
-                        <li class="main_menu"><a href="">여행일정 계획</a>
-                            
+                        <li class="main_menu">
+                        	여행지  
                         </li>
-                        <li class="main_menu"><a href="">커뮤니티</a>
-                            
+                        <li class="main_menu">
+                        	여행일정 계획
                         </li>
-                        <li class="main_menu"><a href="">여행 준비</a></li>
+                        <li class="main_menu">
+                       		커뮤니티
+                        </li>
                     </ul>
                 </div>
                 <% if(loginUser==null){ %>
@@ -240,14 +243,18 @@
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/citySelect">해외 여행지</a></li>
                     </ul>
                     <ul class="sub_menu1_2">
+                    	<%if(loginUser!=null){ %>
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/makePlan1">내 일정 만들기</a></li>
+                        <%} else{%>
+                         <li class="hvr-float-shadow mypagea mypagenull"><a class="mypagea">내 일정 만들기</a></li>
+                        <%} %>
+                         
                         <%if(loginUser!=null){ %>
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/user/mypage">내 일정 보기</a></li>
-                        
                         <%}else{ %>
-                         <li class="hvr-float-shadow mypagea" id="mypagenull"><a class="mypagea">내 일정 보기</a></li>
+                         <li class="hvr-float-shadow mypagea mypagenull"><a class="mypagea">내 일정 보기</a></li>
                         <%} %>
-                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/planMain">다른사람 일정보기</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/planMain">다른여행자 일정보기</a></li>
                     </ul>
                     <ul class="sub_menu1_3">
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/boardList">Q&A 게시판</a></li>
