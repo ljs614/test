@@ -11,6 +11,7 @@
 	}
 	List userList=(List)request.getAttribute("userList");
 	String userName=(String)request.getAttribute("userName");
+	String users="";
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -42,10 +43,14 @@
 								
 						</div>
 						<div id="planner-member-list">
-							<%if(userList!=null){
-								for(int i=0; i<userList.size(); i++){%>
-									<span><%=userList.get(i)%></span>
-								<%}
+							<%if(userList!=null){%>
+								<i class="fas fa-users" id="users"></i>
+								<%for(int i=0; i<userList.size(); i++){
+									users+=userList.get(i);
+									if(i<userList.size()-1){
+										users+=",";
+									}
+								}
 							}%>
 						</div>
 					</div>
@@ -258,7 +263,7 @@
 			$("#main-map-map").css("width",$(document).width()-150+"px");
 			$('#planTitle>i').hide();
 			$("#cover-change").css("opacity",0);
-			
+			$("#users").attr("title","<%=users%>");
 			
 		});
 
@@ -267,7 +272,7 @@
 				$("#main-map-map").css("width",$("#planView-main").width()-170+"px");
 				fn_markerM(mainM);
 			}
-		})
+		});
 
 		//요일 리턴 함수
 		function returnDay(day){
