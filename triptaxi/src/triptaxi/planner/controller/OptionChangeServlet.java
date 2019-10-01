@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import triptaxi.city.model.service.CityService;
 import triptaxi.planner.model.service.PlannerService;
 import triptaxi.planner.model.vo.CityList;
@@ -19,16 +17,16 @@ import triptaxi.planner.model.vo.PlannerCity;
 import triptaxi.planner.model.vo.PlannerFullInfo;
 
 /**
- * Servlet implementation class PlanMainServlet
+ * Servlet implementation class OptionChangeServlet
  */
-@WebServlet("/planMain")
-public class PlanMainServlet extends HttpServlet {
+@WebServlet("/optionChange")
+public class OptionChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PlanMainServlet() {
+    public OptionChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,14 +35,19 @@ public class PlanMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int cPage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
-		String option = "PLANNER_THEME IS NOT NULL AND PLANNER_PUBLIC = 'Y' ORDER BY PLANNER_LIKE DESC";
+		
+		String option1 = request.getParameter("option1");
+		String receiveOption2 = request.getParameter("option2");
+		String option2 = (request.getParameter("option2").equals("null"))?"":"AND city like '%"+request.getParameter("option2")+"%'";
+		
+		String totalOption = "PLANNER_THEME IS NOT NULL AND PLANNER_PUBLIC = 'Y' "+option2+" " + option1;
+
 		int numPerPage=9;
 		int totalData=0;
 		PlannerService service = new PlannerService();
@@ -52,9 +55,9 @@ public class PlanMainServlet extends HttpServlet {
 		List<PlannerFullInfo> plannerList = new ArrayList<PlannerFullInfo>();
 		List<PlannerCity> plannerCity = new ArrayList<PlannerCity>();
 
-		totalData = service.selectCountPlanner(option);
-		plannerList = service.selectPlannerFullInfo(cPage, numPerPage, option);
-
+		totalData = service.selectCountPlanner(totalOption);
+		plannerList = service.selectPlannerFullInfo(cPage, numPerPage, totalOption);
+	
 		String idList = "";
 		for(int i=0; i<plannerList.size();i++) {
 			if(i==0) {
@@ -65,8 +68,8 @@ public class PlanMainServlet extends HttpServlet {
 				idList += "'" + plannerList.get(i).getPlannerId() + "',";
 			}
 		}
+		
 		plannerCity = service.selectPlannerCity(idList);
-
 
 		for(int i=0;i<plannerList.size();i++) {
 			for(int j=0;j<plannerCity.size();j++) {
@@ -86,14 +89,14 @@ public class PlanMainServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar += "<span> [이전] </span>";
 		}else {
-			pageBar += "<a href='"+request.getContextPath()+"/planMain?cPage="+(pageNo-1)+"'> [이전] </a>";
+			pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> [이전] </a>";
 		}
-		
+
 		while(!(pageNo>pageEnd || pageNo>totalPage )) {
 			if(pageNo==cPage) {
 				pageBar += "<span> " + pageNo + " </span>";
 			}else {
-				pageBar += "<a href='"+request.getContextPath() + "/planMain?cPage=" + pageNo + "'> " + pageNo + " </a>";
+				pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> " + pageNo + " </a>";
 			}
 			pageNo++;
 		}
@@ -101,7 +104,7 @@ public class PlanMainServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar += "<span>[다음]</span>";
 		}else {
-			pageBar += "<a href='" + request.getContextPath() + "/planMain?cPage=" + pageNo + "'> [다음] </a>";
+			pageBar += "<a href='javascript:fn_planner('"+option1+","+receiveOption2+","+pageNo+")'> [다음] </a>";
 		}
 		
 		request.setAttribute("cPage", cPage);

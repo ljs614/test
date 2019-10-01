@@ -265,16 +265,26 @@ public class PlannerService {
 		return result;
 	}
 	
-	public List<PlannerFullInfo> selectPlannerFullInfo(String option){
+	public int selectCountPlanner(String option) {
 		Connection conn = getConnection();
-		List<PlannerFullInfo> list = dao.selectPlannerFullInfo(conn, option);
+		int result = dao.selectCountPlanner(conn, option);
+		close(conn);
+		return result;
+		
+	}
+	
+	public List<PlannerFullInfo> selectPlannerFullInfo(int cPage, int numPerPage, String option){
+		Connection conn = getConnection();
+		List<PlannerFullInfo> list = dao.selectPlannerFullInfo(conn, cPage, numPerPage, option);
 		close(conn);
 		return list;
 	}
 	
-	public List<PlannerCity> selectPlannerCity(){
+	public List<PlannerCity> selectPlannerCity(String idList){
 		Connection conn = getConnection();
-		List<PlannerCity> list = dao.selectPlannerCity(conn);
+		List<PlannerCity> list = dao.selectPlannerCity(conn, idList);
+		close(conn);
+		return list;
 		
 	}
 	

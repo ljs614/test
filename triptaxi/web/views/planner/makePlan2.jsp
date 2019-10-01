@@ -225,7 +225,6 @@
       	var date = new Date(receiveList['plannerDate']);
       	var theme = receiveList['plannerTheme'];
       	
-      	console.log(theme);
       	var lats=[];
     	var lngs=[];
     	var plannerLats=[];
@@ -326,7 +325,6 @@
      	   $('#pltitle').text(planner);
  
      	   //여행기간 설정
-     	   console.log(date);
 			var dateString = date.getFullYear()+"-"+(date.getMonth()+1) + "-"+date.getDate();
 			$('#dayEditDate').html(dateString + " <i class='fas fa-calendar-alt'></i>");
 			$('#endStartDay').val(dateString);
@@ -389,7 +387,6 @@
           add += "<div id='mm_weekday'>"+ returnDay(currDate.getDay()) +"</div>";
           add += "<div id='mm_city'>"+ cityName +"</div></li>";
 
-            console.log($(document).height()-235);
           $('.mainMenu').append(add);
           $('#addDayBox').css("height", $("#addDayBox").height() - 62 + "px");
           if ($('.mainMenu').height() >= ($(window).height() - 250)) {
@@ -408,7 +405,6 @@
             add += "<div class='md_city'>"+ cityName +"</div>";
             add += "<div class='delete_md_day'>X</div></li>";
 
-              console.log($(document).height()-235);
             $('#dayEditModal-list').append(add);
             if ($('#dayEditModal-list').height() >= ($(window).height() - 84)) {
               $('#dayEditModal-list').css("overflow-y", "scroll");
@@ -479,7 +475,6 @@
         	$('#sm_dayCount>span').text($('.clickColor').find("#mm_dayCount").children().text());
             $('#sm_date').text($('.clickColor').find('#mm_date').text());
             $('#sm_weekday').text($('.clickColor').find('#mm_weekday').text());
-            console.log("도시 : " + $('.clickColor').find('#mm_city').text());
             if($('.clickColor').find('#mm_city').text() != $('#sc_title')){
           	fn_changeTourListCity($('.clickColor').find('#mm_city').text());
             	$('#sc_title').text($('.clickColor').find('#mm_city').text());
@@ -496,9 +491,11 @@
 			
 		  $('#sm_plannerList>li').remove(); 
           
-		  map_clear();
+		  if(plannerLats.length>0){
+		  	map_clear();
+			  
+		  }
       	
-		  console.log(markers2);
           $.ajax({
         	url:"<%=request.getContextPath()%>/changeDayList",
         	data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
@@ -651,9 +648,7 @@
 			}
 			
 			$(document).on("mouseover", '#sm_plannerList>li', function(){
-				console.log($(this).index());
 	 			beforeIndex2 = $(this).index();
-				console.log(markers2[beforeIndex2]);
 	    		markers2[beforeIndex2].setIcon("https://img.icons8.com/office/80/000000/marker.png");
 	    		});   			
 		
@@ -687,10 +682,7 @@
       		$.ajax({
         		url:"<%=request.getContextPath()%>/refreshDay",
         		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text()},
-        		dataType:"text",
-        		success:function(data){
-        			console.log(data);
-        		}
+        		dataType:"text"
         	})
         });
         
@@ -703,6 +695,7 @@
         		fn_navTextChange();
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
+        		flightPath.getPath().clear();
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -734,6 +727,7 @@
         		fn_navTextChange();
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
+        		flightPath.getPath().clear();
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -829,7 +823,6 @@
     })
     
     $('#dayEditClose').click(function(){
-    	console.log($('#dayEditDate').text());
     	var newDate = $('#dayEditDate').text();
     	if(date != newDate){
     		$.ajax({
@@ -865,8 +858,6 @@
     		dataType:"json",
     		success:function(data){
     			tourList = data;
-    			console.log("투어리스트아이디");
-    			console.log(data['tourId']);
     			
     			if(data.length>0){
     				var category = tourList[0]['tourId'].substring(0,2);
@@ -886,8 +877,6 @@
     
   	//day 삭제
     $(document).on('click', '.delete_md_day',function(){
-    	console.log($(this).siblings('.md_dayCount').find('span').text()); // dayNo
-    	console.log(plannerId);
     	$.ajax({
     		url:"<%=request.getContextPath()%>/deletePlannerDay",
     		type:"post",
@@ -895,7 +884,6 @@
     		dataType:"json",
     		success:function(data){
     			$('#dayEditModal-list>li').remove();
-    			console.log(data);
     			dayList = data;
     			$.each(dayList, function(index, item){
     		    	  fn_addEditDay(item['plannerDayNo'], item['cityName'], date)
@@ -961,8 +949,6 @@
     		data:{"cityName":city},
     		dataType:"json",
     		success:function(data){
-    			console.log("changTourListCity : ");
-    			console.log(data);
     			tourList = data;
     			fn_resetTourList(tourList);
     		}
@@ -971,7 +957,6 @@
     
   	//일정리스트 추가
     function fn_addPlanner(tourId, tourName, category, lat, lng){
-		console.log("fn_addPlanner");
     	switch(tourId.substring(0,2)){
     		case 'at':	img="<i class='fas fa-camera'></i>"; break;
     		case 'ac':	img="<i class='fas fa-running'></i>"; break;
@@ -996,7 +981,6 @@
     //일정 추가
     var firstPlus = 0;
     $(document).on('click', '.plusTour', function(){
-    	console.log("plusTour");
     	var img;
     	var tourId=$(this).parent().parent().data('tourid');
     	var tour = $(this).parent().parent().find('.tourTitle').text();
@@ -1008,10 +992,7 @@
     	$.ajax({
     		url:"<%=request.getContextPath()%>/updateTourList",
     		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text(),"tourId":tourId},
-    		dataType:"text",
-    		success:function(data){
-    			console.log(data);
-    		}
+    		dataType:"text"
     	});
     	
     	if(firstPlus!=0){
@@ -1031,7 +1012,6 @@
     	map_clear();
     	$(this).parent().remove();
     	var tourList = "";
-    	console.log($('#sm_plannerList>li').length);
     	for(var i=0 ; i<$('#sm_plannerList>li').length ;i++){
     		tourList += $($('#sm_plannerList>li')[i]).data('tourid');
     		if(i!=($('#sm_plannerList>li').length-1)){
@@ -1044,10 +1024,7 @@
     	$.ajax({
     		url:"<%=request.getContextPath()%>/deleteTourOne",
     		data:{"plannerId":plannerId, "dayNo":$('.clickColor').find('span').text(),"tourList":tourList},
-    		dataType:"text",
-    		success:function(data){
-    			console.log(data);
-    		}
+    		dataType:"text"
     	})
     	
     	polyMarker_draw(map);

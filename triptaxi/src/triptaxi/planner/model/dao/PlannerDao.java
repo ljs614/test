@@ -570,11 +570,33 @@ public class PlannerDao {
 		return result;
 	}
 	
-	public List<PlannerFullInfo> selectPlannerFullInfo(Connection conn, String option){
+	public int selectCountPlanner(Connection conn, String option) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String sql = "select count(*) from ("+prop.getProperty("selectPlannerFullInfo")+" "+option+")";
+	
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		return result;
+	}
+	
+	public List<PlannerFullInfo> selectPlannerFullInfo(Connection conn, int cPage, int numPerPage, String option){
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<PlannerFullInfo> list = new ArrayList<PlannerFullInfo>();
-		String sql = prop.getProperty("selectPlannerFullInfo")+option;
+		String sql = "select * from (select rownum as rnum, c.* from (" + prop.getProperty("selectPlannerFullInfo")+" "+option+")c) where rnum between "+ ((cPage-1)*numPerPage+1)+ " and "+ (cPage*numPerPage);
 		
 		try {
 			stmt = conn.createStatement();
@@ -585,6 +607,7 @@ public class PlannerDao {
 				pfi.setPlannerName(rs.getString("planner_name"));
 				pfi.setPlannerDate(rs.getDate("planner_date"));
 				pfi.setPlannerWriter(rs.getString("planner_writer"));
+				pfi.setPlannerTheme(rs.getString("planner_theme"));
 				pfi.setPlannerLike(rs.getInt("planner_like"));
 				pfi.setPlannerCount(rs.getInt("planner_count"));
 				pfi.setPlannerPublic(rs.getString("planner_public").charAt(0));
@@ -604,14 +627,30 @@ public class PlannerDao {
 		return list;
 	}
 	
-	public List<PlannerCity> selectPlannerCity(Connection conn){
+	public List<PlannerCity> selectPlannerCity(Connection conn, String idList){
 		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("selectPlannerCity");
+		String sql = "SELECT PLANNER_ID, LISTAGG(CITY_NAME,',') WITHIN GROUP (ORDER BY ROWNUM DESC) FROM (SELECT PLANNER_ID,CITY_NAME FROM TT_PLANNER_DAY WHERE PLANNER_ID IN ('"+idList+"') GROUP BY PLANNER_ID, CITY_NAME ORDER BY PLANNER_ID) GROUP BY PLANNER_ID";
+		List<PlannerCity> list = new ArrayList<PlannerCity>();
 		
 		try {
-			pstmt = conn.
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()) {
+				PlannerCity pc = new PlannerCity();
+				pc.setPlannerId(rs.getString(1));
+				pc.setCityList(rs.getString(2));
+				list.add(pc);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
 		}
+		return list;
 	}
 
 }

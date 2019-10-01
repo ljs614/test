@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, triptaxi.planner.model.vo.CityList"%>
+<%@ page import="java.util.*, triptaxi.planner.model.vo.CityList, triptaxi.planner.model.vo.PlannerFullInfo"%>
 <%@ include file="/views/common/header.jsp"%>
 <%
 	String userId = "null";
@@ -8,10 +8,9 @@
 		userId = loginUser.getUserId();
 	}
 
-	List<CityList> list = (List<CityList>) request.getAttribute("cityList");
-	for (CityList c : list) {
-		System.out.println(c.getCityName());
-	}
+	List<CityList> list = (List<CityList>) request.getAttribute("cityList");	
+	List<PlannerFullInfo> plannerList = (List<PlannerFullInfo>)request.getAttribute("plannerList");
+	
 %>
 <link
 	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
@@ -30,7 +29,7 @@
 			<div id='makePlanBT' onclick="fn_openMakePlan1();">
 				<i class="far fa-calendar-plus"></i> 새 일정 만들기
 			</div>
-			<div id='planViewBT' onclick="location.href''">
+			<div id='planViewBT' onclick="fn_openMyPage();">
 				<i class="far fa-eye"></i> 나의 일정보기
 			</div>
 		</div>
@@ -60,7 +59,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("Asia")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -79,7 +78,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("Europe")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -98,7 +97,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("NorthAmerica")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -117,7 +116,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("Austrailia")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -136,7 +135,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("SouthAmerica")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -155,7 +154,7 @@
 									for (int i = 0; i < list.size(); i++) {
 										if (list.get(i).getContinentName().equals("Africa")) {
 								%>
-								<li><%=list.get(i).getCityName()%></li>
+								<li data-cityeng='<%=list.get(i).getCityEng()%>'><%=list.get(i).getCityName()%></li>
 								<%
 									}
 									}
@@ -163,23 +162,6 @@
 							</ul>
 						</div>
 					</td>
-				</tr>
-				<tr>
-					<th>여행일</th>
-					<td>1-3일</td>
-					<td>4-6일</td>
-					<td>7-10일</td>
-					<td>11-15일</td>
-					<td colspan='2' style='text-align: left; padding-left: 40px'>15일이상</td>
-
-				</tr>
-				<tr>
-					<th>여행테마</th>
-					<td>가족여행</td>
-					<td>나홀로여행</td>
-					<td>커플여행</td>
-					<td>친구여행</td>
-					<td colspan='2' style='text-align: left; padding-left: 27px'>비즈니스여행</td>
 				</tr>
 			</table>
 
@@ -191,100 +173,50 @@
 						<div id='newestPlan'>신규</div>
 					</div>
 					<div id='planTotalCount'>
-						<span id='totalCnt'>1000</span>개의 일정
+						<span id='totalCnt'>${totalData}</span>개의 일정
 					</div>
 				</div>
 
+
+				<% for(int i=0;i<plannerList.size();i++){ %>
+				
 				<div class='planView_Div'>
-					<div class='planView_Thumbnail'>
+					<div class='planView_Thumbnail' onclick="location.href='<%=request.getContextPath()%>/planner/plannerView?plannerId=<%=plannerList.get(i).getPlannerId()%>'">
 						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+							src="<%=request.getContextPath() %><%= plannerList.get(i).getPlannerCoverimg()%>"
 							alt="" width="268px" height="180px">
 					</div>
 					<div class="planView_Content">
-						<div class='pvc_title'>일정 제목</div>
-						<div class='pvc_date'>2019-01-01</div>
-						<div class='pvc_totalDay'>10 DAY</div>
-						<div class="pvc_city">도시</div>
-						<div class='pvc_theme'>가족여행</div>
+						<div class='pvc_title'><%=plannerList.get(i).getPlannerName() %></div>
+						<div class='pvc_date'><%=plannerList.get(i).getPlannerDate() %></div>
+						<div class='pvc_totalDay'><%=plannerList.get(i).getDayCount() %> DAY</div>
+						<div class="pvc_city"><%=plannerList.get(i).getCityList() %></div>
+						<div class='pvc_theme'><%=plannerList.get(i).getPlannerTheme() %></div>
 						<div class='pvc_users'>
-							<i class="fas fa-user"></i> 누구,누구,누구
+							<i class="fas fa-user"></i> <%=plannerList.get(i).getPlannerWriter() %>
 						</div>
 						<div class='pvc_Popularity'>
-							<i class="fas fa-eye"></i> 100 <i class="fas fa-heart"></i> 20
+							<i class="fas fa-eye"></i> <%=plannerList.get(i).getPlannerCount() %> <i class="fas fa-heart"></i> <%=plannerList.get(i).getPlannerLike() %>
 						</div>
 
 					</div>
 				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'>
-						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-							alt="" width="268px" height="180px">
-					</div>
-					<div class="planView_Content">
-						<div class='pvc_title'>일정 제목</div>
-						<div class='pvc_date'>2019-01-01</div>
-						<div class='pvc_totalDay'>10 DAY</div>
-						<div class="pvc_city">도시</div>
-						<div class='pvc_theme'>가족여행</div>
-						<div class='pvc_users'>
-							<i class="fas fa-user"></i> 누구,누구,누구
-						</div>
-						<div class='pvc_Popularity'>
-							<i class="fas fa-eye"></i> 100 <i class="fas fa-heart"></i> 20
-						</div>
-
-					</div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'>
-						<img
-							src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-							alt="" width="268px" height="180px">
-					</div>
-					<div class="planView_Content">
-						<div class='pvc_title'>일정 제목</div>
-						<div class='pvc_date'>2019-01-01</div>
-						<div class='pvc_totalDay'>10 DAY</div>
-						<div class="pvc_city">도시</div>
-						<div class='pvc_theme'>가족여행</div>
-						<div class='pvc_users'>
-							<i class="fas fa-user"></i> 누구,누구,누구
-						</div>
-						<div class='pvc_Popularity'>
-							<i class="fas fa-eye"></i> 100 <i class="fas fa-heart"></i> 20
-						</div>
-
-					</div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
-				<div class='planView_Div'>
-					<div class='planView_Thumbnail'></div>
-				</div>
+				
+				<%} %>
+				
 			</div>
 		</div>
+			<div id="pageBar">
+				${pageBar}
+			</div>
 
 	</div>
 
 </section>
 
 <script>
-
+	
+	var cPage=1;
 	var aa;
 	var selectId;
 	var flag=true;
@@ -336,6 +268,14 @@
 		}
 	}
 	
+	function fn_openMyPage(){
+		if('<%=userId%>'=='null'){
+			fn_login();
+		}else{
+			location.href='<%=request.getContextPath() %>/user/mypage';
+		}
+	}
+	
 	$('.tbl_Continent').click(function(){
 
 		var continent = $(this).text();
@@ -353,7 +293,70 @@
 		}) 
 
 		
+	});
+	
+	$('#sac_content>ul>li').click(function(){
+		$('#sac_content>ul>li').removeClass('clickCategory');
+		$(this).addClass('clickCategory');
+		
+		var option1;
+		if($('.clickColor').text() == '인기'){
+			option1 = "order by planner_like desc";
+		}else{
+			option1 = "order by planner_writedate desc";
+		}
+		fn_paging(option1, $(this).data("cityeng"), cPage);
 	})
+	$('.tbl_Continent').click(function(){
+		$('#sac_content>ul>li').removeClass('clickCategory');
+		
+		var option1;
+		if($('.clickColor').text() == '인기'){
+			option1 = "order by planner_like desc";
+		}else{
+			option1 = "order by planner_writedate desc";
+		}
+		fn_paging(option1, "null", cPage);
+		
+	})
+	
+
+	function fn_paging(option1, option2, cPage){
+		$.ajax({
+			url:"<%=request.getContextPath()%>/optionChange",
+			data:{"option1":option1, "option2":option2, "cPage":cPage},
+			success:function(data){
+				
+			}
+		})
+		
+	}
+	
+	$('#newestPlan').click(function(){
+		var option="null";
+	
+		if($('.clickCategory').length>0){
+			option=$('.clickCategory').data("cityeng");
+		}
+		
+		fn_paging("order by planner_writedate desc", option, cPage);
+
+	});
+	
+	$('#popularPlan').click(function(){
+		var option="null";
+		
+		if($('.clickCategory').length>0){
+			option=$('.clickCategory').data("cityeng");
+		}
+		
+		fn_paging("order by planner_like desc", option, cPage);
+	})
+	
+	
+	
+	
+	
 	
 </script>
 

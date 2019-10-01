@@ -98,7 +98,7 @@ header>img {
 header button#close {
 	position: absolute;
 	display: inline-block;
-	top: 12px;
+	top: 13px;
 	right: 30px;
 	width: 110px;
 	height: 35px;
@@ -1050,6 +1050,7 @@ div#datepicker {
 	top: 35px;
 	left: 0;
 	bottom: 50px;
+	height:-2px;
 }
 
 #close:hover:before, #close:hover:after {
