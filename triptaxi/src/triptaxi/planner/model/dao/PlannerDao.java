@@ -628,7 +628,6 @@ public class PlannerDao {
 	}
 	
 	public List<PlannerCity> selectPlannerCity(Connection conn, String idList){
-		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sql = "SELECT PLANNER_ID, LISTAGG(CITY_NAME,',') WITHIN GROUP (ORDER BY ROWNUM DESC) FROM (SELECT PLANNER_ID,CITY_NAME FROM TT_PLANNER_DAY WHERE PLANNER_ID IN ('"+idList+"') GROUP BY PLANNER_ID, CITY_NAME ORDER BY PLANNER_ID) GROUP BY PLANNER_ID";
@@ -648,9 +647,24 @@ public class PlannerDao {
 			e.printStackTrace();
 		}finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}
 		return list;
+	}
+	
+	public int updateThemeUp(Connection conn, String tourId, String plannerTheme) {
+		Statement stmt=null;
+		int result=0;
+		String sql="UPDATE TT_THEME SET "+plannerTheme+"="+plannerTheme+"+1 WHERE TOUR_ID='"+tourId+"'";
+		try {
+			stmt=conn.createStatement();
+			result=stmt.executeUpdate(sql);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+		}
+		return result;
 	}
 
 }
