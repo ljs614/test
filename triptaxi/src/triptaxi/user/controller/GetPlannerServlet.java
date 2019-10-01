@@ -80,7 +80,7 @@ public class GetPlannerServlet extends HttpServlet {
 		
 
 		
-		String pageBar="";
+		String pageBar="<div id='pageBar'>";
 		int totalPage=(int)Math.ceil((double)totalData/numPerPage);
 		int pageBarSize=10;
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
@@ -105,7 +105,7 @@ public class GetPlannerServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>[다음]</a>";
 		}
-		
+		pageBar+="</div>";
 		Gson gson=new Gson();
 		JSONObject jList=new JSONObject();
 		jList.put("plannerList", pList);

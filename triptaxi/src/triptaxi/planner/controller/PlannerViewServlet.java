@@ -19,6 +19,7 @@ import com.triptaxi.attraction.model.vo.Attraction;
 import triptaxi.planner.model.vo.Planner;
 import triptaxi.planner.model.vo.PlannerDay;
 import triptaxi.planner.model.vo.Tour;
+import triptaxi.user.model.service.UserService;
 
 /**
  * Servlet implementation class PlannerViewServlet
@@ -64,9 +65,11 @@ public class PlannerViewServlet extends HttpServlet {
 					list.add(pdList.get(i).getCityName());
 				}
 			}
+			String userName=(new UserService().selectOne(planner.getPlannerWriter())).getUserName();
 			request.setAttribute("planner", planner);
 			request.setAttribute("userList", userList);
 			request.setAttribute("jlist", gson.toJson(list));
+			request.setAttribute("userName", userName);
 			view="/views/planner/planView.jsp";
 			
 		}else {

@@ -10,6 +10,7 @@
 		userId=loginUser.getUserId();
 	}
 	List userList=(List)request.getAttribute("userList");
+	String userName=(String)request.getAttribute("userName");
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -25,15 +26,20 @@
 				<div id="planner-info">
 					<div id="planner-writer">
 						<div id="planner-writer-profile">
-							<img src="<%=request.getContextPath()%>/images/bx_loader.gif" widht='40px' height='40px'/>
+								<i class="fas fa-user-circle"></i>
 						</div>
 						<div id="planner-writer-name">
-							<%=planner.getPlannerWriter()%>
+							<%=userName%>
 						</div>
 					</div>
 					<div id="planner-member">
 						<div id="planner-member-invite">
-							<img src="<%=request.getContextPath()%>/views/planner/img/pButton.png" width='30px' height='30px'/>
+							<%if(userId.equals(planner.getPlannerWriter())){%>
+								<i class="fas fa-user-plus" title='초대하기'></i>
+							<%}else{%>
+								<div style='width:30px; height:30px'></div>
+							<%}%>
+								
 						</div>
 						<div id="planner-member-list">
 							<%if(userList!=null){
@@ -80,7 +86,6 @@
 					<li><a class="navs">개요</a></li>
 					<li><a class="navs">일정표</a></li>
 					<li><a class="navs">지도</a></li>
-					<li><a class="navs">댓글</a></li>
 				</ul>
 				<input type="button" id="modify_btn" value="수정하기"/>
 				<input type="button" id="copy_btn" value="복사하기"/>
@@ -91,15 +96,21 @@
 
 	<section id="planView-main">
 	</section>
-	<div id="bot-container" style="width:100%; height:600px; border:1px solid red;">
+	<div id="bot-container" style="width:100%; height:300px; border:1px solid navy;">
 			
 	</div>
 	<div id="invite-modal">
 		<div id="invite-modal-container">
-			<div id="invite-modal-title">&nbsp;친구초대<span>X</span></div>
-			<input type="email" name="invite_email" id="invite_email" placeholder="이메일 주소 입력"/>
-			<button onclick="fn_invite_member();">초대</button>
-			<p>* 5분 이상 메일을 수신하지 못할 경우, 스팸 메일함 확인을 요청하시기 바랍니다.</p>
+			<div id="invite-modal-title"><div>&nbsp;친구초대<p>X</p></div></div>
+			<div id="invite-modal-content">
+				<input type="email" name="invite_email" id="invite_email" placeholder="이메일 주소 입력"/>
+				<button onclick="fn_invite_member();">초대</button>
+				<p>* 5분 이상 메일을 수신하지 못할 경우, 스팸 메일함 확인을 요청하시기 바랍니다.</p>
+				<div id="sending_mail">
+					<img src="../views/planner/img/sendingMail.gif" width="100px;">
+					<p>전송중</p>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -121,7 +132,6 @@
 		var outline_html='<div id="planView-outline" class="planView-main-container">';
 		outline_html+='<div id="side-navi"></div>';
 		outline_html+='<div id="planner-containerNmap"><div id="planner-container"><div id="planner-outline">';
-		console.log(planList);
 		for(var i=0; i<planList.length; i++){
 			outline_html+="<div id='planner-day"+(i+1)+"' class='day-planner'>";
 			outline_html+="<table class='day-table'>";
@@ -352,10 +362,12 @@
 				}
 				markers.push(marker);
 			}
-			map.fitBounds(bounds);
-			map.panToBounds(bounds);
+				map.panToBounds(bounds);
+				map.fitBounds(bounds);
 			if(lats.length==1){
 				map.setZoom(18);
+			}else{
+
 			}
 		}
 
@@ -627,11 +639,18 @@
 	
 	//초대하기 함수
 	function fn_invite_member(){
+		$("#sending_mail").show();
 		$.ajax({
 				url:"<%=request.getContextPath()%>/invite",
-				data:{"email":$("#invite_email").val()},
+				data:{"email":$("#invite_email").val(),"plannerName":"<%=planner.getPlannerName()%>","plannerId":"<%=planner.getPlannerId()%>"},
 				success:function(data){
-					console.log(data);
+					alert(data);
+					if(data.substring(0,1)=='초'){
+						location.reload();
+					}else{
+						$("#sending_mail").hide();
+						$("#invite_email").val("");
+					}
 				}
 			});
 	}
@@ -672,13 +691,13 @@
 
 		//초대 클릭이벤트
 		$("#planner-member-invite").click(function(){
-			$("#invite-modal").css("visibility","visible");
+			$("#invite-modal").show();
 			
 		});
 
 		//초대 닫기 클릭
-		$("#invite-modal-title>span").click(function(){
-			$("#invite-modal").css("visibility","hidden");
+		$("#invite-modal-title>div>p").click(function(){
+			$("#invite-modal").hide();
 		});
 
 

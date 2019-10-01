@@ -153,8 +153,12 @@ div#planner-writer-profile{
     position: relative;
     display: inline-block;
     height:40px;
-    /* border:1px solid yellow; */
     
+    /* border:1px solid yellow; */ 
+}
+div#planner-writer-profile>i{
+    font-size: 40px;
+    color:white;
 }
 div#planner-writer-name{
     position: relative;
@@ -165,10 +169,11 @@ div#planner-writer-name{
     font-size:23px;
     color:white;
     font-weight: 600;
-    top:-10px;
+    top:-7px;
     padding-left:5px;
     padding-right:5px;
 }
+
 div#planner-member{
     position: relative;
     display: inline-block;
@@ -176,11 +181,14 @@ div#planner-member{
     height:45px;
     /* border:1px solid blue; */
 }
-div#planner-member>div{
+div#planner-member>#planner-member-invite{
     position: relative;
     display: inline-block;
     color:white;
-    font-size:15px;
+    font-size:25px;
+    top:-5px;
+    cursor: pointer;
+    
 }
 div#planner-name{
     position: relative;
@@ -243,12 +251,14 @@ div#planView-nav{
     margin-top:-10px;
 }
 div#planView-nav li{
+    position: relative;
     float: left;
     font-size: 25px;
     font-weight: 100;
     width:100px;
     height: 40px;
     text-align: center;
+    left:85px;
 }
 div#planView-nav a:hover{
     cursor: pointer;
@@ -317,11 +327,10 @@ div#planner-container{
 }
 div#right-side{
     width: 350px;
-    height:500px;
+    height:350px;
     margin:0 auto;
     position: absolute;
     margin-left: 12px;
-    border:1px solid red;
 
 }
 div#side-map{
@@ -360,7 +369,7 @@ div.day-planner{
 }
 td.day-day{
     font-size: 30px;
-    width: 50px;
+    width: 100px;
     height:60px;
     text-align: center;
     color:white;
@@ -383,7 +392,7 @@ td.day-city{
 }
 td.day-num{
     text-align: center;
-    width: 50px;
+    width: 100px;
     font-size: 30px;
     font-weight: 900;
     color:#49506a;
@@ -402,7 +411,7 @@ td.day-tourDistance2{
     font-size: 12px;
 }
 td.day-tourName{
-    width:300px;
+    width:400px;
     height: 50px;
     font-size: 20px;
 }
@@ -579,13 +588,13 @@ p.mmn-date-city{
 
 div#invite-modal{
     position: fixed;
-    display: inline-block;
-    top:0;
+    display: none;
+    top:-0px;
     width:100%;
     height:100%;
     background-color:rgba(0,0,0,0.5); 
     text-align: center;
-    visibility: hidden;
+    z-index: 999;
 }
 
 div#invite-modal-title{
@@ -598,13 +607,21 @@ div#invite-modal-title{
     font-size: 22px;
     margin:0 auto;
     text-align: left;
-    
     top:5px;
 
 }
-div#invite-modal-title>span{
+div#invite-modal-title>div{
     position: relative;
+    top:-20px;
+}
+div#invite-modal-title>div>p{
+    position: relative;
+    display: inline-block;
+    /* top:-30px; */
     left:480px;
+    cursor: pointer;
+    font-size: 22px;
+    top:-5px;
 }
 div#invite-modal-container{
     position: relative;
@@ -613,7 +630,7 @@ div#invite-modal-container{
     margin:0 auto;
     width:600px;
     height:200px;
-    top:300px;
+    top:150px;
 
     
 }
@@ -623,13 +640,30 @@ input#invite_email{
     height:20px;
     top:30px;
 }
-div#invite-modal-container>p{
+div#invite-modal-content>p{
     position: relative;
     font-size:12px;
     top:30px;
     
 }
-div#invite-modal-container>button{
+div#invite-modal-container>div>button{
     position: relative;
     top:31px;
+}
+div#sending_mail{
+    position: relative;
+    top:-50px;
+    background-color: white;
+    width:600px;
+    height:100px;
+    display: none;
+}
+div#sending_mail>p{
+    position: relative;
+    top:-30px;
+}
+
+div#pageBar{
+    position: relative;
+    margin:0 auto;
 }
