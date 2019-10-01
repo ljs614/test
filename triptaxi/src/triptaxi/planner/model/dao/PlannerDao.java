@@ -711,5 +711,23 @@ public class PlannerDao {
 		}
 		return result;
 	}
+	
+	public int updateInviteY(Connection conn, String plannerId, String email) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateInviteY");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			pstmt.setString(2, email);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 
 }

@@ -99,6 +99,8 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String birthday=request.getParameter("birthyear")+month+day;
 		String phone=request.getParameter("phone");
 		String email=request.getParameter("email");
+		String email1=request.getParameter("email1");
+		email+="@"+email1;
 		
 		
 		User u=new User(id,pw,name,gender,birthday,email,phone);

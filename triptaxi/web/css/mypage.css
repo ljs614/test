@@ -110,7 +110,7 @@ div.planList_div .planList_thumbnail, div.clipList_div .clipList_thumbnail {
 	height: 180px;
 }
 
-div.planList_div:hover .planList_thumbnail, div.clipList_div:hover .clipList_thumbnail {
+div.planList_div:hover .planList_thumbnail{
 	transform: translateY(-50%);
 	transition: 0.5s;
 }
@@ -143,11 +143,26 @@ div.planList_content>div.plan_totalDay {
 	color: gray;
 }
 
-div.planList_div:hover .planList_content, div.clipList_div:hover .clipList_content {
+div.clipList_content{
+    top:20px;
+}
+div.planList_div:hover .planList_content{
 	transform: translateY(-56%);
 	transition: 0.6s;
 	transition-delay: 0.05s;
 }
+
+div.clipList_div:hover{
+    box-shadow: 1px 1px 5px #49506a;
+    box-shadow: -1px -1px 5px #49506a;
+}
+
+div.clipList_div:hover .clipList_thumbnail {
+    width:200px;
+}
+
+
+
 
 div.plan_city {
 	padding-top: 13px;
@@ -209,6 +224,40 @@ div.planList_div:hover .plan_popularity {
 div#clipList_nav, #planList_nav{
     border-bottom:1px solid #49506a;
     width:100%;
+}
+
+div.clip_clipcount{
+    position: relative;
+    display: inline-block;
+    top:10px;
+    left:30px;
+
+}
+div.clip_clipcount>i{
+    color:gray;
+}
+
+
+div.clip_reviewscore{
+    position: relative;
+    display: inline-block;
+    top:10px;
+    left:30px;
+}
+
+div.clip_reviewscore>i{
+    color:#fde396;
+}
+
+div.clip_category{
+    position: relative;
+    display: inline-block;
+    top:10px;
+    left:40px;
+    padding:2px;
+    border-radius: 3px;
+    background-color:#49506a;
+    color: white;
 }
 
 div#pageBar{

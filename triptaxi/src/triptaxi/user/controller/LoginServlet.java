@@ -68,14 +68,16 @@ public class LoginServlet extends HttpServlet {
 				response.addCookie(c);
 			}
 			int result=service.checkInvite(u.getUserId(),u.getEmail());
-			
-			
-			
-			
-			
-			
-			
-			response.sendRedirect(loc);
+			if(result>0) {
+				msg="새로운 여행일정에 탑승하셨습니다.";
+				view="/views/common/msg.jsp";
+				loc=loc.replace("/triptaxi", "");
+				request.setAttribute("msg",msg);
+				request.setAttribute("loc", loc);
+				request.getRequestDispatcher(view).forward(request,response);
+			}else {				
+				response.sendRedirect(loc);
+			}
 			
 		}else {
 			//로그인이 안됨!

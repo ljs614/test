@@ -181,7 +181,7 @@
 					outline_html+="</tr>";
 					outline_html+="<tr>";
 					outline_html+="<td class='day-tourType' colspan='2'>&nbsp;&nbsp;<span>"+planList[i][j]['category']+"</span></td>";
-					outline_html+="<td class='day-tourScore'><i class='fas fa-paperclip'></i><span> " + planList[i][j]['clipCount'] +" </span><i class='fas fa-star'></i><span> "+planList[i][j]["reviewScore"]+"</span></td>";//수정하기
+					outline_html+="<td class='day-tourScore'><i class='fas fa-paperclip'></i><span> " + planList[i][j]['clipCount'] +" </span><i class='fas fa-star'></i><span> "+planList[i][j]["reviewScore"]+"</span></td>";
 					outline_html+="<td></td>"
 					outline_html+="</tr>";
 					outline_html+="<tr>";
@@ -259,7 +259,9 @@
 		$("#planView-main").append(mmn_html);
 		$("#main-map").hide();
 
-				
+		if("<%=planner.getPlannerWriter()%>"=="<%=userId%>"){
+			$("#planner-member-invite").addClass("member-invite");
+		}	
 		//초기화
 		var cDay=1;
 		var map;
@@ -277,11 +279,7 @@
 			$($(".navs")[0]).css("font-weight","bold");
 			$($(".side-navi-btn")[1]).css("color","#8eade7");
 			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
-			$("#main-map-map").css("width",$(document).width()-150+"px");
-			if("<%=planner.getPlannerWriter()%>"=="<%=userId%>"){
-				$("#planner-member-invite").addClass("member-invite");
-			}
-			
+			$("#main-map-map").css("width",$(document).width()-150+"px");	
 		});
 
 		$(window).resize(function(){

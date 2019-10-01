@@ -65,7 +65,7 @@
                 data:{"userId":userId, "plannerType":plannerType, "cPage":cPage},
                 success:function(data){
                     var plannerList=JSON.parse(data);
-                    fn_plannerChange(plannerList)
+                    fn_plannerChange(plannerList);
                     $("#mypage-content").html(planner_html);
                     $("#mypage").css("height",ph*220+700+"px");
                     $("#mypage-content-planner").css("height",ph*220+150+"px")
@@ -164,8 +164,9 @@
                             clip_content_html+="<img src='<%=request.getContextPath()%>/images/"+clip_list[j]['city']+"/"+clip_list[j]['tourName']+"/"+clip_list[j]['imageUrl'].split(",")[0]+"'width='268px' height='180px'/></div>";
                             clip_content_html+="<div class='clipList_content'>";
                             clip_content_html+="<div class='clip_name'>"+clip_list[j]['tourName']+"</div>";
-                            clip_content_html+="<div class='clip_clipcount'>"+clip_list[j]['clipCount']+"</div>";
-                            clip_content_html+="<div class='clip_reviewscore'>"+clip_list[j]['reviewScore']+"</div>";
+                            clip_content_html+="<div class='clip_clipcount'><i class='fas fa-paperclip'></i><span> " + clip_list[j]['clipCount'] +" </span></div>";
+                            clip_content_html+="<div class='clip_reviewscore'><i class='fas fa-star'></i><span> "+clip_list[j]["reviewScore"]+"</span></div>";
+                            clip_content_html+="<div class='clip_category'>"+clip_list[j]["category"]+"</div>";
                             clip_content_html+="</div></div>";
                         }
                     }

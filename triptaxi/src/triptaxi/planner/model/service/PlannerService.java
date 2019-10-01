@@ -322,6 +322,17 @@ public class PlannerService {
 		
 	}
 	
+	public void updateInviteY(String plannerId, String email) {
+		Connection conn=getConnection();
+		int result=dao.updateInviteY(conn, plannerId, email);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	}
+	
 
 
 }
