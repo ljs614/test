@@ -109,7 +109,70 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		}return u;
 	}
 	
-	public List<Planner> selectPlanner(Connection conn, String userId){
+	public int selectCountPlanner(Connection conn, String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("selectCountPlanner");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectCountPlannerIng(Connection conn, String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("selectCountPlannerIng");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectCountPlannerLike(Connection conn, String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("selectCountPlannerLike");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<Planner> selectPlanner(Connection conn, String userId, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Planner> list=new ArrayList<Planner>();
@@ -118,6 +181,9 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setInt(3, (cPage-1)*numPerPage+1);
+			pstmt.setInt(4, cPage*numPerPage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				planner=new Planner();
@@ -142,7 +208,7 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		return list;
 	}
 	
-	public List<Planner> selectPlannerIng(Connection conn, String userId){
+	public List<Planner> selectPlannerIng(Connection conn, String userId, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Planner> list=new ArrayList<Planner>();
@@ -151,6 +217,9 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setInt(3, (cPage-1)*numPerPage+1);
+			pstmt.setInt(4, cPage*numPerPage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				planner=new Planner();
@@ -175,7 +244,7 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		return list;
 	}
 	
-	public List<Planner> selectPlannerLike(Connection conn, String userId){
+	public List<Planner> selectPlannerLike(Connection conn, String userId, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Planner> list=new ArrayList<Planner>();
@@ -184,6 +253,8 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				planner=new Planner();
@@ -296,13 +367,13 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		return list;
 	}
 	
-	public int insertClip(Connection conn, String userId, String clipId) {
+	public int insertClip(Connection conn, String userId, String tourId) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("insertClip");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, clipId);
+			pstmt.setString(1, tourId);
 			pstmt.setString(2,  userId);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
@@ -313,13 +384,13 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		return result;
 	}
 	
-	public int deleteClip(Connection conn, String userId, String clipId) {
+	public int deleteClip(Connection conn, String userId, String tourId) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("deleteClip");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, clipId);
+			pstmt.setString(1, tourId);
 			pstmt.setString(2,  userId);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
@@ -330,14 +401,14 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		return result;
 	}
 	
-	public String selectClip(Connection conn, String userId, String clipId) {
+	public String selectClip(Connection conn, String userId, String tourId) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String result="false";
 		String sql=prop.getProperty("selectClip");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, clipId);
+			pstmt.setString(1, tourId);
 			pstmt.setString(2, userId);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {

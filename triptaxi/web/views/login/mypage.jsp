@@ -35,10 +35,11 @@
         var ph;
         var ch;
         var plannerType='<%=type%>';
+        var cPage=1;
         $(window).ready(function(){
             $(".my-content").css("opacity",0);
             $("#mypage-content-clipboard").css("opacity",1);
-            fn_planner(plannerType);
+            fn_planner(plannerType, cPage);
             $($("#mypage-nav>li")[0]).addClass('mn_clicked');
         });
 
@@ -58,23 +59,23 @@
         });
 
        
-        function fn_planner(plannerType){
+        function fn_planner(plannerType, cPage){
             $.ajax({
                 url:"<%=request.getContextPath()%>/user/planner",
-                data:{"userId":userId, "plannerType":plannerType},
+                data:{"userId":userId, "plannerType":plannerType, "cPage":cPage},
                 success:function(data){
                     var plannerList=JSON.parse(data);
-                    console.log(plannerList);
+                    // console.log(plannerList);
                     fn_plannerChange(plannerList)
                     $("#mypage-content").html(planner_html);
                     $("#mypage").css("height",ph*220+700+"px");
-                    $("#"+plannerType   ).addClass("pn_clicked");
+                    $("#"+plannerType).addClass("pn_clicked");
                      //일정 내비 클릭이벤트
                     $(function(){
                         $("#planList_nav>li").click(function(){
                             $(this).addClass("pn_clicked");
                             $($(this).siblings()).removeClass("pn_clicked");
-                            fn_planner($(this).attr("id"));
+                            fn_planner($(this).attr("id"), cPage);
                         });
                         $(".planList_div").click(function(){
                             location.href="<%=request.getContextPath()%>/planner/plannerView?plannerId="+plannerList['plannerList'][$(this).index()-1]['plannerId'];
@@ -98,25 +99,21 @@
                 planner_html+="<div class='plan_title'>"+planner['plannerName']+"</div>";
                 var p_date=planner['plannerDate'].split(' ');
                 planner_html+="<div class='plan_date'>"+p_date[2]+"-"+p_date[0].split('월')[0]+"-"+p_date[1].split(',')[0]+"</div>";
-                planner_html+="<div class='plan_totalDay'> "+plannerList['plannerList'].length+" DAY</div>";
+                planner_html+="<div class='plan_totalDay'> "+plannerList['dayList'][i]+" DAY</div>";
                 planner_html+="<div class='plan_city'>"+plannerList['cities'][i]+"</div>";
                 var plan_theme=planner['plannerTheme']==null?"계획중":planner['plannerTheme'];
                 planner_html+="<div class='plan_theme'><span>"+plan_theme+"</span></div>";
                 planner_html+="<div class='plan_users'><i class='fas fa-user'></i>"+planner['plannerWriter'];
                 var userList=plannerList['userList'][i];
-                for(var j=0; j<userList.length; j++){
-                    if(userList.length>1){
-                        planner_html+=" 외 "+userList.length+"명";
-                        break;
-                    }
-                    planner_html+=", ";
-                    planner_html+=userList[j];   
+                if(userList.length>0){
+                    planner_html+=" 외 "+userList.length+"명";
                 }
                 planner_html+="</div>";
                 planner_html+="<div class='plan_popularity'><i class='fas fa-eye'></i> "+planner['plannerCount']+"<i class='fas fa-heart'></i> "+planner['plannerLike']+"</div>";
                 planner_html+="</div></div>";
             }
             planner_html+="</div>";
+            planner_html+=plannerList['pageBar'];
             ph=Math.ceil(plannerList['plannerList'].length/3);
         }
 

@@ -545,5 +545,27 @@ public class PlannerDao {
 		}
 		return result;
 	}
+	
+	
+	public int plannerDayCount(Connection conn, String plannerId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("plannerDayCount");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, plannerId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
 
 }

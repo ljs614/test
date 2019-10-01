@@ -9,6 +9,7 @@
 	if(loginUser!=null){
 		userId=loginUser.getUserId();
 	}
+	List userList=(List)request.getAttribute("userList");
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -32,7 +33,14 @@
 					</div>
 					<div id="planner-member">
 						<div id="planner-member-invite">
-							<img src="<%=request.getContextPath()%>/views/planner/img/pButton.png" width='40px' height='40px'/>
+							<img src="<%=request.getContextPath()%>/views/planner/img/pButton.png" width='30px' height='30px'/>
+						</div>
+						<div id="planner-member-list">
+							<%if(userList!=null){
+								for(int i=0; i<userList.size(); i++){%>
+									<span><%=userList.get(i)%></span>
+								<%}
+							}%>
 						</div>
 					</div>
 					<div id="planner-name">	
@@ -55,7 +63,11 @@
 							
 						</div>
 						<div id="planner-etc-theme">
-							<%=planner.getPlannerTheme()%>
+							<%if(planner.getPlannerTheme()==null){%>
+								계획중
+							<%}else{%>
+								<%=planner.getPlannerTheme()%>
+							<%}%>
 						</div>
 					</div>
 					<div id='planner_popularity'><i class='fas fa-eye'></i> <%=planner.getPlannerCount()%><i class='fas fa-heart'></i><%=planner.getPlannerLike()%></div>
@@ -82,6 +94,14 @@
 	<div id="bot-container" style="width:100%; height:600px; border:1px solid red;">
 			
 	</div>
+	<div id="invite-modal">
+		<div id="invite-modal-container">
+			<div id="invite-modal-title">&nbsp;친구초대<span>X</span></div>
+			<input type="email" name="invite_email" id="invite_email" placeholder="이메일 주소 입력"/>
+			<button onclick="fn_invite_member();">초대</button>
+			<p>* 5분 이상 메일을 수신하지 못할 경우, 스팸 메일함 확인을 요청하시기 바랍니다.</p>
+		</div>
+	</div>
 	<script>
 		var planList=${jlist};
 		//커버 이미지
@@ -101,6 +121,7 @@
 		var outline_html='<div id="planView-outline" class="planView-main-container">';
 		outline_html+='<div id="side-navi"></div>';
 		outline_html+='<div id="planner-containerNmap"><div id="planner-container"><div id="planner-outline">';
+		console.log(planList);
 		for(var i=0; i<planList.length; i++){
 			outline_html+="<div id='planner-day"+(i+1)+"' class='day-planner'>";
 			outline_html+="<table class='day-table'>";
@@ -604,7 +625,16 @@
             });
 	}
 	
-
+	//초대하기 함수
+	function fn_invite_member(){
+		$.ajax({
+				url:"<%=request.getContextPath()%>/invite",
+				data:{"email":$("#invite_email").val()},
+				success:function(data){
+					console.log(data);
+				}
+			});
+	}
 	$(function(){
 		
 		//커버 이미지 바꾸기
@@ -642,8 +672,15 @@
 
 		//초대 클릭이벤트
 		$("#planner-member-invite").click(function(){
-			location.href="<%=request.getContextPath()%>/invite";
+			$("#invite-modal").css("visibility","visible");
+			
 		});
+
+		//초대 닫기 클릭
+		$("#invite-modal-title>span").click(function(){
+			$("#invite-modal").css("visibility","hidden");
+		});
+
 
 		//관광지 줌 클릭이벤트
 		$(".day-tour-zoom>.fa-map-marker-alt").click(function(){

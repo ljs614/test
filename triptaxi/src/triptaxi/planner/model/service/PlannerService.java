@@ -255,6 +255,13 @@ public class PlannerService {
 		return result;
 	}
 	
+	///////정섭 추가//
+	public int plannerDayCount(String plannerId) {
+		Connection conn=getConnection();
+		int result=dao.plannerDayCount(conn, plannerId);
+		close(conn);
+		return result;
+	}
 	
 
 

@@ -49,6 +49,7 @@ public class PlannerViewServlet extends HttpServlet {
 		String view;
 		Tour[] tourList=null;
 		if(planner!=null) {
+			List<String> userList=service.selectShareUser(planner.getPlannerId());
 			List<PlannerDay> pdList=service.selectPlannerDayList(plannerId);
 			List list=new ArrayList();
 			for(int i=0; i<pdList.size(); i++) {
@@ -64,6 +65,7 @@ public class PlannerViewServlet extends HttpServlet {
 				}
 			}
 			request.setAttribute("planner", planner);
+			request.setAttribute("userList", userList);
 			request.setAttribute("jlist", gson.toJson(list));
 			view="/views/planner/planView.jsp";
 			

@@ -40,14 +40,27 @@ public class GetPlannerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String userId=request.getParameter("userId");
 		String plannerType=request.getParameter("plannerType");
+		int cPage;
+		try {
+			cPage=Integer.parseInt(request.getParameter("cPage"));
+		}catch(NumberFormatException e) {
+			cPage=1;
+		}
+		int numPerPage=6;
+		int totalData=0;
 		PlannerService pService=new PlannerService();
+		UserService uService=new UserService();
 		List<Planner> pList=new ArrayList<Planner>();
 		if(plannerType.equals("ed_plan")) {
-			pList=new UserService().selectPlanner(userId);
+			totalData=uService.selectCountPlanner(userId);
+			pList=uService.selectPlanner(userId, cPage, numPerPage);
 		}else if(plannerType.equals("ing_plan")) {
-			pList=new UserService().selectPlannerIng(userId);
+			totalData=uService.selectCountPlannerIng(userId);
+			pList=uService.selectPlannerIng(userId, cPage, numPerPage);
+			
 		}else {
-			pList=new UserService().selectPlannerLike(userId);
+			totalData=uService.selectCountPlannerLike(userId);
+			pList=uService.selectPlannerLike(userId, cPage, numPerPage);
 		}
 		List<String[]> pwList=new ArrayList<String[]>();
 		String[] cities=new String[pList.size()];
@@ -60,13 +73,57 @@ public class GetPlannerServlet extends HttpServlet {
 			pwList.add(userArr);
 			cities[i]=pService.selectPlannerDayList(pList.get(i).getPlannerId()).get(0).getCityName();
 		}
+		int[] dayList=new int[pList.size()];
+		for(int i=0; i<dayList.length; i++) {
+			dayList[i]=pService.plannerDayCount(pList.get(i).getPlannerId());
+		}
+		
+
+		
+		String pageBar="";
+		int totalPage=(int)Math.ceil((double)totalData/numPerPage);
+		int pageBarSize=10;
+		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
+		int pageEnd=pageNo+pageBarSize-1;
+		if(pageNo==1) {
+			pageBar+="<span>[이전]</span>";
+		}else {
+			pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>[이전]</a>";
+		}
+		//중간 클릭한 페이지(숫자) 만들기
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(pageNo==cPage) {
+				pageBar+="<span>"+pageNo+"</span>";
+			}else {
+				pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>"+pageNo+"</a>";
+			}
+			pageNo++;
+		}
+		//다음 만들기
+		if(pageNo>totalPage) {
+			pageBar+="<span>[다음]</span>";
+		}else {
+			pageBar+="<a href='javascript:fn_planner("+"\""+plannerType+"\""+","+pageNo+")'>[다음]</a>";
+		}
 		
 		Gson gson=new Gson();
 		JSONObject jList=new JSONObject();
 		jList.put("plannerList", pList);
 		jList.put("userList",pwList);
 		jList.put("cities", cities);
+		jList.put("dayList", dayList);
+		jList.put("pageBar",pageBar);
 		response.getWriter().append(gson.toJson(jList));
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		
 	}
 

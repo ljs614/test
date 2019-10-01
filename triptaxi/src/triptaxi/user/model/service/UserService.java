@@ -39,23 +39,44 @@ public class UserService {
 		return result;
 	}
 	
-	public List<Planner> selectPlanner(String userId){
+	public int selectCountPlanner(String userId) {
 		Connection conn=getConnection();
-		List<Planner> list=dao.selectPlanner(conn, userId);
+		int result=dao.selectCountPlanner(conn, userId);
+		close(conn);
+		return result;
+	}
+	
+	public int selectCountPlannerIng(String userId) {
+		Connection conn=getConnection();
+		int result=dao.selectCountPlannerIng(conn, userId);
+		close(conn);
+		return result;
+	}
+	
+	public int selectCountPlannerLike(String userId) {
+		Connection conn=getConnection();
+		int result=dao.selectCountPlannerLike(conn, userId);
+		close(conn);
+		return result;
+	}
+	
+	public List<Planner> selectPlanner(String userId, int cPage, int numPerPage){
+		Connection conn=getConnection();
+		List<Planner> list=dao.selectPlanner(conn, userId, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 	
-	public List<Planner> selectPlannerIng(String userId){
+	public List<Planner> selectPlannerIng(String userId, int cPage, int numPerPage){
 		Connection conn=getConnection();
-		List<Planner> list=dao.selectPlannerIng(conn, userId);
+		List<Planner> list=dao.selectPlannerIng(conn, userId, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 	
-	public List<Planner> selectPlannerLike(String userId){
+	public List<Planner> selectPlannerLike(String userId, int cPage, int numPerPage){
 		Connection conn=getConnection();
-		List<Planner> list=dao.selectPlannerLike(conn, userId);
+		List<Planner> list=dao.selectPlannerLike(conn, userId, cPage, numPerPage);
 		close(conn);
 		return list;
 	}

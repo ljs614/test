@@ -23,7 +23,7 @@
 	String userId="";
 	List<Attraction> list=(List)request.getAttribute("list");
 	if(loginUser!=null){
-	userId=loginUser.getUserId();
+		userId=loginUser.getUserId();
 	}
 	
 	
@@ -671,24 +671,58 @@ opacity:0.5;
 
 </style>
 <script>
-
+	var userId="<%=userId%>";
+	var clip;
 	var clipcount=0;
+	if(userId!='null'){
+		fn_clip_tf();
+	}else{
+		clip=false;
+	}
+	//클립 데이터 가져오기
+	function fn_clip_tf(){
+		$.ajax({
+			url:"<%=request.getContextPath()%>/user/getClipTour",
+			type:"get",
+			dataType:"text",
+			data:{"tourId":"<%=a.getAttractionId()%>", "userId":userId},
+			success:function(data){
+				if(data=='true'){
+					$("#topButtonClip").css("color","orange");
+					$("#imageText").html("클립해제");
+					clip=true;
+				}else{
+					$("#topButtonClip").css("color","gray");
+					$("#imageText").text("클립보드");
+					clip=false;
+				}
+			}
+		});
+	}
+
 	$(function(){
 		$("#top-button-clip").click(function(){
-			clipcount++;
-
-			if(clipcount%2!=0){
-			$("#topButtonClip").css("color","orange");
-			$("#imageText").html("클립해제");
-        	<%clip=1;%>
-        	console.log(<%=clip%>);
-        	
-			}else{$("#topButtonClip").css("color","gray");
-			$("#imageText").text("클립보드");
-      		<%clip=2;%>
-      		
- 			}
-			console.log(<%=clip%>);
+			if(userId=='null'){
+				fn_login();
+			}else{
+				$.ajax({
+					url:"<%=request.getContextPath()%>/user/clipTour",
+					type:"get",
+					dataType:"text",
+					data:{"tourId":"<%=a.getAttractionId()%>", "userId":userId, "clip":""+clip},
+					success:function(data){
+						if(data=='true'){
+							$("#topButtonClip").css("color","orange");
+							$("#imageText").html("클립해제");
+							clip=true;
+						}else{
+							$("#topButtonClip").css("color","gray");
+							$("#imageText").text("클립보드");
+							clip=false;
+						}
+					}
+				});
+			}
 		});
 
 	});

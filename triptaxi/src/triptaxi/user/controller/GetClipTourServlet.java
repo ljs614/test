@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import triptaxi.user.model.service.UserService;
+
 /**
- * Servlet implementation class GetPlannerIngServlet
+ * Servlet implementation class GetClipTourServlet
  */
-@WebServlet("/user/plannerIng")
-public class GetPlannerIngServlet extends HttpServlet {
+@WebServlet("/user/getClipTour")
+public class GetClipTourServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPlannerIngServlet() {
+    public GetClipTourServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +29,10 @@ public class GetPlannerIngServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		String userId=request.getParameter("userId");
+		String tourId=request.getParameter("tourId");
+		String clip=new UserService().selectClip(userId, tourId);
+		response.getWriter().append(clip);
 	}
 
 	/**
