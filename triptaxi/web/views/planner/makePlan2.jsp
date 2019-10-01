@@ -442,7 +442,7 @@
 		add += "<img src='<%=request.getContextPath()%>/images/"+city+"/"+tourName+"/"+tourName+"1.jpg' width='90px' height='70px' />";
 		add += "</div><div class='rightContent'><div class='tourTitle'";
 		if(tourName.length>9){
-			add += "style='font-size:11.5px'";
+			add += " style='font-size:11.5px'";
 		}
 		add += ">" + tourName + "</div>";
 		add += "<div class='tourCategory'>" + category + "</div>";
@@ -491,12 +491,13 @@
           fn_navTextChange();
 			
 		  $('#sm_plannerList>li').remove(); 
-          
+     
 		  console.log(plannerLats.length);
 		  if(plannerLats.length>0){
 		  	map_clear();
 			  
 		  }
+		  flightPath.setMap(null);
       	
           $.ajax({
         	url:"<%=request.getContextPath()%>/changeDayList",
@@ -603,6 +604,7 @@
         }
         
         var markers2=[];
+        var polys=[];
         //일정리스트 마커, 폴리라인 함수
 		function polyMarker_draw(map){	
 			var beforeIndex2;
@@ -623,6 +625,7 @@
 				strokeOpacity: 1.0,
 				strokeWeight: 2
 				});
+				polys.push(flightPath);
         	flightPath.setMap(map);
 
     
@@ -669,8 +672,14 @@
 	      	}
 	   		markers2=[];
 	   		path=[];
+	   		
+	   		console.log("초기화");
+	   		console.log(flightPath.length);
 	      	flightPath.getPath().clear(); 	
-	      	flightPath.setMap(null);
+	      	
+	      	for(var i=0;i<polys.length;i++){
+	      		polys[i].setMap(null);
+	      	}
 		}
 
         //일정 초기화
