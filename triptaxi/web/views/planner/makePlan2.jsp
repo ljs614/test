@@ -230,6 +230,7 @@
     	var plannerLats=[];
     	var plannerLngs=[];
     	var flightPath;
+    	var path=[];
     	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
     	var icon;
       
@@ -491,6 +492,7 @@
 			
 		  $('#sm_plannerList>li').remove(); 
           
+		  console.log(plannerLats.length);
 		  if(plannerLats.length>0){
 		  	map_clear();
 			  
@@ -659,7 +661,6 @@
 		
         //일정리스트 맵 초기화
 		function map_clear(){
-	      	flightPath.getPath().clear(); 	
 	      	
 			plannerLats=[];
 	    	plannerLngs=[];
@@ -667,6 +668,9 @@
 	      		markers2[i].setMap(null);
 	      	}
 	   		markers2=[];
+	   		path=[];
+	      	flightPath.getPath().clear(); 	
+	      	flightPath.setMap(null);
 		}
 
         //일정 초기화
@@ -677,6 +681,7 @@
           	map_clear();
       	
       		/* polyMarker_draw(map); */
+      		flightPath.getPath().clear();
       		Marker_draw(map); 
       		
       		$.ajax({
@@ -696,6 +701,11 @@
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
         		flightPath.getPath().clear();
+        		
+        		console.log("prev버튼");
+        		console.log(plannerLats);
+        		console.log(plannerLngs);
+        		console.log("-----------------");
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -728,6 +738,11 @@
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
         		flightPath.getPath().clear();
+        		
+        		console.log("next버튼");
+        		console.log(plannerLats);
+        		console.log(plannerLngs);
+        		console.log("-----------------");
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -998,6 +1013,7 @@
     	if(firstPlus!=0){
     		flightPath.getPath().clear();
     		firstPlus=1;
+    		path=[];
     	}
     	plannerLats.push(lat);
     	plannerLngs.push(lng);
@@ -1010,6 +1026,9 @@
     //일정 삭제
     $(document).on('click', '.sm_plannerDelete', function(){
     	map_clear();
+   		
+    	console.log(plannerLats);
+    	flightPath.getPath().clear();
     	$(this).parent().remove();
     	var tourList = "";
     	for(var i=0 ; i<$('#sm_plannerList>li').length ;i++){
