@@ -10,12 +10,8 @@ section {
 }
 
 div#continentSelect {
-	/* border:1px solid black; */
 	width: 100%;
-	background-color: rgba(159,159,165,0.7);
-	
-	/* height:580px; */
-	
+	background-color: rgb(73,80,106);	
 }
 
 div#continentSelect #innerContinentSelect {
@@ -62,8 +58,8 @@ ul#continents li div#continentTooltip {
 	font-size: 16px;
 	font-weight: bolder;
 	text-align: left;
-	background: #49506a;
-	color: white;
+	background: white;
+	color: black;
 	padding: 5px 10px;
 	border-radius: 5px;
 	display: block;
@@ -92,7 +88,7 @@ ul#continents li div#continentTooltip:after {
 	height: 0;
 	border-style: solid;
 	border-width: 7px 7px 0 7px;
-	border-color: #49506a transparent transparent transparent;
+	border-color: white transparent transparent transparent;
 }
 
 ul#continents li a:hover {

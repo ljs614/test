@@ -230,6 +230,7 @@
     	var plannerLats=[];
     	var plannerLngs=[];
     	var flightPath;
+    	var path=[];
     	var iconBase = '<%=request.getContextPath()%>/views/planner/img/';
     	var icon;
       
@@ -441,7 +442,7 @@
 		add += "<img src='<%=request.getContextPath()%>/images/"+city+"/"+tourName+"/"+tourName+"1.jpg' width='90px' height='70px' />";
 		add += "</div><div class='rightContent'><div class='tourTitle'";
 		if(tourName.length>9){
-			add += "style='font-size:11.5px'";
+			add += " style='font-size:11.5px'";
 		}
 		add += ">" + tourName + "</div>";
 		add += "<div class='tourCategory'>" + category + "</div>";
@@ -490,11 +491,13 @@
           fn_navTextChange();
 			
 		  $('#sm_plannerList>li').remove(); 
-          
+     
+		  console.log(plannerLats.length);
 		  if(plannerLats.length>0){
 		  	map_clear();
 			  
 		  }
+		  flightPath.setMap(null);
       	
           $.ajax({
         	url:"<%=request.getContextPath()%>/changeDayList",
@@ -601,6 +604,7 @@
         }
         
         var markers2=[];
+        var polys=[];
         //일정리스트 마커, 폴리라인 함수
 		function polyMarker_draw(map){	
 			var beforeIndex2;
@@ -621,6 +625,7 @@
 				strokeOpacity: 1.0,
 				strokeWeight: 2
 				});
+				polys.push(flightPath);
         	flightPath.setMap(map);
 
     
@@ -659,7 +664,6 @@
 		
         //일정리스트 맵 초기화
 		function map_clear(){
-	      	flightPath.getPath().clear(); 	
 	      	
 			plannerLats=[];
 	    	plannerLngs=[];
@@ -667,6 +671,15 @@
 	      		markers2[i].setMap(null);
 	      	}
 	   		markers2=[];
+	   		path=[];
+	   		
+	   		console.log("초기화");
+	   		console.log(flightPath.length);
+	      	flightPath.getPath().clear(); 	
+	      	
+	      	for(var i=0;i<polys.length;i++){
+	      		polys[i].setMap(null);
+	      	}
 		}
 
         //일정 초기화
@@ -677,6 +690,7 @@
           	map_clear();
       	
       		/* polyMarker_draw(map); */
+      		flightPath.getPath().clear();
       		Marker_draw(map); 
       		
       		$.ajax({
@@ -696,6 +710,11 @@
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
         		flightPath.getPath().clear();
+        		
+        		console.log("prev버튼");
+        		console.log(plannerLats);
+        		console.log(plannerLngs);
+        		console.log("-----------------");
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -728,6 +747,11 @@
         		$('#sm_plannerList>li').remove(); 
         		map_clear();
         		flightPath.getPath().clear();
+        		
+        		console.log("next버튼");
+        		console.log(plannerLats);
+        		console.log(plannerLngs);
+        		console.log("-----------------");
         		
         		$.ajax({
                 	url:"<%=request.getContextPath()%>/changeDayList",
@@ -998,6 +1022,7 @@
     	if(firstPlus!=0){
     		flightPath.getPath().clear();
     		firstPlus=1;
+    		path=[];
     	}
     	plannerLats.push(lat);
     	plannerLngs.push(lng);
@@ -1010,6 +1035,9 @@
     //일정 삭제
     $(document).on('click', '.sm_plannerDelete', function(){
     	map_clear();
+   		
+    	console.log(plannerLats);
+    	flightPath.getPath().clear();
     	$(this).parent().remove();
     	var tourList = "";
     	for(var i=0 ; i<$('#sm_plannerList>li').length ;i++){

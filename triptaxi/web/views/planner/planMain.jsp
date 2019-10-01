@@ -305,7 +305,7 @@
 		}else{
 			option1 = "order by planner_writedate desc";
 		}
-		fn_paging(option1, $(this).data("cityeng"), cPage);
+		fn_paging2(option1, $(this).data("cityeng"), cPage);
 	})
 	$('.tbl_Continent').click(function(){
 		$('#sac_content>ul>li').removeClass('clickCategory');
@@ -316,15 +316,15 @@
 		}else{
 			option1 = "order by planner_writedate desc";
 		}
-		fn_paging(option1, "null", cPage);
+		fn_paging1(option1, cPage);
 		
 	})
 	
 
-	function fn_paging(option1, option2, cPage){
+	function fn_paging1(option1, cPage){
 		$.ajax({
-			url:"<%=request.getContextPath()%>/optionChange",
-			data:{"option1":option1, "option2":option2, "cPage":cPage},
+			url:"<%=request.getContextPath()%>/option1Change",
+			data:{"option1":option1, "cPage":cPage},
 			success:function(data){
 				
 			}
@@ -332,14 +332,28 @@
 		
 	}
 	
+	function fn_paging2(option1, option2, cPage){
+		$.ajax({
+			url:"<%=request.getContextPath()%>/option2Change",
+			data:{"option1":option1, "option2":option2, "cPage":cPage},
+			success:function(data){
+				
+			}
+		})
+	}
+	
+	
+	
 	$('#newestPlan').click(function(){
 		var option="null";
 	
 		if($('.clickCategory').length>0){
 			option=$('.clickCategory').data("cityeng");
+			fn_paging2("order by planner_writedate desc", option, cPage);
+		}else{
+			fn_paging1("order by planner_writedate desc", cPage);
 		}
 		
-		fn_paging("order by planner_writedate desc", option, cPage);
 
 	});
 	
@@ -348,9 +362,11 @@
 		
 		if($('.clickCategory').length>0){
 			option=$('.clickCategory').data("cityeng");
+			fn_paging2("order by planner_like desc", option, cPage);
+		}else{
+			fn_paging1("order by planner_like desc", cPage);
 		}
 		
-		fn_paging("order by planner_like desc", option, cPage);
 	})
 	
 	
