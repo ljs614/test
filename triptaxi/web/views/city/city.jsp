@@ -90,7 +90,7 @@
 	<div class="con1_bottom">
 		<div class="con1_bottom1">
 			<p class="con1_bottom_p1"><%=c.getCityName() %>여행 준비할 때 꼭 필요한 최신의 <%=c.getCityName() %> 여행정보를 보고 있습니다.</p>
-			<p class="con1_bottom_p2"><a href="#"><i class="fas fa-angle-double-down"></i>&nbsp다른 여행도시 보기</a></p>
+			<p class="con1_bottom_p2"><a href="#"><i class="material-icons">touch_app</i>&nbsp다른 여행도시 보기</a></p>
 		</div>
 	</div>
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<link href="<%=request.getContextPath() %>/css/city.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/reviewboard.css" rel="stylesheet">
 
 <script>
@@ -22,9 +21,9 @@
 
 
 <section>
-		<video autoplay loop muted="false">
-			<source src="../video/city.mp4" type="video/mp4">
-		</video>
+	<div>
+		<img src="../../1.jpg" width="100%" height="350px">
+	</div>
 		
 	<div class="con1_bottom">
 		<div class="con1_bottom1">
@@ -46,7 +45,44 @@
 		
 		<div class="community_right">
 			<div>
-			
+				<table>
+					<tr>
+						<th>사진</th>
+						<th>번호</th>
+						<th>도시</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>날짜</th>
+						<th>조회수</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					<tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					<tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					<tr>
+				</table>
 			</div>
 		</div>
 	</div>
