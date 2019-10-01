@@ -15,7 +15,7 @@ td{font-size:18px; font-weight:bold;  padding:20px;}
 }
 #enroll{
     height:900px;
-    width:100%;
+    width:100%; 
 }
 #frm_enroll{
     position: relative;
