@@ -9,9 +9,7 @@
 	if(loginUser!=null){
 		userId=loginUser.getUserId();
 	}
-	List userList=(List)request.getAttribute("userList");
 	String userName=(String)request.getAttribute("userName");
-	String users="";
 %>
 
 	<link href="<%=request.getContextPath() %>/css/planView.css" rel="stylesheet">
@@ -36,22 +34,14 @@
 					<div id="planner-member">
 						<div id="planner-member-invite">
 							<%if(userId.equals(planner.getPlannerWriter())){%>
-								<i class="fas fa-user-plus" title='초대하기'></i>
+								<i class="far fa-plus-square" title='초대하기'></i>
 							<%}else{%>
 								<div style='width:30px; height:30px'></div>
 							<%}%>
 								
 						</div>
 						<div id="planner-member-list">
-							<%if(userList.size()>0){%>
-								<i class="fas fa-users" id="users"></i>
-								<%for(int i=0; i<userList.size(); i++){
-									users+=userList.get(i);
-									if(i<userList.size()-1){
-										users+=",";
-									}
-								}
-							}%>
+						
 						</div>
 					</div>
 					<div id="planner-name">	
@@ -101,7 +91,7 @@
 
 	<section id="planView-main">
 	</section>
-	<div id="bot-container" style="width:100%; height:3000px; border:1px solid navy;">
+	<div id="bot-container" style="width:100%; height:100px;">
 			
 	</div>
 	<div id="invite-modal">
@@ -125,7 +115,34 @@
 		$("#cover-container").css("background-image","url('../"+coverImg+"')");
 
 		var html="";
-
+		//커버 멤버 생성
+		var userList=${userList};
+		var member_html="";
+		var ulCount=0;
+		var imCount=0;
+		var users="";
+		var inviteM="";
+		if(userList.length>0){
+			for(var i=0; i<userList.length; i++){
+				var userIne=userList[i].split(",");
+				if(userIne[0]!="<%=planner.getPlannerWriter()%>"){
+					users+=userIne[1]+" ";
+					ulCount++;
+				}else{
+					inviteM+=userIne[2]+" ";
+					imCount++;
+				}
+			}
+		}
+		if(ulCount>0){
+			$("#planner-member-list").append("<i class='fas fa-users' id='users'></i>");
+			$("#users").attr("title",users);
+		}
+		if(imCount>0){
+			$("#planner-member-list").append("<img id='invite_ing' src='<%=request.getContextPath()%>/views/planner/img/invite_ing.png' width='60px' />");
+			$("#invite_ing").attr("title",inviteM);
+		}
+	
 		//커버 일정 날짜 생성
 		var date_=new Date('<%=planner.getPlannerDate()%>');
 		var dayLong=planList.length;
@@ -258,12 +275,12 @@
 		$(window).ready(function(){
 			$(".navs").css("font-weight","");
 			$($(".navs")[0]).css("font-weight","bold");
-			$($(".side-navi-btn")[1]).css("color","red");
+			$($(".side-navi-btn")[1]).css("color","#8eade7");
 			$("#planView-main").css("height", $("#planner-container").height()+100+"px");
 			$("#main-map-map").css("width",$(document).width()-150+"px");
-			$('#planTitle>i').hide();
-			$("#cover-change").css("opacity",0);
-			$("#users").attr("title","<%=users%>");
+			if("<%=planner.getPlannerWriter()%>"=="<%=userId%>"){
+				$("#planner-member-invite").addClass("member-invite");
+			}
 			
 		});
 
@@ -361,9 +378,11 @@
 						});
 				bounds.extend(loc);
 				if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
-					marker.setIcon("<%=request.getContextPath()%>/views/planner/img/camera1.png");
+					marker.setIcon("<%=request.getContextPath()%>/views/planner/img/atMarker-40.png");
+				}else if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
+					marker.setIcon("<%=request.getContextPath()%>/views/planner/img/acMarker-40.png");
 				}else{
-					marker.setIcon("https://img.icons8.com/office/40/000000/marker.png");
+					marker.setIcon("<%=request.getContextPath()%>/views/planner/img/feMarker-40.png");
 				}
 				markers.push(marker);
 			}
@@ -386,13 +405,13 @@
 				var bot_con=$("#bot-container").offset().top;
 				if(window.scrollY+500>bot_con){
 					$("#right-side").css({"position":"absolute","top":$("#planView-main").height()-350+"px"});
-					$("#side-navi").css("position","absolute");
+					$("#side-navi").css({"position":"absolute","top":$("#planView-main").height()+200+"px"});
 				}else if(window.scrollY>top_planner){
 					$("#right-side").css({"position":"fixed", "top":"60px"});
-					$("#side-navi").css("position","fixed");
+					$("#side-navi").css({"position":"fixed", "top":"420px"});
 				}else{
 					$("#right-side").css({"position":"absolute", "top":"0"});
-					$("#side-navi").css("position","fixed");
+					$("#side-navi").css({"position":"fixed", "top":"420px"});
 				}
 			});
 	
@@ -410,7 +429,7 @@
 				var side=$(".side-navi-btn");
 				for(var i=0; i<side.length; i++){
 					if(i==cDay){
-						$(side[i]).css("color","red");
+						$(side[i]).css("color","#8eade7");
 						
 					}else{
 						$(side[i]).css("color","black");
@@ -451,8 +470,8 @@
 		function fn_mainMap(){
 			$(".planView-main-container").hide();
 			cDay=1;
-			$(".mmn-div").css({"background-color":"white","color":"navy"});
-			$($(".mmn-div")[0]).css({"background-color":"navy","color":"white"});
+			$(".mmn-div").css({"background-color":"white","color":"#49506a"});
+			$($(".mmn-div")[0]).css({"background-color":"#49506a","color":"white"});
 			$("html, section").scrollTop(0);
 			$("html, section").css("overflow-y","hidden");
 			$("#main-map").show();
@@ -521,12 +540,21 @@
 				var loc=new google.maps.LatLng(lats[i],lngs[i]);
 				pathM.push(loc);
 				var markerM = new google.maps.Marker({ position: loc, map: mainM });
+				if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
+					markerM.setIcon("<%=request.getContextPath()%>/views/planner/img/atMarker-40.png");
+				}else if(planList[cDay-1][i]['tourId'].substring(0,2)=='at'){
+					markerM.setIcon("<%=request.getContextPath()%>/views/planner/img/acMarker-40.png");
+				}else{
+					markerM.setIcon("<%=request.getContextPath()%>/views/planner/img/feMarker-40.png");
+				}
 				bounds.extend(loc);
 				markersM.push(markerM);
 			}
 			mainM.fitBounds(bounds);
 			mainM.panToBounds(bounds);
 		}
+
+
 		function fn_markerM(mainM){
 			flightPathM.getPath().clear();
 			for (var i = 0; i < markersM.length; i++) {
@@ -587,33 +615,37 @@
 
 
 	//일정 이름 바꾸기
-	if(userId!='null'){
+	if(userId=="<%=planner.getPlannerWriter()%>"){
 		$('#cover-container').mouseover(function(){
 			// $(this).css("background-color","#F2F2F2");
 			$('#planTitle>i').show();
-			$("#cover-change").css("opacity",1);
+			$("#planTitle").css("cursor","pointer");
+			$("#cover-change").css("visibility","visible");
+		});
+		$('#cover-container').mouseleave(function(){
+			// $(this).css("background-color", "white");
+			$('#planTitle>i').hide();
+			$("#planTitle").css("cursor","default");
+			$("#cover-change").css("visibility","hidden");
+		});
+			$('#planTitle').on('click',function(){
+			$(this).hide();
+			$('#editTitle').show();
+			$("#editT").val($('#title').text().trim());
+			$('#titleCnt').text($('#editT').val().length+"/15");
+		});
+		$('#editBT').on('click',function(){
+			$('#editTitle').hide();
+			$('#planTitle').show();
+			$('#title').text($('#editT').val());
+
 		});
 	}else{
 		$("#modify_btn").hide();
 	}
-	$('#cover-container').mouseleave(function(){
-		// $(this).css("background-color", "white");
-		$('#planTitle>i').hide();
-		$("#cover-change").css("opacity",0);
-	});
+	
 
-	$('#planTitle').on('click',function(){
-		$(this).hide();
-		$('#editTitle').show();
-		$("#editT").val($('#title').text().trim());
-		$('#titleCnt').text($('#editT').val().length+"/15");
-	});
-	$('#editBT').on('click',function(){
-		$('#editTitle').hide();
-		$('#planTitle').show();
-		$('#title').text($('#editT').val());
-
-	});
+	
 	function fn_lengthCheck(input) {
 		var text = $(input).val();
 		var maxlength = $(input).prop("maxlength");
@@ -645,6 +677,7 @@
 	//초대하기 함수
 	function fn_invite_member(){
 		$("#sending_mail").show();
+		$("#invite_email").focus();
 		$.ajax({
 				url:"<%=request.getContextPath()%>/invite",
 				data:{"email":$("#invite_email").val(),"plannerName":"<%=planner.getPlannerName()%>","plannerId":"<%=planner.getPlannerId()%>"},
@@ -695,7 +728,7 @@
 		});
 
 		//초대 클릭이벤트
-		$("#planner-member-invite").click(function(){
+		$(".member-invite").click(function(){
 			$("#invite-modal").show();
 			
 		});
@@ -739,8 +772,8 @@
 		$(".mmn-div").click(function(){
 			cDay=$($(this).children('input')).val();
 			fn_markerM(mainM);
-			$($(".mmn-div")).css({"background-color":"white","color":"navy"});
-			$(this).css({"background-color":"navy","color":"white"});
+			$($(".mmn-div")).css({"background-color":"white","color":"#49506a"});
+			$(this).css({"background-color":"#49506a","color":"white"});
 		});
 	
 	});

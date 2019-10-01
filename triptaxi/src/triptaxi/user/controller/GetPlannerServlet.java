@@ -66,6 +66,11 @@ public class GetPlannerServlet extends HttpServlet {
 		String[] cities=new String[pList.size()];
 		for(int i=0; i<pList.size(); i++) {
 			List<String> userList=pService.selectShareUser(pList.get(i).getPlannerId());
+			for(int j=0; j<userList.size(); j++) {
+				if(!userList.get(j).split(",")[2].equals("null")) {
+					userList.remove(j);
+				}
+			}
 			String[] userArr=new String[userList.size()];
 			for(int j=0; j<userArr.length; j++) {
 				userArr[j]=userList.get(j);

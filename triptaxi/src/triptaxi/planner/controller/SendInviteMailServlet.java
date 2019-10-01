@@ -2,6 +2,7 @@ package triptaxi.planner.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -60,13 +61,25 @@ public class SendInviteMailServlet extends HttpServlet {
         User user=(User)hSession.getAttribute("loginUser");
         String str="";
         String sendText="";
+        boolean email_tf=false;
+        List<String> shareUser=new PlannerService().selectShareUser(plannerId);
+        for(int i=0; i<shareUser.size(); i++) {
+        	String sue=(shareUser.get(i)).split(",")[2];
+        	if(sue.equals(email)) {
+        		email_tf=true;
+        		break;
+        	}
+        }
         if(user.getEmail().equals(email)) {
         	str="자기 자신은 초대할 수 없습니다.";
+        }else if(email_tf){
+        	str="이미 초대된 승객입니다.";
         }else {
 		    sendText+="<h4>"+user.getUserName()+"님의 택시에 탑승하세요.</h4><br>";
 		    sendText+="<center>";
-		    sendText+="<div style='width:700px;border:1px solid #cecece;border-top:1px solid #1a7ad9;font-size:20px'>";
-			sendText+="<img src='https://ci4.googleusercontent.com/proxy/-CJYszf1j-XBxEksEyfb_tQ-WGx1J7sNlN6_rbY6O_hPFRdI9QTzsFm2VgNOqCSTs1tYOd89GrM5OGtBYV4JDDza7BGwBFc=s0-d-e1-ft#http://earthtory.com/res/img/mail/common/mail_bg.gif' class='CToWUd'>";
+		    sendText+="<div style='width:700px;border:1px solid #cecece;border-top:1px solid #49506a;font-size:20px'>";
+//			sendText+="<img src='http://rclass.iptime.org:9999/triptaxi/images/logo.png' width='250px' class='CToWUd'>";
+		    sendText+="<img src='http://localhost:9090/triptaxi/images/logo.png' width='250px' class='CToWUd'>";
 			sendText+="<div style='width:100%;border-bottom:1px solid #cecece;text-align:left'>";
 			sendText+="<div style='width:600px;margin:0 auto;margin-bottom:34px;margin-top:60px'>";
 			sendText+="<span style='color:#363636;font-size:16px;line-height:22px'>";
@@ -75,8 +88,9 @@ public class SendInviteMailServlet extends HttpServlet {
 			sendText+="</span>";
 			sendText+="<br><br>";
 			sendText+="<center><br>";
-			sendText+="<a href='"+"http://rclass.iptime.org:9999/triptaxi/planner/plannerView?plannerId="+plannerId+"' style='display:block;height:50px;padding-left:30px;padding-right:30px;font-size:20px;color:white;line-height:48px;margin:0 auto;text-align:center;display:inline-block;border-radius:10px;text-decoration:none;margin-top:35px;border:1px solid #f7870f;background:#fe931f;background-position:95% center' target='_blank' data-saferedirecturl='https://www.google.com/url?q=http://www.earthtory.com/ko/mypage/et_1908080923330125223001565267013?type%3Dplan_sub%26gdb_srl%3D294271%26iv_code%3D9c2809c566c96acfd6d125d287d511e1&amp;source=gmail&amp;ust=1570005044430000&amp;usg=AFQjCNGvyU7Y19qzobN6SlLhWVyb8px_yw'>";
-		    sendText+="탑승하기<img src='https://ci4.googleusercontent.com/proxy/5GbJHxNcDAJbaeoJAPiDBU7zQbd_OG9sJhpVl7WhKJU2G0BLdIMVFe4V8kLrbP5H3hwRSMvGA8WyT-bQcokNgokTFm0L2d1A3W8bmg=s0-d-e1-ft#http://earthtory.com/res/img/mail/common/arrow_yellow.gif' style='float:right;margin-top:7px;margin-left:5px' class='CToWUd'>";
+//			sendText+="<a href='"+"http://rclass.iptime.org:9999/triptaxi/planner/inviteYes?plannerId="+plannerId+"' style='display:block;height:50px;padding-left:30px;padding-right:30px;font-size:20px;color:white;line-height:48px;margin:0 auto;text-align:center;display:inline-block;border-radius:10px;text-decoration:none;margin-top:35px;border:1px solid #f7870f;background:#fe931f;background-position:95% center' target='_blank' data-saferedirecturl='https://www.google.com/url?q=http://www.earthtory.com/ko/mypage/et_1908080923330125223001565267013?type%3Dplan_sub%26gdb_srl%3D294271%26iv_code%3D9c2809c566c96acfd6d125d287d511e1&amp;source=gmail&amp;ust=1570005044430000&amp;usg=AFQjCNGvyU7Y19qzobN6SlLhWVyb8px_yw'>";
+			sendText+="<a href='"+"http://localhost:9090/triptaxi/planner/inviteYes?plannerId="+plannerId+"&email="+email+"' style='display:block;height:50px;padding-left:30px;padding-right:30px;font-size:20px;color:white;line-height:48px;margin:0 auto;text-align:center;display:inline-block;border-radius:10px;text-decoration:none;margin-top:35px;border:1px solid #49506a;background:#49506a;background-position:95% center' target='_blank' data-saferedirecturl='https://www.google.com/url?q=http://www.earthtory.com/ko/mypage/et_1908080923330125223001565267013?type%3Dplan_sub%26gdb_srl%3D294271%26iv_code%3D9c2809c566c96acfd6d125d287d511e1&amp;source=gmail&amp;ust=1570005044430000&amp;usg=AFQjCNGvyU7Y19qzobN6SlLhWVyb8px_yw'>";
+		    sendText+="탑승하기 >";
 		    sendText+="</a>";
 			sendText+="</center><br><br>";
 			sendText+="</div></div></div>";

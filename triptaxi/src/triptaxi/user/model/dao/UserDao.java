@@ -458,5 +458,20 @@ import static triptaxi.common.template.JDBCTemplate.close;
 		
 	}
 	
+	public int checkInvite(Connection conn, String userId, String email) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("checkInvite");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, email);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
 }

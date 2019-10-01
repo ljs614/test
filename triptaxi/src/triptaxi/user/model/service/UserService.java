@@ -162,5 +162,17 @@ public class UserService {
 		close(conn);
 		return result;
 	}
+	
+	public int checkInvite(String userId, String email) {
+		Connection conn=getConnection();
+		int result=dao.checkInvite(conn, userId, email);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }

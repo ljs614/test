@@ -51,6 +51,9 @@ public class LoginServlet extends HttpServlet {
 		String view="";
 		String loc="/";
 		loc=location+"?"+parameter;
+		if(location.replace("/triptaxi", "").equals("/UserEnroll")) {
+			loc="/triptaxi";
+		}
 		if(u!=null) {
 			HttpSession session=request.getSession();
 			session.setAttribute("loginUser", u);
@@ -64,6 +67,14 @@ public class LoginServlet extends HttpServlet {
 				c.setMaxAge(0);
 				response.addCookie(c);
 			}
+			int result=service.checkInvite(u.getUserId(),u.getEmail());
+			
+			
+			
+			
+			
+			
+			
 			response.sendRedirect(loc);
 			
 		}else {

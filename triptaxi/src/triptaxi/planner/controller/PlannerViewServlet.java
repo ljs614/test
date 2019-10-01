@@ -67,7 +67,7 @@ public class PlannerViewServlet extends HttpServlet {
 			}
 			String userName=(new UserService().selectOne(planner.getPlannerWriter())).getUserName();
 			request.setAttribute("planner", planner);
-			request.setAttribute("userList", userList);
+			request.setAttribute("userList", gson.toJson(userList));
 			request.setAttribute("jlist", gson.toJson(list));
 			request.setAttribute("userName", userName);
 			view="/views/planner/planView.jsp";
