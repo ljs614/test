@@ -65,13 +65,12 @@
                 data:{"userId":userId, "plannerType":plannerType, "cPage":cPage},
                 success:function(data){
                     var plannerList=JSON.parse(data);
-                    // console.log(plannerList);
                     fn_plannerChange(plannerList)
                     $("#mypage-content").html(planner_html);
                     $("#mypage").css("height",ph*220+700+"px");
                     $("#mypage-content-planner").css("height",ph*220+150+"px")
                     $("#"+plannerType).addClass("pn_clicked");
-                     //일정 내비 클릭이벤트
+                    //일정 내비 클릭이벤트
                     $(function(){
                         $("#planList_nav>li").click(function(){
                             $(this).addClass("pn_clicked");
@@ -121,7 +120,13 @@
                 planner_html+="</div></div>";
             }
             planner_html+="</div>";
-            planner_html+=plannerList['pageBar'];
+            if(plannerList['plannerList'].length>0){
+                planner_html+=plannerList['pageBar'];
+            }else{
+                var add = "<li id='dataNullalert' style='border:none'><div id='dataNullalertIcon'><i class='fas fa-exclamation-triangle'></i></div>";
+                add += "<div id='dataNullalertContent'>해당하는 데이터가<br>없습니다.</div></li>";
+                planner_html+=add;
+            }
             ph=Math.ceil(plannerList['plannerList'].length/3);
         }
 
