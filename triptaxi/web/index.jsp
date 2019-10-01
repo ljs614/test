@@ -107,7 +107,7 @@
 
 	<div id="transcroller-body" class="aos-all con3_1">
 		<h3>어디로 갈까?</h3>
-		<p>트립택시를 이용하는 회원들이 가장 애호하는 여행지를 추천해드립니다.</p>
+		<p>트립택시를 이용하는 여행자들의 가장 선호하는 여행지를 추천해드립니다.</p>
 		
 			<!-- <div class="aos-item" data-aos="fade-up">
 				<a href="#">
@@ -156,58 +156,16 @@
 	<div class="parallax-window" data-parallax="scroll"
 		data-image-src="<%=request.getContextPath() %>/images/4.jpg">
 		<div class="con4">
+			<h2>TRIP TAXI</h2>
 			<div class="con4_1">
-				<div class="con4_1_1">
-					<p>TRIP TAXI</p2>
-					<p>나만의 여행 플래너 trip taxi<br/>
-					       쉽고 빠르게 여행을 계획하세요.</p>
-				</div>
-				<div class="con4_1_2">
-					<button class="" onclick="">여행계획 만들러가기</button>
-				</div>
+				<h1 id="counter1"></h1>
+				<h1 id="counter2"></h1>
+				<h1 id="counter3"></h1>
 			</div>
 			<div class="con4_2">
-				<div class="con4_2_1">
-					<img src="" width="700" height="200"/>
-					<ul>
-						<li>
-							<a href="">
-								<div class="con4_list">
-									도시정보
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="" >
-								<div class="con4_list">
-									도시별 액티비티
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="" >
-								<div class="con4_list">
-									도시별 축제
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="" >
-								<div class="con4_list">
-									도시별 관광명소
-								</div>
-							</a>
-						</li>
-					</ul>
-				</div>
-				
-				<div>
-					<p>
-						투어택시 이용자들을 위한 도시별 각종정보
-						<br/>환율, 날씨등 다양한 정보를 한 눈에 볼수 있습니다.
-					</p>
-					
-				</div>
+				<p>트립택시 여행자</p>
+				<p>트립택시 여행자의 일정</p>
+				<p>트립택시의 도시정보</p>
 			</div>
 		</div>
 	</div>
@@ -248,21 +206,21 @@
 				
 				<div class="modal-con">
 					<label class="list_label">
-						<input type="checkbox" class="option-input checkbox" value="family" name="withTravel"/> 가족여행
+						<input type="checkbox" class="option-input checkbox" value="family_trip" name="withTravel" onclick="doOpenCheck(this);"/> 가족여행
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="alone" name="withTravel"/> 나홀로여행
+						<input type="checkbox" class="option-input checkbox" value="solo_trip" name="withTravel" onclick="doOpenCheck(this);"/> 나홀로여행
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="couple" name="withTravel"/> 커플여행
+						<input type="checkbox" class="option-input checkbox" value="couple_trip" name="withTravel" onclick="doOpenCheck(this);"/> 커플여행
 					</label>
 				</div>
 				<div class="modal-con">
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="friend" name="withTravel"/> 친구와함께
+						<input type="checkbox" class="option-input checkbox" value="friend_trip" name="withTravel" onclick="doOpenCheck(this);" /> 친구와함께
 					</label> 
 					<label class="list_label"> 
-						<input type="checkbox" class="option-input checkbox" value="business" name="withTravel"/> 비즈니스여행
+						<input type="checkbox" class="option-input checkbox" value="business_trip" name="withTravel" onclick="doOpenCheck(this);"/> 비즈니스여행
 					</label> 
 				</div>
 				<!-- <input type="submit" value="전송" id="last_btn">
@@ -273,10 +231,61 @@
 	</div>
 
 
-
-
-
 	<script>
+	
+	function doOpenCheck(chk){
+	    var obj = document.getElementsByName("withTravel");
+	    for(var i=0; i<obj.length; i++){
+	        if(obj[i] != chk){
+	            obj[i].checked = false;
+	        }
+	    }
+	}
+
+	
+	$(function(){
+		$(document).ready(function(){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/countUser",
+				type:"get",
+				success:function(data){
+					console.log(data["result"]);
+					console.log(data["result1"]);
+					console.log(data["result2"]);
+					function numberCounter(target_frame, target_number) {
+					    this.count = 0; this.diff = 0;
+					    this.target_count = parseInt(target_number);
+					    this.target_frame = document.getElementById(target_frame);
+					    this.timer = null;
+					    this.counter();
+					};
+					numberCounter.prototype.counter = function() {
+					    var self = this;
+					    this.diff = this.target_count - this.count;
+					     
+					    if(this.diff > 0) {
+					        self.count += Math.ceil(this.diff / 100);
+					    }
+					     
+					    this.target_frame.innerHTML = this.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+					     
+					    if(this.count < this.target_count) {
+					        this.timer = setTimeout(function() { self.counter(); }, 100);
+					    } else {
+					        clearTimeout(this.timer);
+					    }
+					};
+
+					new numberCounter("counter1", data["result"]);
+					new numberCounter("counter2", data["result1"]);
+					new numberCounter("counter3", data["result2"]);
+
+				}
+			});
+		});
+	});
+	
+	
 	
 		$(function(){
 			$(".modal-content2").hide();
@@ -301,7 +310,7 @@
 				 		});
 				 				console.log(withTravel);
 			        	/*  var allData = {"continent":continent,"withTravel":withTravel}; */
-			        	 $('#myModal').hide();
+			        	 /* $('#myModal').hide(); */
 			        	<%-- location.href="<%=request.getContextPath()%>/city/matching"; --%>
 			        	
 			        	$.ajax({
@@ -309,23 +318,23 @@
 							type:"get",
 							data:{"continent":continent,"withTravel":withTravel},
 							success:function(data){
-								/* var cityArr="";
-							 	for(var i=0; i<=5; i++){
-							 		cityArr+="<a href=''>도시명</a>"
-								} 
-							 	$(".con3_1").html(cityArr); */
-							 	
+								var cityArr="";
+								console.log(data);
+								console.log(data.length);
+								for(var i=0; i<data.length; i++){
+									console.log(data[i]["cityEng"]);
+									cityArr="<span class='close'>&times;</span>";
+									cityArr+="<a href='<%=request.getContextPath()%>/citychoice?cityName="+data[i]["cityEng"]+"'>"+data[i]["cityName"]+"</a>";
+								}
+							 	$(".modal-content").html(cityArr);
+							 	$(".close").on("click",function(){
+									/* $("#myModal").css("display","none"); */
+									location.reload();
+								});	
 							}
-						});
-			        	console.log(continent+"asd"+withTravel)
-			        	 
+						});   	 
 			});
-			     /*  var withTravel;
-			      $('input:checkbox[name=withTravel]').each(function() {
-			         if($(this).is(':checked')){
-			        	 withTravel += "|"+($(this).val());
-			         }
-			      }); */
+
 		
  
 		$(function(){
@@ -334,13 +343,11 @@
 			});			
 		});
 		
-
-			$(".close").on("click",function(){
-				/* $("#myModal").css("display","none"); */
-				location.reload();
-			});			
-
-		
+		$(".close").on("click",function(){
+			/* $("#myModal").css("display","none"); */
+			location.reload();
+		});	
+					
 		$(function(){
 			$("window").on("click",function(){
 				if (event.target == modal) {
@@ -354,18 +361,6 @@
 			easing : 'ease-in-out-sine'
 		});
 
-		<%-- $(function() {
-			$(document).ready(function() {
-				$.ajax({
-					url : "
-	<%=request.getContextPath() %>/dayCity",
-				type:"get",
-				success:function(data){
-					console.log(data);
-				}
-			});	
-		});
-	}); --%>
 	
 
 	$(function(){

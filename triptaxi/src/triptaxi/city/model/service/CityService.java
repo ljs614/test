@@ -72,6 +72,45 @@ public class CityService {
 		return list;
 	}
 	
+	public int countUser() {
+		Connection conn=getConnection();
+		int result=dao.countUser(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int countPlanner() {
+		Connection conn=getConnection();
+		int result=dao.countPlanner(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int countAttraction() {
+		Connection conn=getConnection();
+		int result=dao.countAttraction(conn);
+		close(conn);
+		return result;
+	}
+	
+//	public List<DayCity> selectDayCity(){
+//		Connection conn=getConnection();
+//		String todayCity = "";
+//			// 오늘의 시티를 가져옴
+//			todayCity = dao.getTodayCity(conn);
+//			System.out.println("todayCity >> select : " + todayCity);
+//			if(todayCity.equals("")) {
+//				// 오늘의 시티가 없으면 만들어서 가져옴
+//				todayCity = dao.insertGetTodayCity(conn);	
+//			}
+//			
+//			
+//			System.out.println("todayCity >> insertGetTodayCity : " + todayCity);
+//		
+//		List<DayCity> a=dao.selectDayCity(conn,todayCity);
+//		close(conn);
+//		return a;
+//	}
 
 }
 

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import triptaxi.city.model.service.CityService;
 import triptaxi.city.model.vo.City;
 
@@ -17,13 +19,13 @@ import triptaxi.city.model.vo.City;
  * Servlet implementation class MainCityMatchingServlet
  */
 @WebServlet("/city/matching")
-public class MainCityMatchingServlet extends HttpServlet {
+public class IndexCityMatchingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainCityMatchingServlet() {
+    public IndexCityMatchingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,9 +62,10 @@ public class MainCityMatchingServlet extends HttpServlet {
 		}
 		System.out.println(wt);
 		List<City> list=new CityService().matchingCity(ct, wt);
-		
-		
-		request.getRequestDispatcher("/").forward(request, response);
+		System.out.println(list+"asdkjasdkjhwdqiohqv");
+		response.setContentType("application/json;charset=UTF-8");
+		new Gson().toJson(list,response.getWriter());
+
 	}
 
 	/**

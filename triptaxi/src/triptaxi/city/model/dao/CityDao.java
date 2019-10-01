@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -270,27 +271,129 @@ public class CityDao {
 	}
 	
 	public List<City> matchingCity(Connection conn,String ct,String wt){
-		PreparedStatement pstmt=null;
+		Statement stmt=null;
 		ResultSet rs=null;
 		List<City> list=new ArrayList();
-		String sql=prop.getProperty("matchingCity");
+		System.out.println(ct+"이거야이거"+wt);
+		String sql = "select city, city_eng from (SELECT city, rank() over (order by sums desc) as rank FROM (SELECT sum(a."+wt+") as sums, b.city FROM TT_THEME a join (SELECT * FROM TT_ATTRACTION UNION SELECT * FROM TT_ACTIVITY UNION SELECT * FROM TT_FESTIVAL) b on(a.tour_id=b.attraction_id) WHERE TOUR_ID IN (SELECT ATTRACTION_ID AS TOUR_ID FROM (SELECT * FROM TT_ATTRACTION UNION SELECT * FROM TT_ACTIVITY UNION SELECT * FROM TT_FESTIVAL) WHERE CITY IN (SELECT A.CITY_NAME FROM TT_CITY A JOIN TT_NATION B ON (A.NATION_NAME=B.NATION_NAME) WHERE CONTINENT_NAME IN('"+ct+"'))) group by b.city)) join tt_city on(city_name=city) where rank=1";
 		try {
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery(sql);
 			while(rs.next()) {
 				City c=new City();
-				c.setCityName(rs.getString("city_name"));
-
+				c.setCityName(rs.getString(1));
+				c.setCityEng(rs.getString(2));
 				list.add(c);				
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}return list;
-	}		
+	}
 	
+	public int countUser(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("countUser");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result=rs.getInt("countUser");
+				
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int countPlanner(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("countPlanner");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt("countPlanner");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int countAttraction(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql=prop.getProperty("countattraction");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt("totalatt");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+//	public String getTodayCity(Connection conn) {
+//		PreparedStatement pstmt = null;
+//			ResultSet rs = null;
+//			String sql = prop.getProperty("selectTodayCityOne");
+//			String resultCity = "";
+//		      try {
+//		         pstmt = conn.prepareStatement(sql);
+//		         rs = pstmt.executeQuery();
+//		         while(rs.next()) {
+//		        	 resultCity = rs.getString("city");
+//		         }
+//		      }catch(SQLException e) {
+//		         e.printStackTrace();
+//		      }finally {
+//		         close(rs);
+//		         close(pstmt);
+//		      }
+//		      return resultCity;
+//	}
+//
+//	public String insertGetTodayCity(Connection conn) {
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = prop.getProperty("insertTodayCity");
+//	      try {
+//	         pstmt = conn.prepareStatement(sql);
+//	         pstmt.executeUpdate();
+//	      }catch(SQLException e) {
+//	         e.printStackTrace();
+//	      }finally {
+//	         close(rs);
+//	         close(pstmt);
+//	      }
+//	      return getTodayCity(conn);
+//	}
 	
 }
 
