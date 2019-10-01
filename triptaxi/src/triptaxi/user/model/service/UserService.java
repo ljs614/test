@@ -38,7 +38,24 @@ public class UserService {
 		close(conn);
 		return result;
 	}
-	
+
+	public int updateUser(String id, String email,String phone) {
+		Connection conn=getConnection();
+		int result=dao.updateUser(conn,id,email,phone);
+		if(result>0) {commit(conn);}
+		else {rollback(conn);}
+		close(conn);
+		return result;
+	}
+	public int deleteUser(String id) {
+		Connection conn=getConnection();
+		int result=dao.deleteUser(conn,id);
+		if(result>0) {commit(conn);}
+		else {rollback(conn);}
+		close(conn);
+		return result;
+	}
+
 	public int selectCountPlanner(String userId) {
 		Connection conn=getConnection();
 		int result=dao.selectCountPlanner(conn, userId);

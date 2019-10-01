@@ -6,7 +6,7 @@
 
 <section>
 	<div class="login_1">
-		<form action="<%=request.getContextPath()%>/login" method="post" onsubmit="validate();">
+		<form action="<%=request.getContextPath()%>/login" method="post">
 		<div class="login">
 			<div class="login_h2">
 				<h2>회원 로그인</h2>
@@ -38,8 +38,11 @@
 						<i class="fab fa-google"></i>구글
 					</button>
 				</div>
-				<span class="search"><a href="">회원가입</a></span> <span class="search"><a
-					href="">아이디/비밀번호 찾기</a></span>
+				<span >
+				<a href="<%=request.getContextPath()%>/views/login/UserEnroll.jsp">회원가입</a></span>
+				console.log()
+				 <span id="search">
+				 <a href="<%-- <%=request.getContextPath()%>/views/ --%>">아이디/비밀번호 찾기</a></span>
 			</div>
 		</div>
 		</form>
@@ -47,14 +50,7 @@
 
 </section>
 <script>
-/* function validate(){
-	if($("#userId").val().trim().length<4){
-		alert("아이디는 4글자 이상 입력하세요");
-		$("#userId").focus();
-		return false;
-	}
-}
- */
+
 </script>
 
 

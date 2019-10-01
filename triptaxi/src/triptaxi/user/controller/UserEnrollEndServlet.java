@@ -22,7 +22,7 @@ import triptaxi.user.model.vo.User;
 /**
  * Servlet implementation class MemberEnrollEndServlet
  */
-@WebServlet("/UserEnrollEnd")
+@WebServlet(name="UserEnrollEnd", urlPatterns="/UserEnrollEnd")
 public class UserEnrollEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -84,8 +84,8 @@ public class UserEnrollEndServlet extends HttpServlet {
 //		u.setEmail(email);
 //		u.setProfile(profile);
 		
-		String id=request.getParameter("userId");//userId_
-		String pw=request.getParameter("password");
+		String id=request.getParameter("enroll_userId");//userId_
+		String pw=request.getParameter("enroll_password");
 		String name=request.getParameter("userName");
 		char gender=request.getParameter("gender").charAt(0);
 		String month=request.getParameter("birthmonth");

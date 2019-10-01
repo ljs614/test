@@ -29,7 +29,6 @@
 			name="checkIdDuplicate" method="post">
 				<input type="text" name="userId" placeholder="아이디입력">
 			</form>
-			<button onclick="checkId();">중복검사</button>
 		<%} else{%>
 			[<span><%=userId %></span>]는 사용가능합니다.
 			<br><br>
@@ -41,14 +40,6 @@
 			opener.document.getElementById("userId").value='<%=userId%>';
 			opener.document.getElementById("password").focus();
 			self.close();
-		}
-		function checkId(){
-			var id=checkIdDuplicate.userId.value;
-			if(!id||id.trim().length<4){
-				alert("아이디는 4글자 이상 입력");
-				return;
-			}
-			checkIdDuplicate.submit();
 		}
 	
 	

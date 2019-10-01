@@ -19,11 +19,10 @@ public class EncryptPasswordWrapper extends HttpServletRequestWrapper {
 	@Override
 	public String getParameter(String key) {
 		String value="";
-		if(key!=null && (key.equals("password")
-					||key.equals("cPw")
-					||key.equals("nPw"))) {
-			value=getEncryptPw(super.getParameter(key));
-			System.out.println(value);
+		if(key!=null && (key.equals("password")||key.equals("enroll_password")
+				/*||key.equals("cPw")
+				||key.equals("nPw")*/)){
+			value=getSha512(super.getParameter(key));
 			
 		}else {
 			value=super.getParameter(key);
@@ -31,11 +30,8 @@ public class EncryptPasswordWrapper extends HttpServletRequestWrapper {
 		return value;
 	}
 	
-	private static String getEncryptPw(String pw) {
-		//해쉬알고리즘을 이용함 sha512방식으로 암호화처리
-		//java api에서 기본적으로 제공하는 암호화처리 객체가 
-		//있음 -> MessageDigest
-		//암호화는 비트단위(바이트)로 이루어짐
+	private static String getSha512(String password) {
+		
 		MessageDigest md=null;
 		try {
 			md=MessageDigest.getInstance("SHA-512");
@@ -45,13 +41,13 @@ public class EncryptPasswordWrapper extends HttpServletRequestWrapper {
 		byte[] bytes;
 		try {
 			
-			bytes=pw.getBytes("UTF-8");
+			bytes=password.getBytes("UTF-8");
 			md.update(bytes);
 		}catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
 		String encPw=Base64.getEncoder().encodeToString(md.digest());
+		System.out.println(encPw);
 		
 		return encPw;		
 		

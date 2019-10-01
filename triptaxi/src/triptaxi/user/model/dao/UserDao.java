@@ -47,9 +47,9 @@ import static triptaxi.common.template.JDBCTemplate.close;
 				u.setPassword(rs.getString("user_pw"));
 				u.setUserName(rs.getString("user_Name"));
 				u.setGender(rs.getString("gender").charAt(0));
-				u.setBirthday(rs.getString("birthday"));
+				u.setBirthday(rs.getString("birthday").substring(0, 10));
 				u.setEmail(rs.getString("user_Email"));
-				u.setPhone("phone");
+				u.setPhone(rs.getString("phone"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -93,7 +93,7 @@ import static triptaxi.common.template.JDBCTemplate.close;
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				u=new User();
-				u.setUserId(rs.getString("user_Id"));
+				u.setUserId(rs.getString("user_id"));
 				u.setPassword(rs.getString("user_pw"));
 				u.setUserName(rs.getString("user_Name"));
 				u.setGender(rs.getString("gender").charAt(0));
@@ -108,6 +108,40 @@ import static triptaxi.common.template.JDBCTemplate.close;
 			close(pstmt);
 		}return u;
 	}
+	
+	public int updateUser(Connection conn, String id,String email,String phone) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateUser");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, phone);
+			pstmt.setString(3, id);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public int deleteUser(Connection conn,String id) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteUser");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	
 	public int selectCountPlanner(Connection conn, String userId) {
 		PreparedStatement pstmt=null;
