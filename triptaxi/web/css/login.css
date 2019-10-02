@@ -33,11 +33,25 @@
        padding-top:20px;
     
    }
+   .login_inp>input{
+   	width:270px;
+   	height: 35px;
+    		margin-bottom:10px;
+    		border-radius:0;
+    		outline:none;
+/*     		position: relative;
+    		left: -90px;
+    		top: -10px; */
+   }
+   .wrap{
+   	 width:270px;
+   }
    .login_h2{
         position: relative;
    	    /* border-bottom:1px solid lightgray; */
-        padding:5px 0;
+        padding-top:20px;
         display: inline-block;
+        margin-top:10px;
            
    }
    #login_exit{
@@ -77,6 +91,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    wdith:100px;
     }
 
     .button {
@@ -100,7 +115,7 @@
 
     .button:hover {
     background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    box-shadow: 0px 15px 20px rgba(165, 198, 244, 0.4);
     color: #fff;
     transform: translateY(-7px);
     }
@@ -116,7 +131,7 @@
 
     .button1 {
     margin: 10px 5px;
-    width: 200px;
+    width: 150px;
     height: 30px;
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
@@ -134,7 +149,7 @@
     }
 
     .button1:hover {
-    background-color: rgb(0, 141, 85);
+    background-color: rgb(165, 198, 244);
     box-shadow: 0px 15px 20px rgba(3, 88, 54, 0.4);
     color: #fff;
     transform: translateY(-7px);

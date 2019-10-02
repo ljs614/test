@@ -67,7 +67,7 @@
 						</div>
 					</div>
 
-					<div class="top_con1_2_1 con1_hover3 hvr-shutter-out-vertical top_border" onclick="">
+					<div class="top_con1_2_1 con1_hover3 hvr-shutter-out-vertical top_border" onclick="frei_div();">
 						<div class="top_con1_2_11">
 							<span class="top_con_span">동행 찾기</span>
 							<p class="top_con_p">안전하고 즐거운 여행, 혼자보단 동행과 같이</p>
@@ -105,7 +105,7 @@
 			<p class="con1_text2">Alone | Group</p>
 		</div>
 		<div class="con1_3 hvr-icon-spin">
-			<a href=""> <i class="material-icons hvr-icon material-icons_con1"> people </i>
+			<a href="<%=request.getContextPath() %>/board/boardList"> <i class="material-icons hvr-icon material-icons_con1"> people </i>
 				<p class="con1_text1">동행 게시판</p>
 			</a>
 			<p class="con1_text2">
@@ -541,7 +541,9 @@
     	});
     });
 	
-		
+		function frei_div(){
+			location.href="<%=request.getContextPath() %>/board/boardList";
+		}
 	
 
 	

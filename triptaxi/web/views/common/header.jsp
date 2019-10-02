@@ -257,9 +257,9 @@
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath()%>/planMain">다른여행자 일정보기</a></li>
                     </ul>
                     <ul class="sub_menu1_3">
-                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/boardList">Q&A 게시판</a></li>
-                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/reviewList">후기 게시판</a></li>
-                        <li class="hvr-float-shadow"><a href="">동행 게시판</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/boardList">동행 게시판</a></li>
+                       <%--  <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/reviewList">후기 게시판</a></li>
+                        <li class="hvr-float-shadow"><a href="">동행 게시판</a></li> --%>
                     </ul>
                 </div>
             </div>
@@ -271,7 +271,25 @@
     	width: 395px;
     	height: 347px;
     }
-    	.login_2 input[type="text"], .login_2 input[type="password"]{
+    .login2_1{
+    		height: 46px;
+    		margin-bottom:10px;
+    		border-radius:0;
+    		outline:none;
+    		position: relative;
+    		left: -90px;
+    		top: -10px;
+    } 
+    	.login_2 input[type="text"]{ 
+    		height: 46px;
+    		margin-bottom:10px;
+    		border-radius:0;
+    		outline:none;
+    		position: relative;
+    		left: -90px;
+    		top: -10px;
+    	}
+    	.login_2 input[type="password"]{
     		height: 46px;
     		margin-bottom:10px;
     		border-radius:0;
@@ -289,8 +307,12 @@
     		left: -8px;
     	}
     	#loginBT{
-    	position:relative;
-    	top:10px;
+    	/* position:relative;
+    	top:10px; */
+    	margin-left:-60px;
+    	}
+    	.wrap>label{
+    		margin-left:-110px;
     	}
     	#login-joinBT, #login-findBT{
     		position:relative;
@@ -315,7 +337,6 @@
 
     <div id="logi">
             <div class="login_1">
-               
                 <form action="<%=request.getContextPath()%>/login" method="post" onsubmit="validate();">
                 <div class="login">
                     <div class="login_h2">
@@ -323,10 +344,12 @@
                     </div>
                     <div id="login-container">
                         <div class="login_2">
-                            <input type="text" name="userId" id="userId" value="<%=saveId !=null?saveId:""%>" placeholder="아이디"> <br/>
-                            <input type="password" id="password" name="password" placeholder="비밀번호"/><br>
-                            <label><input type="checkbox" name="saveId" id="saveId" <%=saveId != null ? "checked" : ""%> />아이디 저장</label>
+                        	<div class="login_inp">
+	                            <input type="text" class="login2_1" name="userId" id="userId" value="<%=saveId !=null?saveId:""%>" placeholder="아이디"> <br/>
+	                            <input type="password" class="login2_1" id="password" name="password" placeholder="비밀번호"/><br>
+                            </div>
                             <div class="wrap">
+                            	<label><input type="checkbox" name="saveId" id="saveId" <%=saveId != null ? "checked" : ""%> />아이디 저장</label>
                                 <button class="button1" id='loginBT'>로그인</button>
                             </div>
                         </div>
