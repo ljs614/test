@@ -35,7 +35,8 @@
 <body>
 
 	<header>
-		<img logo src="<%=request.getContextPath() %>/images/logo_mini.png" width="55px" height="50px" style="padding-top:5px;padding-left:5px">
+		<img logo src="<%=request.getContextPath() %>/images/logo_mini.png" width="55px" height="50px" style="padding-top:5px;padding-left:5px"
+		onclick="location.href='<%=request.getContextPath()%>'">
 		<div id="planTitle">
 			<div id="pltitle"></div>
 			<i class="far fa-edit"></i>
