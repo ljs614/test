@@ -17,10 +17,10 @@
 		<div class="top_con1">
 			<div class="top_img">
 				<div class="topcon_img">
-					<img src="2.jpg" class="top_img0"/>
-					<img src="1.jpg" class="top_img1"/>
-					<img src="2.jpg" class="top_img2"/>
-					<img src="3.jpg" class="top_img3"/>
+					<img src="" class="top_img0"/>
+					<img src="3.png" class="top_img1"/>
+					<img src="2.png" class="top_img2"/>
+					<img src="1.png" class="top_img3"/>
 				</div>
 			</div>
 			<div class="top_con1_1">
@@ -87,15 +87,21 @@
 	<div class="con1">
 		<h2>Main contents</h2>
 		<div class="con1_1 hvr-icon-spin">
-			<a href=""> <i class="material-icons hvr-icon material-icons_con1"> assignment </i>
+			<a href="<%=request.getContextPath()%>/citySelect"> <i class="material-icons hvr-icon material-icons_con1"> assignment </i>
 				<p class="con1_text1">도시별 정보제공</p>
 			</a>
 			<p class="con1_text2">Activity | 환율 | 날씨</p>
 		</div>
 		<div class="con1_2 hvr-icon-spin">
-			<a href=""> <i class="material-icons hvr-icon material-icons_con1"> today </i>
+			<%if(loginUser!=null){ %>
+			<a href="<%=request.getContextPath()%>/makePlan1"> <i class="material-icons hvr-icon material-icons_con1"> today </i>
 				<p class="con1_text1">여행 계획표</p>
 			</a>
+			<%} else{%>
+			<a href="<%=request.getContextPath()%>/user/mypage"> <i class="material-icons hvr-icon material-icons_con1"> today </i>
+				<p class="con1_text1">여행 계획표</p>
+			</a>
+			<%} %>
 			<p class="con1_text2">Alone | Group</p>
 		</div>
 		<div class="con1_3 hvr-icon-spin">
@@ -247,7 +253,7 @@
 	<script>
 	
 	function con1_div(){
-		location.href="<%=request.getContextPath()%>/user/mypage";
+		location.href="<%=request.getContextPath()%>/makePlan1";
 	}
 	
 	function doOpenCheck(chk){
@@ -346,7 +352,7 @@
 								}
 								headCity+="<span class='close'>&times;</span>";
 								headCity+="<h2>추천 도시</h2>";
-								headCity+="<ul class='modal_citylist'>";
+								headCity+="<br><br><ul class='modal_citylist'>";
 								$(".modal-content").html(headCity+cityArr);
 							 	$(".modal-content").append("</ul>");
 							 	$(".modal-content").append("<h4>도시를 클릭하시면 상세정보를 볼수 있습니다.</h4>");
@@ -409,11 +415,15 @@
 				 		cityArr+="</div>";
 					} 
 				 	$(".con3_1").append(cityArr);
-				 	$(".con3_1").append("<button class='' onclick=''>인기도시 모두보기</button>");
+				 	$(".con3_1").append("<button class='' onclick='travel_btn();'>해외여행지 모두보기</button>");
 				}
 			});
 		});
 	});
+	
+	function travel_btn(){
+		location.href="<%=request.getContextPath()%>/citySelect";
+	}
 
 	
 
@@ -427,9 +437,9 @@
 					console.log(data);
 					
 					var plannerArr="";
-				 	for(var i=0; i<=5; i++){
+				 	for(var i=0; i<data.length; i++){
 				 		plannerArr+="<div class='aos-item' data-aos='fade-down'>";
-				 		plannerArr+="<a href='#' class='aos_a'>";
+				 		plannerArr+="<a href='<%=request.getContextPath()%>/planner/plannerView?plannerId="+data[i]["plannerId"]+"' class='aos_a'>";
 				 		plannerArr+="<div class='aos-item__inner coco'>";
 				 		plannerArr+="<img src='<%=request.getContextPath() %>"+data[i]['plannerCoverimg']+"'/>";
 				 		plannerArr+="<div class='con3_coco'>";
@@ -451,7 +461,7 @@
 					} 
 				 	
 				 	$(".con3_2").append(plannerArr);
-				 	$(".con3_2").append("<button class='' onclick=''>인기도시 모두보기</button>");
+				 	$(".con3_2").append("<button class='' onclick='plan_btn();'>여행일정 모두보기</button>");
 				 	
 				 	$(function(){
 						$(".coco").first().hover(function(){
@@ -520,7 +530,9 @@
 			});
 		});
 	});
- 	
+ 	function plan_btn(){
+ 		location.href="<%=request.getContextPath()%>/planMain";
+ 	}
 
 	$(document).ready(function(){
     $('.bxslider').bxSlider({

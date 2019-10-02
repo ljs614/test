@@ -220,14 +220,14 @@
 							person_pin
 						</i>
 					</a>
-					<a href="#" class="top_login" title="메세지함">
+					<!-- <a href="#" class="top_login" title="메세지함">
 						<i class="material-icons login_i">
 							notifications_active
 						</i>
-						<!-- <i class="material-icons top_i">
+						<i class="material-icons top_i">
 							notifications_off
-						</i> -->
-					</a>
+						</i>
+					</a> -->
 					<a href="<%=request.getContextPath() %>/logout" id="btn_logout" name="btn_logout" class="top_login" title="로그아웃">
 						<i class="material-icons login_i">
 							emoji_people
@@ -258,7 +258,7 @@
                     </ul>
                     <ul class="sub_menu1_3">
                         <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/boardList">Q&A 게시판</a></li>
-                        <li class="hvr-float-shadow"><a href="">후기 게시판</a></li>
+                        <li class="hvr-float-shadow"><a href="<%=request.getContextPath() %>/board/reviewList">후기 게시판</a></li>
                         <li class="hvr-float-shadow"><a href="">동행 게시판</a></li>
                     </ul>
                 </div>

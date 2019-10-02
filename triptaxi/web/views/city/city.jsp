@@ -103,7 +103,6 @@
 						<li><a href="#" id="tourist">관광지</a></li>
 						<li><a href="#" id="activity">액티비티</a></li>
 						<li><a href="#" id="festival">축제</a></li>
-						<li><a href="#">지도보기</a></li>
 					</ul>
 			</div>
 			<div class="city_right">
@@ -264,8 +263,8 @@
 						var planArr="";
 						 for(var i=0; i<data.length; i++){
 							planArr+="<figure class='snip1382'>";
-							planArr+="<a href='#'>";
-							planArr+="<img src='<%=request.getContextPath()%>"+data[i]["plannerCoverimg"]+"'>";
+							planArr+="<a href='<%=request.getContextPath()%>/planner/plannerView?plannerId="+data[i]["plannerId"]+"'>";
+							planArr+="<img src='<%=request.getContextPath()%>"+data[i]["plannerCoverimg"]+"' widht='340px' height='233px'>";
 							planArr+="<figcaption>";
 							planArr+="<h2>"+data[i]["plannerName"]+"</h2>";
 							planArr+="<p>"+data[i]["plannerTheme"]+"</p>";
@@ -295,13 +294,11 @@
 						attArr+="<div class='swiper-slide_right'>";
 						attArr+="<h2>"+data[i]['attractionName']+"</h2>";
 						attArr+="<p>"+data[i]['attractionComment']+"</p><br>";
-						attArr+="<p class='red'>category : <i class='material-icons'>thumb_up</i>"+data[i]['category']+"</p><br>";
-						attArr+="<div>";
-						attArr+="<button onclick=''>자세히 보기</button>";
-						attArr+="</div>";
-						attArr+="</div>";
-						attArr+="</div>";
+						attArr+="<p class='red'>category : "+data[i]['category']+"</p><br>";
+						attArr+="<div><button class='attc' data-no='"+data[i]["attractionId"]+"' onclick='att_btn();'>자세히 보기</button>";
+						attArr+="</div></div></div>";
 					}
+
 					$(".swiper-wrapper").append(attArr);
 					var arrArr2="";
 					arrArr2+="<div class='swiper-button-next'></div>";
@@ -318,10 +315,17 @@
 					        prevEl: '.swiper-button-prev',
 					      },
 					    });
+					
 				}
 			});
 		});
 	});
+	
+	function att_btn(){
+		var attNo=$(".attc").data("no");
+		location.href="<%=request.getContextPath()%>/attraction/select?attId="+attNo+"";
+	}
+	
 	$(function (){
 		$("#festival").on('click', function () {
 			$.ajax({
@@ -446,7 +450,15 @@
 
 	$(function(){
 		$(document).ready(function(){
-			var city=("<%=c.getCityName()%>"=='나트랑'?'Danang':"<%=c.getCityEng()%>");
+			var city="";
+			<%-- ("<%=c.getCityName()%>"=='나트랑'?'Danang':"<%=c.getCityEng()%>"); --%>
+			if("<%=c.getCityName()%>"=='나트랑'){
+				city='Danang';
+			}else if("<%=c.getCityName()%>"=='라오스'){
+				city='Vientiane';
+			}else{
+				city="<%=c.getCityEng()%>";
+			}
 			console.log(city);
 			var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=98d4971f2e14753dd582c6f4443133d8";
 		    $.ajax({

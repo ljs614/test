@@ -77,11 +77,11 @@
         font-family: 'Nanum Gothic', sans-serif;
         width: 100%;
         height: 660px;
-        background-color: #66a1f4;
-        /* background-image: url("../3.jpg");
+       /*  background-color: #66a1f4; */
+        background-image: url("../1234567.jpg");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: cover; */
+        background-size: cover;
     }
     .top_img{
 		width:200px;    
@@ -97,12 +97,12 @@
     }
 	.topcon_img{
 		position:absolute;
-		top:250px;
-		left:150px;
+		top:200px;
+		left:100px;
 	}
     .topcon_img>img{
-    	width:200px;
-    	heigth:200px;
+    	width:300px;
+    	heigth:300px;
     }
     .coco{
     	overflow: hidden;
