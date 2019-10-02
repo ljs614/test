@@ -34,11 +34,10 @@ public class UserUpdateServlet extends HttpServlet {
 			String id=request.getParameter("user_id");
 			
 			String email=request.getParameter("user_email");
+			String email1=request.getParameter("email1");
+			email+="@"+email1;
 			String phone=request.getParameter("phone");
 			
-			System.out.println(id);
-			System.out.println(email);
-			System.out.println(phone);
 			int result=new UserService().updateUser(id,email,phone);
 			
 			String msg=result>0?"수정완료!":"수정실패!";

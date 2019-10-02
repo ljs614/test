@@ -736,7 +736,11 @@
 			$("#invite-modal").hide();
 		});
 
-
+		//수정하기 클릭
+		$("#modify_btn").click
+		(function(){
+			location.href="<%=request.getContextPath()%>/makePlan2?plannerId=<%=planner.getPlannerId()%>";
+		});
 		//관광지 줌 클릭이벤트
 		$(".day-tour-zoom>.fa-map-marker-alt").click(function(){
 			var day_num=$(this).parents().parents(".day-planner").index();
