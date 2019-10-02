@@ -113,7 +113,7 @@
 			</p>
 		</div>
 	</div>
-	
+<!-- 	
 	<div class="con2">
 			<h2>Best review</h2>
 		<div class="bxslider">
@@ -122,7 +122,7 @@
 			<div><img src="3.jpg" title="캡션을 지정할 수 있습니다." width="682" height="400"/></div>
 			<div><img src="4.jpg" title="캡션을 지정할 수 있습니다." width="682" height="400"/></div>
 		</div>
-	</div>
+	</div> -->
 	
 	
 </section>
@@ -415,7 +415,7 @@
 				 		cityArr+="</div>";
 					} 
 				 	$(".con3_1").append(cityArr);
-				 	$(".con3_1").append("<button class='' onclick='travel_btn();'>해외여행지 모두보기</button>");
+				 	$(".con3_1").append("<button class='btn1 btn-4' onclick='travel_btn();'>여행도시 모두보기</button>");
 				}
 			});
 		});
@@ -461,7 +461,7 @@
 					} 
 				 	
 				 	$(".con3_2").append(plannerArr);
-				 	$(".con3_2").append("<button class='' onclick='plan_btn();'>여행일정 모두보기</button>");
+				 	$(".con3_2").append("<button class='btn1 btn-4' onclick='plan_btn();'>여행일정 모두보기</button>");
 				 	
 				 	$(function(){
 						$(".coco").first().hover(function(){

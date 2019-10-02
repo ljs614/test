@@ -6,6 +6,25 @@
 section{font-family:'Nanum Gothic';}
 table, th, td { border-collapse:collapse; padding:3px}
 td{font-size:18px; font-weight:bold;  padding:20px; box-sizing:border-box;}
+.btn1 {
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  font-weight:bold;
+  border-radius: 20px;
+  border:0px;
+  box-shadow:0px;
+ }
+ .btn1:hover {
+  background-position: right center;
+}
+.btn-4 {
+  background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+}
+
 #wrap{
     position : relative;
 	width : 100%;
@@ -40,7 +59,23 @@ input[type="button"]{
 
 
 }
-input[type="text"],input[type="password"]{
+.inp_color{
+	background-color: rgba(166,171,190,0.3);
+    border: none;
+    height: 45px;
+    width: 270px;
+    border-radius: 10px;
+    padding-left:10px;
+    
+}
+input[type="text"]{
+	background-color: rgba(166,171,190,0.3);
+    border: none;
+    height: 45px;
+    width: 270px;
+    border-radius: 10px;
+}
+input[type="password"]{
 	background-color: rgba(166,171,190,0.3);
     border: none;
     height: 45px;
@@ -49,8 +84,9 @@ input[type="text"],input[type="password"]{
 }
 
 #frmButton input[type="submit"], #frmButton input[type="reset"]{
-	width: 225px;
-    height: 30px;
+	width: 140px;
+    height: 40px;
+    line-height:20px;
     margin-left: 10px;
     margin-right: 10px;
     background-color:rgb(73,80,106);
@@ -68,14 +104,14 @@ input[type="text"],input[type="password"]{
                 <tr>
                     <td>아이디</td>
                     <td>
-                        <input type="text" name="enroll_userId" id="enroll_userId" maxlength="50" placeholder="아이디입력" required>
-                        <input type="button" value="중복확인"  onclick="checkIdDuplicate();"/>    
+                        <input type="text" class="inp_color" name="enroll_userId" id="enroll_userId" maxlength="50" placeholder="아이디입력" required>
+                        <input type="button" class="btn1 btn-4" value="중복확인"  onclick="checkIdDuplicate();"/>    
                     </td>
                 </tr>
                <tr>
                     <td id="title">비밀번호</td>
                     <td>
-                        <input type="password" name="enroll_password" id="enroll_password" maxlength="12" placeholder="영문과숫자특수문자조합 "  required>
+                        <input type="password" class="inp_color" name="enroll_password" id="enroll_password" maxlength="12" placeholder="영문과숫자특수문자조합 "  required>
                      	 <span id="pwmessage"></span>
                     </td>
                 </tr>
@@ -83,14 +119,14 @@ input[type="text"],input[type="password"]{
                 <tr>
                     <td>비밀번호 확인</td>
                     <td>
-                        <input type="password" name="passwordcheck" id="passwordcheck" maxlength="12" required>
+                        <input type="password" class="inp_color" name="passwordcheck" id="passwordcheck" maxlength="12" required>
                 	</td>
                 </tr>
                     
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="userName" id="userName" maxlength="50">
+                        <input type="text" class="inp_color" name="userName" id="userName" maxlength="50">
                     </td>
                 </tr>
                     
@@ -105,9 +141,9 @@ input[type="text"],input[type="password"]{
                 <tr>
                     <td>생일</td>
                     <td>
-                        <input type="number" name="birthyear" id="birthyear" maxlength="4" placeholder="년(4자)" size="7"  step="" min="1900" max="2019" >
-                        <input type="number" name="birthmonth" id="birthmonth" maxlength="2" placeholder="월" size="4" step="" min="1" max="12" >
-                        <input type="number" name="birthday" id="birthday" maxlength="2" placeholder="일" size="4"  step="" min="1" max="31" >
+                        <input type="number" class="inp_color" name="birthyear" id="birthyear" maxlength="4" placeholder="년(4자)" size="7"  step="" min="1900" max="2019" >
+                        <input type="number" class="inp_color" name="birthmonth" id="birthmonth" maxlength="2" placeholder="월" size="4" step="" min="1" max="12" >
+                        <input type="number" class="inp_color" name="birthday" id="birthday" maxlength="2" placeholder="일" size="4"  step="" min="1" max="31" >
                        
                         
                     </td>
@@ -117,7 +153,7 @@ input[type="text"],input[type="password"]{
                 <tr>
                     <td>이메일</td>
                     <td>
-                        <input type="text" name="email" maxlength="50">@
+                        <input type="text" class="inp_color" name="email" maxlength="50">@
                         <select name="email1">
                             <option>naver.com</option>
                             <option>daum.net</option>
@@ -148,8 +184,8 @@ input[type="text"],input[type="password"]{
             </table>
             <br>
             <div id="frmButton">
-            <input type="submit" value="가입"/>  
-            <input type="reset" value="다시입력">
+            <input type="submit" class="btn1 btn-4" value="가입"/>  
+            <input type="reset" class="btn1 btn-4"value="다시입력">
             </div>
         </form>
                 

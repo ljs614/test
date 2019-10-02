@@ -90,7 +90,7 @@
 	<div class="con1_bottom">
 		<div class="con1_bottom1">
 			<p class="con1_bottom_p1"><%=c.getCityName() %>여행 준비할 때 꼭 필요한 최신의 <%=c.getCityName() %> 여행정보를 보고 있습니다.</p>
-			<p class="con1_bottom_p2"><a href="#"><i class="material-icons">touch_app</i>&nbsp다른 여행도시 보기</a></p>
+			<p class="con1_bottom_p2"><a href="<%=request.getContextPath()%>/citySelect"><i class="material-icons">touch_app</i>&nbsp다른 여행도시 보기</a></p>
 		</div>
 	</div>
 
@@ -193,7 +193,7 @@
 					</div>
 					<div>
 						<div class="pdf_con2">
-							<a href="<%=request.getContextPath()%>/pdf/<%=c.getCityEng()%>.pdf" download>
+							<a href="<%=request.getContextPath()%>/pdf/<%=c.getCityEng()%>.pdf" class="btn1 btn-4" download>
 								파일 다운로드
 								<i class="material-icons hvr-pulse-grow">
 									system_update_alt
@@ -295,7 +295,7 @@
 						attArr+="<h2>"+data[i]['attractionName']+"</h2>";
 						attArr+="<p>"+data[i]['attractionComment']+"</p><br>";
 						attArr+="<p class='red'>category : "+data[i]['category']+"</p><br>";
-						attArr+="<div><button class='attc' data-no='"+data[i]["attractionId"]+"' onclick='att_btn();'>자세히 보기</button>";
+						attArr+="<div><button class='attc btn1 btn-4' data-no='"+data[i]["attractionId"]+"' onclick='att_btn();'>자세히 보기</button>";
 						attArr+="</div></div></div>";
 					}
 

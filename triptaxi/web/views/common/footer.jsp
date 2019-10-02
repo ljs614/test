@@ -7,13 +7,10 @@
                     <div class="footer_1_1">
                         <div class="footer_1_1_1">
                             <div>
-                                <h4>Trip Taxi</h4>
-                                <p>CALL US - 112</p>
-                            </div>
-                            <div>
-                                <i class="fab fa-facebook"></i>
-                                <i class="fab fa-instagram"></i>
-                                <i class="fab fa-twitter"></i>
+                                <h4>Tel</h4>
+                                <p>02-112-5674</p>
+                                <h4>Address</h4>
+                                <p>서울특별시 봉천동 11-9번지</p>
                             </div>
                         </div>
                         <div class="footer_1_1_2">
