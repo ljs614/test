@@ -43,7 +43,6 @@ public class makePlan2Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("makePlan2Servlet");
 		String plannerId = request.getParameter("plannerId");
 		PlannerService service = new PlannerService();
 		
@@ -56,8 +55,7 @@ public class makePlan2Servlet extends HttpServlet {
 
 		Gson gson = new Gson();
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(planner.getPlannerDate());
-		System.out.println(planner.getPlannerDate());
-		System.out.println(date);
+	
 		JSONObject list = new JSONObject();
 		list.put("plannerId", planner.getPlannerId());
 		list.put("plannerName", planner.getPlannerName());
@@ -68,8 +66,6 @@ public class makePlan2Servlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
-	    System.out.println(loginUser.getUserId());
-	    System.out.println(planner.getPlannerWriter());
 	    
 	    if(loginUser!=null && loginUser.getUserId().equals(planner.getPlannerWriter())) {
 	    	response.setContentType("application/json;charset=UTF-8");

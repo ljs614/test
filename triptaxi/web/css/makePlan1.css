@@ -534,6 +534,7 @@
 	top: 35px;
 	left: 0;
 	bottom: 50px;
+	height:-2px;
 }
 
 #close:hover:before, #close:hover:after {

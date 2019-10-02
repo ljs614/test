@@ -28,7 +28,8 @@
 
 <link href="<%=request.getContextPath() %>/css/makePlan2.css"
 	rel="stylesheet">
-<title>Insert title here</title>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favi.png">
+<title>Trip Taxi</title>
 
 </head>
 <body>
@@ -684,7 +685,6 @@
           
           	map_clear();
       	
-      		/* polyMarker_draw(map); */
       		flightPath.getPath().clear();
       		Marker_draw(map); 
       		
@@ -1059,7 +1059,7 @@
     		$('#endPlannerId').val(plannerId);
     		
     	}else{
-    		location.href="<%=request.getContextPath()%>/planner/plannerView?plannerId"+plannerId;
+    		location.href="<%=request.getContextPath()%>/planner/plannerView?plannerId="+plannerId;
     	}
     	
     	
@@ -1104,7 +1104,6 @@
      $(document).on('click', '.tourTitle', function(){
     	 var id = $($(this).parent().parent()).data("tourid");
     	 open("<%=request.getContextPath()%>/attraction/select?attId="+id);
-    	 console.log($($(this).parent().parent()).data("tourid"));
      })
 
   

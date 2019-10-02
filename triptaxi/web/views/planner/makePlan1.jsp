@@ -30,6 +30,7 @@
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 <script src="https://kit.fontawesome.com/dcff5cba12.js"></script>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favi.png">
 
 <link href="<%=request.getContextPath() %>/css/makePlan1.css"
 	rel="stylesheet">
@@ -475,8 +476,7 @@
           $('#closeBTModal').css("display", "block");
         }
         else{
-        	/* 나중에 Servlet경로로 변경 */
-          location.href="<%=request.getContextPath()%>/views/planner/planMain.jsp";
+          location.href="<%=request.getContextPath()%>/planMain";
         }
       }
 
@@ -485,8 +485,7 @@
       });
       
       $('#cbmBT-Y').click(function(){
-    	  /* 나중에 Servlet경로로 변경 */
-    	  location.href="<%=request.getContextPath()%>/views/planner/planMain.jsp";
+    	  location.href="<%=request.getContextPath()%>/planMain";
       });
       
       
