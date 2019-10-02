@@ -95,14 +95,14 @@ public class Option1ChangeServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar += "<span> [이전] </span>";
 		}else {
-			pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> [이전] </a>";
+			pageBar += "<a href='javascript:fn_paging1(\""+option1+"\","+pageNo+")'> [이전] </a>";
 		}
 
 		while(!(pageNo>pageEnd || pageNo>totalPage )) {
 			if(pageNo==cPage) {
 				pageBar += "<span> " + pageNo + " </span>";
 			}else {
-				pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> " + pageNo + " </a>";
+				pageBar += "<a href='javascript:fn_paging1(\""+option1+"\","+pageNo+")'> " + pageNo + " </a>";
 			}
 			pageNo++;
 		}
@@ -110,7 +110,7 @@ public class Option1ChangeServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar += "<span>[다음]</span>";
 		}else {
-			pageBar += "<a href='javascript:fn_paging1('"+option1+","+pageNo+")'> [다음] </a>";
+			pageBar += "<a href='javascript:fn_paging1(\""+option1+"\","+pageNo+")'> [다음] </a>";
 		}
 		
 		JSONObject list = new JSONObject();

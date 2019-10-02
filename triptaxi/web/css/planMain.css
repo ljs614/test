@@ -222,10 +222,11 @@ div.planView_Div .planView_Content {
 }
 
 div.planView_Content>div.pvc_title {
+	padding-top:4px;
 	padding-left: 30px;
 	text-align: left;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 div.planView_Content>div.pvc_date, div.pvc_totalDay {

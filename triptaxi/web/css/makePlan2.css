@@ -529,6 +529,10 @@ div#map {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.tourTitle:hover{
+	text-decoration:underline;
+	cursor:pointer;
+}
 
 .rightContent>.tourCategory {
 	font-weight: 300;
