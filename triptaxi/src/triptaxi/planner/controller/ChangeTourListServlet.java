@@ -45,8 +45,6 @@ public class ChangeTourListServlet extends HttpServlet {
 			tourList = service.selectTourList(table, "city", cityName);
 		}else if(table.equals("tt_festival")) {
 			tourList = service.selectFestivalList(table, "city", cityName, "category", select+"월");
-		}else if(table.equals("tt_clip")) {
-//			나중에 추가
 		}
 		
 		response.setContentType("application/json;charset=UTF-8");

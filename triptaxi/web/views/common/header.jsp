@@ -265,6 +265,53 @@
             </div>
         </nav>
     </header>
+    
+    <style>
+    .login_1{
+    	width: 395px;
+    	height: 347px;
+    }
+    	.login_2 input[type="text"], .login_2 input[type="password"]{
+    		height: 46px;
+    		margin-bottom:10px;
+    		border-radius:0;
+    		outline:none;
+    		position: relative;
+    		left: -90px;
+    		top: -10px;
+    	}
+    	.login_2 label{
+    		position: relative;
+    		left: -82px;
+    	}
+    	#login-container{
+    		position:relative;
+    		left: -8px;
+    	}
+    	#loginBT{
+    	position:relative;
+    	top:10px;
+    	}
+    	#login-joinBT, #login-findBT{
+    		position:relative;
+    		top: 214px;
+    		left: -40px;
+    	}
+    	#login-joinBT>a, #login-findBT>a{
+    		color:black;
+
+    	}
+    	#login-findBT>a{
+    	width:100px;}
+    	#login_exit{
+    		position: relative;
+    	top: -85px;
+    	left: 335px;
+    	background: none;
+    	font-size: 30px;
+    	}
+    
+    </style>
 
     <div id="logi">
             <div class="login_1">
@@ -280,31 +327,10 @@
                             <input type="password" id="password" name="password" placeholder="비밀번호"/><br>
                             <label><input type="checkbox" name="saveId" id="saveId" <%=saveId != null ? "checked" : ""%> />아이디 저장</label>
                             <div class="wrap">
-                                <button class="button1">로그인</button>
+                                <button class="button1" id='loginBT'>로그인</button>
                             </div>
                         </div>
-                        <div>
-                            <div class="wrap1">
-                                <button class="button1">
-                                    <i class="fab fa-google"></i>네이버
-                                </button>
-                            </div>
-                            <div class="wrap1">
-                                <button class="button1">
-                                    <i class="fab fa-google"></i>페이스북
-                                </button>
-                            </div>
-            
-                        </div>
-                        <div>
-                            <div class="wrap1">
-                                <button class="button1">
-                                    <i class="fab fa-google"></i>구글
-                                </button>
-                            </div>
-                            <span class="search"><a href="">회원가입</a></span> <span class="search"><a
-                                href="">아이디/비밀번호 찾기</a></span>
-                        </div>
+                 
                     </div>
                 </div>
                 <input type="hidden" id="location" name="location"/>

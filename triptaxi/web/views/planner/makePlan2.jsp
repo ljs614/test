@@ -118,11 +118,6 @@
 							<i class="fas fa-drum"></i>
 						</div>
 					</div>
-					<div class='sc_icon'>
-						<div id='clipIcon' title="클립보드">
-							<i class="fas fa-paperclip"></i>
-						</div>
-					</div>
 				</div>
 			</li>
 		</ul>
@@ -872,7 +867,6 @@
     		case "attractionIcon" : table = "tt_attraction"; break;
     		case "activityIcon" : table = "tt_activity"; break;
     		case "festivalIcon" : table = "tt_festival"; select = (date.getMonth()+1);break;
-    		case "clipIcon" : table = "tt_clip";  break;
     	}
     	
     	$.ajax({
@@ -890,7 +884,6 @@
     					case "at": icon="atMarker"; break;
     					case "ac": icon="acMarker"; break;
     					case "fe": icon="feMarker"; break;
-    					case "cl": icon="clipMarker"; break;
     				}	
     			}
     			
