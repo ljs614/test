@@ -103,21 +103,21 @@ public class Option2ChangeServlet extends HttpServlet {
 		 { 
 			 pageBar += "<span> [이전] </span>"; 
 		}else 
-		{ pageBar +="<a href='javascript:fn_paging2('"+option1+","+receiveOption2+","+pageNo+")'> [이전] </a>"; 
+		{ pageBar +="<a href='javascript:fn_paging2(\""+option1+"\",\""+receiveOption2+"\","+pageNo+")'> [이전] </a>"; 
 		}
 		 
 		 while(!(pageNo>pageEnd || pageNo>totalPage )) {
 			 if(pageNo==cPage) { 
 				 pageBar += "<span> " + pageNo + " </span>"; 
 			 }else { 
-				 pageBar += "<a href='javascript:fn_paging2('"+option1+","+receiveOption2+","+ pageNo+")'> " + pageNo + " </a>"; 
+				 pageBar += "<a href='javascript:fn_paging2(\""+option1+"\",\""+receiveOption2+"\","+ pageNo+")'> " + pageNo + " </a>"; 
 			 } pageNo++; 
 		}
 		 
 		 if(pageNo>totalPage) { 
 			 pageBar += "<span>[다음]</span>"; 
 		 }else { 
-			 pageBar += "<a href='javascript:fn_paging2('"+option1+","+receiveOption2+","+ pageNo+")'> [다음] </a>"; 
+			 pageBar += "<a href='javascript:fn_paging2(\""+option1+"\",\""+receiveOption2+"\","+ pageNo+")'> [다음] </a>"; 
 		 }
 		 
 

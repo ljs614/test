@@ -373,11 +373,6 @@
 				
 				makePlanView(list['plannerList']);
 				
-				if($('.planView_Div').length==0){
-					
-					
-				}
-				
 			}
 		})
 	}
