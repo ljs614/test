@@ -3,9 +3,6 @@
 <%@ page import="java.util.*, triptaxi.planner.model.vo.CityList" %>
 <%
 	List<CityList> list = (List<CityList>)request.getAttribute("cityList");
-	for(CityList c : list){
-		System.out.println(c.getCityName());
-	}
 	
 	HashSet<String> continents = new HashSet<>();
 	HashSet<String> nations = new HashSet<>();
@@ -146,7 +143,6 @@
 
 <script>
 	var windowHeight = $(window).height();
-	console.log($(window).height());
 	$(document).ready(function() {
 		$('#continentSelect').css("height", windowHeight - 52 + "px");
 		$('#continentSelectContent').css("height",windowHeight + "px");
@@ -154,16 +150,6 @@
 		$('section').css("height", $('#totalList').height() + $('#continentSelect').height() + "px");
 	});
 
-/* 	$('#continents>li>a').click(function() {
-		var str = $(this).text();
-		console.log($(this).text());
-		$('#continentSelectContent').css("display","block");
-		$('#contentTitle').text("- " + str.toUpperCase());
-		$('section').css("height", $('#totalList').height() + $('#continentSelect').height() 
-				+$('#continentSelectContent').height()+ "px");
-	}); */
-	
-	
 </script>
 
 <%@ include file="/views/common/footer.jsp"%>

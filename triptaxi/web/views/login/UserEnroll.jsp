@@ -3,15 +3,14 @@
 <%@ include file="/views/common/header.jsp" %>
 
 <style>
-table, th, td {border:1px solid #333333; border-collapse:collapse; padding:10px}
-td{font-size:18px; font-weight:bold;  padding:20px;}
+section{font-family:'Nanum Gothic';}
+table, th, td { border-collapse:collapse; padding:3px}
+td{font-size:18px; font-weight:bold;  padding:20px; box-sizing:border-box;}
 #wrap{
     position : relative;
-    
-	width : 600px;
+	width : 100%;
 	height: 600px;
     margin:0 auto;
-
 }
 #enroll{
     height:900px;
@@ -20,8 +19,47 @@ td{font-size:18px; font-weight:bold;  padding:20px;}
 #frm_enroll{
     position: relative;
     top:100px;
+    margin:0 auto;
+}
+table.userid_1{
+margin:0 auto;
+}
+#frmButton{
+	text-align:center;
+}
+input[type="button"]{
+	background-color: rgb(73,80,106);
+    border: none;
+    height: 35px;
+    width: 100px;
+    margin-left: 15px;
+    color: white;
+    font-size: 14px;
+    font-family: 'Nanum Gothic';
 }
 
+
+}
+input[type="text"],input[type="password"]{
+	background-color: rgba(166,171,190,0.3);
+    border: none;
+    height: 45px;
+    width: 270px;
+    border-radius: 10px;
+}
+
+#frmButton input[type="submit"], #frmButton input[type="reset"]{
+	width: 225px;
+    height: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color:rgb(73,80,106);
+    border:none;
+    color:white;
+    font-family: 'Nanum Gothic';
+    font-weight: bolder;
+    font-size: 16px;
+}
 </style>
 <section id="enroll">
     <div id="wrap">
@@ -109,14 +147,15 @@ td{font-size:18px; font-weight:bold;  padding:20px;}
       
             </table>
             <br>
+            <div id="frmButton">
             <input type="submit" value="가입"/>  
             <input type="reset" value="다시입력">
+            </div>
         </form>
                 
     </div>
 </section>
     <script>
-
 	function checkIdDuplicate(){
 		
 			console.log($("#enroll_userId").val());
@@ -136,7 +175,6 @@ td{font-size:18px; font-weight:bold;  padding:20px;}
 		alert("아이디를 다시 입력하십시오");
 	}
 } 
-
 $('#enroll_password').blur(function(){
 	var ps=/^[A-Za-z0-9]{8,12}$/;
 	if(!ps.test($("#enroll_password").val())){
@@ -154,50 +192,11 @@ $('#passwordcheck').blur(function (){
 	}
 });
 
-/*$('#birthyear').blur(function(){
-		 var year=/^(19[0-9][0-9]|200[0-9])/;
-		if(!year.test($("#birthyear").val())){
-			$('#birthyear').focus();
-		} */
-	/* $('#birthmonth').blur(function(){
-		var month=/^(0[0-9]|1[0-2])/;
-		if(!month.test($("#birthmonth").val())){
-			$('#birthmonth').focus();
-		}
-	});
-	$('#birthday').blur(function(){
-		var day=/^(0[1-9]|[1-2][0-9]|3[0-1])$/
-		if(!day.test($("#birthday").val())){
-			$('#birthday').focus();
-		}
-	});  
-	});*/
 	
-
 			
 			
 		</script>
-    <!--var empJ = /\s/g;
-	//아이디 정규식
-	var idJ = /^[a-z0-9]{4,12}$/;
-	// 비밀번호 정규식
-	var pwJ = /^[A-Za-z0-9]{4,12}$/; 
-	// 이름 정규식
-	var nameJ = /^[가-힣]{2,6}$/;
-	// 이메일 검사 정규식
-	var mailJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	// 휴대폰 번호 정규식
-	var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/; -->
-	<!--// 비밀번호 정규식
-	 날짜 정규식 
-	
-	
-	 if(!/^[a-zA-Z0-9]{10,15}$/.test(password)){
 
-alert('숫자와 영문자 조합으로 10~15자리를 사용해야 합니다.');
 
-return false;
-
-} -->
 
 <%@ include file="/views/common/footer.jsp" %>
