@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 
  <%@ include file="/views/common/header.jsp"%>
+<%@ page import="triptaxi.board.model.vo.Board" %>
+ <%
+	Board b=(Board)request.getAttribute("board");
+
+ %>
  
  <section>
     <style>
@@ -13,13 +18,20 @@
     </style>
 		<section id="board-container">
 		<br><br><br>
-		<h2>동행모집 게시판</h2>
-   	<form action="<%=request.getContextPath()%>/board/boardFormEnd"	method="post" enctype="multipart/form-data">
+		<h2>동행모집 게시판 수정하기</h2>
+   	<form action="<%=request.getContextPath()%>/board/boardUpdateEnd" method="post" enctype="multipart/form-data">
 		<table id="tbl-board">
+		<tr>
+				<th>글번호</th>
+				<td>
+				<input name="boardNo" type="hidden" value="<%=b.getQnaNo()%>"/>
+					<%=b.getQnaNo()%>
+				</td>
+			</tr>
 			<tr>
 				<th>제 목</th>
 				<td>
-					<input type="text" name="title" id="title" required/>
+					<input type="text" name="title" id="title" value="<%=b.getQnaTitle()%>"/>
 				</td>
 			</tr>
 			<tr>
@@ -57,26 +69,27 @@
 			<tr>
 				<th>첨부파일</th>
 				<td>
-					<input type="file" name="up_file" id="up_file">
+					<input type="file" name="up_file" id="up_file" value="<%=b.getOriFileName()%>">
 				</td>
 			</tr>
 			<tr>
 				<th>내 용</th>
 				<td>
-					<textarea rows="5" cols="50" name="content" id="content" required></textarea>
+					<textarea rows="5" cols="50" name="content" id="content" required><%=b.getQnaContent() %></textarea>
 				</td>
 			</tr>
 			<tr>
 				<th colspan="2">
-					<button type ="submit" id="submit">완료</button>
+					<input type=button onclick="fn_listBoard()" value="돌아가기"/>
+					<button type ="submit" id="submit">수정완료</button>
+					
+					
 					
 				</th>
 			</tr>
 		</table>
 	</form>
     <script>
-    
-   
     
     function fn_listBoard(){
     	location.href='<%=request.getContextPath()%>/board/boardList?cPage=<%=request.getAttribute("cPage")%>';

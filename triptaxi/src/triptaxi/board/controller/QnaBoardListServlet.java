@@ -38,7 +38,7 @@ public class QnaBoardListServlet extends HttpServlet {
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
-		int numPerPage=5;
+		int numPerPage=10;
 		BoardService service=new BoardService();
 		int totalData=service.selectBoardCount();
 		List<Board> list=service.selectBoardList(cPage,numPerPage);

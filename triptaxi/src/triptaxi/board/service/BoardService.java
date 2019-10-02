@@ -80,6 +80,32 @@ public class BoardService {
 	}
 	
 	
+	public Board updateBoard(int no) {
+		Connection conn=getConnection();
+		Board b=dao.selectBoard(conn,no);
+		close(conn);
+		return b;
+		}
 	
+	public int updateBoardEnd(Board b) {
+		Connection conn=getConnection();
+		int result=dao.updateBoard(conn,b);
+		if(result>0) {
+			commit(conn);
+		}else {rollback(conn);}
+		close(conn);
+		return result;
+	}
+	
+	public int boardDelete(int pageNo) {
+		Connection conn=getConnection();
+		int result=dao.boardDelete(conn,pageNo);
+		if(result>0) {
+			commit(conn);
+		}else {rollback(conn);}
+		close(conn);
+		return result;
+	}
 	
 }
+	

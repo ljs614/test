@@ -6,9 +6,10 @@
 
 <%	List<Board> list=(List)request.getAttribute("list");
 	int cPage=(int)request.getAttribute("cPage");
+
 %>
 <style>
-	section#board-container{width:600px; margin:0 auto; text-align:center;}
+	section#board-container{width: 1000px; margin:0 auto; text-align:center;}
 	section#board-container h2{margin:10px 0;
 	margin-top:50px}
 	table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
@@ -34,8 +35,9 @@
 		<%} %>
 		<table id="tbl-board">
 			<tr>
+			<th>성별</th>
+			<th>연령대 </th>
 				<th>번호</th>
-				<th>카테고리</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
@@ -53,8 +55,9 @@
 			<%}else{
 				for(Board b : list){ %>
 				<tr>
-					<td><%=b.getQnaNo() %></td>
 					<td><%=b.getQnaCategory() %></td>
+					<td><%=b.getAgeGrade() %></td>
+					<td><%=b.getQnaNo() %></td>
 					<td>
 						<a href='<%=request.getContextPath()%>/board/boardView?no=<%=b.getQnaNo()%>&cPage=<%=cPage%>'>
 							<%=b.getQnaTitle()%>
@@ -76,7 +79,16 @@
 			
 		</table>
 		<div id="pageBar">
-			<%=request.getAttribute("pageBar") %>
+			<%=request.getAttribute("pageBar")%>
 		</div>
 	</section>
+	<script>
+ 	$("#list-select").click(function(){
+
+		location.href='<%=request.getContextPath()%>/board/boardListSelect?gender=$("#category-select").val()&age=$("#age-select")';
+		
+	});
+	
+	
+	</script>
 	<%@ include file="/views/common/footer.jsp"%>

@@ -13,11 +13,12 @@ public class Board {
 		String reNameFileName;
 		Date qnaDate;
 		int qnaReadCount;
+		String ageGrade;
 		public Board() {
 			
 		}
 		public Board(int qnaNo, String qnaCategory, String qnaTitle, String qnaContent, String qnaWriter,
-				String oriFileName, String reNameFileName, Date qnaDate, int qnaReadCount) {
+				String oriFileName, String reNameFileName, Date qnaDate, int qnaReadCount, String ageGrade) {
 			super();
 			this.qnaNo = qnaNo;
 			this.qnaCategory = qnaCategory;
@@ -28,6 +29,7 @@ public class Board {
 			this.reNameFileName = reNameFileName;
 			this.qnaDate = qnaDate;
 			this.qnaReadCount = qnaReadCount;
+			this.ageGrade = ageGrade;
 		}
 		public int getQnaNo() {
 			return qnaNo;
@@ -83,13 +85,19 @@ public class Board {
 		public void setQnaReadCount(int qnaReadCount) {
 			this.qnaReadCount = qnaReadCount;
 		}
-		
+		public String getAgeGrade() {
+			return ageGrade;
+		}
+		public void setAgeGrade(String ageGrade) {
+			this.ageGrade = ageGrade;
+		}
 		
 		@Override
 		public String toString() {
 			return "Board [qnaNo=" + qnaNo + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaContent="
 					+ qnaContent + ", qnaWriter=" + qnaWriter + ", oriFileName=" + oriFileName + ", reNameFileName="
-					+ reNameFileName + ", qnaDate=" + qnaDate + ", qnaReadCount=" + qnaReadCount + "]";
+					+ reNameFileName + ", qnaDate=" + qnaDate + ", qnaReadCount=" + qnaReadCount + ", ageGrade="
+					+ ageGrade + "]";
 		}
 		
 		

@@ -543,7 +543,6 @@ float: left;
 #review-button-div{
 float: left;
 margin-top:25px;
-margin-left:-50px;
 }
 #review-td{
 	height:50px;
