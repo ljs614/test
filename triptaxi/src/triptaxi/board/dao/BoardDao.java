@@ -69,6 +69,7 @@ public class BoardDao {
 				b.setReNameFileName(rs.getString("renamefilename"));
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
+				b.setAgeGrade(rs.getString("age_grade"));
 				list.add(b);
 				System.out.println(b);
 			}
@@ -100,6 +101,7 @@ public class BoardDao {
 				b.setReNameFileName(rs.getString("renamefilename"));
 				b.setQnaDate(rs.getDate("qna_date"));
 				b.setQnaReadCount(rs.getInt("qna_readcount"));
+				b.setAgeGrade(rs.getString("age_grade"));
 			}
 			
 		}catch(SQLException e) {
@@ -140,6 +142,7 @@ public class BoardDao {
 			pstmt.setString(4, b.getQnaWriter());
 			pstmt.setString(5, b.getOriFileName());
 			pstmt.setString(6, b.getReNameFileName());
+			pstmt.setString(7, b.getAgeGrade());
 			
 			result=pstmt.executeUpdate();
 			System.out.println("dao:"+result);
@@ -233,6 +236,51 @@ public class BoardDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, boardRef);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int updateBoard(Connection conn,Board b) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateBoard");
+		System.out.println("dd"+b.getQnaCategory());
+	
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getQnaCategory());
+			pstmt.setString(2, b.getQnaTitle());
+			pstmt.setString(3, b.getQnaContent());
+			pstmt.setString(4, b.getOriFileName());
+			pstmt.setString(5, b.getReNameFileName());
+			pstmt.setString(6, b.getAgeGrade());
+			pstmt.setInt(7, b.getQnaNo());
+			
+			result=pstmt.executeUpdate();
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}return result;
+		
+		
+	}
+	
+	public int boardDelete(Connection conn,int pageNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteBoard");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, pageNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

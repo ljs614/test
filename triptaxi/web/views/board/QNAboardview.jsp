@@ -87,8 +87,12 @@
 				<td><%=b.getQnaNo()%></td>
 			</tr>
 			<tr>
-				<th>카테고리</th>
+				<th>성별</th>
 				<td><%=b.getQnaCategory()%></td>
+			</tr>
+			<tr>
+				<th>연령대</th>
+				<td><%=b.getAgeGrade()%></td>
 			</tr>
 			<tr>
 				<th>제 목</th>
@@ -267,6 +271,11 @@
     						!=null?request.getAttribute("cPage"):"1"%>';
     	
     }
+    function fn_updateBoard(){
+    	location.href='<%=request.getContextPath()%>/board/boardUpdate?boardNo=<%=b.getQnaNo()%>&cPage=<%=request.getAttribute("cPage")
+			!=null?request.getAttribute("cPage"):"1"%>';
+    	
+    }
     
     function fn_deleteBoardComment(){
     	location.href='<%=request.getContextPath()%>/board/boardCommentDelete?boardCommentRef='+$("#btn-delete").val;
@@ -274,10 +283,12 @@
     }
     
     
-    function fn_updateBoard(){
-        
-    }
+   
+    
+    
     function fn_deleteBoard(){	
+    	
+    	location.href='<%=request.getContextPath()%>/board/boardDelete?pageNo=<%=b.getQnaNo()%>'
     	
     }
     </script>
